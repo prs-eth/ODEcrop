@@ -251,6 +251,10 @@ def variable_time_collate_fn_activity(batch, args, device = torch.device("cpu"),
 		combined_vals: (M, T, D) tensor containing the observed values.
 		combined_mask: (M, T, D) tensor containing 1 where values were observed and 0 otherwise.
 	"""
+	#Attention: Nando changed this line:
+	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+	
+	
 	D = batch[0][2].shape[1]
 	N = batch[0][-1].shape[1] # number of labels
 

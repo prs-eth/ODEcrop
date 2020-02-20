@@ -193,7 +193,7 @@ def parse_datasets(args, device):
 	# Crop Classification
     
     #if dataset_name == "crops":
-	if dataset_name == "crop":#TODO!!!
+	if dataset_name == "crop": #TODO!!!
 		raise Exception("crop data set not implemented yet")
 
 	########### 1d datasets ###########

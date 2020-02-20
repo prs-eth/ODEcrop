@@ -36,15 +36,14 @@ from mujoco_physics import HopperPhysics
 
 from lib.utils import compute_loss_all_batches
 
-# supress warings
-import warnings
-warnings.filterwarnings("ignore", message="Warning")
+# Nando's additional libraries
+from tqdm import tqdm
 
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=100, help="Size of the dataset")
-parser.add_argument('--niters', type=int, default=5) # default=300
+parser.add_argument('-n',  type=int, default=10000, help="Size of the dataset")
+parser.add_argument('--niters', type=int, default=200) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=50)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
@@ -94,6 +93,7 @@ parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise ampl
 
 args = parser.parse_args()
 
+print("I'm running on GPU") if torch.cuda.is_available() else print("I'm running on CPU")
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 file_name = os.path.basename(__file__)[:-3]
 utils.makedirs(args.save)
@@ -253,7 +253,7 @@ if __name__ == '__main__':
 
 	num_batches = data_obj["n_train_batches"]
 
-	for itr in range(1, num_batches * (args.niters + 1)):
+	for itr in tqdm(range(1, num_batches * (args.niters + 1))):
 		optimizer.zero_grad()
 		utils.update_learning_rate(optimizer, decay_rate = 0.999, lowest = args.lr / 10)
 
