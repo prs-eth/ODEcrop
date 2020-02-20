@@ -36,19 +36,24 @@ from mujoco_physics import HopperPhysics
 
 from lib.utils import compute_loss_all_batches
 
+# supress warings
+import warnings
+warnings.filterwarnings("ignore", message="Warning")
+
+
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=100, help="Size of the dataset")
-parser.add_argument('--niters', type=int, default=300)
+parser.add_argument('--niters', type=int, default=5) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=50)
-parser.add_argument('--viz', action='store_true', help="Show plots while training")
+parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
 
 parser.add_argument('--save', type=str, default='experiments/', help="Path for save checkpoints")
 parser.add_argument('--load', type=str, default=None, help="ID of the experiment to load for evaluation. If None, run a new experiment.")
 parser.add_argument('-r', '--random-seed', type=int, default=1991, help="Random_seed")
 
-parser.add_argument('--dataset', type=str, default='periodic', help="Dataset to load. Available: physionet, activity, hopper, periodic")
+parser.add_argument('--dataset', type=str, default='activity', help="Dataset to load. Available: physionet, activity, hopper, periodic")
 parser.add_argument('-s', '--sample-tp', type=float, default=None, help="Number of time points to sub-sample."
 	"If > 1, subsample exact number of points. If the number is in [0,1], take a percentage of available points per time series. If None, do not subsample")
 
@@ -64,24 +69,22 @@ parser.add_argument('--z0-encoder', type=str, default='odernn', help="Type of en
 parser.add_argument('--classic-rnn', action='store_true', help="Run RNN baseline: classic RNN that sees true points at every point. Used for interpolation only.")
 parser.add_argument('--rnn-cell', default="gru", help="RNN Cell type. Available: gru (default), expdecay")
 parser.add_argument('--input-decay', action='store_true', help="For RNN: use the input that is the weighted average of impirical mean and previous value (like in GRU-D)")
-
-parser.add_argument('--ode-rnn', action='store_true', help="Run ODE-RNN baseline: RNN-style that sees true points at every point. Used for interpolation only.")
-
+parser.add_argument('--ode-rnn', default=True, action='store_true', help="Run ODE-RNN baseline: RNN-style that sees true points at every point. Used for interpolation only.")
 parser.add_argument('--rnn-vae', action='store_true', help="Run RNN baseline: seq2seq model with sampling of the h0 and ELBO loss.")
 
-parser.add_argument('-l', '--latents', type=int, default=6, help="Size of the latent state")
-parser.add_argument('--rec-dims', type=int, default=20, help="Dimensionality of the recognition model (ODE or RNN).")
+parser.add_argument('-l', '--latents', type=int, default=15, help="Size of the latent state")
+parser.add_argument('--rec-dims', type=int, default=100, help="Dimensionality of the recognition model (ODE or RNN).")
 
-parser.add_argument('--rec-layers', type=int, default=1, help="Number of layers in ODE func in recognition ODE")
-parser.add_argument('--gen-layers', type=int, default=1, help="Number of layers in ODE func in generative ODE")
+parser.add_argument('--rec-layers', type=int, default=4, help="Number of layers in ODE func in recognition ODE")
+parser.add_argument('--gen-layers', type=int, default=2, help="Number of layers in ODE func in generative ODE")
 
-parser.add_argument('-u', '--units', type=int, default=100, help="Number of units per layer in ODE func")
-parser.add_argument('-g', '--gru-units', type=int, default=100, help="Number of units per layer in each of GRU update networks")
+parser.add_argument('-u', '--units', type=int, default=500, help="Number of units per layer in ODE func")
+parser.add_argument('-g', '--gru-units', type=int, default=50, help="Number of units per layer in each of GRU update networks")
 
 parser.add_argument('--poisson', action='store_true', help="Model poisson-process likelihood for the density of events in addition to reconstruction.")
-parser.add_argument('--classif', action='store_true', help="Include binary classification loss -- used for Physionet dataset for hospiral mortality")
+parser.add_argument('--classif', default="True", action='store_true', help="Include binary classification loss -- used for Physionet dataset for hospiral mortality")
 
-parser.add_argument('--linear-classif', action='store_true', help="If using a classifier, use a linear classifier instead of 1-layer NN")
+parser.add_argument('--linear-classif', default=True, action='store_true', help="If using a classifier, use a linear classifier instead of 1-layer NN")
 parser.add_argument('--extrap', action='store_true', help="Set extrapolation mode. If this flag is not set, run interpolation mode.")
 
 parser.add_argument('-t', '--timepoints', type=int, default=100, help="Total number of time-points")
@@ -149,7 +152,7 @@ if __name__ == '__main__':
 	z0_prior = Normal(torch.Tensor([0.0]).to(device), torch.Tensor([1.]).to(device))
 
 	if args.rnn_vae:
-		if args.poisson:
+		if args.poisson: #not used
 			print("Poisson process likelihood not implemented for RNN-VAE: ignoring --poisson")
 
 		# Create RNN-VAE model
@@ -170,7 +173,7 @@ if __name__ == '__main__':
 			).to(device)
 
 
-	elif args.classic_rnn:
+	elif args.classic_rnn: #not used
 		if args.poisson:
 			print("Poisson process likelihood not implemented for RNN: ignoring --poisson")
 
@@ -188,7 +191,7 @@ if __name__ == '__main__':
 			n_labels = n_labels,
 			train_classif_w_reconstr = (args.dataset == "physionet")
 			).to(device)
-	elif args.ode_rnn:
+	elif args.ode_rnn: # using this thing
 		# Create ODE-GRU model
 		n_ode_gru_dims = args.latents
 				

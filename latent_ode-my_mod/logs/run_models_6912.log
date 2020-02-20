@@ -1,0 +1,19 @@
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+Experiment 6912
+Epoch 0005 [Test seq (cond on sampled tp)] | Loss 1.272862 | Likelihood -26584.207031 | KL fp 0.0000 | FP STD 0.0000|
+KL coef: 0.0
+Train loss (one batch): 1.2132004499435425
+Train CE loss (one batch): 1.2132004499435425
+Test MSE: 5.3176
+Classification accuracy (TEST): 0.3360
+Poisson likelihood: 0.0
+CE loss: 1.2728620767593384
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py

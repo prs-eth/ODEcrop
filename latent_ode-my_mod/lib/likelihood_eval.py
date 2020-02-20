@@ -118,8 +118,8 @@ def compute_multiclass_CE_loss(label_predictions, true_label, mask):
 
 	res = []
 	for i in range(true_label.size(0)):
-		pred_masked = torch.masked_select(label_predictions[i], pred_mask[i].byte())
-		labels = torch.masked_select(true_label[i], label_mask[i].byte())
+		pred_masked = torch.masked_select(label_predictions[i], pred_mask[i].bool()) #byte()
+		labels = torch.masked_select(true_label[i], label_mask[i].bool()) #byte()
 	
 		pred_masked = pred_masked.reshape(-1, n_dims)
 
@@ -146,11 +146,11 @@ def compute_masked_likelihood(mu, data, mask, likelihood_func):
 	for i in range(n_traj_samples):
 		for k in range(n_traj):
 			for j in range(n_dims):
-				data_masked = torch.masked_select(data[i,k,:,j], mask[i,k,:,j].byte())
+				data_masked = torch.masked_select(data[i,k,:,j], mask[i,k,:,j].bool()) #byte()
 				
 				#assert(torch.sum(data_masked == 0.) < 10)
 
-				mu_masked = torch.masked_select(mu[i,k,:,j], mask[i,k,:,j].byte())
+				mu_masked = torch.masked_select(mu[i,k,:,j], mask[i,k,:,j].bool()) #byte()
 				log_prob = likelihood_func(mu_masked, data_masked, indices = (i,k,j))
 				res.append(log_prob)
 	# shape: [n_traj*n_traj_samples, 1]

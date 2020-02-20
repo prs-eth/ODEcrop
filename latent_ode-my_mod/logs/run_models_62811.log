@@ -1,0 +1,96 @@
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+Experiment 72030
+Epoch 0001 [Test seq (cond on sampled tp)] | Loss 1.637748 | Likelihood -21080.490234 | KL fp 0.0000 | FP STD 0.0000|
+KL coef: 0.0
+Train loss (one batch): 1.6165190935134888
+Train CE loss (one batch): 1.6165190935134888
+Test MSE: 4.2168
+Classification accuracy (TEST): 0.4538
+Poisson likelihood: 0.0
+CE loss: 1.6377484798431396
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+Experiment 51412
+Epoch 0001 [Test seq (cond on sampled tp)] | Loss 1.503139 | Likelihood -25823.271484 | KL fp 0.0000 | FP STD 0.0000|
+KL coef: 0.0
+Train loss (one batch): 1.5980479717254639
+Train CE loss (one batch): 1.5980479717254639
+Test MSE: 5.1654
+Classification accuracy (TEST): 0.4980
+Poisson likelihood: 0.0
+CE loss: 1.503138542175293
+Experiment 51412
+Epoch 0002 [Test seq (cond on sampled tp)] | Loss 1.258356 | Likelihood -26318.525391 | KL fp 0.0000 | FP STD 0.0000|
+KL coef: 0.0
+Train loss (one batch): 1.490770936012268
+Train CE loss (one batch): 1.490770936012268
+Test MSE: 5.2644
+Classification accuracy (TEST): 0.3310
+Poisson likelihood: 0.0
+CE loss: 1.2583564519882202
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+Experiment 66508
+Epoch 0001 [Test seq (cond on sampled tp)] | Loss 1.503139 | Likelihood -25823.271484 | KL fp 0.0000 | FP STD 0.0000|
+KL coef: 0.0
+Train loss (one batch): 1.5980479717254639
+Train CE loss (one batch): 1.5980479717254639
+Test MSE: 5.1654
+Classification accuracy (TEST): 0.4980
+Poisson likelihood: 0.0
+CE loss: 1.503138542175293
+Experiment 66508
+Epoch 0002 [Test seq (cond on sampled tp)] | Loss 1.258356 | Likelihood -26318.525391 | KL fp 0.0000 | FP STD 0.0000|
+KL coef: 0.0
+Train loss (one batch): 1.490770936012268
+Train CE loss (one batch): 1.490770936012268
+Test MSE: 5.2644
+Classification accuracy (TEST): 0.3310
+Poisson likelihood: 0.0
+CE loss: 1.2583564519882202
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+Experiment 89466
+Epoch 0001 [Test seq (cond on sampled tp)] | Loss 1.503139 | Likelihood -25823.271484 | KL fp 0.0000 | FP STD 0.0000|
+KL coef: 0.0
+Train loss (one batch): 1.5980479717254639
+Train CE loss (one batch): 1.5980479717254639
+Test MSE: 5.1654
+Classification accuracy (TEST): 0.4980
+Poisson likelihood: 0.0
+CE loss: 1.503138542175293
+Experiment 89466
+Epoch 0002 [Test seq (cond on sampled tp)] | Loss 1.258356 | Likelihood -26318.525391 | KL fp 0.0000 | FP STD 0.0000|
+KL coef: 0.0
+Train loss (one batch): 1.490770936012268
+Train CE loss (one batch): 1.490770936012268
+Test MSE: 5.2644
+Classification accuracy (TEST): 0.3310
+Poisson likelihood: 0.0
+CE loss: 1.2583564519882202
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+Experiment 6912
+Epoch 0005 [Test seq (cond on sampled tp)] | Loss 1.272862 | Likelihood -26584.207031 | KL fp 0.0000 | FP STD 0.0000|
+KL coef: 0.0
+Train loss (one batch): 1.2132004499435425
+Train CE loss (one batch): 1.2132004499435425
+Test MSE: 5.3176
+Classification accuracy (TEST): 0.3360
+Poisson likelihood: 0.0
+CE loss: 1.2728620767593384
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py
+/home/pf/pfstud/ODE_Nando/ODE_crop_Project/latent_ode-my_mod/run_models.py

@@ -187,6 +187,14 @@ def parse_datasets(args, device):
 					"n_labels": labels.size(-1)}
 
 		return data_objects
+		
+    
+    ##################################################################
+	# Crop Classification
+    
+    #if dataset_name == "crops":
+	if dataset_name == "crop":#TODO!!!
+		raise Exception("crop data set not implemented yet")
 
 	########### 1d datasets ###########
 

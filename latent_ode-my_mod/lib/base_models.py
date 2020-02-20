@@ -109,10 +109,10 @@ class Baseline(nn.Module):
 
 		# Compute likelihood of all the points
 		likelihood = self.get_gaussian_likelihood(batch_dict["data_to_predict"], pred_x,
-			mask = batch_dict["mask_predicted_data"])
+			mask = (batch_dict["mask_predicted_data"])) # this mask gives UserWarnings # torch.BoolTensor
 
 		mse = self.get_mse(batch_dict["data_to_predict"], pred_x,
-			mask = batch_dict["mask_predicted_data"])
+			mask = (batch_dict["mask_predicted_data"]) ) # this mask gives UserWarnings # torch.BoolTensor
 
 		################################
 		# Compute CE loss for binary classification on Physionet

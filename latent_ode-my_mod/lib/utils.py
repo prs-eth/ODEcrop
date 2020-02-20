@@ -385,7 +385,7 @@ def split_data_extrap(data_dict, dataset = ""):
 	split_dict = {"observed_data": data_dict["data"][:,:n_observed_tp,:].clone(),
 				"observed_tp": data_dict["time_steps"][:n_observed_tp].clone(),
 				"data_to_predict": data_dict["data"][:,n_observed_tp:,:].clone(),
-				"tp_to_predict": data_dict["time_steps"][n_observed_tp:].clone()}
+				"tp_to_predict": data_dict["time_steps"][n_observed_tp:].clone()} # we want to predict the sucessive values
 
 	split_dict["observed_mask"] = None 
 	split_dict["mask_predicted_data"] = None 
@@ -411,7 +411,7 @@ def split_data_interp(data_dict):
 	split_dict = {"observed_data": data_dict["data"].clone(),
 				"observed_tp": data_dict["time_steps"].clone(),
 				"data_to_predict": data_dict["data"].clone(),
-				"tp_to_predict": data_dict["time_steps"].clone()}
+				"tp_to_predict": data_dict["time_steps"].clone()} # we want to predict values in between
 
 	split_dict["observed_mask"] = None 
 	split_dict["mask_predicted_data"] = None 
