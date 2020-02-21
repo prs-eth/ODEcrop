@@ -1,7 +1,8 @@
 #!/home/russwurm/anaconda2/envs/field2/bin/python
 
 #import psycopg2
-import cPickle as pickle
+#import cPickle as pickle
+import pickle as pickle
 import os
 import numpy as np
 
@@ -53,7 +54,17 @@ class Dataloader:
         if self.batch >= self.nbatches:
             self.new_epoch()
         with open(os.path.join(self.datafolder, "b{}.pkl".format(self.batch)), "rb") as f:
-            data = pickle.load(f)
+			#data = pickle.load(f)
+            u = pickle._Unpickler(f)
+            u.encoding = 'latin1'
+            data = u.load()
+			#print(p)
+		
+		#Nando's code:
+		#with open(csv_name_here, 'r', encoding="utf-8") as f:
+		#	#some codes
+		#	data = pickle.load(f)
+		
         if advance: self.batch += 1
         return data
 

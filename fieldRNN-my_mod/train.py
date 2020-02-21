@@ -1,5 +1,6 @@
 import tensorflow as tf
-import cPickle as pickle
+#import cPickle as pickle
+import pickle as pickle
 import rnn_model
 import cnn_model
 from dataloader import Dataloader
@@ -112,7 +113,7 @@ def train_rnn(model,
                     train_dataloader.epoch = epoch
 
                 except:
-                    print "error at {} ignoring".format(init_from)
+                    print("error at {} ignoring".format(init_from))
                     init_from = None
                     pass
 
@@ -290,13 +291,13 @@ def train_cnn(model,
                 try:
 
                     ckpt = tf.train.get_checkpoint_state(init_from)
-                    print("restoring model from %s" % ckpt.model_checkpoint_path)
+                    print("restoring print(tf.__version__)model from %s" % ckpt.model_checkpoint_path)
                     saver.restore(sess, ckpt.model_checkpoint_path)
                     step, epoch = read_status_file(init_from)
                     train_dataloader.epoch = epoch
 
                 except:
-                    print "error at {} ignoring".format(init_from)
+                    print("error at {} ignoring".format(init_from))
                     init_from = None
                     pass
 
@@ -404,12 +405,12 @@ def train_cnn(model,
 def main():
     parser = argparse.ArgumentParser(description='Train neural network.')
 
-    parser.add_argument('layers', type=int, help='number of layers')
-    parser.add_argument('cells', type=int, help='number of rnn cells, as multiple of 55')
-    parser.add_argument('dropout', type=float, help='dropout keep probability')
-    parser.add_argument('fold', type=int, help='select training/evaluation fold to use')
+    parser.add_argument('layers', default=4, type=int, help='number of layers')
+    parser.add_argument('cells', default=2, type=int, help='number of rnn cells, as multiple of 55')
+    parser.add_argument('dropout', default=0.5, type=float, help='dropout keep probability')
+    parser.add_argument('fold', default=0, type=int, help='select training/evaluation fold to use')
 
-    parser.add_argument('maxepoch', type=int, help="maximum epochs")
+    parser.add_argument('maxepoch', default=30, type=int, help="maximum epochs")
 
     parser.add_argument('--savedir', type=str, default="save/tmp", help='directory to save the run')
     parser.add_argument('--gpu', '-g', type=str, default=None, help='visible gpu')
@@ -464,7 +465,7 @@ def main():
     # n_pixels * n_bands + doy = 9 * 6 + 1 = 55
     n_input = 55
 
-    print "Start Training with y_layers {}, n_cell_per_input {}, keep_prob {}, run {}, init_from {}".format(n_layers, n_cell_per_input, keep_prob, run, init_from)
+    print("Start Training with y_layers {}, n_cell_per_input {}, keep_prob {}, run {}, init_from {}".format(n_layers, n_cell_per_input, keep_prob, run, init_from))
 
     tf.reset_default_graph()
 
@@ -508,7 +509,7 @@ def main():
                     allow_gpu_mem_growth=allow_gpu_mem_growth)
 
     if success:
-        print "Process terminated successfully"
+        print("Process terminated successfully")
 
 if __name__ == '__main__':
     main()

@@ -1,6 +1,7 @@
 import pandas
 import re
-import cPickle as pickle
+#import cPickle as pickle
+import pickle as pickle
 import os
 
 def write_status_file(savedir, step, epoch, eta=None, train_xentropy=None, test_xentropy=None, train_oa=None, test_oa=None):
