@@ -18,6 +18,7 @@ from torch.utils.data import DataLoader
 from mujoco_physics import HopperPhysics
 from physionet import PhysioNet, variable_time_collate_fn, get_data_min_max
 from person_activity import PersonActivity, variable_time_collate_fn_activity
+from crop_classification import Crops, variable_time_collate_fn_crop
 
 from sklearn import model_selection
 import random
@@ -47,7 +48,6 @@ def parse_datasets(args, device):
 		dataset_obj = HopperPhysics(root='data', download=True, generate=False, device = device)
 		dataset = dataset_obj.get_dataset()[:args.n]
 		dataset = dataset.to(device)
-
 
 		n_tp_data = dataset[:].shape[1]
 
@@ -194,11 +194,30 @@ def parse_datasets(args, device):
     
     #if dataset_name == "crops":
 	if dataset_name == "crop": #TODO!!!
-		raise Exception("Crop data set not implemented yet")
+		#raise Exception("Crop dataset not implemented yet")
 		
-		n_samples =  min(10000, args.n)
-		dataset_obj = Crops('data/Crops', 
-					  download=True, n_samples =  n_samples, device = device)
+		
+		train_dataset_obj = Crops('data/Crops', train=True, 
+										download=True, n_samples = min(10000, args.n), 
+										device = device)
+		# Use custom collate_fn to combine samples with arbitrary time observations.
+		# Returns the dataset along with mask and time steps
+		test_dataset_obj = Crops('data/Crops', train=False, 
+										download=True, n_samples = min(10000, args.n), 
+										device = device)
+		
+		
+		# Shuffle and split
+		train_data, test_data = model_selection.train_test_split(total_dataset, train_size= 0.8, 
+			random_state = 42, shuffle = True)
+		
+		
+		train_dataloader = DataLoader(train_data, batch_size= batch_size, shuffle=False, 
+			collate_fn= lambda batch: variable_time_collate_fn(batch, args, device, data_type = "train",
+				data_min = data_min, data_max = data_max))
+		test_dataloader = DataLoader(test_data, batch_size = n_samples, shuffle=False, 
+			collate_fn= lambda batch: variable_time_collate_fn(batch, args, device, data_type = "test",
+				data_min = data_min, data_max = data_max))
 		
 		
 	########### 1d datasets ###########
