@@ -194,8 +194,13 @@ def parse_datasets(args, device):
     
     #if dataset_name == "crops":
 	if dataset_name == "crop": #TODO!!!
-		raise Exception("crop data set not implemented yet")
-
+		raise Exception("Crop data set not implemented yet")
+		
+		n_samples =  min(10000, args.n)
+		dataset_obj = Crops('data/Crops', 
+					  download=True, n_samples =  n_samples, device = device)
+		
+		
 	########### 1d datasets ###########
 
 	# Sampling args.timepoints time points in the interval [0, args.max_t]

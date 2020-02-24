@@ -58,7 +58,13 @@ def compute_binary_CE_loss(label_predictions, mortality_label):
 	n_traj_samples = label_predictions.size(0)
 	label_predictions = label_predictions.reshape(n_traj_samples, -1)
 	
-	idx_not_nan = 1 - torch.isnan(mortality_label)
+	""" Nando's comment:
+	The following line caused a RunTime error: Subtraction, the `-` operator, with a bool tensor
+	is not supported. If you are trying to invert a mask, use the `~` or `logical_not()` operator instead.
+	idx_not_nan = 1 - torch.isnan(mortality_label) but I just used ~
+	
+	"""
+	idx_not_nan = ~torch.isnan(mortality_label)
 	if len(idx_not_nan) == 0.:
 		print("All are labels are NaNs!")
 		ce_loss = torch.Tensor(0.).to(get_device(mortality_label))
