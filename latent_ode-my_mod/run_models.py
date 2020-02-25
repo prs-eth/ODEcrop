@@ -52,7 +52,7 @@ parser.add_argument('--save', type=str, default='experiments/', help="Path for s
 parser.add_argument('--load', type=str, default=None, help="ID of the experiment to load for evaluation. If None, run a new experiment.")
 parser.add_argument('-r', '--random-seed', type=int, default=1991, help="Random_seed")
 
-parser.add_argument('--dataset', type=str, default='activity', help="Dataset to load. Available: physionet, activity, hopper, periodic")
+parser.add_argument('--dataset', type=str, default='crop', help="Dataset to load. Available: physionet, activity, hopper, periodic")
 parser.add_argument('-s', '--sample-tp', type=float, default=None, help="Number of time points to sub-sample."
 	"If > 1, subsample exact number of points. If the number is in [0,1], take a percentage of available points per time series. If None, do not subsample")
 
@@ -69,7 +69,7 @@ parser.add_argument('--classic-rnn', action='store_true', help="Run RNN baseline
 parser.add_argument('--rnn-cell', default="gru", help="RNN Cell type. Available: gru (default), expdecay")
 parser.add_argument('--input-decay', action='store_true', help="For RNN: use the input that is the weighted average of impirical mean and previous value (like in GRU-D)")
 parser.add_argument('--ode-rnn', default=True, action='store_true', help="Run ODE-RNN baseline: RNN-style that sees true points at every point. Used for interpolation only.")
-parser.add_argument('--rnn-vae', action='store_true', help="Run RNN baseline: seq2seq model with sampling of the h0 and ELBO loss.")
+parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run RNN baseline: seq2seq model with sampling of the h0 and ELBO loss.")
 
 parser.add_argument('-l', '--latents', type=int, default=15, help="Size of the latent state")
 parser.add_argument('--rec-dims', type=int, default=100, help="Dimensionality of the recognition model (ODE or RNN).")
@@ -253,7 +253,7 @@ if __name__ == '__main__':
 
 	num_batches = data_obj["n_train_batches"]
 
-	for itr in (range(1, num_batches * (args.niters + 1))):
+	for itr in tqdm(range(1, num_batches * (args.niters + 1))):
 		optimizer.zero_grad()
 		utils.update_learning_rate(optimizer, decay_rate = 0.999, lowest = args.lr / 10)
 

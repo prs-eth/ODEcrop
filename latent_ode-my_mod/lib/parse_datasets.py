@@ -197,14 +197,19 @@ def parse_datasets(args, device):
 		#raise Exception("Crop dataset not implemented yet")
 		
 		
-		train_dataset_obj = Crops('data/Crops', train=True, 
+		train_dataset_obj = Crops('data/Crops', mode="train", 
 										download=True, n_samples = min(10000, args.n), 
 										device = device)
 		# Use custom collate_fn to combine samples with arbitrary time observations.
 		# Returns the dataset along with mask and time steps
-		test_dataset_obj = Crops('data/Crops', train=False, 
+		test_dataset_obj = Crops('data/Crops', mode="test", 
 										download=True, n_samples = min(10000, args.n), 
 										device = device)
+		
+		eval_dataset_obj = Crops('data/Crops', mode="eval", 
+										download=True, n_samples = min(10000, args.n), 
+										device = device)
+		
 		
 		
 		# Shuffle and split
