@@ -255,7 +255,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		prev_t, t_i = time_steps[-1] + 0.01,  time_steps[-1]
 
 		interval_length = time_steps[-1] - time_steps[0]
-		minimum_step = interval_length / 50
+		minimum_step = interval_length / 50 # maybe have to modify minimum time step
 
 		#print("minimum step: {}".format(minimum_step))
 
@@ -280,7 +280,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 				assert(not torch.isnan(ode_sol).any())
 			else:
-				n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int())
+				n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between
 
 				time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
 				ode_sol = self.z0_diffeq_solver(prev_y, time_points)

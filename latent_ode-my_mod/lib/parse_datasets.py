@@ -210,21 +210,42 @@ def parse_datasets(args, device):
 										download=True, n_samples = min(10000, args.n), 
 										device = device)
 		
+		n_samples = len(train_dataset_obj)
+		
+		train_data = train_dataset_obj[:n_samples]
+		test_data = train_dataset_obj
+		eval_data = eval_dataset_obj
 		
 		
-		# Shuffle and split
-		train_data, test_data = model_selection.train_test_split(total_dataset, train_size= 0.8, 
-			random_state = 42, shuffle = True)
+		record_id, tt, vals, mask, labels = train_data[0]
 		
+		batch_size = min(args.batch_size, args.n)
+		#train_dataloader = DataLoader(train_data, batch_size= batch_size, shuffle=False, 
+		#						collate_fn= lambda batch: variable_time_collate_fn(batch,args,device,data_type = "train"))
 		
-		train_dataloader = DataLoader(train_data, batch_size= batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn(batch, args, device, data_type = "train",
-				data_min = data_min, data_max = data_max))
-		test_dataloader = DataLoader(test_data, batch_size = n_samples, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn(batch, args, device, data_type = "test",
-				data_min = data_min, data_max = data_max))
+		train_dataloader = DataLoader(train_data, batch_size = batch_size, shuffle=True, 
+			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type = "train"))
 		
+		test_dataloader = DataLoader(test_data, batch_size = batch_size, shuffle=False, 
+			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type = "test"))
 		
+		eval_dataloader = DataLoader(eval_data, batch_size = batch_size, shuffle=False, 
+			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type = "eval"))
+		
+		data_objects = {"dataset_obj": train_dataset_obj, 
+					"train_dataloader": utils.inf_generator(train_dataloader), 
+					"test_dataloader": utils.inf_generator(test_dataloader), #attention, might be another naming convention...
+					"eval_dataloader": utils.inf_generator(test_dataloader), #attention, might be another naming convention...
+					"input_dim": vals.size(-1),
+					"n_train_batches": len(train_dataloader),
+					"n_test_batches": len(test_dataloader),
+					"n_eval_batches": len(eval_dataloader),
+					"classif_per_tp": False, # We want to classify the whole sequence!!. Standard: True, #optional
+					"n_labels": labels.size(-1)}
+
+		return data_objects
+	
+	
 	########### 1d datasets ###########
 
 	# Sampling args.timepoints time points in the interval [0, args.max_t]
