@@ -13,6 +13,7 @@ import pickle as pickle
 from tqdm import tqdm
 import numpy as np
 import h5py
+import lib.utils as utils
 
 class Crops(object):
 	
@@ -29,7 +30,6 @@ class Crops(object):
 		self.root = root
 		self.reduce = reduce
 		self.mode = mode
-		self.stored_batchsize = 100
 				
 		if download:
 			self.download()
@@ -40,7 +40,7 @@ class Crops(object):
 		if self.mode=="train":
 			data_file = self.train_file
 		elif self.mode=="eval":
-			data_file = self.evaluation_file
+			data_file = self.eval_file
 		elif self.mode=="test":
 			data_file = self.test_file
 			
@@ -52,13 +52,14 @@ class Crops(object):
 		"""
 		
 		self.hdf5dataloader = h5py.File(os.path.join(self.processed_folder, data_file), "r")
-
-		#Load one file and see how large the batchsize is
-		self.raw_batchsize = self.data[0][2].shape[0]
+		self.nsamples = self.hdf5dataloader["data"].shape[0]
 		
+		self.timestamps = h5py.File(os.path.join(self.processed_folder, self.time_file), "r")["tt"][:]
+			
+		"""
 		if n_samples is not None:
 			self.data = self.data[:n_samples]
-		
+		"""
 		
 			
 	def download(self):
@@ -81,15 +82,15 @@ class Crops(object):
 		#os.system('sha512sum -c data.sha512')
 		
 		#Processing data
-		print('Processing data...')
+		print('Scanning data...')
 		
 		#collect all the possible time stamps
 		train_localdir = os.path.join(self.raw_folder, 'data', 'train')
 		test_localdir = os.path.join(self.raw_folder, 'data', 'test')
-		evaluation_localdir = os.path.join(self.raw_folder, 'data', 'eval')
+		eval_localdir = os.path.join(self.raw_folder, 'data', 'eval')
 		first = True
 		timeC = 0
-		badweather_lables = np.array([0,1,2,3])
+		badweather_labels = np.array([0,1,2,3])
 		
 		unique_times = np.array([0])
 		for filename in os.listdir(train_localdir):
@@ -98,7 +99,7 @@ class Crops(object):
 				u.encoding = 'latin1'
 				X, Y, _ = u.load()
 				if first:
-					batchsize, maxobs, nfeatures = X.shape
+					raw_batchsize, maxobs, nfeatures = X.shape
 					_, _, nclasses = Y.shape
 					first=False
 				unique_times = np.unique(np.hstack([ X[:,:,0].ravel(), unique_times] ))
@@ -112,27 +113,57 @@ class Crops(object):
 				unique_times = np.unique(np.hstack([ X[:,:,0].ravel(), unique_times] ))
 				
 		unique_times = np.array([0])
-		for filename in os.listdir(evaluation_localdir):
-			with open(os.path.join(evaluation_localdir, filename), "rb") as f:
+		for filename in os.listdir(eval_localdir):
+			with open(os.path.join(eval_localdir, filename), "rb") as f:
 				u = pickle._Unpickler(f);
 				u.encoding = 'latin1'
 				X, _, _ = u.load()
 				unique_times = np.unique(np.hstack([ X[:,:,timeC].ravel(), unique_times] ))
 		
-		self.timstamps = unique_times
-
+		#write timestamps file
+		timestamps_hdf5 = h5py.File(os.path.join(self.processed_folder, self.time_file), 'w')
+		timestamps_hdf5.create_dataset('tt', data=unique_times)
+		
+		self.batchsize = raw_batchsize
+		
 		train_records = []
 		test_records = []
-		evaluation_records = []
+		eval_records = []
+		
+		#HDF5 style dataset
+		self.ntrainsamples = raw_batchsize*len(os.listdir(train_localdir))
+		self.ntestsamples = raw_batchsize*len(os.listdir(test_localdir))
+		self.nevalsamples = raw_batchsize*len(os.listdir(eval_localdir))
+		
+		ntargetclasses = nclasses-badweather_labels.size
+		
+		# Open a hdf5 files and create arrays
+		hdf5_file_train = h5py.File(os.path.join(self.processed_folder, self.train_file) , mode='w')
+		hdf5_file_train.create_dataset("data", (self.ntrainsamples, len(unique_times), nfeatures-1), np.float)
+		hdf5_file_train.create_dataset("mask", (self.ntrainsamples, len(unique_times), nfeatures-1), np.bool)
+		hdf5_file_train.create_dataset("labels", (self.ntrainsamples, len(unique_times), ntargetclasses), np.float)
+		
+		hdf5_file_test = h5py.File(os.path.join(self.processed_folder, self.test_file) , mode='w')
+		hdf5_file_test.create_dataset("data", (self.ntestsamples, len(unique_times), nfeatures-1), np.float)
+		hdf5_file_test.create_dataset("mask", (self.ntestsamples, len(unique_times), nfeatures-1), np.bool)
+		hdf5_file_test.create_dataset("labels", (self.ntestsamples, len(unique_times), ntargetclasses), np.float)
+		
+		hdf5_file_eval = h5py.File(os.path.join(self.processed_folder, self.eval_file) , mode='w')
+		hdf5_file_eval.create_dataset("data", (self.nevalsamples, len(unique_times), nfeatures-1), np.float)
+		hdf5_file_eval.create_dataset("mask", (self.nevalsamples, len(unique_times), nfeatures-1), np.bool)
+		hdf5_file_eval.create_dataset("labels", (self.nevalsamples, len(unique_times), ntargetclasses), np.float)
+		
+		start_ix = 0
+		stop_ix = raw_batchsize
 		
 		#Training data
 		print("Building training dataset...")
-		for filename in tqdm(os.listdir(train_localdir)): #tqdm
+		for fid, filename in enumerate(tqdm(os.listdir(train_localdir))): #tqdm
 	
 			#starting a new batch
-			X_mod = np.zeros((batchsize, maxobs, nfeatures))
-			Y_mod = np.zeros((batchsize, maxobs, nclasses))
-			mask = np.zeros((batchsize, maxobs, nfeatures),dtype=bool)
+			X_mod = np.zeros((raw_batchsize, maxobs, nfeatures))
+			Y_mod = np.zeros((raw_batchsize, maxobs, nclasses))
+			mask = np.zeros((raw_batchsize, maxobs, nfeatures),dtype=bool)
 		
 			with open(os.path.join(train_localdir, filename), "rb") as f:
 				
@@ -142,7 +173,7 @@ class Crops(object):
 				data = u.load()
 				X, Y, obslen = data
 				
-				batchsize, maxobs, nfeatures = X.shape
+				raw_batchsize, maxobs, nfeatures = X.shape
 				_, _, nclasses = Y.shape
 				times = X[:,:,timeC] #(500,26)
 				
@@ -184,24 +215,34 @@ class Crops(object):
 				# cloud/weather mask
 				# 1 is observed, 0 is not observed, due to clouds/ice/snow and stuff
 				# we mark the bad weather observations in the mask as unoberved
-				badweather_obs = np.nonzero(np.sum(Y_mod[:,:,badweather_lables], axis=2)!=0)
+				badweather_obs = np.nonzero(np.sum(Y_mod[:,:,badweather_labels], axis=2)!=0)
 				mask[badweather_obs[0], badweather_obs[1], :] = 0
 				
 				#"destroy" data, that is corrputed by bad weather. We will never use it!
-				X_mod[~mask] = None
+				#X_mod[~mask] = None
 				
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)
 				X_mask_mod = np.delete(mask, (timeC), axis=2)
 				
 				#truncate and renormalize the labels
-				Y_mod = np.delete(Y_mod, badweather_lables, axis=2)
-				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_lables.size, axis=2)
+				Y_mod = np.delete(Y_mod, badweather_labels, axis=2)
+				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_labels.size, axis=2)
 				Y_mod = np.divide(Y_mod, tot_weight, out=np.zeros_like(Y_mod), where=tot_weight!=0)
+				
+				#TODO: delete datapoints without any labels (only negative labels)???
 				
 				#get the time stamps
 				tt = unique_times
 				
+				#fill in data to hdf5 file
+				start_ix = fid*self.batchsize
+				stop_ix = (fid+1)*self.batchsize
+				hdf5_file_train["data"][start_ix:stop_ix, ...] = X_mod
+				hdf5_file_train["mask"][start_ix:stop_ix, ...] = X_mask_mod
+				hdf5_file_train["labels"][start_ix:stop_ix, ...] = Y_mod
+				
+				"""
 				batchsize = X_mod.shape[0]
 				for i in range(0,batchsize, self.stored_batchsize):
 					# convert to torch variable and append it
@@ -212,19 +253,27 @@ class Crops(object):
 								torch.from_numpy(X_mask_mod[i:i+self.stored_batchsize]),
 								torch.from_numpy(Y_mod[i:i+self.stored_batchsize])
 								))
+				"""
+				#start_ix +=raw_batchsize
+				#stop_ix +=raw_batchsize
+				
+		start_ix = 0
+		stop_ix = raw_batchsize
+		
+		
 		#save data
-		print("Saving. This can take several minutes...")
-		torch.save(train_records, os.path.join(self.processed_folder, self.train_file))
+		print("Saving...")
+		#torch.save(train_records, os.path.join(self.processed_folder, self.train_file))
 		print("Train data done!")
 		
 		#Testing data
 		print("Building testing dataset...")
-		for filename in tqdm(os.listdir(test_localdir)): #tqdm
+		for fid, filename in enumerate(tqdm(os.listdir(test_localdir))): #tqdm
 	
 			#starting a new batch
-			X_mod = np.zeros((batchsize, maxobs, nfeatures))
-			Y_mod = np.zeros((batchsize, maxobs, nclasses))
-			mask = np.zeros((batchsize, maxobs, nfeatures),dtype=bool)
+			X_mod = np.zeros((raw_batchsize, maxobs, nfeatures))
+			Y_mod = np.zeros((raw_batchsize, maxobs, nclasses))
+			mask = np.zeros((raw_batchsize, maxobs, nfeatures),dtype=bool)
 		
 			with open(os.path.join(test_localdir, filename), "rb") as f:
 				
@@ -234,7 +283,7 @@ class Crops(object):
 				data = u.load()
 				X, Y, obslen = data
 				
-				batchsize, maxobs, nfeatures = X.shape
+				raw_batchsize, maxobs, nfeatures = X.shape
 				_, _, nclasses = Y.shape
 				times = X[:,:,timeC] #(500,26)
 				
@@ -276,24 +325,34 @@ class Crops(object):
 				# cloud/weather mask
 				# 1 is observed, 0 is not observed, due to clouds/ice/snow and stuff
 				# we mark the bad weather observations in the mask as unoberved
-				badweather_obs = np.nonzero(np.sum(Y_mod[:,:,badweather_lables], axis=2)!=0)
+				badweather_obs = np.nonzero(np.sum(Y_mod[:,:,badweather_labels], axis=2)!=0)
 				mask[badweather_obs[0], badweather_obs[1], :] = 0
 				
 				#"destroy" data, that is corrputed by bad weather. We will never use it!
-				X_mod[~mask] = None
+				#X_mod[~mask] = None
 				
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)
 				X_mask_mod = np.delete(mask, (timeC), axis=2)
 				
 				#truncate and renormalize the labels
-				Y_mod = np.delete(Y_mod, badweather_lables, axis=2)
-				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_lables.size, axis=2)
+				Y_mod = np.delete(Y_mod, badweather_labels, axis=2)
+				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_labels.size, axis=2)
 				Y_mod = np.divide(Y_mod, tot_weight, out=np.zeros_like(Y_mod), where=tot_weight!=0)
+				
+				#TODO: delete datapoints without any labels (only negative labels)???
 				
 				#get the time stamps
 				tt = unique_times
 				
+				#fill in data to hdf5 file
+				start_ix = fid*self.batchsize
+				stop_ix = (fid+1)*self.batchsize
+				hdf5_file_test["data"][start_ix:stop_ix, ...] = X_mod
+				hdf5_file_test["mask"][start_ix:stop_ix, ...] = X_mask_mod
+				hdf5_file_test["labels"][start_ix:stop_ix, ...] = Y_mod
+				
+				"""
 				batchsize = X_mod.shape[0]
 				for i in range(0,batchsize, self.stored_batchsize):
 					# convert to torch variable and append it
@@ -304,10 +363,16 @@ class Crops(object):
 								torch.from_numpy(X_mask_mod[i:i+self.stored_batchsize]),
 								torch.from_numpy(Y_mod[i:i+self.stored_batchsize])
 								))
+				"""
+				start_ix +=raw_batchsize
+				stop_ix +=raw_batchsize
+				
+		start_ix = 0
+		stop_ix = raw_batchsize
 					
 		#save data
 		print("Saving...")
-		torch.save(test_records, os.path.join(self.processed_folder, self.test_file))
+		#torch.save(test_records, os.path.join(self.processed_folder, self.test_file))
 		print("Test data done!")
 		
 		
@@ -315,14 +380,14 @@ class Crops(object):
 		
 		#Evaluation data
 		print("Building evaluation dataset...")
-		for filename in tqdm(os.listdir(evaluation_localdir)): #tqdm
+		for fid, filename in enumerate(tqdm(os.listdir(eval_localdir))): #tqdm
 	
 			#starting a new batch
-			X_mod = np.zeros((batchsize, maxobs, nfeatures))
-			Y_mod = np.zeros((batchsize, maxobs, nclasses))
-			mask = np.zeros((batchsize, maxobs, nfeatures),dtype=bool)
+			X_mod = np.zeros((raw_batchsize, maxobs, nfeatures))
+			Y_mod = np.zeros((raw_batchsize, maxobs, nclasses))
+			mask = np.zeros((raw_batchsize, maxobs, nfeatures),dtype=bool)
 		
-			with open(os.path.join(evaluation_localdir, filename), "rb") as f:
+			with open(os.path.join(eval_localdir, filename), "rb") as f:
 				
 				#Unpacking procedure with pickels
 				u = pickle._Unpickler(f);
@@ -330,7 +395,7 @@ class Crops(object):
 				data = u.load()
 				X, Y, obslen = data
 				
-				batchsize, maxobs, nfeatures = X.shape
+				raw_batchsize, maxobs, nfeatures = X.shape
 				_, _, nclasses = Y.shape
 				times = X[:,:,timeC] #(500,26)
 				
@@ -372,43 +437,60 @@ class Crops(object):
 				# cloud/weather mask
 				# 1 is observed, 0 is not observed, due to clouds/ice/snow and stuff
 				# we mark the bad weather observations in the mask as unoberved
-				badweather_obs = np.nonzero(np.sum(Y_mod[:,:,badweather_lables], axis=2)!=0)
+				badweather_obs = np.nonzero(np.sum(Y_mod[:,:,badweather_labels], axis=2)!=0)
 				mask[badweather_obs[0], badweather_obs[1], :] = 0
 				
 				#"destroy" data, that is corrputed by bad weather. We will never use it!
-				X_mod[~mask] = None
+				#X_mod[~mask] = None
 				
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)
 				X_mask_mod = np.delete(mask, (timeC), axis=2)
 				
 				#truncate and renormalize the labels
-				Y_mod = np.delete(Y_mod, badweather_lables, axis=2)
-				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_lables.size, axis=2)
+				Y_mod = np.delete(Y_mod, badweather_labels, axis=2)
+				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_labels.size, axis=2)
 				Y_mod = np.divide(Y_mod, tot_weight, out=np.zeros_like(Y_mod), where=tot_weight!=0)
+				
+				#TODO: delete datapoints without any labels (only negative labels)???
 				
 				#get the time stamps
 				tt = unique_times
 				
+				#fill in data to hdf5 file
+				start_ix = fid*self.batchsize
+				stop_ix = (fid+1)*self.batchsize
+				hdf5_file_eval["data"][start_ix:stop_ix, ...] = X_mod
+				hdf5_file_eval["mask"][start_ix:stop_ix, ...] = X_mask_mod
+				hdf5_file_eval["labels"][start_ix:stop_ix, ...] = Y_mod
+				
+				"""
 				batchsize = X_mod.shape[0]
 				for i in range(0,batchsize, self.stored_batchsize):
 					# convert to torch variable and append itappend it
-					evaluation_records.append((
+					eval_records.append((
 								filename + "_" + str(i),
 								torch.from_numpy(tt),
 								torch.from_numpy(X_mod[i:i+self.stored_batchsize]),
 								torch.from_numpy(X_mask_mod[i:i+self.stored_batchsize]),
 								torch.from_numpy(Y_mod[i:i+self.stored_batchsize])
 								))
-					
-		
+				"""
+				start_ix +=raw_batchsize
+				stop_ix +=raw_batchsize
+				
+		start_ix = 0
+		stop_ix = raw_batchsize
 		#save data
 		print("Saving...")
-		torch.save(evaluation_records, os.path.join(self.processed_folder, self.evaluation_file))
+		#torch.save(eval_records, os.path.join(self.processed_folder, self.eval_file))
 		print("Evaluation data done!")
 		
-		#self.nfeatures = nfeatures
-		self.nclasses = nclasses
+		
+		hdf5_file_train.close()
+		hdf5_file_test.close()
+		hdf5_file_eval.close()
+		
 	
 	def _check_exists(self):
 		exist_train = os.path.exists(
@@ -418,10 +500,13 @@ class Crops(object):
 				os.path.join(self.processed_folder, self.test_file)
 				 )
 		exist_eval = os.path.exists(
-				os.path.join(self.processed_folder, self.train_file)
+				os.path.join(self.processed_folder, self.eval_file)
+				 )
+		exist_time = os.path.exists(
+				os.path.join(self.processed_folder, self.time_file)
 				 )
 		
-		if not (exist_train and exist_test and exist_eval):
+		if not (exist_train and exist_test and exist_eval and exist_time):
 			return False
 		return True
 	
@@ -434,8 +519,8 @@ class Crops(object):
 		return os.path.join(self.root, self.__class__.__name__, 'processed')
 	
 	@property
-	def data_file(self):
-		return 'data.pt'
+	def time_file(self):
+		return 'time.hdf5'
 	
 	@property
 	def train_file(self):
@@ -446,16 +531,48 @@ class Crops(object):
 		return 'test.hdf5'
 	
 	@property
-	def evaluation_file(self):
-		return 'evaluation.hdf5'
+	def eval_file(self):
+		return 'eval.hdf5'
 	
 	def __getitem__(self, index):
-		#TODO: should accept indices and should output the datasamples, as read from disk
-		return self.hdf5dataloader[index]
+		
+		list_format = True # must agree with variable_time_collate_fn_crop
+		print(index)
+		#should accept indices and should output the datasamples, as read from disk
+		if isinstance(index, slice):
+			# do your handling for a slice object:
+			output = []
+			start = 0 if index.start is None else index.start
+			step = 1 if index.start is None else index.step
+			
+			#TODO: replace the for loop to increase performance
+			#maybe change to tensor format and than also adjust the
+			
+			if list_format: #list format as the other datasets
+				for i in range(start,index.stop,step):
+					data = torch.from_numpy( self.hdf5dataloader["data"][i] )
+					time_stamps = torch.from_numpy( self.timestamps )
+					mask = torch.from_numpy(  self.hdf5dataloader["mask"][i] )
+					labels = torch.from_numpy( self.hdf5dataloader["labels"][i] ) 
+					output.append((data, time_stamps, mask, labels))
+				return output
+			else: #tensor_format (more efficient), must agree with variable_time_collate_fn_crop
+				raise Exception('Tensorformat not implemented yet!')
+				data = torch.from_numpy( self.hdf5dataloader["data"][start:index.stop:step] )
+				time_stamps = torch.from_numpy( self.timestamps )
+				mask = torch.from_numpy(  self.hdf5dataloader["mask"][start:index.stop:step] )
+				labels = torch.from_numpy( self.hdf5dataloader["labels"][start:index.stop:step] )
+				return (data, time_stamps, mask, labels)
+		else:
+            # Do your handling for a plain index
+			data = torch.from_numpy( self.hdf5dataloader["data"][index] )
+			time_stamps = torch.from_numpy( self.timestamps )
+			mask = torch.from_numpy( self.hdf5dataloader["mask"][index] )
+			labels = torch.from_numpy( self.hdf5dataloader["labels"][index] )
+			return (data, time_stamps, mask, labels)
 
 	def __len__(self):
-		# TODO: should output the number of samples
-		return len(self.data*self.stored_batchsize)
+		return self.hdf5dataloader["data"].shape[0]
 
 	def __repr__(self):
 		fmt_str = 'Dataset ' + self.__class__.__name__ + '\n'
@@ -466,9 +583,63 @@ class Crops(object):
 	
 	
 	
-def variable_time_collate_fn_crop(batch, args, device = torch.device("cpu"), data_type="train"):
+def variable_time_collate_fn_crop(batch, args, device = torch.device("cpu"), data_type="train", 
+	data_min = None, data_max = None):
 	#TODO
-	return None
+	"""
+	Returns:
+		combined_tt: The union of all time observations.
+		combined_vals: (M, T, D) tensor containing the observed values.
+		combined_mask: (M, T, D) tensor containing 1 where values were observed and 0 otherwise.
+	"""
+	list_format = True #must agree with the __getitem__ function
+	
+	
+	if list_format: #list format as the other datasets
+		
+		data, tt, mask, labels = batch[0]
+		nfeatures = data.shape[1]
+		N_labels = labels.shape[1]
+		
+		combined_vals = torch.zeros([len(batch), len(tt), nfeatures]).to(device)
+		combined_mask = torch.zeros([len(batch), len(tt), nfeatures]).to(device)
+		
+		combined_labels = (torch.zeros([len(batch), len(tt), N_labels])+ torch.tensor(float('nan'))).to(device)
+		#combined_labels = (torch.zeros(len(batch), N_labels) + torch.tensor(float('nan'))).to(device = device)
+		
+		for b, (data, tt, mask, labels) in enumerate(batch):
+			tt = tt.to(device)
+			data = data.to(device)
+			mask = mask.to(device)
+			labels = labels.to(device)
+			
+			combined_vals[b] = data
+			combined_mask[b] = mask
+			
+			combined_labels[b] = labels
+		combined_tt = tt
+		
+	else: #tensor_format (more efficient), must agree with the __getitem__ function
+		#TODO: Tensorformat
+		raise Exception('Tensorformat not implemented yet!')
+		data, tt, mask, labels = batch
+		
+		combined_tt = tt.to(device)
+		combined_vals = data.to(device)
+		combined_mask = mask.to(device)
+		combined_labels = labels.to(device)
+	#combined_vals, _, _ = utils.normalize_masked_data(combined_vals, combined_mask, 
+	#		att_min = data_min, att_max = data_max)
+	
+	data_dict = {
+		"data": combined_vals, 
+		"time_steps": combined_tt,
+		"mask": combined_mask,
+		"labels": combined_labels}
+
+	data_dict = utils.split_and_subsample_batch(data_dict, args, data_type = data_type)
+	
+	return data_dict
 
 
 

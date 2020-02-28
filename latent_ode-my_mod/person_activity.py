@@ -278,7 +278,9 @@ def variable_time_collate_fn_activity(batch, args, device = torch.device("cpu"),
 		combined_vals[b, indices] = vals
 		combined_mask[b, indices] = mask
 		combined_labels[b, indices] = labels
-
+		
+		#test = combined_labels[b].cpu().numpy()
+		
 	combined_tt = combined_tt.float()
 
 	if torch.max(combined_tt) != 0.:

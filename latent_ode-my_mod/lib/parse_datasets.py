@@ -113,7 +113,8 @@ def parse_datasets(args, device):
 
 		# Combine and shuffle samples from physionet Train and physionet Test
 		total_dataset = train_dataset_obj[:len(train_dataset_obj)]
-
+		
+		
 		if not args.classif:
 			# Concatenate samples from original Train and Test sets
 			# Only 'training' physionet samples are have labels. Therefore, if we do classifiction task, we don't need physionet 'test' samples.
@@ -188,7 +189,6 @@ def parse_datasets(args, device):
 
 		return data_objects
 		
-    
     ##################################################################
 	# Crop Classification
     
@@ -198,28 +198,37 @@ def parse_datasets(args, device):
 		
 		
 		train_dataset_obj = Crops('data/Crops', mode="train", 
-										download=True, n_samples = min(10000, args.n), 
+										download=True,
 										device = device)
 		# Use custom collate_fn to combine samples with arbitrary time observations.
 		# Returns the dataset along with mask and time steps
 		test_dataset_obj = Crops('data/Crops', mode="test", 
-										download=True, n_samples = min(10000, args.n), 
+										download=True,
 										device = device)
 		
 		eval_dataset_obj = Crops('data/Crops', mode="eval", 
 										download=True, n_samples = min(10000, args.n), 
 										device = device)
 		
-		n_samples = len(train_dataset_obj)
-		
-		train_data = train_dataset_obj[:n_samples]
-		test_data = train_dataset_obj
-		eval_data = eval_dataset_obj
+		n_samples = min(args.n, len(train_dataset_obj))
+		n_eval_samples = min(1000, len(eval_dataset_obj))
 		
 		
-		record_id, tt, vals, mask, labels = train_data[0]
+		#should I read the data into memory. takes about 4 minutes for the whole dataset!
+		read_to_mem = False
+		if read_to_mem:
+			train_data = train_dataset_obj[:n_samples]
+		else:
+			train_data = train_dataset_obj
+		test_data = test_dataset_obj[:len(test_dataset_obj)]
+		eval_data = eval_dataset_obj[:n_eval_samples]
+		
+		
+		tt, vals, mask, labels = train_dataset_obj[0]
+		
 		
 		batch_size = min(args.batch_size, args.n)
+		
 		#train_dataloader = DataLoader(train_data, batch_size= batch_size, shuffle=False, 
 		#						collate_fn= lambda batch: variable_time_collate_fn(batch,args,device,data_type = "train"))
 		
@@ -235,7 +244,7 @@ def parse_datasets(args, device):
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
 					"test_dataloader": utils.inf_generator(test_dataloader), #attention, might be another naming convention...
-					"eval_dataloader": utils.inf_generator(test_dataloader), #attention, might be another naming convention...
+					"eval_dataloader": utils.inf_generator(eval_dataloader), #attention, might be another naming convention...
 					"input_dim": vals.size(-1),
 					"n_train_batches": len(train_dataloader),
 					"n_test_batches": len(test_dataloader),
