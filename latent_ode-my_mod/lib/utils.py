@@ -242,6 +242,9 @@ def get_next_batch(dataloader):
 
 	if ("labels" in data_dict) and (data_dict["labels"] is not None):
 		batch_dict["labels"] = data_dict["labels"]
+		
+		#Nando's Modification below: why don't we cut the labels as well?
+		batch_dict["labels"] = data_dict["labels"][:, non_missing_tp]
 
 	batch_dict["mode"] = data_dict["mode"]
 	return batch_dict
@@ -608,6 +611,12 @@ def compute_loss_all_batches(model,
 			total["accuracy"] = sk.metrics.accuracy_score(
 					class_labels.cpu().numpy(), 
 					pred_class_id.cpu().numpy())
+		if args.dataset == "crop":
+			#TODO: to implement
+			
+			raise Exception("Crop classification will be implemented soon...")
+			
+			
 	return total
 
 def check_mask(data, mask):

@@ -39,13 +39,12 @@ from lib.utils import compute_loss_all_batches
 # Nando's additional libraries
 from tqdm import tqdm
 
-
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=4000, help="Size of the dataset")
-parser.add_argument('--niters', type=int, default=200) # default=300
+parser.add_argument('--niters', type=int, default=2) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
-parser.add_argument('-b', '--batch-size', type=int, default=50)
+parser.add_argument('-b', '--batch-size', type=int, default=1)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
 
 parser.add_argument('--save', type=str, default='experiments/', help="Path for save checkpoints")
@@ -78,7 +77,7 @@ parser.add_argument('--rec-layers', type=int, default=4, help="Number of layers 
 parser.add_argument('--gen-layers', type=int, default=2, help="Number of layers in ODE func in generative ODE")
 
 parser.add_argument('-u', '--units', type=int, default=500, help="Number of units per layer in ODE func")
-parser.add_argument('-g', '--gru-units', type=int, default=50, help="Number of units per layer in each of GRU update networks")
+parser.add_argument('-g', '--gru-units', type=int, default=69, help="Number of units per layer in each of GRU update networks")
 
 parser.add_argument('--poisson', action='store_true', help="Model poisson-process likelihood for the density of events in addition to reconstruction.")
 parser.add_argument('--classif', default="True", action='store_true', help="Include binary classification loss -- used for Physionet dataset for hospiral mortality")
@@ -264,12 +263,14 @@ if __name__ == '__main__':
 			kl_coef = (1-0.99** (itr // num_batches - wait_until_kl_inc))
 
 		batch_dict = utils.get_next_batch(data_obj["train_dataloader"])
+		if itr==477:
+			print("here")
 		train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
 		train_res["loss"].backward()
 		optimizer.step()
 
-		n_iters_to_viz = 1
-		if itr % (n_iters_to_viz * num_batches) == 0:
+		n_iters_to_viz = 0.001
+		if itr % round(n_iters_to_viz * num_batches+1) == 0:
 			with torch.no_grad():
 
 				test_res = compute_loss_all_batches(model, 

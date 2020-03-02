@@ -195,51 +195,52 @@ def parse_datasets(args, device):
     #if dataset_name == "crops":
 	if dataset_name == "crop": #TODO!!!
 		#raise Exception("Crop dataset not implemented yet")
-		
+		list_form = True
 		
 		train_dataset_obj = Crops('data/Crops', mode="train", 
 										download=True,
-										device = device)
+										device = device, list_form = list_form)
 		# Use custom collate_fn to combine samples with arbitrary time observations.
 		# Returns the dataset along with mask and time steps
 		test_dataset_obj = Crops('data/Crops', mode="test", 
 										download=True,
-										device = device)
+										device = device, list_form = list_form)
 		
 		eval_dataset_obj = Crops('data/Crops', mode="eval", 
-										download=True, n_samples = min(10000, args.n), 
-										device = device)
+										download=True,
+										device = device,  list_form = list_form)
+		
+		print(train_dataset_obj)
 		
 		n_samples = min(args.n, len(train_dataset_obj))
 		n_eval_samples = min(1000, len(eval_dataset_obj))
 		
-		
-		#should I read the data into memory. takes about 4 minutes for the whole dataset!
-		read_to_mem = False
+		#should I read the data into memory? takes about 4 minutes for the whole dataset!
+		#not recommended for debugging with large datasets, so better set it to false
+		read_to_mem = True 
 		if read_to_mem:
 			train_data = train_dataset_obj[:n_samples]
 		else:
 			train_data = train_dataset_obj
+			
 		test_data = test_dataset_obj[:len(test_dataset_obj)]
 		eval_data = eval_dataset_obj[:n_eval_samples]
 		
-		
-		tt, vals, mask, labels = train_dataset_obj[0]
-		
+		vals, tt, mask, labels = train_dataset_obj[0]
 		
 		batch_size = min(args.batch_size, args.n)
 		
 		#train_dataloader = DataLoader(train_data, batch_size= batch_size, shuffle=False, 
 		#						collate_fn= lambda batch: variable_time_collate_fn(batch,args,device,data_type = "train"))
 		
-		train_dataloader = DataLoader(train_data, batch_size = batch_size, shuffle=True, 
-			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type = "train"))
+		train_dataloader = DataLoader(train_data, batch_size = batch_size, shuffle=False, 
+			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="train", list_form=list_form))
 		
 		test_dataloader = DataLoader(test_data, batch_size = batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type = "test"))
+			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="test", list_form=list_form))
 		
 		eval_dataloader = DataLoader(eval_data, batch_size = batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type = "eval"))
+			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="eval", list_form=list_form))
 		
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
@@ -249,7 +250,7 @@ def parse_datasets(args, device):
 					"n_train_batches": len(train_dataloader),
 					"n_test_batches": len(test_dataloader),
 					"n_eval_batches": len(eval_dataloader),
-					"classif_per_tp": False, # We want to classify the whole sequence!!. Standard: True, #optional
+					"classif_per_tp": True, # We want to classify the whole sequence!!. Standard: True, #optional
 					"n_labels": labels.size(-1)}
 
 		return data_objects

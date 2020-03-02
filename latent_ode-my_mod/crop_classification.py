@@ -25,8 +25,9 @@ class Crops(object):
 	
 	def __init__(self, root, download=False,
 		reduce='average', mode='train', minseqlength=20,
-		n_samples = None, device = torch.device("cpu")):
+		n_samples = None, device = torch.device("cpu"), list_form = True):
 		
+		self.list_form = list_form
 		self.root = root
 		self.reduce = reduce
 		self.mode = mode
@@ -93,7 +94,7 @@ class Crops(object):
 		badweather_labels = np.array([0,1,2,3])
 		
 		unique_times = np.array([0])
-		for filename in os.listdir(train_localdir):
+		for filename in (os.listdir(train_localdir)):
 			with open(os.path.join(train_localdir, filename), "rb") as f:
 				u = pickle._Unpickler(f);
 				u.encoding = 'latin1'
@@ -105,7 +106,7 @@ class Crops(object):
 				unique_times = np.unique(np.hstack([ X[:,:,0].ravel(), unique_times] ))
 		
 		unique_times = np.array([0])
-		for filename in os.listdir(test_localdir):
+		for filename in (os.listdir(test_localdir)):
 			with open(os.path.join(test_localdir, filename), "rb") as f:
 				u = pickle._Unpickler(f);
 				u.encoding = 'latin1'
@@ -113,7 +114,7 @@ class Crops(object):
 				unique_times = np.unique(np.hstack([ X[:,:,0].ravel(), unique_times] ))
 				
 		unique_times = np.array([0])
-		for filename in os.listdir(eval_localdir):
+		for filename in (os.listdir(eval_localdir)):
 			with open(os.path.join(eval_localdir, filename), "rb") as f:
 				u = pickle._Unpickler(f);
 				u.encoding = 'latin1'
@@ -124,40 +125,276 @@ class Crops(object):
 		timestamps_hdf5 = h5py.File(os.path.join(self.processed_folder, self.time_file), 'w')
 		timestamps_hdf5.create_dataset('tt', data=unique_times)
 		
-		self.batchsize = raw_batchsize
-		
-		train_records = []
-		test_records = []
-		eval_records = []
+		trainbatchsizes = []
 		
 		#HDF5 style dataset
-		self.ntrainsamples = raw_batchsize*len(os.listdir(train_localdir))
-		self.ntestsamples = raw_batchsize*len(os.listdir(test_localdir))
-		self.nevalsamples = raw_batchsize*len(os.listdir(eval_localdir))
+		#adjust the numbers! Or just resize in the end...
+		
+		print('Scanning Training data...')
+		for filename in tqdm(os.listdir(train_localdir)):
+			
+			#starting a new batch
+			Y_mod = np.zeros((raw_batchsize, maxobs, nclasses))
+			mask = np.zeros((raw_batchsize, maxobs, nfeatures),dtype=bool)
+		
+			with open(os.path.join(train_localdir, filename), "rb") as f:
+				
+				#Unpacking procedure with pickels
+				u = pickle._Unpickler(f);
+				u.encoding = 'latin1'
+				data = u.load()
+				X, Y, obslen = data
+				
+				raw_batchsize, maxobs, nfeatures = X.shape
+				_, _, nclasses = Y.shape
+				times = X[:,:,timeC] #(500,26)
+				
+				#get the time ordering of time
+				for ind, t in enumerate(unique_times):
+					ind = ind
+					if abs(t-1)<0.0001:
+						#correct for the offset thing, where the first measurement is in the last year
+						ind0=0
+						
+						#Indices of corresponding times
+						sampleind = np.nonzero(times==t)[0]
+						timeind = np.nonzero(times==t)[1]
+						
+						#place at correct position
+						Y_mod[sampleind, ind0, :] = Y[sampleind, timeind, :]
+						
+						#mark as observed in mask
+						mask[sampleind, 0, :] = True
+						
+					elif abs(t)<0.0001: #no data => do nothing
+						#print("was a 0")
+						pass
+					else:
+						
+						#Indices of corresponding times
+						sampleind = np.nonzero(times==t)[0]
+						timeind = np.nonzero(times==t)[1]
+						
+						#place at correct position
+						Y_mod[sampleind, ind, :] = Y[sampleind, timeind, :]
+						
+						#mark as observed in mask
+						mask[sampleind, ind, :] = True
+						
+				# cloud/weather mask
+				# 1 is observed, 0 is not observed, due to clouds/ice/snow and stuff
+				# we mark the bad weather observations in the mask as unoberved
+				badweather_obs = np.nonzero(np.sum(Y_mod[:,:,badweather_labels], axis=2)!=0)
+				mask[badweather_obs[0], badweather_obs[1], :] = 0
+				
+				#Truncate the timestamp-column (timeC) from the features and mask
+				X_mask_mod = np.delete(mask, (timeC), axis=2)
+				
+				#truncate and renormalize the labels
+				Y_mod = np.delete(Y_mod, badweather_labels, axis=2)
+				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_labels.size, axis=2)
+				Y_mod = np.divide(Y_mod, tot_weight, out=np.zeros_like(Y_mod), where=tot_weight!=0)
+				
+				#delete datapoints without any labels 
+				#check that "mask" argument indeed contains a mask for data
+				# we also need more than one point in time, because we integrate
+				unobserved_datapt = np.where((np.sum(X_mask_mod==1., axis=(1,2)) == 0.)) #no data
+				no_labels = np.where((np.sum(Y_mod, axis=(1,2)) == 0.)) #no labels
+				too_few_obs_tp = np.where(np.sum(np.sum(X_mask_mod==1.,2)!=0, 1)<2)
+				
+				samples_to_delete = np.unique(np.hstack([ unobserved_datapt, no_labels, too_few_obs_tp] ))
+				
+				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
+				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
+				
+				trainbatchsizes.append(Y_mod.shape[0])
+		ntrainsamples =sum(trainbatchsizes)
+		testbatchsizes = []
+		
+		print('Scanning Testing data...')
+		for filename in tqdm(os.listdir(test_localdir)):
+			
+			#starting a new batch
+			X_mod = np.zeros((raw_batchsize, maxobs, nfeatures))
+			Y_mod = np.zeros((raw_batchsize, maxobs, nclasses))
+			mask = np.zeros((raw_batchsize, maxobs, nfeatures),dtype=bool)
+			
+			with open(os.path.join(test_localdir, filename), "rb") as f:
+				#Unpacking procedure with pickels
+				u = pickle._Unpickler(f);
+				u.encoding = 'latin1'
+				data = u.load()
+				X, Y, obslen = data
+				
+				raw_batchsize, maxobs, nfeatures = X.shape
+				_, _, nclasses = Y.shape
+				times = X[:,:,timeC] #(500,26)
+				
+				#get the time ordering of time
+				for ind, t in enumerate(unique_times):
+					ind = ind
+					if abs(t-1)<0.0001:
+						#correct for the offset thing, where the first measurement is in the last year
+						ind0=0
+						
+						#Indices of corresponding times
+						sampleind = np.nonzero(times==t)[0]
+						timeind = np.nonzero(times==t)[1]
+						
+						#place at correct position
+						Y_mod[sampleind, ind0, :] = Y[sampleind, timeind, :]
+						
+						#mark as observed in mask
+						mask[sampleind, 0, :] = True
+						
+					elif abs(t)<0.0001: #no data => do nothing
+						#print("was a 0")
+						pass
+					else:
+						
+						#Indices of corresponding times
+						sampleind = np.nonzero(times==t)[0]
+						timeind = np.nonzero(times==t)[1]
+						
+						#place at correct position
+						Y_mod[sampleind, ind, :] = Y[sampleind, timeind, :]
+						
+						#mark as observed in mask
+						mask[sampleind, ind, :] = True
+						
+				# cloud/weather mask
+				# 1 is observed, 0 is not observed, due to clouds/ice/snow and stuff
+				# we mark the bad weather observations in the mask as unoberved
+				badweather_obs = np.nonzero(np.sum(Y_mod[:,:,badweather_labels], axis=2)!=0)
+				mask[badweather_obs[0], badweather_obs[1], :] = 0
+				
+				#Truncate the timestamp-column (timeC) from the features and mask
+				X_mask_mod = np.delete(mask, (timeC), axis=2)
+				
+				#truncate and renormalize the labels
+				Y_mod = np.delete(Y_mod, badweather_labels, axis=2)
+				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_labels.size, axis=2)
+				Y_mod = np.divide(Y_mod, tot_weight, out=np.zeros_like(Y_mod), where=tot_weight!=0)
+				
+				#delete datapoints without any labels 
+				#check that "mask" argument indeed contains a mask for data
+				unobserved_datapt = np.where((np.sum(X_mask_mod==1., axis=(1,2)) == 0.)) #no data
+				no_labels = np.where((np.sum(Y_mod, axis=(1,2)) == 0.)) #no labels
+				too_few_obs_tp = np.where(np.sum(np.sum(X_mask_mod==1.,2)!=0, 1)<2)
+				
+				samples_to_delete = np.unique(np.hstack([ unobserved_datapt, no_labels, too_few_obs_tp] ))
+				
+				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
+				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
+				
+				testbatchsizes.append(Y_mod.shape[0])
+		ntestsamples =sum(testbatchsizes)
+		evalbatchsizes = []
+				
+		
+		print('Scanning Evaluation data...')
+		for filename in tqdm(os.listdir(eval_localdir)):
+			
+			#starting a new batch
+			Y_mod = np.zeros((raw_batchsize, maxobs, nclasses))
+			mask = np.zeros((raw_batchsize, maxobs, nfeatures),dtype=bool)
+			
+			with open(os.path.join(eval_localdir, filename), "rb") as f:
+				#Unpacking procedure with pickels
+				u = pickle._Unpickler(f);
+				u.encoding = 'latin1'
+				data = u.load()
+				X, Y, obslen = data
+				
+				raw_batchsize, maxobs, nfeatures = X.shape
+				_, _, nclasses = Y.shape
+				times = X[:,:,timeC] #(500,26)
+				
+				#get the time ordering of time
+				for ind, t in enumerate(unique_times):
+					ind = ind
+					if abs(t-1)<0.0001:
+						#correct for the offset thing, where the first measurement is in the last year
+						ind0=0
+						
+						#Indices of corresponding times
+						sampleind = np.nonzero(times==t)[0]
+						timeind = np.nonzero(times==t)[1]
+						
+						#place at correct position
+						Y_mod[sampleind, ind0, :] = Y[sampleind, timeind, :]
+						
+						#mark as observed in mask
+						mask[sampleind, 0, :] = True
+						
+					elif abs(t)<0.0001: #no data => do nothing
+						#print("was a 0")
+						pass
+					else:
+						
+						#Indices of corresponding times
+						sampleind = np.nonzero(times==t)[0]
+						timeind = np.nonzero(times==t)[1]
+						
+						#place at correct position
+						Y_mod[sampleind, ind, :] = Y[sampleind, timeind, :]
+						
+						#mark as observed in mask
+						mask[sampleind, ind, :] = True
+						
+				# cloud/weather mask
+				# 1 is observed, 0 is not observed, due to clouds/ice/snow and stuff
+				# we mark the bad weather observations in the mask as unoberved
+				badweather_obs = np.nonzero(np.sum(Y_mod[:,:,badweather_labels], axis=2)!=0)
+				mask[badweather_obs[0], badweather_obs[1], :] = 0
+				
+				#Truncate the timestamp-column (timeC) from the features and mask
+				X_mask_mod = np.delete(mask, (timeC), axis=2)
+				
+				#truncate and renormalize the labels
+				Y_mod = np.delete(Y_mod, badweather_labels, axis=2)
+				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_labels.size, axis=2)
+				Y_mod = np.divide(Y_mod, tot_weight, out=np.zeros_like(Y_mod), where=tot_weight!=0)
+				
+				#delete datapoints without any labels 
+				#check that "mask" argument indeed contains a mask for data
+				unobserved_datapt = np.where((np.sum(X_mask_mod==1., axis=(1,2)) == 0.)) #no data
+				no_labels = np.where((np.sum(Y_mod, axis=(1,2)) == 0.)) #no labels
+				too_few_obs_tp = np.where(np.sum(np.sum(X_mask_mod==1.,2)!=0, 1)<2)
+				
+				samples_to_delete = np.unique(np.hstack([ unobserved_datapt, no_labels, too_few_obs_tp] ))
+				
+				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
+				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
+				
+				evalbatchsizes.append(Y_mod.shape[0])
+		nevalsamples =sum(evalbatchsizes)
+		batchsizes = []
 		
 		ntargetclasses = nclasses-badweather_labels.size
 		
 		# Open a hdf5 files and create arrays
 		hdf5_file_train = h5py.File(os.path.join(self.processed_folder, self.train_file) , mode='w')
-		hdf5_file_train.create_dataset("data", (self.ntrainsamples, len(unique_times), nfeatures-1), np.float)
-		hdf5_file_train.create_dataset("mask", (self.ntrainsamples, len(unique_times), nfeatures-1), np.bool)
-		hdf5_file_train.create_dataset("labels", (self.ntrainsamples, len(unique_times), ntargetclasses), np.float)
+		hdf5_file_train.create_dataset("data", (ntrainsamples, len(unique_times), nfeatures-1), np.float)
+		hdf5_file_train.create_dataset("mask", (ntrainsamples, len(unique_times), nfeatures-1), np.bool)
+		hdf5_file_train.create_dataset("labels", (ntrainsamples, len(unique_times), ntargetclasses), np.float)
 		
 		hdf5_file_test = h5py.File(os.path.join(self.processed_folder, self.test_file) , mode='w')
-		hdf5_file_test.create_dataset("data", (self.ntestsamples, len(unique_times), nfeatures-1), np.float)
-		hdf5_file_test.create_dataset("mask", (self.ntestsamples, len(unique_times), nfeatures-1), np.bool)
-		hdf5_file_test.create_dataset("labels", (self.ntestsamples, len(unique_times), ntargetclasses), np.float)
+		hdf5_file_test.create_dataset("data", (ntestsamples, len(unique_times), nfeatures-1), np.float)
+		hdf5_file_test.create_dataset("mask", (ntestsamples, len(unique_times), nfeatures-1), np.bool)
+		hdf5_file_test.create_dataset("labels", (ntestsamples, len(unique_times), ntargetclasses), np.float)
 		
 		hdf5_file_eval = h5py.File(os.path.join(self.processed_folder, self.eval_file) , mode='w')
-		hdf5_file_eval.create_dataset("data", (self.nevalsamples, len(unique_times), nfeatures-1), np.float)
-		hdf5_file_eval.create_dataset("mask", (self.nevalsamples, len(unique_times), nfeatures-1), np.bool)
-		hdf5_file_eval.create_dataset("labels", (self.nevalsamples, len(unique_times), ntargetclasses), np.float)
+		hdf5_file_eval.create_dataset("data", (nevalsamples, len(unique_times), nfeatures-1), np.float)
+		hdf5_file_eval.create_dataset("mask", (nevalsamples, len(unique_times), nfeatures-1), np.bool)
+		hdf5_file_eval.create_dataset("labels", (nevalsamples, len(unique_times), ntargetclasses), np.float)
 		
-		start_ix = 0
-		stop_ix = raw_batchsize
+		observed = 0
+		missing = 0
 		
 		#Training data
 		print("Building training dataset...")
+		first_batch = True
 		for fid, filename in enumerate(tqdm(os.listdir(train_localdir))): #tqdm
 	
 			#starting a new batch
@@ -219,7 +456,7 @@ class Crops(object):
 				mask[badweather_obs[0], badweather_obs[1], :] = 0
 				
 				#"destroy" data, that is corrputed by bad weather. We will never use it!
-				#X_mod[~mask] = None
+				X_mod[~mask] = 0
 				
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)
@@ -230,44 +467,46 @@ class Crops(object):
 				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_labels.size, axis=2)
 				Y_mod = np.divide(Y_mod, tot_weight, out=np.zeros_like(Y_mod), where=tot_weight!=0)
 				
-				#TODO: delete datapoints without any labels (only negative labels)???
+				#delete datapoints without any labels 
+				#check that "mask" argument indeed contains a mask for data
+				unobserved_datapt = np.where((np.sum(X_mask_mod==1., axis=(1,2)) == 0.)) #no data
+				no_labels = np.where((np.sum(Y_mod, axis=(1,2)) == 0.)) #no labels
+				too_few_obs_tp = np.where(np.sum(np.sum(X_mask_mod==1.,2)!=0, 1)<2)
 				
+				samples_to_delete = np.unique(np.hstack([ unobserved_datapt, no_labels, too_few_obs_tp] ))
+				
+				X_mod = np.delete(X_mod, (samples_to_delete), axis=0)
+				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
+				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
+				
+				#for statistics
+				missing += np.sum(mask == 0.)
+				observed += np.sum(mask == 1.)
+				
+				valid_batchsize = X_mod.shape[0]
+	
 				#get the time stamps
 				tt = unique_times
 				
+				if first_batch:
+					start_ix = 0
+					stop_ix = valid_batchsize
+					first_batch = False
+				else:
+					start_ix = stop_ix
+					stop_ix += valid_batchsize
+					
 				#fill in data to hdf5 file
-				start_ix = fid*self.batchsize
-				stop_ix = (fid+1)*self.batchsize
 				hdf5_file_train["data"][start_ix:stop_ix, ...] = X_mod
 				hdf5_file_train["mask"][start_ix:stop_ix, ...] = X_mask_mod
 				hdf5_file_train["labels"][start_ix:stop_ix, ...] = Y_mod
 				
-				"""
-				batchsize = X_mod.shape[0]
-				for i in range(0,batchsize, self.stored_batchsize):
-					# convert to torch variable and append it
-					train_records.append((
-								filename + "_" + str(i),
-								torch.from_numpy(tt),
-								torch.from_numpy(X_mod[i:i+self.stored_batchsize]),
-								torch.from_numpy(X_mask_mod[i:i+self.stored_batchsize]),
-								torch.from_numpy(Y_mod[i:i+self.stored_batchsize])
-								))
-				"""
-				#start_ix +=raw_batchsize
-				#stop_ix +=raw_batchsize
 				
-		start_ix = 0
-		stop_ix = raw_batchsize
 		
-		
-		#save data
-		print("Saving...")
-		#torch.save(train_records, os.path.join(self.processed_folder, self.train_file))
-		print("Train data done!")
 		
 		#Testing data
 		print("Building testing dataset...")
+		first_batch = True
 		for fid, filename in enumerate(tqdm(os.listdir(test_localdir))): #tqdm
 	
 			#starting a new batch
@@ -300,7 +539,7 @@ class Crops(object):
 						
 						#place at correct position
 						X_mod[sampleind, ind0, :] = X[sampleind, timeind, :]
-						X_mod[sampleind, ind0, timeC] = 0 #set to zero
+						X_mod[sampleind, ind0, timeC] = 0 #set to zero, last day of previous year
 						Y_mod[sampleind, ind0, :] = Y[sampleind, timeind, :]
 						
 						#mark as observed in mask
@@ -329,7 +568,8 @@ class Crops(object):
 				mask[badweather_obs[0], badweather_obs[1], :] = 0
 				
 				#"destroy" data, that is corrputed by bad weather. We will never use it!
-				#X_mod[~mask] = None
+				# "all masked out elements should be zeros"
+				X_mod[~mask] = 0
 				
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)
@@ -340,46 +580,47 @@ class Crops(object):
 				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_labels.size, axis=2)
 				Y_mod = np.divide(Y_mod, tot_weight, out=np.zeros_like(Y_mod), where=tot_weight!=0)
 				
-				#TODO: delete datapoints without any labels (only negative labels)???
+				#delete datapoints without any labels 
+				#check that "mask" argument indeed contains a mask for data
+				unobserved_datapt = np.where((np.sum(X_mask_mod==1., axis=(1,2)) == 0.)) #no data
+				no_labels = np.where((np.sum(Y_mod, axis=(1,2)) == 0.)) #no labels
+				too_few_obs_tp = np.where(np.sum(np.sum(X_mask_mod==1.,2)!=0, 1)<2)
 				
+				samples_to_delete = np.unique(np.hstack([ unobserved_datapt, no_labels, too_few_obs_tp] ))
+				
+				X_mod = np.delete(X_mod, (samples_to_delete), axis=0)
+				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
+				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
+				
+				#for statistics
+				missing += np.sum(mask == 0.)
+				observed += np.sum(mask == 1.)
+				
+				valid_batchsize = X_mod.shape[0]
+	
 				#get the time stamps
 				tt = unique_times
 				
+				if first_batch:
+					start_ix = 0
+					stop_ix = valid_batchsize
+					first_batch = False
+				else:
+					start_ix = stop_ix
+					stop_ix += valid_batchsize
+					
 				#fill in data to hdf5 file
-				start_ix = fid*self.batchsize
-				stop_ix = (fid+1)*self.batchsize
 				hdf5_file_test["data"][start_ix:stop_ix, ...] = X_mod
 				hdf5_file_test["mask"][start_ix:stop_ix, ...] = X_mask_mod
 				hdf5_file_test["labels"][start_ix:stop_ix, ...] = Y_mod
 				
-				"""
-				batchsize = X_mod.shape[0]
-				for i in range(0,batchsize, self.stored_batchsize):
-					# convert to torch variable and append it
-					test_records.append((
-								filename + "_" + str(i),
-								torch.from_numpy(tt),
-								torch.from_numpy(X_mod[i:i+self.stored_batchsize]),
-								torch.from_numpy(X_mask_mod[i:i+self.stored_batchsize]),
-								torch.from_numpy(Y_mod[i:i+self.stored_batchsize])
-								))
-				"""
-				start_ix +=raw_batchsize
-				stop_ix +=raw_batchsize
-				
 		start_ix = 0
-		stop_ix = raw_batchsize
+		stop_ix = 0
 					
-		#save data
-		print("Saving...")
-		#torch.save(test_records, os.path.join(self.processed_folder, self.test_file))
-		print("Test data done!")
-		
-		
-		
 		
 		#Evaluation data
 		print("Building evaluation dataset...")
+		first_batch = True
 		for fid, filename in enumerate(tqdm(os.listdir(eval_localdir))): #tqdm
 	
 			#starting a new batch
@@ -441,7 +682,8 @@ class Crops(object):
 				mask[badweather_obs[0], badweather_obs[1], :] = 0
 				
 				#"destroy" data, that is corrputed by bad weather. We will never use it!
-				#X_mod[~mask] = None
+				# "all masked out elements should be zeros"
+				X_mod[~mask] = 0
 				
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)
@@ -452,45 +694,47 @@ class Crops(object):
 				tot_weight = np.repeat(np.sum(Y_mod, axis=2)[:,:,None], repeats=nclasses-badweather_labels.size, axis=2)
 				Y_mod = np.divide(Y_mod, tot_weight, out=np.zeros_like(Y_mod), where=tot_weight!=0)
 				
-				#TODO: delete datapoints without any labels (only negative labels)???
+				#delete datapoints without any labels 
+				#check that "mask" argument indeed contains a mask for data
+				unobserved_datapt = np.where((np.sum(X_mask_mod==1., axis=(1,2)) == 0.)) #no data
+				no_labels = np.where((np.sum(Y_mod, axis=(1,2)) == 0.)) #no labels
+				too_few_obs_tp = np.where(np.sum(np.sum(X_mask_mod==1.,2)!=0, 1)<2)
 				
+				samples_to_delete = np.unique(np.hstack([ unobserved_datapt, no_labels, too_few_obs_tp] ))
+				
+				X_mod = np.delete(X_mod, (samples_to_delete), axis=0)
+				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
+				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
+				
+				#for statistics
+				missing += np.sum(mask == 0.)
+				observed += np.sum(mask == 1.)
+				
+				valid_batchsize = X_mod.shape[0]
+	
 				#get the time stamps
 				tt = unique_times
 				
+				if first_batch:
+					start_ix = 0
+					stop_ix = valid_batchsize
+					first_batch = False
+				else:
+					start_ix = stop_ix
+					stop_ix += valid_batchsize
+					
 				#fill in data to hdf5 file
-				start_ix = fid*self.batchsize
-				stop_ix = (fid+1)*self.batchsize
 				hdf5_file_eval["data"][start_ix:stop_ix, ...] = X_mod
 				hdf5_file_eval["mask"][start_ix:stop_ix, ...] = X_mask_mod
 				hdf5_file_eval["labels"][start_ix:stop_ix, ...] = Y_mod
 				
-				"""
-				batchsize = X_mod.shape[0]
-				for i in range(0,batchsize, self.stored_batchsize):
-					# convert to torch variable and append itappend it
-					eval_records.append((
-								filename + "_" + str(i),
-								torch.from_numpy(tt),
-								torch.from_numpy(X_mod[i:i+self.stored_batchsize]),
-								torch.from_numpy(X_mask_mod[i:i+self.stored_batchsize]),
-								torch.from_numpy(Y_mod[i:i+self.stored_batchsize])
-								))
-				"""
-				start_ix +=raw_batchsize
-				stop_ix +=raw_batchsize
 				
-		start_ix = 0
-		stop_ix = raw_batchsize
-		#save data
-		print("Saving...")
-		#torch.save(eval_records, os.path.join(self.processed_folder, self.eval_file))
-		print("Evaluation data done!")
-		
-		
 		hdf5_file_train.close()
 		hdf5_file_test.close()
 		hdf5_file_eval.close()
 		
+		missing_rate = missing/(observed+missing)
+		print(missing_rate)
 	
 	def _check_exists(self):
 		exist_train = os.path.exists(
@@ -536,8 +780,6 @@ class Crops(object):
 	
 	def __getitem__(self, index):
 		
-		list_format = True # must agree with variable_time_collate_fn_crop
-		print(index)
 		#should accept indices and should output the datasamples, as read from disk
 		if isinstance(index, slice):
 			# do your handling for a slice object:
@@ -545,10 +787,7 @@ class Crops(object):
 			start = 0 if index.start is None else index.start
 			step = 1 if index.start is None else index.step
 			
-			#TODO: replace the for loop to increase performance
-			#maybe change to tensor format and than also adjust the
-			
-			if list_format: #list format as the other datasets
+			if self.list_form : #list format as the other datasets
 				for i in range(start,index.stop,step):
 					data = torch.from_numpy( self.hdf5dataloader["data"][i] )
 					time_stamps = torch.from_numpy( self.timestamps )
@@ -556,7 +795,7 @@ class Crops(object):
 					labels = torch.from_numpy( self.hdf5dataloader["labels"][i] ) 
 					output.append((data, time_stamps, mask, labels))
 				return output
-			else: #tensor_format (more efficient), must agree with variable_time_collate_fn_crop
+			else: #tensor_format (more efficient), 
 				raise Exception('Tensorformat not implemented yet!')
 				data = torch.from_numpy( self.hdf5dataloader["data"][start:index.stop:step] )
 				time_stamps = torch.from_numpy( self.timestamps )
@@ -584,18 +823,16 @@ class Crops(object):
 	
 	
 def variable_time_collate_fn_crop(batch, args, device = torch.device("cpu"), data_type="train", 
-	data_min = None, data_max = None):
-	#TODO
+	data_min = None, data_max = None, list_form=True):
 	"""
 	Returns:
 		combined_tt: The union of all time observations.
 		combined_vals: (M, T, D) tensor containing the observed values.
 		combined_mask: (M, T, D) tensor containing 1 where values were observed and 0 otherwise.
 	"""
-	list_format = True #must agree with the __getitem__ function
 	
 	
-	if list_format: #list format as the other datasets
+	if list_form: #list format as the other datasets
 		
 		data, tt, mask, labels = batch[0]
 		nfeatures = data.shape[1]
