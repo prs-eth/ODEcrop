@@ -18,6 +18,7 @@ from shutil import copyfile
 import sklearn as sk
 import subprocess
 import datetime
+from tqdm import tqdm
 
 def makedirs(dirname):
 	if not os.path.exists(dirname):
@@ -244,6 +245,8 @@ def get_next_batch(dataloader):
 		batch_dict["labels"] = data_dict["labels"]
 		
 		#Nando's Modification below: why don't we cut the labels as well?
+		#TODO: Maybe have to integrate this to the preprocessing step!!
+		#if args.dataset == "crop":
 		batch_dict["labels"] = data_dict["labels"][:, non_missing_tp]
 
 	batch_dict["mode"] = data_dict["mode"]
@@ -534,8 +537,8 @@ def compute_loss_all_batches(model,
 	classif_predictions = torch.Tensor([]).to(device)
 	all_test_labels =  torch.Tensor([]).to(device)
 
-	for i in range(n_batches):
-		print("Computing loss... " + str(i))
+	for i in tqdm(range(n_batches)):
+		#print("Computing loss... " + str(i))
 		
 		batch_dict = get_next_batch(test_dataloader)
 
@@ -576,7 +579,7 @@ def compute_loss_all_batches(model,
 			all_test_labels = all_test_labels.repeat(n_traj_samples,1,1)
 
 
-			idx_not_nan = ~torch.isnan(all_test_labels) # Nando's edit: idx_not_nan = 1 - torch.isnan(all_test_labels)
+			idx_not_nan = ~torch.isnan(all_test_labels) # Nando's edit, original was: idx_not_nan = 1 - torch.isnan(all_test_labels)
 			classif_predictions = classif_predictions[idx_not_nan]
 			all_test_labels = all_test_labels[idx_not_nan]
 
@@ -613,8 +616,28 @@ def compute_loss_all_batches(model,
 					pred_class_id.cpu().numpy())
 		if args.dataset == "crop":
 			#TODO: to implement
+			all_test_labels = all_test_labels.repeat(n_traj_samples,1,1)
 			
-			raise Exception("Crop classification will be implemented soon...")
+			idx_not_nan = ~torch.isnan(all_test_labels) # Nando's edit: idx_not_nan = 1 - torch.isnan(all_test_labels)
+			classif_predictions = classif_predictions[idx_not_nan]
+			all_test_labels = all_test_labels[idx_not_nan]
+			
+			dirname = "plots/" + str(experimentID) + "/"
+			os.makedirs(dirname, exist_ok=True)
+			
+			print("Number of labeled examples: {}".format(len(all_test_labels.reshape(-1))))
+			
+			# classif_predictions and all_test_labels are in on-hot-encoding -- convert to class ids
+			_, pred_class_id = torch.max(classif_predictions, -1)
+			_, class_labels = torch.max(all_test_labels, -1)
+			
+			
+			total["accuracy"] = sk.metrics.accuracy_score(
+					class_labels.cpu().numpy(), 
+					pred_class_id.cpu().numpy())
+			
+			
+			raise Exception("Crop classification metrics will be implemented soon...")
 			
 			
 	return total

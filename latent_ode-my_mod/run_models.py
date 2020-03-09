@@ -41,10 +41,10 @@ from tqdm import tqdm
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=4000, help="Size of the dataset")
+parser.add_argument('-n',  type=int, default=3000, help="Size of the dataset")
 parser.add_argument('--niters', type=int, default=2) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
-parser.add_argument('-b', '--batch-size', type=int, default=1)
+parser.add_argument('-b', '--batch-size', type=int, default=30)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
 
 parser.add_argument('--save', type=str, default='experiments/', help="Path for save checkpoints")
@@ -263,14 +263,12 @@ if __name__ == '__main__':
 			kl_coef = (1-0.99** (itr // num_batches - wait_until_kl_inc))
 
 		batch_dict = utils.get_next_batch(data_obj["train_dataloader"])
-		if itr==477:
-			print("here")
 		train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
 		train_res["loss"].backward()
 		optimizer.step()
 
-		n_iters_to_viz = 0.001
-		if itr % round(n_iters_to_viz * num_batches+1) == 0:
+		n_iters_to_viz = 0.01
+		if itr % round(n_iters_to_viz * num_batches+2) == 0:
 			with torch.no_grad():
 
 				test_res = compute_loss_all_batches(model, 

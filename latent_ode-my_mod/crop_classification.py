@@ -17,10 +17,10 @@ import lib.utils as utils
 
 class Crops(object):
 	
-	# TODO: make label Tags
-	labels = [ "other", "corn", "meadow", "asparagus", "rape", "hop", "summer oats", "winter spelt", "fallow", "winter wheat",
+	#make label Tags
+	label = [ "other", "corn", "meadow", "asparagus", "rape", "hop", "summer oats", "winter spelt", "fallow", "winter wheat",
 		   "winter barley", "winter rye", "beans", "winter triticale", "summer barley", "peas", "potatoe", "soybeans", "sugar beets" ]
-	labels_dict = {k: i for i, k in enumerate(labels)}
+	label_dict = {k: i for i, k in enumerate(label)}
 	
 	
 	def __init__(self, root, download=False,
@@ -44,25 +44,13 @@ class Crops(object):
 			data_file = self.eval_file
 		elif self.mode=="test":
 			data_file = self.test_file
-			
-		"""
-		if device == torch.device("cpu"):
-			self.data = torch.load(os.path.join(self.processed_folder, data_file), map_location='cpu')
-		else:
-			self.data = torch.load(os.path.join(self.processed_folder, data_file))
-		"""
 		
 		self.hdf5dataloader = h5py.File(os.path.join(self.processed_folder, data_file), "r")
 		self.nsamples = self.hdf5dataloader["data"].shape[0]
 		
 		self.timestamps = h5py.File(os.path.join(self.processed_folder, self.time_file), "r")["tt"][:]
-			
-		"""
-		if n_samples is not None:
-			self.data = self.data[:n_samples]
-		"""
 		
-			
+		
 	def download(self):
 		
 		if self._check_exists():
@@ -73,14 +61,10 @@ class Crops(object):
 		
 		print('Downloading data...')
 		
-		#get the dataset from the web
+		# get the dataset from the web
 		#os.system('wget ftp://m1370728:m1370728@138.246.224.34/data.zip')
 		#os.system('unzip data.zip -d ' + self.raw_folder)
 		#os.system('rm data.zip')
-		
-		# test for completeness
-		#os.system('wget ftp://m1370728:m1370728@138.246.224.34/data.sha512')
-		#os.system('sha512sum -c data.sha512')
 		
 		#Processing data
 		print('Scanning data...')
@@ -377,17 +361,17 @@ class Crops(object):
 		hdf5_file_train = h5py.File(os.path.join(self.processed_folder, self.train_file) , mode='w')
 		hdf5_file_train.create_dataset("data", (ntrainsamples, len(unique_times), nfeatures-1), np.float)
 		hdf5_file_train.create_dataset("mask", (ntrainsamples, len(unique_times), nfeatures-1), np.bool)
-		hdf5_file_train.create_dataset("labels", (ntrainsamples, len(unique_times), ntargetclasses), np.float)
+		hdf5_file_train.create_dataset("labels", (ntrainsamples, ntargetclasses), np.float)
 		
 		hdf5_file_test = h5py.File(os.path.join(self.processed_folder, self.test_file) , mode='w')
 		hdf5_file_test.create_dataset("data", (ntestsamples, len(unique_times), nfeatures-1), np.float)
 		hdf5_file_test.create_dataset("mask", (ntestsamples, len(unique_times), nfeatures-1), np.bool)
-		hdf5_file_test.create_dataset("labels", (ntestsamples, len(unique_times), ntargetclasses), np.float)
+		hdf5_file_test.create_dataset("labels", (ntestsamples, ntargetclasses), np.float)
 		
 		hdf5_file_eval = h5py.File(os.path.join(self.processed_folder, self.eval_file) , mode='w')
 		hdf5_file_eval.create_dataset("data", (nevalsamples, len(unique_times), nfeatures-1), np.float)
 		hdf5_file_eval.create_dataset("mask", (nevalsamples, len(unique_times), nfeatures-1), np.bool)
-		hdf5_file_eval.create_dataset("labels", (nevalsamples, len(unique_times), ntargetclasses), np.float)
+		hdf5_file_eval.create_dataset("labels", (nevalsamples, ntargetclasses), np.float)
 		
 		observed = 0
 		missing = 0
@@ -479,6 +463,9 @@ class Crops(object):
 				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
 				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
 				
+				#make assumptions about the label
+				Y_mod = np.sum(Y_mod, axis=1)/np.repeat(np.sum(Y_mod, axis=(1,2))[:,None], repeats=nclasses-badweather_labels.size, axis=1)
+				
 				#for statistics
 				missing += np.sum(mask == 0.)
 				observed += np.sum(mask == 1.)
@@ -502,7 +489,6 @@ class Crops(object):
 				hdf5_file_train["labels"][start_ix:stop_ix, ...] = Y_mod
 				
 				
-		
 		
 		#Testing data
 		print("Building testing dataset...")
@@ -777,6 +763,9 @@ class Crops(object):
 	@property
 	def eval_file(self):
 		return 'eval.hdf5'
+	
+	#def get_label(self, record_id):
+	#	return self.label_dict[record_id]
 	
 	def __getitem__(self, index):
 		
