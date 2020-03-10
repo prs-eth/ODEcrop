@@ -50,6 +50,10 @@ class Crops(object):
 		
 		self.timestamps = h5py.File(os.path.join(self.processed_folder, self.time_file), "r")["tt"][:]
 		
+		#for statistics
+		#self.absolute_class_distribution = np.sum(self.hdf5dataloader["labels"], axis=0)
+		#self.relative_class_distribution = self.absolute_class_distribution/np.sum(self.absolute_class_distribution)
+		
 		
 	def download(self):
 		
@@ -578,6 +582,9 @@ class Crops(object):
 				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
 				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
 				
+				#make assumptions about the label
+				Y_mod = np.sum(Y_mod, axis=1)/np.repeat(np.sum(Y_mod, axis=(1,2))[:,None], repeats=nclasses-badweather_labels.size, axis=1)
+				
 				#for statistics
 				missing += np.sum(mask == 0.)
 				observed += np.sum(mask == 1.)
@@ -692,10 +699,13 @@ class Crops(object):
 				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
 				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
 				
+				#make assumptions about the label
+				Y_mod = np.sum(Y_mod, axis=1)/np.repeat(np.sum(Y_mod, axis=(1,2))[:,None], repeats=nclasses-badweather_labels.size, axis=1)
+				
 				#for statistics
 				missing += np.sum(mask == 0.)
 				observed += np.sum(mask == 1.)
-				
+								
 				valid_batchsize = X_mod.shape[0]
 	
 				#get the time stamps
@@ -825,12 +835,12 @@ def variable_time_collate_fn_crop(batch, args, device = torch.device("cpu"), dat
 		
 		data, tt, mask, labels = batch[0]
 		nfeatures = data.shape[1]
-		N_labels = labels.shape[1]
+		N_labels = labels.shape[0]
 		
 		combined_vals = torch.zeros([len(batch), len(tt), nfeatures]).to(device)
 		combined_mask = torch.zeros([len(batch), len(tt), nfeatures]).to(device)
 		
-		combined_labels = (torch.zeros([len(batch), len(tt), N_labels])+ torch.tensor(float('nan'))).to(device)
+		combined_labels = (torch.zeros([len(batch), N_labels])+ torch.tensor(float('nan'))).to(device)
 		#combined_labels = (torch.zeros(len(batch), N_labels) + torch.tensor(float('nan'))).to(device = device)
 		
 		for b, (data, tt, mask, labels) in enumerate(batch):

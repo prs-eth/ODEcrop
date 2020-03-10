@@ -20,6 +20,8 @@ from torch.distributions.normal import Normal
 from torch.distributions import Independent
 from torch.nn.parameter import Parameter
 
+import sklearn as sk
+
 
 def create_classifier(z0_dim, n_labels):
 	return nn.Sequential(
@@ -27,7 +29,9 @@ def create_classifier(z0_dim, n_labels):
 			nn.ReLU(),
 			nn.Linear(300, 300),
 			nn.ReLU(),
-			nn.Linear(300, n_labels),)
+			nn.Linear(300, n_labels),
+			nn.Softmax(dim=(2)),
+			)
 
 
 class Baseline(nn.Module):
@@ -60,7 +64,9 @@ class Baseline(nn.Module):
 		if use_binary_classif: 
 			if linear_classifier:
 				self.classifier = nn.Sequential(
-					nn.Linear(z0_dim, n_labels))
+					nn.Linear(z0_dim, n_labels),
+					nn.Softmax(dim=(2))
+					)
 			else:
 				self.classifier = create_classifier(z0_dim, n_labels)
 			utils.init_network_weights(self.classifier)
@@ -152,6 +158,11 @@ class Baseline(nn.Module):
 			loss = loss - 0.1 * pois_log_likelihood 
 
 		if self.use_binary_classif:
+			accuracy = sk.metrics.accuracy_score(
+					info["label_predictions"][0].max(-1)[1].cpu().numpy(),
+					batch_dict["labels"].max(-1)[1].cpu().numpy())
+			
+		if self.use_binary_classif:
 			if self.train_classif_w_reconstr:
 				loss = loss +  ce_loss * 100
 			else:
@@ -167,6 +178,7 @@ class Baseline(nn.Module):
 		results["kl"] = 0.
 		results["kl_first_p"] =  0.
 		results["std_first_p"] = 0.
+		results["accuracy"] = accuracy
 
 		if batch_dict["labels"] is not None and self.use_binary_classif:
 			results["label_predictions"] = info["label_predictions"].detach()

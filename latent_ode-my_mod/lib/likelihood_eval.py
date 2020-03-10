@@ -89,11 +89,21 @@ def compute_binary_CE_loss(label_predictions, mortality_label):
 
 def compute_multiclass_CE_loss(label_predictions, true_label, mask):
 	#print("Computing multi-class classification loss: compute_multiclass_CE_loss")
-
+	def CXE(predicted, target):
+		return -(target * torch.log(predicted)).sum(dim=1).mean()
+	
+	n_tp = 1
+	n_traj_samples = 1
+	
 	if (len(label_predictions.size()) == 3):
 		label_predictions = label_predictions.unsqueeze(0)
-
-	n_traj_samples, n_traj, n_tp, n_dims = label_predictions.size()
+	
+	if (len(true_label.size()) == 2):
+		n_traj_samples, _, n_traj, n_dims = label_predictions.size()
+		crop_set = True
+	else:
+		n_traj_samples, n_traj, n_tp, n_dims = label_predictions.size()
+		crop_set = False
 
 	# assert(not torch.isnan(label_predictions).any())
 	# assert(not torch.isnan(true_label).any())
@@ -108,31 +118,50 @@ def compute_multiclass_CE_loss(label_predictions, true_label, mask):
 	mask = torch.sum(mask, -1) > 0
 
 	# repeat the mask for each label to mark that the label for this time point is present
-	pred_mask = mask.repeat(n_dims, 1,1).permute(1,2,0)
+	if crop_set:
+		mask[:,:] = True
+		
+		pred_mask = mask[:,0]
+		label_mask = mask[:,0]
+		
+	else:
+		pred_mask = mask.repeat(n_dims, 1,1).permute(1,2,0)
 
-	label_mask = mask
-	pred_mask = pred_mask.repeat(n_traj_samples,1,1,1)
-	label_mask = label_mask.repeat(n_traj_samples,1,1,1)
-
-	pred_mask = pred_mask.reshape(n_traj_samples * n_traj * n_tp,  n_dims)
-	label_mask = label_mask.reshape(n_traj_samples * n_traj * n_tp, 1)
+		label_mask = mask
+		pred_mask = pred_mask.repeat(n_traj_samples,1,1,1)
+		label_mask = label_mask.repeat(n_traj_samples,1,1,1)
+	
+		pred_mask = pred_mask.reshape(n_traj_samples * n_traj * n_tp,  n_dims)
+		label_mask = label_mask.reshape(n_traj_samples * n_traj * n_tp, 1)
 
 	if (label_predictions.size(-1) > 1) and (true_label.size(-1) > 1):
 		assert(label_predictions.size(-1) == true_label.size(-1))
 		# targets are in one-hot encoding -- convert to indices
-		_, true_label = true_label.max(-1)
-
+		_, true_label_hard = true_label.max(-1)
+		
+		#Nando's comment: but what if i want soft labels for my cross entropy? use the labels_soft variable
+		
 	res = []
-	for i in range(true_label.size(0)):
+	for i in range(true_label_hard.size(0)):
 		pred_masked = torch.masked_select(label_predictions[i], pred_mask[i].bool()) #byte()
-		labels = torch.masked_select(true_label[i], label_mask[i].bool()) #byte()
-	
+		labels_hard = torch.masked_select(true_label_hard[i], label_mask[i].bool()) #byte()
+		labels_soft = torch.masked_select(true_label[i], label_mask[i].bool()) #byte()
+		
+		
 		pred_masked = pred_masked.reshape(-1, n_dims)
 
-		if (len(labels) == 0):
-			continue
+		if not crop_set:
+			if (len(labels_hard) == 0):
+				continue
 
-		ce_loss = nn.CrossEntropyLoss()(pred_masked, labels.long())
+		#ce_loss = nn.CrossEntropyLoss()(pred_masked, labels_hard.long())
+		ce_loss = CXE (pred_masked, labels_soft)
+		"""
+		print(ce_loss)
+		print(labels_soft)
+		print(pred_masked)
+		print(sum(sum(pred_masked)))
+		"""
 		res.append(ce_loss)
 
 	ce_loss = torch.stack(res, 0).to(get_device(label_predictions))

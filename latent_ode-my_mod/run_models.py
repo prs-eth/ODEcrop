@@ -1,6 +1,7 @@
 ###########################
 # Latent ODEs for Irregularly-Sampled Time Series
-# Author: Yulia Rubanova
+# Author: Yulia Rubanova,
+# Editor: Nando Metzger
 ###########################
 
 import os
@@ -22,6 +23,7 @@ import torch
 import torch.nn as nn
 from torch.nn.functional import relu
 import torch.optim as optim
+from torch.utils.tensorboard import SummaryWriter
 
 import lib.utils as utils
 from lib.plotting import *
@@ -41,10 +43,10 @@ from tqdm import tqdm
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=3000, help="Size of the dataset")
-parser.add_argument('--niters', type=int, default=2) # default=300
+parser.add_argument('-n',  type=int, default=1000, help="Size of the dataset")
+parser.add_argument('--niters', type=int, default=3) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
-parser.add_argument('-b', '--batch-size', type=int, default=30)
+parser.add_argument('-b', '--batch-size', type=int, default=500)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
 
 parser.add_argument('--save', type=str, default='experiments/', help="Path for save checkpoints")
@@ -77,17 +79,20 @@ parser.add_argument('--rec-layers', type=int, default=4, help="Number of layers 
 parser.add_argument('--gen-layers', type=int, default=2, help="Number of layers in ODE func in generative ODE")
 
 parser.add_argument('-u', '--units', type=int, default=500, help="Number of units per layer in ODE func")
-parser.add_argument('-g', '--gru-units', type=int, default=69, help="Number of units per layer in each of GRU update networks")
+parser.add_argument('-g', '--gru-units', type=int, default=50, help="Number of units per layer in each of GRU update networks")
 
 parser.add_argument('--poisson', action='store_true', help="Model poisson-process likelihood for the density of events in addition to reconstruction.")
 parser.add_argument('--classif', default="True", action='store_true', help="Include binary classification loss -- used for Physionet dataset for hospiral mortality")
 
-parser.add_argument('--linear-classif', default=True, action='store_true', help="If using a classifier, use a linear classifier instead of 1-layer NN")
+parser.add_argument('--linear-classif', default=False, action='store_true', help="If using a classifier, use a linear classifier instead of 1-layer NN")
 parser.add_argument('--extrap', action='store_true', help="Set extrapolation mode. If this flag is not set, run interpolation mode.")
 
 parser.add_argument('-t', '--timepoints', type=int, default=100, help="Total number of time-points")
 parser.add_argument('--max-t',  type=float, default=5., help="We subsample points in the interval [0, args.max_tp]")
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
+parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
+parser.add_argument('--ode-method', type=str, default='euler',
+					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3': Bosh3Solver, 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
 
 
 args = parser.parse_args()
@@ -193,7 +198,9 @@ if __name__ == '__main__':
 	elif args.ode_rnn: # using this thing
 		# Create ODE-GRU model
 		n_ode_gru_dims = args.latents
-				
+		method = args.ode_method
+		#print(args.ode_method)
+		
 		if args.poisson:
 			print("Poisson process likelihood not implemented for ODE-RNN: ignoring --poisson")
 
@@ -209,7 +216,7 @@ if __name__ == '__main__':
 			ode_func_net = ode_func_net,
 			device = device).to(device)
 
-		z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, "euler", args.latents, 
+		z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, method, args.latents, 
 			odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
 	
 		model = ODE_RNN(input_dim, n_ode_gru_dims, device = device, 
@@ -231,7 +238,19 @@ if __name__ == '__main__':
 
 	if args.viz:
 		viz = Visualizations(device)
-
+	
+	##################################################################
+	
+	if args.tensorboard:
+		comment = "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
+		
+		validationtensorboard_dir = "runs/expID" + "_validation" + str(experimentID) + comment
+		validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
+		
+		tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
+		trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
+		
+		
 	##################################################################
 	
 	#Load checkpoint and evaluate the model
@@ -252,7 +271,7 @@ if __name__ == '__main__':
 
 	num_batches = data_obj["n_train_batches"]
 
-	for itr in tqdm(range(1, num_batches * (args.niters + 1))):
+	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
 		optimizer.zero_grad()
 		utils.update_learning_rate(optimizer, decay_rate = 0.999, lowest = args.lr / 10)
 
@@ -268,7 +287,8 @@ if __name__ == '__main__':
 		optimizer.step()
 
 		n_iters_to_viz = 0.01
-		if itr % round(n_iters_to_viz * num_batches+2) == 0:
+		if (itr % round(n_iters_to_viz * num_batches)== 0) and (itr!=0):
+			
 			with torch.no_grad():
 
 				test_res = compute_loss_all_batches(model, 
@@ -289,23 +309,48 @@ if __name__ == '__main__':
 				logger.info("Train loss (one batch): {}".format(train_res["loss"].detach()))
 				logger.info("Train CE loss (one batch): {}".format(train_res["ce_loss"].detach()))
 				
-				if "auc" in test_res:
-					logger.info("Classification AUC (TEST): {:.4f}".format(test_res["auc"]))
-
-				if "mse" in test_res:
-					logger.info("Test MSE: {:.4f}".format(test_res["mse"]))
-
+				# write training numbers
 				if "accuracy" in train_res:
 					logger.info("Classification accuracy (TRAIN): {:.4f}".format(train_res["accuracy"]))
-
+					trainwriter.add_scalar('Classification_accuracy', train_res["accuracy"], itr*args.batch_size)
+				
+				if "loss" in train_res:
+					trainwriter.add_scalar('loss', train_res["loss"].detach(), itr*args.batch_size)
+				
+				if "ce_loss" in train_res:
+					trainwriter.add_scalar('CE_loss', train_res["ce_loss"].detach(), itr*args.batch_size)
+				
+				if "mse" in train_res:
+					trainwriter.add_scalar('MSE', train_res["mse"], itr/num_batches)
+				
+				if "pois_likelihood" in train_res:
+					trainwriter.add_scalar('Poisson_likelihood', train_res["pois_likelihood"], itr*args.batch_size)
+				
+				#write test numbers
+				if "auc" in test_res:
+					logger.info("Classification AUC (TEST): {:.4f}".format(test_res["auc"]))
+					validationwriter.add_scalar('Classification_AUC', test_res["auc"], itr*args.batch_size)
+					
+				if "mse" in test_res:
+					logger.info("Test MSE: {:.4f}".format(test_res["mse"]))
+					validationwriter.add_scalar('MSE', test_res["mse"], itr/num_batches)
+					
 				if "accuracy" in test_res:
 					logger.info("Classification accuracy (TEST): {:.4f}".format(test_res["accuracy"]))
+					validationwriter.add_scalar('Classification_accuracy', test_res["accuracy"], itr*args.batch_size)
 
 				if "pois_likelihood" in test_res:
 					logger.info("Poisson likelihood: {}".format(test_res["pois_likelihood"]))
-
+					validationwriter.add_scalar('Poisson_likelihood', test_res["pois_likelihood"], itr*args.batch_size)
+				
+				if "loss" in train_res:
+					validationwriter.add_scalar('loss', test_res["loss"].detach(), itr*args.batch_size)
+				
 				if "ce_loss" in test_res:
 					logger.info("CE loss: {}".format(test_res["ce_loss"]))
+					validationwriter.add_scalar('CE_loss', test_res["ce_loss"], itr*args.batch_size)
+	
+				logger.info("-----------------------------------------------------------------------------------")
 
 			torch.save({
 				'args': args,
@@ -325,6 +370,10 @@ if __name__ == '__main__':
 							plot_name = file_name + "_" + str(experimentID) + "_{:03d}".format(plot_id) + ".png",
 						 	experimentID = experimentID, save=True)
 						plt.pause(0.01)
+						
+	validationwriter.close()
+	trainwriter.close()
+	
 	torch.save({
 		'args': args,
 		'state_dict': model.state_dict(),
