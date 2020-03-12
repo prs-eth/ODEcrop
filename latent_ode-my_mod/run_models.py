@@ -242,7 +242,7 @@ if __name__ == '__main__':
 	##################################################################
 	
 	if args.tensorboard:
-		if args.classc_rnn:
+		if args.classic_rnn:
 			nntype = 'rnn'
 		elif args.ode_rnn:
 			nntype = 'ode'

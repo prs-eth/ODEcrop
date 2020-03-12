@@ -1,5 +1,5 @@
 #!/bin/bash
-#BSUB -W 24:00
+#BSUB -W 120:00
 ##BSUB -o /cluster/work/igp_psr/metzgern/Network/outputs/outputtrain_Le${object}.%J.%I.txt
 ##BSUB -e /cluster/work/igp_psr/metzgern/Network/outputs/train_Le${object}.%J.%I.txt
 #BSUB -R "rusage[mem=32000,ngpus_excl_p=1]"
@@ -16,8 +16,8 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.130 pytorch/1.4.0 #hdf5/2.10.0 
 #python_gpu/3.6.1
 
 ## Our model:
-#python run_models.py --niters 3 -n 300000 -b 3000 -l 15 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method euler
+python run_models.py --niters 3 -n 300000 -b 16000 -l 15 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method euler
 
 ## Baseline
-python run_models.py --niters 3 -n 300000 -b 500 -l 25 --dataset crop --classic-rnn
+#python run_models.py --niters 3 -n 300000 -b 500 -l 10 --dataset crop --classic-rnn
 
