@@ -43,7 +43,7 @@ from tqdm import tqdm
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=1000, help="Size of the dataset")
+parser.add_argument('-n',  type=int, default=10000, help="Size of the dataset")
 parser.add_argument('--niters', type=int, default=3) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=500)

@@ -7,11 +7,16 @@
 ##BSUB -Is 
 #BSUB -N
 #BSUB -B
+##BSUB -B
 #### BEGIN #####
 
 
-module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.130 hdf5/1.10.1 #2.7.14 #numpy/1.16.3 matplotlib/2.1.1 Keras/2.2.4
+module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.130 pytorch/1.4.0 #hdf5/2.10.0 #2.7.14 #numpy/1.16.3 matplotlib/2.1.1 Keras/2.2.4
+#module --ignore-cache load "hdf5/2.10.0"
 
-#sh test_cityscapes.sh
-python AE_L1_leon_withskip.py
+## Our model:
+#python3 run_models.py --niters 3 -n 300000 -b 3000 -l 15 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method euler
+
+## Baseline
+python3 run_models.py --niters 3 -n 3000 -l 10 --dataset crop --classic-rnn
 
