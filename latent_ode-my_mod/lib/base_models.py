@@ -30,9 +30,19 @@ def create_classifier(z0_dim, n_labels):
 			nn.Linear(300, 300),
 			nn.ReLU(),
 			nn.Linear(300, n_labels),
-			nn.Softmax(dim=(2)),
+			nn.Softmax(dim=(2)), #for ODERNN we use dim=(2)
 			)
-
+	
+def create_RNN_classifier(z0_dim, n_labels):
+	return nn.Sequential(
+			nn.Linear(z0_dim, 300),
+			nn.ReLU(),
+			nn.Linear(300, 300),
+			nn.ReLU(),
+			nn.Linear(300, n_labels),
+			nn.Softmax(dim=(1)), #for ODERNN we use dim=(2)
+			)
+	
 
 class Baseline(nn.Module):
 	def __init__(self, input_dim, latent_dim, device, 
@@ -41,7 +51,8 @@ class Baseline(nn.Module):
 		use_poisson_proc = False,
 		linear_classifier = False,
 		n_labels = 1,
-		train_classif_w_reconstr = False):
+		train_classif_w_reconstr = False,
+		RNN_type=False ):
 		super(Baseline, self).__init__()
 
 		self.input_dim = input_dim
@@ -68,7 +79,10 @@ class Baseline(nn.Module):
 					nn.Softmax(dim=(2))
 					)
 			else:
-				self.classifier = create_classifier(z0_dim, n_labels)
+				if not RNN_type:
+					self.classifier = create_classifier(z0_dim, n_labels)
+				else:
+					self.classifier = create_RNN_classifier(z0_dim, n_labels)
 			utils.init_network_weights(self.classifier)
 
 

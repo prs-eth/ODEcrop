@@ -95,10 +95,18 @@ def compute_multiclass_CE_loss(label_predictions, true_label, mask):
 	n_tp = 1
 	n_traj_samples = 1
 	
+	crop_set = False
+	RNN = False
+	
 	if (len(label_predictions.size()) == 3):
 		label_predictions = label_predictions.unsqueeze(0)
 	
-	if (len(true_label.size()) == 2):
+	if (len(true_label.size()) == 2) and (len(label_predictions.size()) == 2):
+		n_traj, n_dims = true_label.size()
+		RNN = True
+		crop_set = True
+		
+	elif (len(true_label.size()) == 2):
 		n_traj_samples, _, n_traj, n_dims = label_predictions.size()
 		crop_set = True
 	else:
@@ -118,7 +126,7 @@ def compute_multiclass_CE_loss(label_predictions, true_label, mask):
 	mask = torch.sum(mask, -1) > 0
 
 	# repeat the mask for each label to mark that the label for this time point is present
-	if crop_set:
+	if crop_set or RNN:
 		mask[:,:] = True
 		
 		pred_mask = mask[:,0]
@@ -150,7 +158,7 @@ def compute_multiclass_CE_loss(label_predictions, true_label, mask):
 		
 		pred_masked = pred_masked.reshape(-1, n_dims)
 
-		if not crop_set:
+		if (not crop_set):
 			if (len(labels_hard) == 0):
 				continue
 

@@ -1,0 +1,13 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "pytorch/1.4.0"
+
+
+
+  File "run_models.py", line 100
+    print("I'm running on GPU") if torch.cuda.is_available() else print("I'm running on CPU")
+                                                                      ^
+SyntaxError: invalid syntax
