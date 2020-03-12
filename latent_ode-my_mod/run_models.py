@@ -195,6 +195,7 @@ if __name__ == '__main__':
 			n_labels = n_labels,
 			train_classif_w_reconstr = (args.dataset == "physionet")
 			).to(device)
+		
 	elif args.ode_rnn: # using this thing
 		# Create ODE-GRU model
 		n_ode_gru_dims = args.latents
@@ -241,14 +242,14 @@ if __name__ == '__main__':
 	
 	##################################################################
 	
-	if args.tensorboard:
-		comment = "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
-		
-		validationtensorboard_dir = "runs/expID" + "_validation" + str(experimentID) + comment
-		validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
-		
-		tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
-		trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
+	#if args.tensorboard:
+	comment = "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
+	
+	validationtensorboard_dir = "runs/expID" + "_validation" + str(experimentID) + comment
+	validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
+	
+	tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
+	trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
 		
 		
 	##################################################################
@@ -321,7 +322,7 @@ if __name__ == '__main__':
 					trainwriter.add_scalar('CE_loss', train_res["ce_loss"].detach(), itr*args.batch_size)
 				
 				if "mse" in train_res:
-					trainwriter.add_scalar('MSE', train_res["mse"], itr/num_batches)
+					trainwriter.add_scalar('MSE', train_res["mse"], itr*args.batch_size)
 				
 				if "pois_likelihood" in train_res:
 					trainwriter.add_scalar('Poisson_likelihood', train_res["pois_likelihood"], itr*args.batch_size)
@@ -333,7 +334,7 @@ if __name__ == '__main__':
 					
 				if "mse" in test_res:
 					logger.info("Test MSE: {:.4f}".format(test_res["mse"]))
-					validationwriter.add_scalar('MSE', test_res["mse"], itr/num_batches)
+					validationwriter.add_scalar('MSE', test_res["mse"], itr*args.batch_size)
 					
 				if "accuracy" in test_res:
 					logger.info("Classification accuracy (TEST): {:.4f}".format(test_res["accuracy"]))
