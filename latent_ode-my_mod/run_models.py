@@ -46,7 +46,7 @@ parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=1000, help="Size of the dataset")
 parser.add_argument('--niters', type=int, default=3) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
-parser.add_argument('-b', '--batch-size', type=int, default=500)
+parser.add_argument('-b', '--batch-size', type=int, default=50)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
 
 parser.add_argument('--save', type=str, default='experiments/', help="Path for save checkpoints")
@@ -97,7 +97,7 @@ parser.add_argument('--ode-method', type=str, default='euler',
 
 args = parser.parse_args()
 
-print("I'm running on GPU") if torch.cuda.is_available() else print("I'm running on CPU")
+#print("I'm running on GPU") if torch.cuda.is_available() else print("I'm running on CPU")
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 file_name = os.path.basename(__file__)[:-3]
 utils.makedirs(args.save)
@@ -242,6 +242,7 @@ if __name__ == '__main__':
 	
 	##################################################################
 	
+<<<<<<< HEAD
 	#if args.tensorboard:
 	comment = "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
 	
@@ -250,6 +251,21 @@ if __name__ == '__main__':
 	
 	tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
 	trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
+=======
+	if args.tensorboard:
+		if args.classic_rnn:
+			nntype = 'rnn'
+		elif args.ode_rnn:
+			nntype = 'ode'
+		
+		comment = nntype + "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
+		
+		validationtensorboard_dir = "runs/expID" + "_validation" + str(experimentID) + comment
+		validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
+		
+		tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
+		trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
+>>>>>>> 96d15b2377166937e2f39ab6f0771a0a01dfd4c4
 		
 		
 	##################################################################
@@ -287,7 +303,7 @@ if __name__ == '__main__':
 		train_res["loss"].backward()
 		optimizer.step()
 
-		n_iters_to_viz = 0.01
+		n_iters_to_viz = 0.05
 		if (itr % round(n_iters_to_viz * num_batches)== 0) and (itr!=0):
 			
 			with torch.no_grad():

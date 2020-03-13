@@ -219,7 +219,8 @@ class Classic_RNN(Baseline):
 			classif_per_tp = classif_per_tp,
 			linear_classifier = linear_classifier,
 			n_labels = n_labels,
-			train_classif_w_reconstr = train_classif_w_reconstr)
+			train_classif_w_reconstr = train_classif_w_reconstr,
+			RNN_type = True)
 
 		self.concat_mask = concat_mask
 		
@@ -270,7 +271,7 @@ class Classic_RNN(Baseline):
 		zero_delta_t = torch.Tensor([0.]).to(self.device)
 
 		delta_ts = truth_time_steps[1:] - truth_time_steps[:-1]
-		delta_ts = torch.cat((delta_ts, zero_delta_t))
+		delta_ts = torch.cat((delta_ts.float(), zero_delta_t))
 		if len(delta_ts.size()) == 1:
 			# delta_ts are shared for all trajectories in a batch
 			assert(data.size(1) == delta_ts.size(0))
@@ -300,7 +301,7 @@ class Classic_RNN(Baseline):
 			if self.classif_per_tp:
 				extra_info["label_predictions"] = self.classifier(all_hiddens)
 			else:
-				extra_info["label_predictions"] = self.classifier(hidden_state).reshape(1,-1)
+				extra_info["label_predictions"] = self.classifier(hidden_state).reshape(1, data.shape[0], -1)#Nando removed this: .reshape(1,-1)
 
 		# outputs shape: [n_traj_samples, n_traj, n_tp, n_dims]
 		return outputs, extra_info

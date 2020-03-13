@@ -1,0 +1,10 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "pytorch/1.4.0"
+
+
+
+/cluster/shadow/.lsbatch/1584026325.5187191.shell: line 21: python3: command not found

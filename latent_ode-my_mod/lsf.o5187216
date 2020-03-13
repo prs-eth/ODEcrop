@@ -1,0 +1,22 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "pytorch/1.4.0"
+
+
+
+/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/plotting.py:178: UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
+  plt.show(block=False)
+Couldn't import umap
+Sampling dataset of 300000 training examples
+Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+Traceback (most recent call last):
+  File "run_models.py", line 245, in <module>
+    if args.classc_rnn:
+AttributeError: 'Namespace' object has no attribute 'classc_rnn'
