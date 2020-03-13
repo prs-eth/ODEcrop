@@ -1,69 +1,0 @@
-Lmod has detected the following error: The following module(s) are unknown:
-"pytorch/1.4.0"
-
-Please check the spelling or version number. Also try "module spider ..."
-It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "pytorch/1.4.0"
-
-
-
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/plotting.py:178: UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
-  plt.show(block=False)
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/run_models.py
-run_models.py --niters 1 -b 500 -n 30000 -l 10 --dataset crop --classic-rnn
-  0%|          | 0/60 [00:00<?, ?it/s]  2%|▏         | 1/60 [00:29<28:52, 29.36s/it]  3%|▎         | 2/60 [00:58<28:17, 29.28s/it]Experiment 95427
-Epoch 0000 [Test seq (cond on sampled tp)] | Loss 2.031114 | Likelihood -1062.776489 | KL fp 0.0000 | FP STD 0.0000|
-KL coef: 0.0
-Train loss (one batch): 1.9783101081848145
-Train CE loss (one batch): 1.9783101081848145
-Classification accuracy (TRAIN): 0.3200
-Test MSE: 0.2133
-Classification accuracy (TEST): 0.4870
-Poisson likelihood: 0.0
-CE loss: 2.031113862991333
------------------------------------------------------------------------------------
-  5%|▌         | 3/60 [02:44<49:39, 52.26s/it]  7%|▋         | 4/60 [03:13<42:22, 45.41s/it]  8%|▊         | 5/60 [03:42<37:08, 40.51s/it]Experiment 95427
-Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.751317 | Likelihood -743.886292 | KL fp 0.0000 | FP STD 0.0000|
-KL coef: 0.0
-Train loss (one batch): 1.8733704090118408
-Train CE loss (one batch): 1.8733704090118408
-Classification accuracy (TRAIN): 0.3520
-Test MSE: 0.1495
-Classification accuracy (TEST): 0.3756
-Poisson likelihood: 0.0
-CE loss: 1.751316785812378
------------------------------------------------------------------------------------
- 10%|█         | 6/60 [05:28<54:10, 60.20s/it]Couldn't import umap
-Sampling dataset of 30000 training examples
-Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-Computing loss... 
-Number of labeled examples: 1499
-plotting....
-Computing loss... 
-Number of labeled examples: 1499
-plotting....
-Traceback (most recent call last):
-  File "run_models.py", line 290, in <module>
-    train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/base_models.py", line 135, in compute_all_losses
-    mask = (batch_dict["mask_predicted_data"]) ) # this mask gives UserWarnings # torch.BoolTensor
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/base_models.py", line 115, in get_mse
-    log_density_data = compute_mse(pred_y, truth, mask = mask)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/likelihood_eval.py", line 276, in compute_mse
-    res = compute_masked_likelihood(mu, data, mask, mse)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/likelihood_eval.py", line 197, in compute_masked_likelihood
-    log_prob = likelihood_func(mu_masked, data_masked, indices = (i,k,j))
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/likelihood_eval.py", line 246, in mse
-    mse = nn.MSELoss()(mu, data)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
-    result = self.forward(*input, **kwargs)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/loss.py", line 431, in forward
-    return F.mse_loss(input, target, reduction=self.reduction)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/functional.py", line 2216, in mse_loss
-    ret = torch._C._nn.mse_loss(expanded_input, expanded_target, _Reduction.get_enum(reduction))
-KeyboardInterrupt
- 10%|█         | 6/60 [05:54<53:07, 59.04s/it]

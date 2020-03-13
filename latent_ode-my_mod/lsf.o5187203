@@ -1,25 +1,0 @@
-Lmod has detected the following error: The following module(s) are unknown:
-"pytorch/1.4.0"
-
-Please check the spelling or version number. Also try "module spider ..."
-It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "pytorch/1.4.0"
-
-
-
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/plotting.py:178: UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
-  plt.show(block=False)
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/run_models.py
-run_models.py --niters 1 -b 500 -n 3000 -l 10 --dataset crop --classic-rnn
-  0%|          | 0/6 [00:00<?, ?it/s]Couldn't import umap
-Sampling dataset of 3000 training examples
-Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-Traceback (most recent call last):
-  File "run_models.py", line 295, in <module>
-    if (itr % round(n_iters_to_viz * num_batches)== 0) and (itr!=0):
-ZeroDivisionError: integer division or modulo by zero
-  0%|          | 0/6 [00:29<?, ?it/s]
