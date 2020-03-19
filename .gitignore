@@ -2,4 +2,6 @@ fieldRNN-my_mod/data
 fieldRNN-my_mod
 latent_ode-my_mod/logs/
 latent_ode-my_mod/experiments/
-latent_ode-my_mod/data
+latent_ode-my_mod/data/
+latent_ode-my_mod/runs/
+
