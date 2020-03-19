@@ -300,7 +300,7 @@ if __name__ == '__main__':
 		train_res["loss"].backward()
 		optimizer.step()
 
-		n_iters_to_viz = 0.12
+		n_iters_to_viz = 0.3333
 		if (itr % round(n_iters_to_viz * num_batches)== 0) and (itr!=0):
 			
 			with torch.no_grad():
