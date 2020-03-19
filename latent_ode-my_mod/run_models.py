@@ -44,7 +44,7 @@ from tqdm import tqdm
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=1000, help="Size of the dataset")
-parser.add_argument('--niters', type=int, default=3) # default=300
+parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=50)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
@@ -242,7 +242,6 @@ if __name__ == '__main__':
 	
 	##################################################################
 	
-<<<<<<< HEAD
 	#if args.tensorboard:
 	comment = "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
 	
@@ -251,7 +250,7 @@ if __name__ == '__main__':
 	
 	tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
 	trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
-=======
+	
 	if args.tensorboard:
 		if args.classic_rnn:
 			nntype = 'rnn'
@@ -265,8 +264,6 @@ if __name__ == '__main__':
 		
 		tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
 		trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
->>>>>>> 96d15b2377166937e2f39ab6f0771a0a01dfd4c4
-		
 		
 	##################################################################
 	
