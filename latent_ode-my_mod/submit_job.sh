@@ -16,8 +16,8 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.130 pytorch/1.4.0 #hdf5/2.10.0 
 #python_gpu/3.6.1
 
 ## Our model:
-python run_models.py --niters 4 -n 300000 -b 2000 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 6 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method euler
+#run_models.py --niters 30 -n 300000 -b 2000 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method euler
 
 ## Baseline
-#python run_models.py --niters 3 -n 300000 -b 500 -l 45 --dataset crop --classic-rnn
+python run_models.py --niters 30 -n 300000 -b 500 -l 45 --dataset crop --classic-rnn --random-seed 1999
 
