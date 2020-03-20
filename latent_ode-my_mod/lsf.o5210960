@@ -1,137 +1,0 @@
-Lmod has detected the following error: The following module(s) are unknown:
-"pytorch/1.4.0"
-
-Please check the spelling or version number. Also try "module spider ..."
-It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "pytorch/1.4.0"
-
-
-
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/run_models.py
-run_models.py --niters 4 -n 300000 -b 2000 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method euler
-  0%|          | 0/576 [00:00<?, ?it/s]  0%|          | 1/576 [02:08<20:28:35, 128.20s/it]  0%|          | 2/576 [04:15<20:24:15, 127.97s/it]  1%|          | 3/576 [06:24<20:23:52, 128.15s/it]  1%|          | 4/576 [08:31<20:20:18, 128.00s/it]  1%|          | 5/576 [10:40<20:19:35, 128.15s/it]  1%|          | 6/576 [12:48<20:17:08, 128.12s/it]Experiment 397
-Epoch 0000 [Test seq (cond on sampled tp)] | Loss 2.041007 | Likelihood -1026.828613 | KL fp 0.0000 | FP STD 0.0000|
-KL coef: 0.0
-Train loss (one batch): 2.0389668941497803
-Train CE loss (one batch): 2.0389668941497803
-Classification accuracy (TRAIN): 0.3320
-Test MSE: 0.2061
-Classification accuracy (TEST): 0.3522
-Poisson likelihood: 0.0
-CE loss: 2.0410068035125732
------------------------------------------------------------------------------------
-  1%|          | 7/576 [16:17<24:04:41, 152.34s/it]  1%|▏         | 8/576 [18:13<22:20:34, 141.61s/it]  2%|▏         | 9/576 [20:03<20:47:04, 131.97s/it]  2%|▏         | 10/576 [21:53<19:43:36, 125.47s/it]  2%|▏         | 11/576 [23:43<18:56:42, 120.71s/it]  2%|▏         | 12/576 [25:33<18:25:35, 117.62s/it]  2%|▏         | 13/576 [27:22<17:59:51, 115.08s/it]Experiment 397
-Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.919435 | Likelihood -1084.123413 | KL fp 0.0000 | FP STD 0.0000|
-KL coef: 0.0
-Train loss (one batch): 1.9582860469818115
-Train CE loss (one batch): 1.9582860469818115
-Classification accuracy (TRAIN): 0.3420
-Test MSE: 0.2176
-Classification accuracy (TEST): 0.3536
-Poisson likelihood: 0.0
-CE loss: 1.919434905052185
------------------------------------------------------------------------------------
-  2%|▏         | 14/576 [30:24<21:04:50, 135.04s/it]  3%|▎         | 15/576 [32:14<19:52:06, 127.50s/it]  3%|▎         | 16/576 [34:04<19:00:59, 122.25s/it]  3%|▎         | 17/576 [35:53<18:23:19, 118.43s/it]  3%|▎         | 18/576 [37:44<17:58:25, 115.96s/it]  3%|▎         | 19/576 [39:33<17:38:50, 114.06s/it]  3%|▎         | 20/576 [41:24<17:27:11, 113.01s/it]Experiment 397
-Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.809808 | Likelihood -1326.656250 | KL fp 0.0000 | FP STD 0.0000|
-KL coef: 0.0
-Train loss (one batch): 1.834220051765442
-Train CE loss (one batch): 1.834220051765442
-Classification accuracy (TRAIN): 0.3600
-Test MSE: 0.2661
-Classification accuracy (TEST): 0.3649
-Poisson likelihood: 0.0
-CE loss: 1.8098076581954956
------------------------------------------------------------------------------------
-  4%|▎         | 21/576 [44:25<20:35:27, 133.56s/it]  4%|▍         | 22/576 [46:15<19:26:43, 126.36s/it]  4%|▍         | 23/576 [48:05<18:40:04, 121.53s/it]  4%|▍         | 24/576 [49:55<18:05:07, 117.95s/it]  4%|▍         | 25/576 [51:45<17:42:45, 115.73s/it]  5%|▍         | 26/576 [53:35<17:24:12, 113.91s/it]  5%|▍         | 27/576 [55:25<17:11:34, 112.74s/it]Experiment 397
-Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.586189 | Likelihood -1389.563477 | KL fp 0.0000 | FP STD 0.0000|
-KL coef: 0.0
-Train loss (one batch): 1.7145777940750122
-Train CE loss (one batch): 1.7145777940750122
-Classification accuracy (TRAIN): 0.4300
-Test MSE: 0.2786
-Classification accuracy (TEST): 0.5177
-Poisson likelihood: 0.0
-CE loss: 1.5861890316009521
------------------------------------------------------------------------------------
-  5%|▍         | 28/576 [58:27<20:18:32, 133.42s/it]  5%|▌         | 29/576 [1:00:16<19:11:25, 126.30s/it]  5%|▌         | 30/576 [1:02:07<18:25:57, 121.53s/it]  5%|▌         | 31/576 [1:03:56<17:51:24, 117.95s/it]  6%|▌         | 32/576 [1:05:47<17:29:06, 115.71s/it]  6%|▌         | 33/576 [1:07:36<17:08:47, 113.68s/it]  6%|▌         | 34/576 [1:09:25<16:55:35, 112.43s/it]Experiment 397
-Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.424594 | Likelihood -1353.312622 | KL fp 0.0000 | FP STD 0.0000|
-KL coef: 0.0
-Train loss (one batch): 1.60933518409729
-Train CE loss (one batch): 1.60933518409729
-Classification accuracy (TRAIN): 0.4840
-Test MSE: 0.2714
-Classification accuracy (TEST): 0.5424
-Poisson likelihood: 0.0
-CE loss: 1.4245936870574951
------------------------------------------------------------------------------------
-  6%|▌         | 35/576 [1:12:27<20:00:37, 133.16s/it]  6%|▋         | 36/576 [1:14:17<18:57:04, 126.34s/it]  6%|▋         | 37/576 [1:16:07<18:10:00, 121.34s/it]  7%|▋         | 38/576 [1:17:57<17:38:11, 118.01s/it]  7%|▋         | 39/576 [1:19:46<17:13:02, 115.42s/it]  7%|▋         | 40/576 [1:21:37<16:57:56, 113.95s/it]  7%|▋         | 41/576 [1:23:27<16:44:58, 112.71s/it]Experiment 397
-Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.339056 | Likelihood -1320.537231 | KL fp 0.0000 | FP STD 0.0000|
-KL coef: 0.0
-Train loss (one batch): 1.4852501153945923
-Train CE loss (one batch): 1.4852501153945923
-Classification accuracy (TRAIN): 0.5490
-Test MSE: 0.2648
-Classification accuracy (TEST): 0.5504
-Poisson likelihood: 0.0
-CE loss: 1.3390562534332275
------------------------------------------------------------------------------------
-  7%|▋         | 42/576 [1:26:28<19:46:49, 133.35s/it]  7%|▋         | 43/576 [1:28:19<18:44:00, 126.53s/it]  8%|▊         | 44/576 [1:30:09<17:57:54, 121.57s/it]  8%|▊         | 45/576 [1:31:59<17:26:27, 118.24s/it]  8%|▊         | 46/576 [1:33:48<17:00:21, 115.51s/it]  8%|▊         | 47/576 [1:35:38<16:43:42, 113.84s/it]  8%|▊         | 48/576 [1:37:29<16:33:07, 112.85s/it]Experiment 397
-Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.160010 | Likelihood -1213.341064 | KL fp 0.0000 | FP STD 0.0000|
-KL coef: 0.0
-Train loss (one batch): 1.4140796661376953
-Train CE loss (one batch): 1.4140796661376953
-Classification accuracy (TRAIN): 0.5720
-Test MSE: 0.2434
-Classification accuracy (TEST): 0.6491
-Poisson likelihood: 0.0
-CE loss: 1.1600103378295898
------------------------------------------------------------------------------------
-  9%|▊         | 49/576 [1:40:31<19:34:17, 133.69s/it]  9%|▊         | 50/576 [1:42:21<18:29:30, 126.56s/it]  9%|▉         | 51/576 [1:44:12<17:45:40, 121.79s/it]  9%|▉         | 52/576 [1:46:02<17:12:11, 118.19s/it]  9%|▉         | 53/576 [1:47:52<16:49:14, 115.78s/it]  9%|▉         | 54/576 [1:49:42<16:31:55, 114.01s/it] 10%|▉         | 55/576 [1:51:32<16:20:51, 112.96s/it]Couldn't import umap
-Sampling dataset of 300000 training examples
-Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-Computing loss... 
-Number of labeled examples: 1499
-plotting....
-Computing loss... 
-Number of labeled examples: 1499
-plotting....
-Computing loss... 
-Number of labeled examples: 1499
-plotting....
-Computing loss... 
-Number of labeled examples: 1499
-plotting....
-Computing loss... 
-Number of labeled examples: 1499
-plotting....
-Computing loss... 
-Number of labeled examples: 1499
-plotting....
-Computing loss... 
-Number of labeled examples: 1499
-plotting....
-Traceback (most recent call last):
-  File "run_models.py", line 290, in <module>
-    train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/base_models.py", line 132, in compute_all_losses
-    mask = (batch_dict["mask_predicted_data"])) # this mask gives UserWarnings # torch.BoolTensor
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/base_models.py", line 97, in get_gaussian_likelihood
-    obsrv_std = self.obsrv_std, mask = mask)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/likelihood_eval.py", line 237, in masked_gaussian_log_density
-    res = compute_masked_likelihood(mu, data, mask, func)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/likelihood_eval.py", line 197, in compute_masked_likelihood
-    log_prob = likelihood_func(mu_masked, data_masked, indices = (i,k,j))
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/likelihood_eval.py", line 236, in <lambda>
-    func = lambda mu, data, indices: gaussian_log_likelihood(mu, data, obsrv_std = obsrv_std, indices = indices)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/likelihood_eval.py", line 30, in gaussian_log_likelihood
-    log_prob = gaussian.log_prob(data_2d) 
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/distributions/independent.py", line 89, in log_prob
-    return _sum_rightmost(log_prob, self.reinterpreted_batch_ndims)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/distributions/utils.py", line 55, in _sum_rightmost
-    return value.reshape(required_shape).sum(-1)
-KeyboardInterrupt
- 10%|▉         | 55/576 [1:51:53<17:39:58, 122.07s/it]

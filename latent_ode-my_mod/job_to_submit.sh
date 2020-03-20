@@ -1,5 +1,5 @@
 #!/bin/bash
-#BSUB -W 24:00
+#BSUB -W 120:00
 ##BSUB -o /cluster/work/igp_psr/metzgern/Network/outputs/outputtrain_Le${object}.%J.%I.txt
 ##BSUB -e /cluster/work/igp_psr/metzgern/Network/outputs/train_Le${object}.%J.%I.txt
 #BSUB -R "rusage[mem=32000,ngpus_excl_p=1]"

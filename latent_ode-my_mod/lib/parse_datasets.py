@@ -212,7 +212,7 @@ def parse_datasets(args, device):
 		print(train_dataset_obj)
 		
 		n_samples = min(args.n, len(train_dataset_obj))
-		n_eval_samples = min( float("inf"), len(eval_dataset_obj))
+		n_eval_samples = min( 1700, len(eval_dataset_obj))
 		n_test_samples = min( float("inf"), len(test_dataset_obj))
 		
 		#should I read the data into memory? takes about 4 minutes for the whole dataset!
@@ -228,11 +228,10 @@ def parse_datasets(args, device):
 		
 		vals, tt, mask, labels = train_dataset_obj[0]
 		
-        
 		batch_size = min(args.batch_size, args.n)
 		 
 		#evaluation batch sizes. #Must be tuned to increase efficency of evaluation
-		validation_batch_size = 3000
+		validation_batch_size = 800
 		test_batch_size = min(n_eval_samples, validation_batch_size)
 		eval_batch_size = min(n_test_samples, validation_batch_size)
 		
