@@ -20,6 +20,9 @@ import subprocess
 import datetime
 from tqdm import tqdm
 
+import pdb
+
+
 def makedirs(dirname):
 	if not os.path.exists(dirname):
 		os.makedirs(dirname)
@@ -218,6 +221,7 @@ def get_next_batch(dataloader):
 	batch_dict = get_dict_template()
 
 	# remove the time points where there are no observations in this batch
+	pdb.set_trace()
 	non_missing_tp = torch.sum(data_dict["observed_data"],(0,2)) != 0.
 	batch_dict["observed_data"] = data_dict["observed_data"][:, non_missing_tp]
 	batch_dict["observed_tp"] = data_dict["observed_tp"][non_missing_tp]
