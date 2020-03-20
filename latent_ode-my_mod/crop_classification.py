@@ -14,6 +14,7 @@ from tqdm import tqdm
 import numpy as np
 import h5py
 import lib.utils as utils
+import pdb
 
 class Crops(object):
 	
@@ -779,6 +780,8 @@ class Crops(object):
 	
 	def __getitem__(self, index):
 		
+		#pdb.set_trace()
+
 		#should accept indices and should output the datasamples, as read from disk
 		if isinstance(index, slice):
 			# do your handling for a slice object:
@@ -829,7 +832,7 @@ def variable_time_collate_fn_crop(batch, args, device = torch.device("cpu"), dat
 		combined_vals: (M, T, D) tensor containing the observed values.
 		combined_mask: (M, T, D) tensor containing 1 where values were observed and 0 otherwise.
 	"""
-	
+	pdb.set_trace()
 	
 	if list_form: #list format as the other datasets
 		

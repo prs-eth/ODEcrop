@@ -23,6 +23,9 @@ from crop_classification import Crops, variable_time_collate_fn_crop
 from sklearn import model_selection
 import random
 
+#Nando's packages
+import pdb
+
 #####################################################################################################
 def parse_datasets(args, device):
 	
@@ -194,7 +197,8 @@ def parse_datasets(args, device):
     
     #if dataset_name == "crops":
 	if dataset_name == "crop":
-		
+		#todo: Implement tensorformat
+
 		list_form = True
 		train_dataset_obj = Crops('data/Crops', mode="train", 
 										download=True,
@@ -212,7 +216,7 @@ def parse_datasets(args, device):
 		print(train_dataset_obj)
 		
 		n_samples = min(args.n, len(train_dataset_obj))
-		n_eval_samples = min( 1700, len(eval_dataset_obj))
+		n_eval_samples = min( 1200, len(eval_dataset_obj))
 		n_test_samples = min( float("inf"), len(test_dataset_obj))
 		
 		#should I read the data into memory? takes about 4 minutes for the whole dataset!
@@ -231,19 +235,29 @@ def parse_datasets(args, device):
 		batch_size = min(args.batch_size, args.n)
 		 
 		#evaluation batch sizes. #Must be tuned to increase efficency of evaluation
-		validation_batch_size = 800
+		validation_batch_size = 150
 		test_batch_size = min(n_eval_samples, validation_batch_size)
 		eval_batch_size = min(n_test_samples, validation_batch_size)
 		
-		train_dataloader = DataLoader(train_data, batch_size = batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="train", list_form=list_form))
-		
-		test_dataloader = DataLoader(test_data, batch_size = test_batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="test", list_form=list_form))
-		
-		eval_dataloader = DataLoader(eval_data, batch_size = eval_batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="eval", list_form=list_form))
-		
+		if list_form:
+			train_dataloader = DataLoader(train_data, batch_size = batch_size, shuffle=False, 
+				collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="train", list_form=list_form))
+			
+			test_dataloader = DataLoader(test_data, batch_size = test_batch_size, shuffle=False, 
+				collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="test", list_form=list_form))
+			
+			eval_dataloader = DataLoader(eval_data, batch_size = eval_batch_size, shuffle=False, 
+				collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="eval", list_form=list_form))
+		else:
+			train_dataloader = DataLoader(train_data, batch_size = batch_size, shuffle=False, 
+				collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="train", list_form=list_form))
+			
+			test_dataloader = DataLoader(test_data, batch_size = test_batch_size, shuffle=False, 
+				collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="test", list_form=list_form))
+			
+			eval_dataloader = DataLoader(eval_data, batch_size = eval_batch_size, shuffle=False, 
+				collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="eval", list_form=list_form))
+
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
 					"test_dataloader": utils.inf_generator(eval_dataloader), #changed to validate on the evalutation set #attention, might be another naming convention...
