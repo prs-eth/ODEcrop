@@ -801,12 +801,12 @@ class Crops(object):
 				return output
 
 			else: #tensor_format (more efficient), 
-				raise Exception('Tensorformat not implemented yet!')
+				#raise Exception('Tensorformat not implemented yet!')
 				
 				data = torch.from_numpy( self.hdf5dataloader["data"][start:index.stop:step] ).float().to(self.device)
 				time_stamps = torch.from_numpy( self.timestamps ).to(self.device)
 				mask = torch.from_numpy(  self.hdf5dataloader["mask"][start:index.stop:step] ).float().to(self.device)
-				labels = torch.from_numpy( self.hdf5dataloader["labels"][start:index.stop:step] ).to(self.device)
+				labels = torch.from_numpy( self.hdf5dataloader["labels"][start:index.stop:step] ).float().to(self.device)
 				
 				#make it a dictionary to replace the collate function....
 				data_dict = {
@@ -837,7 +837,7 @@ class Crops(object):
 				data = torch.from_numpy( self.hdf5dataloader["data"][index] ).float().to(self.device)
 				time_stamps = torch.from_numpy( self.timestamps ).to(self.device)
 				mask = torch.from_numpy(self.hdf5dataloader["mask"][index] ).float().to(self.device)
-				labels = torch.from_numpy( self.hdf5dataloader["labels"][index] ).to(self.device)
+				labels = torch.from_numpy( self.hdf5dataloader["labels"][index] ).float().to(self.device)
 
 				data_dict = {
 					"data": data, 
@@ -851,7 +851,10 @@ class Crops(object):
 				#return (data, time_stamps, mask, labels)
 
 	def __len__(self):
-		return self.hdf5dataloader["data"].shape[0]
+		if self.mode=="train":
+			return min(self.args.n, self.hdf5dataloader["data"].shape[0])
+		else:
+			return min(self.args.validn, self.hdf5dataloader["data"].shape[0])
 
 	def __repr__(self):
 		fmt_str = 'Dataset ' + self.__class__.__name__ + '\n'

@@ -147,37 +147,40 @@ def compute_multiclass_CE_loss(label_predictions, true_label, mask):
 		# targets are in one-hot encoding -- convert to indices
 		_, true_label_hard = true_label.max(-1)
 		
-		#Nando's comment: but what if i want soft labels for my cross entropy? use the labels_soft variable
+		#Nando's comment: but what if i want soft labels for my cross entropy? use the labels_soft variable => solved!
 		
-	res = []
-	for i in range(true_label_hard.size(0)):
-		pred_masked = torch.masked_select(label_predictions[i], pred_mask[i].bool()) #byte()
-		labels_hard = torch.masked_select(true_label_hard[i], label_mask[i].bool()) #byte()
-		labels_soft = torch.masked_select(true_label[i], label_mask[i].bool()) #byte()
+	
+	vectorized = True
+	if not vectorized:
+
+		res = []
+		for i in range(true_label_hard.size(0)):
+			pred_masked = torch.masked_select(label_predictions[i], pred_mask[i].bool()) #byte()
+			labels_hard = torch.masked_select(true_label_hard[i], label_mask[i].bool()) #byte()
+			labels_soft = torch.masked_select(true_label[i], label_mask[i].bool()) #byte()
+			
+			
+			pred_masked = pred_masked.reshape(-1, n_dims)
+
+			if (not crop_set):
+				if (len(labels_hard) == 0):
+					continue
+
+			#ce_loss = nn.CrossEntropyLoss()(pred_masked, labels_hard.long())
+			ce_loss = CXE(pred_masked, labels_soft)
+			res.append(ce_loss)
+
+		pdb.set_trace()
 		
-		
-		pred_masked = pred_masked.reshape(-1, n_dims)
+		ce_loss = torch.stack(res, 0).to(get_device(label_predictions))
+		ce_loss = torch.mean(ce_loss)
+		# # divide by number of patients in a batch
+		# ce_loss = ce_loss / n_traj_samples
 
-		if (not crop_set):
-			if (len(labels_hard) == 0):
-				continue
+	else: #Nando's alternative:
+		ce_loss = -(true_label * torch.log(label_predictions)).sum(dim=1).mean()
 
-		#ce_loss = nn.CrossEntropyLoss()(pred_masked, labels_hard.long())
-		ce_loss = CXE (pred_masked, labels_soft)
-		"""
-		print(ce_loss)
-		print(labels_soft)
-		print(pred_masked)
-		print(sum(sum(pred_masked)))
-		"""
-		res.append(ce_loss)
-
-	ce_loss = torch.stack(res, 0).to(get_device(label_predictions))
-	ce_loss = torch.mean(ce_loss)
-	# # divide by number of patients in a batch
-	# ce_loss = ce_loss / n_traj_samples
 	return ce_loss
-
 
 
 

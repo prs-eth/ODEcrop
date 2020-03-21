@@ -20,6 +20,7 @@ import subprocess
 import datetime
 from tqdm import tqdm
 
+import h5py
 import pdb
 
 
@@ -553,7 +554,7 @@ def compute_loss_all_batches(model,
 	print("Computing loss... ")
 	
 	for i in tqdm(range(n_batches)):
-		
+		#pdb.set_trace()
 		batch_dict = get_next_batch(test_dataloader)
 
 		results  = model.compute_all_losses(batch_dict,
@@ -662,5 +663,84 @@ def check_mask(data, mask):
 
 
 
+#experimental of Nando:
 
+class FastTensorDataLoader:
+	"""
+	A DataLoader-like object for a set of tensors that can be much faster than
+	TensorDataset + DataLoader because dataloader grabs individual indices of
+	the dataset and calls cat (slow).
+	"""
+	def __init__(self, dataset, batch_size=32, shuffle=False):
+		"""
+		Initialize a FastTensorDataLoader.
 
+		:param *dataset: hdf5 dataset. Eg. Crop dataset
+		:param batch_size: batch size to load.
+		:param shuffle: if True, shuffle the data *in-place* whenever an iterator is created out of this object.
+			Recommendation: set shuffle to False, the underlying hd5y is than more efficient,
+			because id can make use of the contiguous blocks of data.
+
+		:returns: A FastTensorDataLoader.
+		"""
+		self.dataset = dataset
+		self.hdf5dataloader = self.dataset.hdf5dataloader
+
+		self.dataset_len = len(dataset)
+		self.batch_size = batch_size
+		self.shuffle = shuffle
+		self.timestamps = h5py.File(os.path.join(self.dataset.processed_folder, self.dataset.time_file), "r")["tt"][:]
+		
+		# Calculate # batches
+		n_batches, remainder = divmod(self.dataset_len, self.batch_size)
+		if remainder > 0: 
+			n_batches += 1 # what hapens to the last one => not full right?
+		self.n_batches = n_batches
+
+	def __iter__(self):
+		if self.shuffle:
+			self.indices = np.random.permutation(self.dataset_len)
+		else:
+			self.indices = None
+		self.i = 0
+		return self
+
+	def __next__(self):
+		if self.i >= self.dataset_len: #start from beginning again # new epoch??
+			raise StopIteration 
+			self.i = 0
+		if self.indices is not None:
+			indices = np.sort(self.indices[self.i:self.i+self.batch_size])
+			#batch = torch.index_select(t, 0, indices)
+			#pdb.set_trace()
+			data = torch.from_numpy( self.hdf5dataloader["data"][indices] ).float().to(self.dataset.device)
+			time_stamps = torch.from_numpy( self.timestamps ).to(self.dataset.device)
+			mask = torch.from_numpy(  self.hdf5dataloader["mask"][indices] ).float().to(self.dataset.device)
+			labels = torch.from_numpy( self.hdf5dataloader["labels"][indices] ).float().to(self.dataset.device)
+
+			data_dict = {
+				"data": data, 
+				"time_steps": time_stamps,
+				"mask": mask,
+				"labels": labels}
+		else:
+			#batch = self.dataset[self.i:self.i+self.batch_size]
+
+			data = torch.from_numpy( self.hdf5dataloader["data"][self.i:self.i+self.batch_size] ).float().to(self.dataset.device)
+			time_stamps = torch.from_numpy( self.timestamps ).to(self.dataset.device)
+			mask = torch.from_numpy(self.hdf5dataloader["mask"][self.i:self.i+self.batch_size] ).float().to(self.dataset.device)
+			labels = torch.from_numpy( self.hdf5dataloader["labels"][self.i:self.i+self.batch_size] ).float().to(self.dataset.device)
+
+			data_dict = {
+				"data": data, 
+				"time_steps": time_stamps,
+				"mask": mask,
+				"labels": labels}
+			
+		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type = self.dataset.mode)
+				
+		self.i += self.batch_size
+		return data_dict
+
+	def __len__(self):
+		return self.n_batches
