@@ -34,6 +34,7 @@ class Crops(object):
 		self.mode = mode
 		self.device = device
 		self.args = args
+		self.second = False
 				
 		if download:
 			self.download()
@@ -785,8 +786,7 @@ class Crops(object):
 		#should accept indices and should output the datasamples, as read from disk
 		if isinstance(index, slice):
 			# do your handling for a slice object:
-			#pdb.set_trace()
-
+			pdb.set_trace()
 			output = []
 			start = 0 if index.start is None else index.start
 			step = 1 if index.start is None else index.step
@@ -799,16 +799,16 @@ class Crops(object):
 					labels = torch.from_numpy( self.hdf5dataloader["labels"][i] ) 
 					output.append((data, time_stamps, mask, labels))
 				return output
+
 			else: #tensor_format (more efficient), 
-				#raise Exception('Tensorformat not implemented yet!')
+				raise Exception('Tensorformat not implemented yet!')
 				
-				data = torch.from_numpy( self.hdf5dataloader["data"][start:index.stop:step] ).to(self.device)
-				time_stamps = torch.from_numpy( self.timestamps ).float().to(self.device)
-				mask = torch.from_numpy(  self.hdf5dataloader["mask"][start:index.stop:step] ).to(self.device)
+				data = torch.from_numpy( self.hdf5dataloader["data"][start:index.stop:step] ).float().to(self.device)
+				time_stamps = torch.from_numpy( self.timestamps ).to(self.device)
+				mask = torch.from_numpy(  self.hdf5dataloader["mask"][start:index.stop:step] ).float().to(self.device)
 				labels = torch.from_numpy( self.hdf5dataloader["labels"][start:index.stop:step] ).to(self.device)
-
-				#TODO: make it a dictionary to replace the collate function....
-
+				
+				#make it a dictionary to replace the collate function....
 				data_dict = {
 					"data": data, 
 					"time_steps": time_stamps,
@@ -822,6 +822,11 @@ class Crops(object):
 		else:
             # Do your handling for a plain index
 			#pdb.set_trace()
+
+			if self.second:
+				raise Exception('Tensorformat not implemented yet!')
+				self.second = True
+			
 			if self.list_form :
 				data = torch.from_numpy( self.hdf5dataloader["data"][index] )
 				time_stamps = torch.from_numpy( self.timestamps )
@@ -829,16 +834,9 @@ class Crops(object):
 				labels = torch.from_numpy( self.hdf5dataloader["labels"][index] )
 				return (data, time_stamps, mask, labels)
 			else:
-				"""
-				data = torch.from_numpy( np.expand_dims(self.hdf5dataloader["data"][index], axis=0) ).to(self.device)
-				time_stamps = torch.from_numpy( np.expand_dims(self.timestamps, axis=0) ).to(self.device)
-				mask = torch.from_numpy( np.expand_dims(self.hdf5dataloader["mask"][index], axis=0) ).to(self.device)
-				labels = torch.from_numpy( np.expand_dims(self.hdf5dataloader["labels"][index], axis=0) ).to(self.device)
-				"""
-
-				data = torch.from_numpy( self.hdf5dataloader["data"][index] ).to(self.device)
-				time_stamps = torch.from_numpy( self.timestamps ).float().to(self.device)
-				mask = torch.from_numpy(self.hdf5dataloader["mask"][index] ).to(self.device)
+				data = torch.from_numpy( self.hdf5dataloader["data"][index] ).float().to(self.device)
+				time_stamps = torch.from_numpy( self.timestamps ).to(self.device)
+				mask = torch.from_numpy(self.hdf5dataloader["mask"][index] ).float().to(self.device)
 				labels = torch.from_numpy( self.hdf5dataloader["labels"][index] ).to(self.device)
 
 				data_dict = {

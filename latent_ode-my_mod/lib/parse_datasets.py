@@ -197,8 +197,8 @@ def parse_datasets(args, device):
     
     #if dataset_name == "crops":
 	if dataset_name == "crop":
-		#todo: Implement tensorformat
-		list_form = True
+		#Implemented tensorformat
+		list_form = False
 
 		train_dataset_obj = Crops('data/Crops', mode="train", args=args,
 										download=True,
@@ -274,6 +274,8 @@ def parse_datasets(args, device):
 				)
 
 		#TODO: make it opossible to quickly switch between evaluation and testdataset
+
+		pdb.set_trace()
 
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 

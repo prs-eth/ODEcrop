@@ -13,6 +13,7 @@ import lib.utils as utils
 from torch.nn.modules.rnn import LSTM, GRU
 from lib.utils import get_device
 
+import pdb
 
 # GRU description: 
 # http://www.wildml.com/2015/10/recurrent-neural-network-tutorial-part-4-implementing-a-grulstm-rnn-with-python-and-theano/
@@ -56,6 +57,7 @@ class GRU_unit(nn.Module):
 
 
 	def forward(self, y_mean, y_std, x, masked_update = True):
+		#pdb.set_trace()
 		y_concat = torch.cat([y_mean, y_std, x], -1)
 
 		update_gate = self.update_gate(y_concat)
