@@ -785,7 +785,7 @@ class Crops(object):
 		#should accept indices and should output the datasamples, as read from disk
 		if isinstance(index, slice):
 			# do your handling for a slice object:
-			pdb.set_trace()
+			#pdb.set_trace()
 
 			output = []
 			start = 0 if index.start is None else index.start
@@ -803,7 +803,7 @@ class Crops(object):
 				#raise Exception('Tensorformat not implemented yet!')
 				
 				data = torch.from_numpy( self.hdf5dataloader["data"][start:index.stop:step] ).to(self.device)
-				time_stamps = torch.from_numpy( self.timestamps ).to(self.device)
+				time_stamps = torch.from_numpy( self.timestamps ).float().to(self.device)
 				mask = torch.from_numpy(  self.hdf5dataloader["mask"][start:index.stop:step] ).to(self.device)
 				labels = torch.from_numpy( self.hdf5dataloader["labels"][start:index.stop:step] ).to(self.device)
 
@@ -837,7 +837,7 @@ class Crops(object):
 				"""
 
 				data = torch.from_numpy( self.hdf5dataloader["data"][index] ).to(self.device)
-				time_stamps = torch.from_numpy( self.timestamps ).to(self.device)
+				time_stamps = torch.from_numpy( self.timestamps ).float().to(self.device)
 				mask = torch.from_numpy(self.hdf5dataloader["mask"][index] ).to(self.device)
 				labels = torch.from_numpy( self.hdf5dataloader["labels"][index] ).to(self.device)
 

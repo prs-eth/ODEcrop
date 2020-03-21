@@ -252,13 +252,15 @@ if __name__ == '__main__':
 	trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
 	
 	if args.tensorboard:
+		comment = '_'
 		if args.classic_rnn:
 			nntype = 'rnn'
+			comment = nntype + "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
+
 		elif args.ode_rnn:
 			nntype = 'ode'
-		
-		comment = nntype + "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
-		
+			comment = nntype + "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
+
 		validationtensorboard_dir = "runs/expID" + "_validation" + str(experimentID) + comment
 		validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
 		

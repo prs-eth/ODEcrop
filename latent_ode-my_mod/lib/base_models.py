@@ -22,6 +22,7 @@ from torch.nn.parameter import Parameter
 
 import sklearn as sk
 
+import pdb
 
 def create_classifier(z0_dim, n_labels):
 	return nn.Sequential(

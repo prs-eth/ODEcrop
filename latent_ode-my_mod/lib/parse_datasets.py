@@ -198,8 +198,8 @@ def parse_datasets(args, device):
     #if dataset_name == "crops":
 	if dataset_name == "crop":
 		#todo: Implement tensorformat
+		list_form = True
 
-		list_form = False
 		train_dataset_obj = Crops('data/Crops', mode="train", args=args,
 										download=True,
 										device = device, list_form = list_form)
@@ -216,13 +216,13 @@ def parse_datasets(args, device):
 		print(train_dataset_obj)
 		
 		n_samples = min(args.n, len(train_dataset_obj))
-		n_eval_samples = min( 1200, len(eval_dataset_obj)) #TODO set it back to inf
+		n_eval_samples = min( float("inf"), len(eval_dataset_obj)) #TODO set it back to inf
 		n_test_samples = min( float("inf"), len(test_dataset_obj))
 		
 		#should I read the data into memory? takes about 4 minutes for the whole dataset!
 		#not recommended for debugging with large datasets, so better set it to false
-		read_to_mem = False #defualt True 
-		if read_to_mem:
+		#read_to_mem = list_form #defualt True 
+		if list_form:
 			train_data = train_dataset_obj[:n_samples]
 			test_data = test_dataset_obj[:n_test_samples]
 			eval_data = eval_dataset_obj[:n_eval_samples]
@@ -246,7 +246,7 @@ def parse_datasets(args, device):
 		batch_size = min(args.batch_size, args.n)
 
 		#evaluation batch sizes. #Must be tuned to increase efficency of evaluation
-		validation_batch_size = 150
+		validation_batch_size = 7000
 		test_batch_size = min(n_eval_samples, validation_batch_size)
 		eval_batch_size = min(n_test_samples, validation_batch_size)
 		

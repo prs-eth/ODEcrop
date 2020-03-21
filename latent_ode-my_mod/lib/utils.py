@@ -221,10 +221,12 @@ def get_next_batch(dataloader):
 	batch_dict = get_dict_template()
 
 	# remove the time points where there are no observations in this batch
-	pdb.set_trace()
 	non_missing_tp = torch.sum(data_dict["observed_data"],(0,2)) != 0.
 	batch_dict["observed_data"] = data_dict["observed_data"][:, non_missing_tp]
-	batch_dict["observed_tp"] = data_dict["observed_tp"][non_missing_tp]
+	if len(data_dict["observed_tp"].shape)==2:
+		batch_dict["observed_tp"] = data_dict["observed_tp"][0,non_missing_tp]
+	else:
+		batch_dict["observed_tp"] = data_dict["observed_tp"][non_missing_tp]
 
 	# print("observed data")
 	# print(batch_dict["observed_data"].size())
@@ -233,12 +235,17 @@ def get_next_batch(dataloader):
 		batch_dict["observed_mask"] = data_dict["observed_mask"][:, non_missing_tp]
 
 	batch_dict[ "data_to_predict"] = data_dict["data_to_predict"]
-	batch_dict["tp_to_predict"] = data_dict["tp_to_predict"]
+	if len(data_dict["observed_tp"].shape)==2:
+		batch_dict["tp_to_predict"] = data_dict["tp_to_predict"][0]
+	else:
+		batch_dict["tp_to_predict"] = data_dict["tp_to_predict"]
 
 	non_missing_tp = torch.sum(data_dict["data_to_predict"],(0,2)) != 0.
 	batch_dict["data_to_predict"] = data_dict["data_to_predict"][:, non_missing_tp]
-	batch_dict["tp_to_predict"] = data_dict["tp_to_predict"][non_missing_tp]
-
+	if len(data_dict["observed_tp"].shape)==2:
+		batch_dict["tp_to_predict"] = data_dict["tp_to_predict"][0,non_missing_tp]
+	else:
+		batch_dict["tp_to_predict"] = data_dict["tp_to_predict"][non_missing_tp]
 	# print("data_to_predict")
 	# print(batch_dict["data_to_predict"].size())
 
