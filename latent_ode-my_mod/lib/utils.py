@@ -553,7 +553,7 @@ def compute_loss_all_batches(model,
 	
 	print("Computing loss... ")
 	
-	for i in tqdm(range(n_batches)):
+	for i in (range(n_batches)):
 		#pdb.set_trace()
 		batch_dict = get_next_batch(test_dataloader)
 

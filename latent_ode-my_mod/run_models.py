@@ -44,7 +44,7 @@ from tqdm import tqdm
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=300000, help="Size of the dataset")
-parser.add_argument('-validn',  type=int, default=60000, help="Size of the validation dataset")
+parser.add_argument('-validn',  type=int, default=20000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=2000)
@@ -299,13 +299,12 @@ if __name__ == '__main__':
 		else:
 			kl_coef = (1-0.99** (itr // num_batches - wait_until_kl_inc))
 		
-		#pdb.set_trace()
 		batch_dict = utils.get_next_batch(data_obj["train_dataloader"])
 		train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
 		train_res["loss"].backward()
 		optimizer.step()
 
-		n_iters_to_viz = 0.025
+		n_iters_to_viz = 0.2
 		if (itr % round(n_iters_to_viz * num_batches + 0.499999)== 0) and (itr!=0):
 			
 			with torch.no_grad():

@@ -1,0 +1,23 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"pytorch/1.4.0" "cuda/10.0.13"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
+
+
+
+usage: Latent ODE [-h] [-n N] [-validn VALIDN] [--niters NITERS] [--lr LR]
+                  [-b BATCH_SIZE] [--viz] [--save SAVE] [--load LOAD]
+                  [-r RANDOM_SEED] [--dataset DATASET] [-s SAMPLE_TP]
+                  [-c CUT_TP] [--quantization QUANTIZATION] [--latent-ode]
+                  [--z0-encoder Z0_ENCODER] [--classic-rnn]
+                  [--rnn-cell RNN_CELL] [--input-decay] [--ode-rnn]
+                  [--rnn-vae] [-l LATENTS] [--rec-dims REC_DIMS]
+                  [--rec-layers REC_LAYERS] [--gen-layers GEN_LAYERS]
+                  [-u UNITS] [-g GRU_UNITS] [--poisson] [--classif]
+                  [--linear-classif] [--extrap] [-t TIMEPOINTS]
+                  [--max-t MAX_T] [--noise-weight NOISE_WEIGHT]
+                  [--tensorboard] [--ode-method ODE_METHOD]
+Latent ODE: error: argument -r/--random-seed: invalid int value: 'andom-seed'
+Couldn't import umap
