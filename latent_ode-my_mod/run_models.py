@@ -44,7 +44,7 @@ from tqdm import tqdm
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=300000, help="Size of the dataset")
-parser.add_argument('-validn',  type=int, default=20000, help="Size of the validation dataset")
+parser.add_argument('-validn',  type=int, default=60000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=2000)
@@ -112,7 +112,7 @@ if __name__ == '__main__':
 	experimentID = args.load
 	if experimentID is None:
 		# Make a new experiment ID
-		experimentID = int(SystemRandom().random()*100000)
+		experimentID = int(SystemRandom().random()*10000000)
 	ckpt_path = os.path.join(args.save, "experiment_" + str(experimentID) + '.ckpt')
 	top_ckpt_path = os.path.join(args.save, "experiment_" + str(experimentID) + '_topscore.ckpt')
 	best_test_acc = 0
@@ -244,36 +244,28 @@ if __name__ == '__main__':
 	
 	##################################################################
 	
-	#if args.tensorboard:
-	comment = "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
-	
-	validationtensorboard_dir = "runs/expID" + "_validation" + str(experimentID) + comment
-	validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
-	
-	tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
-	trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
-	
 	if args.tensorboard:
 		comment = '_'
 		if args.classic_rnn:
 			nntype = 'rnn'
-			comment = nntype + "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
 
 		elif args.ode_rnn:
 			nntype = 'ode'
-			comment = nntype + "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
 
-		validationtensorboard_dir = "runs/expID" + "_validation" + str(experimentID) + comment
+		comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_uts:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-lay:" + str(args.rec_layers) + "_solver" + str(args.ode_method) + "_seed" +str(args.random_seed)
+
+		validationtensorboard_dir = "runs/expID" + str(experimentID) + "_VALID" + comment
 		validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
 		
-		tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
+		tensorboard_dir = "runs/expID" + str(experimentID) "_TRAIN" + comment
 		trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
 		
 	##################################################################
 	
 	#Load checkpoint and evaluate the model
 	if args.load is not None:
-		utils.get_ckpt_model(ckpt_path, model, device)
+		#utils.get_ckpt_model(ckpt_path, model, device)
+		utils.get_ckpt_model(top_ckpt_path, model, device)
 		exit()
 
 	##################################################################
