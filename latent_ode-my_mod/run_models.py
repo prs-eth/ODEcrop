@@ -43,10 +43,11 @@ from tqdm import tqdm
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=1000, help="Size of the dataset")
+parser.add_argument('-n',  type=int, default=300000, help="Size of the dataset")
+parser.add_argument('-validn',  type=int, default=60000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
-parser.add_argument('-b', '--batch-size', type=int, default=50)
+parser.add_argument('-b', '--batch-size', type=int, default=2000)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
 
 parser.add_argument('--save', type=str, default='experiments/', help="Path for save checkpoints")
@@ -92,7 +93,7 @@ parser.add_argument('--max-t',  type=float, default=5., help="We subsample point
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
 parser.add_argument('--ode-method', type=str, default='euler',
-					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3': Bosh3Solver, 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
+					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
 
 
 args = parser.parse_args()
@@ -111,10 +112,11 @@ if __name__ == '__main__':
 	experimentID = args.load
 	if experimentID is None:
 		# Make a new experiment ID
-		experimentID = int(SystemRandom().random()*100000)
+		experimentID = int(SystemRandom().random()*10000000)
 	ckpt_path = os.path.join(args.save, "experiment_" + str(experimentID) + '.ckpt')
+	top_ckpt_path = os.path.join(args.save, "experiment_" + str(experimentID) + '_topscore.ckpt')
+	best_test_acc = 0
 
-	start = time.time()
 	print("Sampling dataset of {} training examples".format(args.n))
 	
 	input_command = sys.argv
@@ -242,34 +244,28 @@ if __name__ == '__main__':
 	
 	##################################################################
 	
-	#if args.tensorboard:
-	comment = "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
-	
-	validationtensorboard_dir = "runs/expID" + "_validation" + str(experimentID) + comment
-	validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
-	
-	tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
-	trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
-	
 	if args.tensorboard:
+		comment = '_'
 		if args.classic_rnn:
 			nntype = 'rnn'
+
 		elif args.ode_rnn:
 			nntype = 'ode'
-		
-		comment = nntype + "_n:" + str(args.n) + "_b:" + str(args.batch_size) + "_units:" + str(args.units) + "_gru-units:" + str(args.gru_units) + "_latents:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-layers:" + str(args.rec_layers) + "_solver" + str(args.ode_method)
-		
-		validationtensorboard_dir = "runs/expID" + "_validation" + str(experimentID) + comment
+
+		comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_uts:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-lay:" + str(args.rec_layers) + "_solver" + str(args.ode_method) + "_seed" +str(args.random_seed)
+
+		validationtensorboard_dir = "runs/expID" + str(experimentID) + "_VALID" + comment
 		validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
 		
-		tensorboard_dir = "runs/expID" + "_training" + str(experimentID) + comment
+		tensorboard_dir = "runs/expID" + str(experimentID) + "_TRAIN" + comment
 		trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
 		
 	##################################################################
 	
 	#Load checkpoint and evaluate the model
 	if args.load is not None:
-		utils.get_ckpt_model(ckpt_path, model, device)
+		#utils.get_ckpt_model(ckpt_path, model, device)
+		utils.get_ckpt_model(top_ckpt_path, model, device)
 		exit()
 
 	##################################################################
@@ -294,14 +290,14 @@ if __name__ == '__main__':
 			kl_coef = 0.
 		else:
 			kl_coef = (1-0.99** (itr // num_batches - wait_until_kl_inc))
-
+		
 		batch_dict = utils.get_next_batch(data_obj["train_dataloader"])
 		train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
 		train_res["loss"].backward()
 		optimizer.step()
 
-		n_iters_to_viz = 0.3333
-		if (itr % round(n_iters_to_viz * num_batches)== 0) and (itr!=0):
+		n_iters_to_viz = 0.2
+		if (itr % round(n_iters_to_viz * num_batches + 0.499999)== 0) and (itr!=0):
 			
 			with torch.no_grad():
 
@@ -371,7 +367,13 @@ if __name__ == '__main__':
 				'state_dict': model.state_dict(),
 			}, ckpt_path)
 
-
+			if test_res["accuracy"] > best_test_acc:
+				best_test_acc = test_res["accuracy"]
+				torch.save({
+					'args': args,
+					'state_dict': model.state_dict(),
+				}, top_ckpt_path)
+			
 			# Plotting
 			if args.viz:
 				with torch.no_grad():

@@ -10,6 +10,7 @@ import torch
 import torch.nn as nn
 
 import lib.utils as utils
+from lib.utils import FastTensorDataLoader
 from lib.diffeq_solver import DiffeqSolver
 from generate_timeseries import Periodic_1d
 from torch.distributions import uniform
@@ -22,6 +23,9 @@ from crop_classification import Crops, variable_time_collate_fn_crop
 
 from sklearn import model_selection
 import random
+
+#Nando's packages
+import pdb
 
 #####################################################################################################
 def parse_datasets(args, device):
@@ -189,73 +193,114 @@ def parse_datasets(args, device):
 
 		return data_objects
 		
-    ##################################################################
+	##################################################################
 	# Crop Classification
-    
-    #if dataset_name == "crops":
+		
+	#if dataset_name == "crops":
 	if dataset_name == "crop":
-		
-		list_form = True
-		train_dataset_obj = Crops('data/Crops', mode="train", 
+
+		#Implemented tensorformat
+		list_form = False
+		num_workers = 1
+
+		# set to False in order to speed up the process
+		automatic_batching = False
+
+		#turn this boolean to true in order to get access to the larger "evaluation" dataset used for validation
+		eval_as_test = True
+
+		train_dataset_obj = Crops('data/Crops', mode="train", args=args,
 										download=True,
 										device = device, list_form = list_form)
-		# Use custom collate_fn to combine samples with arbitrary time observations.
-		# Returns the dataset along with mask and time steps
-		test_dataset_obj = Crops('data/Crops', mode="test", 
+		test_dataset_obj = Crops('data/Crops', mode="test", args=args, 
 										download=True,
 										device = device, list_form = list_form)
 		
-		eval_dataset_obj = Crops('data/Crops', mode="eval", 
+		eval_dataset_obj = Crops('data/Crops', mode="eval", args=args, 
 										download=True,
 										device = device,  list_form = list_form)
 		
-		print(train_dataset_obj)
 		
 		n_samples = min(args.n, len(train_dataset_obj))
-		n_eval_samples = min( float("inf"), len(eval_dataset_obj))
+		n_eval_samples = min( float("inf"), len(eval_dataset_obj)) #TODO set it back to inf
 		n_test_samples = min( float("inf"), len(test_dataset_obj))
 		
 		#should I read the data into memory? takes about 4 minutes for the whole dataset!
 		#not recommended for debugging with large datasets, so better set it to false
-		read_to_mem = True #defualt True 
-		if read_to_mem:
+		#read_to_mem = list_form #defualt True 
+		if list_form:
 			train_data = train_dataset_obj[:n_samples]
+			test_data = test_dataset_obj[:n_test_samples]
+			eval_data = eval_dataset_obj[:n_eval_samples]
 		else:
 			train_data = train_dataset_obj
+			test_data = test_dataset_obj
+			eval_data = eval_dataset_obj
 			
-		test_data = test_dataset_obj[:n_test_samples]
-		eval_data = eval_dataset_obj[:n_eval_samples]
-		
-		vals, tt, mask, labels = train_dataset_obj[0]
-		
-        
+		if list_form:
+			vals, tt, mask, labels = train_dataset_obj[0]
+		else:
+			a_train_dict = train_dataset_obj[0]
+			vals = a_train_dict["observed_data"]
+			tt = a_train_dict["observed_tp"]
+			mask = a_train_dict["observed_mask"]
+			labels = a_train_dict["labels"]
+
 		batch_size = min(args.batch_size, args.n)
-		 
+
 		#evaluation batch sizes. #Must be tuned to increase efficency of evaluation
-		validation_batch_size = 3000
-		test_batch_size = min(n_eval_samples, validation_batch_size)
-		eval_batch_size = min(n_test_samples, validation_batch_size)
+		validation_batch_size = 30000 # size 30000 is 10s per batch
+		test_batch_size = min(n_test_samples, validation_batch_size)
+		eval_batch_size = min(n_eval_samples, validation_batch_size)
 		
-		train_dataloader = DataLoader(train_data, batch_size = batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="train", list_form=list_form))
+		#create the dataloader
+		if list_form:
+			train_dataloader = DataLoader(train_data, batch_size = batch_size, shuffle=False, 
+				collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="train", list_form=list_form))
+			test_dataloader = DataLoader(test_data, batch_size = test_batch_size, shuffle=False, 
+				collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="test", list_form=list_form))
+			eval_dataloader = DataLoader(eval_data, batch_size = eval_batch_size, shuffle=False, 
+				collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="eval", list_form=list_form))
 		
-		test_dataloader = DataLoader(test_data, batch_size = test_batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="test", list_form=list_form))
-		
-		eval_dataloader = DataLoader(eval_data, batch_size = eval_batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn_crop(batch, args, device, data_type="eval", list_form=list_form))
-		
+		else: #else tensor format is used
+			if automatic_batching:
+				train_dataloader = DataLoader(train_data, batch_size = batch_size, shuffle=False, num_workers=num_workers)
+				test_dataloader = DataLoader(test_data, batch_size = test_batch_size, shuffle=False, num_workers=num_workers)
+				eval_dataloader = DataLoader(eval_data, batch_size = eval_batch_size, shuffle=False, num_workers=num_workers)
+
+			else: #else manual batching is used
+				#recommendation: set shuffle to False, the underlying hd5y structure is than more efficient
+				# because it can make use of the countagious blocks of data.
+				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False)
+				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False)
+				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False)
+
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
-					"test_dataloader": utils.inf_generator(eval_dataloader), #changed to validate on the evalutation set #attention, might be another naming convention...
+					"test_dataloader": utils.inf_generator(test_dataloader), #changed to validate on the evalutation set #attention, might be another naming convention...
 					"eval_dataloader": utils.inf_generator(eval_dataloader), #attention, might be another naming convention...
 					"input_dim": vals.size(-1),
 					"n_train_batches": len(train_dataloader),
-					"n_test_batches": len(eval_dataloader),
+					"n_test_batches": len(test_dataloader),
 					"n_eval_batches": len(eval_dataloader),
 					"classif_per_tp": False, # We want to classify the whole sequence!!. Standard: True, #optional
 					"n_labels": labels.size(-1)}
+		
+		print("")
+		print("Trainingdataset:")
+		print(data_objects["dataset_obj"])
 
+		if eval_as_test:
+			data_objects["test_dataloader"] = utils.inf_generator(eval_dataloader)
+			data_objects["n_test_batches"] = len(eval_dataloader)
+			print("Using Evaluationdataset:")
+			print(eval_dataset_obj)
+
+		else:
+			print("Using Testdataset:")
+			print(test_dataset_obj)
+
+		#pdb.set_trace()
 		return data_objects
 	
 	

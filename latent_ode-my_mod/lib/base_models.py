@@ -22,6 +22,7 @@ from torch.nn.parameter import Parameter
 
 import sklearn as sk
 
+import pdb
 
 def create_classifier(z0_dim, n_labels):
 	return nn.Sequential(
@@ -120,6 +121,9 @@ class Baseline(nn.Module):
 	def compute_all_losses(self, batch_dict,
 		n_tp_to_sample = None, n_traj_samples = 1, kl_coef = 1.):
 
+		#pdb.set_trace()
+
+		loss = 0
 		# Condition on subsampled points
 		# Make predictions for all the points
 		pred_x, info = self.get_reconstruction(batch_dict["tp_to_predict"], 
@@ -128,18 +132,24 @@ class Baseline(nn.Module):
 			mode = batch_dict["mode"])
 
 		# Compute likelihood of all the points
-		likelihood = self.get_gaussian_likelihood(batch_dict["data_to_predict"], pred_x,
-			mask = (batch_dict["mask_predicted_data"])) # this mask gives UserWarnings # torch.BoolTensor
+		if self.train_classif_w_reconstr:
+			likelihood = self.get_gaussian_likelihood(batch_dict["data_to_predict"], pred_x,
+				mask = (batch_dict["mask_predicted_data"])) # this mask gives UserWarnings # torch.BoolTensor
+			loss -= torch.mean(likelihood)
 
-		mse = self.get_mse(batch_dict["data_to_predict"], pred_x,
-			mask = (batch_dict["mask_predicted_data"]) ) # this mask gives UserWarnings # torch.BoolTensor
+			mse = self.get_mse(batch_dict["data_to_predict"], pred_x,
+				mask = (batch_dict["mask_predicted_data"]) ) # this mask gives UserWarnings # torch.BoolTensor
+			
+		else:
+			likelihood = torch.tensor(0.0)
+			mse = torch.tensor(0.0)
 
 		################################
 		# Compute CE loss for binary classification on Physionet
 		# Use only last attribute -- mortatility in the hospital 
 		device = get_device(batch_dict["data_to_predict"])
 		ce_loss = torch.Tensor([0.]).to(device)
-		
+
 		if (batch_dict["labels"] is not None) and self.use_binary_classif:
 			if (batch_dict["labels"].size(-1) == 1) or (len(batch_dict["labels"].size()) == 1):
 				ce_loss = compute_binary_CE_loss(
@@ -166,7 +176,7 @@ class Baseline(nn.Module):
 			# Take mean over n_traj
 			pois_log_likelihood = torch.mean(pois_log_likelihood, 1)
 
-		loss = - torch.mean(likelihood)
+		#loss = - torch.mean(likelihood)
 
 		if self.use_poisson_proc:
 			loss = loss - 0.1 * pois_log_likelihood 

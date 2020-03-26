@@ -14,6 +14,7 @@ from tqdm import tqdm
 import numpy as np
 import h5py
 import lib.utils as utils
+import pdb
 
 class Crops(object):
 	
@@ -23,7 +24,7 @@ class Crops(object):
 	label_dict = {k: i for i, k in enumerate(label)}
 	
 	
-	def __init__(self, root, download=False,
+	def __init__(self, root, args, download=False,
 		reduce='average', mode='train', minseqlength=20,
 		n_samples = None, device = torch.device("cpu"), list_form = True):
 		
@@ -31,6 +32,9 @@ class Crops(object):
 		self.root = root
 		self.reduce = reduce
 		self.mode = mode
+		self.device = device
+		self.args = args
+		self.second = False
 				
 		if download:
 			self.download()
@@ -782,6 +786,7 @@ class Crops(object):
 		#should accept indices and should output the datasamples, as read from disk
 		if isinstance(index, slice):
 			# do your handling for a slice object:
+			pdb.set_trace()
 			output = []
 			start = 0 if index.start is None else index.start
 			step = 1 if index.start is None else index.step
@@ -794,23 +799,62 @@ class Crops(object):
 					labels = torch.from_numpy( self.hdf5dataloader["labels"][i] ) 
 					output.append((data, time_stamps, mask, labels))
 				return output
+
 			else: #tensor_format (more efficient), 
-				raise Exception('Tensorformat not implemented yet!')
-				data = torch.from_numpy( self.hdf5dataloader["data"][start:index.stop:step] )
-				time_stamps = torch.from_numpy( self.timestamps )
-				mask = torch.from_numpy(  self.hdf5dataloader["mask"][start:index.stop:step] )
-				labels = torch.from_numpy( self.hdf5dataloader["labels"][start:index.stop:step] )
-				return (data, time_stamps, mask, labels)
+				#raise Exception('Tensorformat not implemented yet!')
+				
+				data = torch.from_numpy( self.hdf5dataloader["data"][start:index.stop:step] ).float().to(self.device)
+				time_stamps = torch.from_numpy( self.timestamps ).to(self.device)
+				mask = torch.from_numpy(  self.hdf5dataloader["mask"][start:index.stop:step] ).float().to(self.device)
+				labels = torch.from_numpy( self.hdf5dataloader["labels"][start:index.stop:step] ).float().to(self.device)
+				
+				#make it a dictionary to replace the collate function....
+				data_dict = {
+					"data": data, 
+					"time_steps": time_stamps,
+					"mask": mask,
+					"labels": labels}
+
+				data_dict = utils.split_and_subsample_batch(data_dict, self.args, data_type = self.mode)
+				
+				return data_dict
+				#return (data, time_stamps, mask, labels)
 		else:
             # Do your handling for a plain index
-			data = torch.from_numpy( self.hdf5dataloader["data"][index] )
-			time_stamps = torch.from_numpy( self.timestamps )
-			mask = torch.from_numpy( self.hdf5dataloader["mask"][index] )
-			labels = torch.from_numpy( self.hdf5dataloader["labels"][index] )
-			return (data, time_stamps, mask, labels)
+			#pdb.set_trace()
+
+			if self.second:
+				raise Exception('Tensorformat not implemented yet!')
+				self.second = True
+			
+			if self.list_form :
+				data = torch.from_numpy( self.hdf5dataloader["data"][index] )
+				time_stamps = torch.from_numpy( self.timestamps )
+				mask = torch.from_numpy( self.hdf5dataloader["mask"][index] )
+				labels = torch.from_numpy( self.hdf5dataloader["labels"][index] )
+				return (data, time_stamps, mask, labels)
+			else:
+				data = torch.from_numpy( self.hdf5dataloader["data"][index] ).float().to(self.device)
+				time_stamps = torch.from_numpy( self.timestamps ).to(self.device)
+				mask = torch.from_numpy(self.hdf5dataloader["mask"][index] ).float().to(self.device)
+				labels = torch.from_numpy( self.hdf5dataloader["labels"][index] ).float().to(self.device)
+
+				data_dict = {
+					"data": data, 
+					"time_steps": time_stamps,
+					"mask": mask,
+					"labels": labels}
+
+				data_dict = utils.split_and_subsample_batch(data_dict, self.args, data_type = self.mode)
+				
+				return data_dict
+				#return (data, time_stamps, mask, labels)
 
 	def __len__(self):
-		return self.hdf5dataloader["data"].shape[0]
+		if self.mode=="train":
+			return min(self.args.n, self.hdf5dataloader["data"].shape[0])
+		else:
+			return min(self.args.validn, self.hdf5dataloader["data"].shape[0])
 
 	def __repr__(self):
 		fmt_str = 'Dataset ' + self.__class__.__name__ + '\n'
@@ -829,7 +873,6 @@ def variable_time_collate_fn_crop(batch, args, device = torch.device("cpu"), dat
 		combined_vals: (M, T, D) tensor containing the observed values.
 		combined_mask: (M, T, D) tensor containing 1 where values were observed and 0 otherwise.
 	"""
-	
 	
 	if list_form: #list format as the other datasets
 		
@@ -857,13 +900,15 @@ def variable_time_collate_fn_crop(batch, args, device = torch.device("cpu"), dat
 		
 	else: #tensor_format (more efficient), must agree with the __getitem__ function
 		#TODO: Tensorformat
-		raise Exception('Tensorformat not implemented yet!')
+		pdb.set_trace()
+	
 		data, tt, mask, labels = batch
 		
-		combined_tt = tt.to(device)
-		combined_vals = data.to(device)
-		combined_mask = mask.to(device)
-		combined_labels = labels.to(device)
+		combined_tt = tt
+		combined_vals = data
+		combined_mask = mask
+		combined_labels = labels
+	
 	#combined_vals, _, _ = utils.normalize_masked_data(combined_vals, combined_mask, 
 	#		att_min = data_min, att_max = data_max)
 	
