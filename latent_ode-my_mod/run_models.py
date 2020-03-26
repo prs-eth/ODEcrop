@@ -93,7 +93,7 @@ parser.add_argument('--max-t',  type=float, default=5., help="We subsample point
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
 parser.add_argument('--ode-method', type=str, default='euler',
-					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3': Bosh3Solver, 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
+					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
 
 
 args = parser.parse_args()
@@ -257,7 +257,7 @@ if __name__ == '__main__':
 		validationtensorboard_dir = "runs/expID" + str(experimentID) + "_VALID" + comment
 		validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
 		
-		tensorboard_dir = "runs/expID" + str(experimentID) "_TRAIN" + comment
+		tensorboard_dir = "runs/expID" + str(experimentID) + "_TRAIN" + comment
 		trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
 		
 	##################################################################

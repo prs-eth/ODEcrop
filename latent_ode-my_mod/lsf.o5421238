@@ -1,0 +1,13 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"cuda/10.0.13" "pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "cuda/10.0.13" "pytorch/1.4.0"
+
+
+
+  File "run_models.py", line 260
+    tensorboard_dir = "runs/expID" + str(experimentID) "_TRAIN" + comment
+                                                              ^
+SyntaxError: invalid syntax
