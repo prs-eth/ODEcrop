@@ -317,10 +317,7 @@ if __name__ == '__main__':
 
 	sched = AsyncHyperBandScheduler(time_attr="training_iteration", metric="mean_accuracy", mode="max")
 
-	
-	config = {
-		#this dictionairy in dictionary does not work
-		"spec_config":{
+	spec_args = {
 			"args": args,
 			"data_obj": data_obj,
 			"args": args,
@@ -331,6 +328,11 @@ if __name__ == '__main__':
 			"validationwriter": validationwriter,
 			"input_dim": input_dim
 		},
+	
+	config = {
+		#this dictionairy in dictionary does not work
+		"spec_config":file_name,
+	
 
 		"rec_layers":  tune.sample_from(lambda _: np.random.choice(range(1,7)) ),
 		"rec_dims":  tune.sample_from(lambda _: np.random.choice(range(1,100))),
