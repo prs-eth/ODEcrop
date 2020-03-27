@@ -4,3 +4,7 @@ latent_ode-my_mod/logs/
 latent_ode-my_mod/experiments/
 latent_ode-my_mod/data/
 latent_ode-my_mod/runs/
+latent_ode-my_mod_hparam/logs/
+latent_ode-my_mod_hparam/experiments/
+latent_ode-my_mod_hparam/data/
+latent_ode-my_mod_hparam/runs/
