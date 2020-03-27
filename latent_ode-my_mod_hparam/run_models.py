@@ -40,6 +40,12 @@ from lib.utils import compute_loss_all_batches
 
 # Nando's additional libraries
 from tqdm import tqdm
+from ray import tune
+
+from ray.tune.schedulers import AsyncHyperBandScheduler
+from ray.tune.suggest.bayesopt import BayesOptSearch
+from lib.training import construct_and_train_model, train_it
+
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
@@ -76,7 +82,7 @@ parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run R
 parser.add_argument('-l', '--latents', type=int, default=15, help="Size of the latent state")
 parser.add_argument('--rec-dims', type=int, default=100, help="Dimensionality of the recognition model (ODE or RNN).")
 
-parser.add_argument('--rec-layers', type=int, default=4, help="Number of layers in ODE func in recognition ODE")
+parser.add_argument('--rec-layers', type=int, default=4, help="Number of layers in ODE func in recognition ODE") 
 parser.add_argument('--gen-layers', type=int, default=2, help="Number of layers in ODE func in generative ODE")
 
 parser.add_argument('-u', '--units', type=int, default=500, help="Number of units per layer in ODE func")
@@ -281,111 +287,65 @@ if __name__ == '__main__':
 
 	num_batches = data_obj["n_train_batches"]
 
-	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
-		optimizer.zero_grad()
-		utils.update_learning_rate(optimizer, decay_rate = 0.999, lowest = args.lr / 10)
+	############
 
-		wait_until_kl_inc = 10
-		if itr // num_batches < wait_until_kl_inc:
-			kl_coef = 0.
-		else:
-			kl_coef = (1-0.99** (itr // num_batches - wait_until_kl_inc))
+	config = {
+		"config": {
+			"data_obj": data_obj,
+			"args": args,
+			"file_name": file_name,
+			"optimizer": optimizer,
+			"experimentID": experimentID,
+			"trainwriter": trainwriter,
+			"validationwriter": validationwriter
+		}
+		,
+		"config": {
+			"iterations": 100,
+		},
+				
+	}
+
+	space = {
+		"rec_layers": (1, 6),
+	}
+
+	sched = AsyncHyperBandScheduler(time_attr="training_iteration", metric="mean_accuracy", mode="max")
+
+	search_alg = BayesOptSearch(
+		space,
+		max_concurrent=4,
+		metric="mean_accuracy",
+		mode="max",
+		utility_kwargs={
+			"kind": "ucb",
+			"kappa": 2.5,
+			"xi": 0.0
+		})
+
+	analysis = tune.run(
+		construct_and_train_model,
+		name=str(experimentID),
+		scheduler=sched,
+		search_alg=search_alg,
 		
-		batch_dict = utils.get_next_batch(data_obj["train_dataloader"])
-		train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
-		train_res["loss"].backward()
-		optimizer.step()
+		num_samples=5,
+		stop={
+			"training_iteration": 25
+		},
 
-		n_iters_to_viz = 0.2
-		if (itr % round(n_iters_to_viz * num_batches + 0.499999)== 0) and (itr!=0):
-			
-			with torch.no_grad():
+		resources_per_trial={
+			"cpu": 20,
+			"gpu": 0
+		},
 
-				test_res = compute_loss_all_batches(model, 
-					data_obj["test_dataloader"], args,
-					n_batches = data_obj["n_test_batches"],
-					experimentID = experimentID,
-					device = device,
-					n_traj_samples = 3, kl_coef = kl_coef)
+		
+		**config)
 
-				message = 'Epoch {:04d} [Test seq (cond on sampled tp)] | Loss {:.6f} | Likelihood {:.6f} | KL fp {:.4f} | FP STD {:.4f}|'.format(
-					itr//num_batches, 
-					test_res["loss"].detach(), test_res["likelihood"].detach(), 
-					test_res["kl_first_p"], test_res["std_first_p"])
-		 	
-				logger.info("Experiment " + str(experimentID))
-				logger.info(message)
-				logger.info("KL coef: {}".format(kl_coef))
-				logger.info("Train loss (one batch): {}".format(train_res["loss"].detach()))
-				logger.info("Train CE loss (one batch): {}".format(train_res["ce_loss"].detach()))
-				
-				# write training numbers
-				if "accuracy" in train_res:
-					logger.info("Classification accuracy (TRAIN): {:.4f}".format(train_res["accuracy"]))
-					trainwriter.add_scalar('Classification_accuracy', train_res["accuracy"], itr*args.batch_size)
-				
-				if "loss" in train_res:
-					trainwriter.add_scalar('loss', train_res["loss"].detach(), itr*args.batch_size)
-				
-				if "ce_loss" in train_res:
-					trainwriter.add_scalar('CE_loss', train_res["ce_loss"].detach(), itr*args.batch_size)
-				
-				if "mse" in train_res:
-					trainwriter.add_scalar('MSE', train_res["mse"], itr*args.batch_size)
-				
-				if "pois_likelihood" in train_res:
-					trainwriter.add_scalar('Poisson_likelihood', train_res["pois_likelihood"], itr*args.batch_size)
-				
-				#write test numbers
-				if "auc" in test_res:
-					logger.info("Classification AUC (TEST): {:.4f}".format(test_res["auc"]))
-					validationwriter.add_scalar('Classification_AUC', test_res["auc"], itr*args.batch_size)
-					
-				if "mse" in test_res:
-					logger.info("Test MSE: {:.4f}".format(test_res["mse"]))
-					validationwriter.add_scalar('MSE', test_res["mse"], itr*args.batch_size)
-					
-				if "accuracy" in test_res:
-					logger.info("Classification accuracy (TEST): {:.4f}".format(test_res["accuracy"]))
-					validationwriter.add_scalar('Classification_accuracy', test_res["accuracy"], itr*args.batch_size)
-
-				if "pois_likelihood" in test_res:
-					logger.info("Poisson likelihood: {}".format(test_res["pois_likelihood"]))
-					validationwriter.add_scalar('Poisson_likelihood', test_res["pois_likelihood"], itr*args.batch_size)
-				
-				if "loss" in train_res:
-					validationwriter.add_scalar('loss', test_res["loss"].detach(), itr*args.batch_size)
-				
-				if "ce_loss" in test_res:
-					logger.info("CE loss: {}".format(test_res["ce_loss"]))
-					validationwriter.add_scalar('CE_loss', test_res["ce_loss"], itr*args.batch_size)
+	print("Best config is:", analysis.get_best_config(metric="mean_accuracy"))
 	
-				logger.info("-----------------------------------------------------------------------------------")
+	############
 
-			torch.save({
-				'args': args,
-				'state_dict': model.state_dict(),
-			}, ckpt_path)
-
-			if test_res["accuracy"] > best_test_acc:
-				best_test_acc = test_res["accuracy"]
-				torch.save({
-					'args': args,
-					'state_dict': model.state_dict(),
-				}, top_ckpt_path)
-			
-			# Plotting
-			if args.viz:
-				with torch.no_grad():
-					test_dict = utils.get_next_batch(data_obj["test_dataloader"])
-
-					print("plotting....")
-					if isinstance(model, LatentODE) and (args.dataset == "periodic"): #and not args.classic_rnn and not args.ode_rnn:
-						plot_id = itr // num_batches // n_iters_to_viz
-						viz.draw_all_plots_one_dim(test_dict, model, 
-							plot_name = file_name + "_" + str(experimentID) + "_{:03d}".format(plot_id) + ".png",
-						 	experimentID = experimentID, save=True)
-						plt.pause(0.01)
 						
 	validationwriter.close()
 	trainwriter.close()
