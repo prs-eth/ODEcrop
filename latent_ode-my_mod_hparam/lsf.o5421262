@@ -1,0 +1,69 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"cuda/10.0.13" "pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "cuda/10.0.13" "pytorch/1.4.0"
+
+
+
+/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/run_models.py
+run_models.py --niters 80 -n 300000 -b 500 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method tsit5 --random-seed 6003
+  0%|          | 0/46080 [00:00<?, ?it/s]  0%|          | 0/46080 [00:04<?, ?it/s]
+Couldn't import umap
+Sampling dataset of 300000 training examples
+
+Trainingdataset:
+Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+Using Evaluationdataset:
+Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+Traceback (most recent call last):
+  File "run_models.py", line 295, in <module>
+    train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/base_models.py", line 132, in compute_all_losses
+    mode = batch_dict["mode"])
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/ode_rnn.py", line 73, in get_reconstruction
+    data_and_mask, truth_time_steps, run_backwards = False)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/encoder_decoder.py", line 288, in run_odernn
+    ode_sol = self.z0_diffeq_solver(prev_y, time_points)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/diffeq_solver.py", line 41, in forward
+    rtol=self.odeint_rtol, atol=self.odeint_atol, method = self.ode_method)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/odeint.py", line 76, in odeint
+    solution = solver.integrate(t)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/solvers.py", line 31, in integrate
+    y = self.advance(t[i])
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/tsit5.py", line 101, in advance
+    self.rk_state = self._adaptive_tsit5_step(self.rk_state)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/tsit5.py", line 114, in _adaptive_tsit5_step
+    y1, f1, y1_error, k = _runge_kutta_step(self.func, y0, f0, t0, dt, tableau=_TSITOURAS_TABLEAU)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/rk_common.py", line 52, in _runge_kutta_step
+    tuple(k_.append(f_) for k_, f_ in zip(k, func(ti, yi)))
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/misc.py", line 187, in <lambda>
+    func = lambda t, y: tuple(-f_ for f_ in _base_reverse_func(-t, y))
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/misc.py", line 179, in <lambda>
+    func = lambda t, y: (_base_nontuple_func_(t, y[0]),)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/ode_func.py", line 36, in forward
+    grad = self.get_ode_gradient_nn(t_local, y)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/ode_func.py", line 42, in get_ode_gradient_nn
+    return self.gradient_net(y)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/container.py", line 100, in forward
+    input = module(input)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/activation.py", line 295, in forward
+    return torch.tanh(input)
+RuntimeError: CUDA out of memory. Tried to allocate 2.00 MiB (GPU 0; 10.73 GiB total capacity; 9.73 GiB already allocated; 3.56 MiB free; 9.88 GiB reserved in total by PyTorch)

@@ -16,6 +16,3 @@ python run_models.py --niters 80 -n 300000 -b 2000 -l 35 --dataset crop --ode-rn
 
 ##RNN Baseline
 #python run_models.py --niters 30 -n 300000 -b 500 -l 45 --dataset crop --classic-rnn --random-seed 1999
-
-
-
