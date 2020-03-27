@@ -1,0 +1,483 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"cuda/10.0.13" "pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "cuda/10.0.13" "pytorch/1.4.0"
+
+
+
+/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/run_models.py
+run_models.py --niters 80 -n 300000 -b 500 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method adaptive_heun --random-seed 6003
+Initializing Ray automatically.For cluster usage or custom Ray initialization, call `ray.init(...)` before `tune.run`.
+2020-03-27 14:58:24,824	INFO resource_spec.py:212 -- Starting Ray with 204.1 GiB memory available for workers and up to 18.63 GiB for objects. You can adjust these settings with ray.init(memory=<bytes>, object_store_memory=<bytes>).
+2020-03-27 14:58:25,871	INFO services.py:1078 -- View the Ray dashboard at [1m[32mlocalhost:8265[39m[22m
+2020-03-27 14:58:27,800	INFO function_runner.py:250 -- tune.track signature detected.
+2020-03-27 14:58:36,322	WARNING worker.py:1058 -- The actor or task with ID ffffffffffffffff45b95b1c0100 is pending and cannot currently be scheduled. It requires {CPU: 1.000000} for execution and {CPU: 1.000000} for placement, but this node only has remaining {node:10.204.3.82: 1.000000}, {object_store_memory: 12.841797 GiB}, {CPU: 40.000000}, {memory: 204.101562 GiB}, {GPU: 1.000000}. In total there are 0 pending tasks and 4 pending actors on this node. This is likely due to all cluster resources being claimed by actors. To resolve the issue, consider creating fewer actors or increase the resources available to this Ray cluster. You can ignore this message if this Ray cluster is expected to auto-scale.
+2020-03-27 14:59:06,872	ERROR trial_runner.py:513 -- Trial construct_and_train_model_08b2b1f4: Error processing event.
+Traceback (most recent call last):
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/trial_runner.py", line 459, in _process_trial
+    result = self.trial_executor.fetch_result(trial)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/ray_trial_executor.py", line 377, in fetch_result
+    result = ray.get(trial_future[0], DEFAULT_GET_TIMEOUT)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/worker.py", line 1504, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TuneError): [36mray::WrappedTrackFunc.train()[39m (pid=8891, ip=10.204.3.82)
+  File "python/ray/_raylet.pyx", line 452, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 430, in ray._raylet.execute_task.function_executor
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/trainable.py", line 254, in train
+    result = self._train()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 195, in _train
+    self._report_thread_runner_error(block=True)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 238, in _report_thread_runner_error
+    .format(err_tb_str)))
+ray.tune.error.TuneError: Trial raised an exception. Traceback:
+[36mray::WrappedTrackFunc.train()[39m (pid=8891, ip=10.204.3.82)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+    self._entrypoint()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+    return self._trainable_func(config, self._status_reporter)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+    output = train_func(config)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+    args
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+    args
+  File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit
+2020-03-27 14:59:07,104	ERROR trial_runner.py:513 -- Trial construct_and_train_model_08ac1128: Error processing event.
+Traceback (most recent call last):
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/trial_runner.py", line 459, in _process_trial
+    result = self.trial_executor.fetch_result(trial)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/ray_trial_executor.py", line 377, in fetch_result
+    result = ray.get(trial_future[0], DEFAULT_GET_TIMEOUT)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/worker.py", line 1504, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TuneError): [36mray::WrappedTrackFunc.train()[39m (pid=8902, ip=10.204.3.82)
+  File "python/ray/_raylet.pyx", line 452, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 430, in ray._raylet.execute_task.function_executor
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/trainable.py", line 254, in train
+    result = self._train()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 195, in _train
+    self._report_thread_runner_error(block=True)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 238, in _report_thread_runner_error
+    .format(err_tb_str)))
+ray.tune.error.TuneError: Trial raised an exception. Traceback:
+[36mray::WrappedTrackFunc.train()[39m (pid=8902, ip=10.204.3.82)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+    self._entrypoint()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+    return self._trainable_func(config, self._status_reporter)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+    output = train_func(config)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+    args
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+    args
+  File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit
+2020-03-27 14:59:07,392	ERROR trial_runner.py:513 -- Trial construct_and_train_model_08b23c2e: Error processing event.
+Traceback (most recent call last):
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/trial_runner.py", line 459, in _process_trial
+    result = self.trial_executor.fetch_result(trial)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/ray_trial_executor.py", line 377, in fetch_result
+    result = ray.get(trial_future[0], DEFAULT_GET_TIMEOUT)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/worker.py", line 1504, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TuneError): [36mray::WrappedTrackFunc.train()[39m (pid=8890, ip=10.204.3.82)
+  File "python/ray/_raylet.pyx", line 452, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 430, in ray._raylet.execute_task.function_executor
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/trainable.py", line 254, in train
+    result = self._train()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 195, in _train
+    self._report_thread_runner_error(block=True)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 238, in _report_thread_runner_error
+    .format(err_tb_str)))
+ray.tune.error.TuneError: Trial raised an exception. Traceback:
+[36mray::WrappedTrackFunc.train()[39m (pid=8890, ip=10.204.3.82)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+    self._entrypoint()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+    return self._trainable_func(config, self._status_reporter)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+    output = train_func(config)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+    args
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+    args
+  File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit
+2020-03-27 14:59:07,737	ERROR trial_runner.py:513 -- Trial construct_and_train_model_08b2ff06: Error processing event.
+Traceback (most recent call last):
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/trial_runner.py", line 459, in _process_trial
+    result = self.trial_executor.fetch_result(trial)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/ray_trial_executor.py", line 377, in fetch_result
+    result = ray.get(trial_future[0], DEFAULT_GET_TIMEOUT)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/worker.py", line 1504, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TuneError): [36mray::WrappedTrackFunc.train()[39m (pid=8887, ip=10.204.3.82)
+  File "python/ray/_raylet.pyx", line 452, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 430, in ray._raylet.execute_task.function_executor
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/trainable.py", line 254, in train
+    result = self._train()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 195, in _train
+    self._report_thread_runner_error(block=True)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 238, in _report_thread_runner_error
+    .format(err_tb_str)))
+ray.tune.error.TuneError: Trial raised an exception. Traceback:
+[36mray::WrappedTrackFunc.train()[39m (pid=8887, ip=10.204.3.82)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+    self._entrypoint()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+    return self._trainable_func(config, self._status_reporter)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+    output = train_func(config)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+    args
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+    args
+  File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit
+2020-03-27 14:59:11,266	ERROR trial_runner.py:513 -- Trial construct_and_train_model_08b34920: Error processing event.
+Traceback (most recent call last):
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/trial_runner.py", line 459, in _process_trial
+    result = self.trial_executor.fetch_result(trial)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/ray_trial_executor.py", line 377, in fetch_result
+    result = ray.get(trial_future[0], DEFAULT_GET_TIMEOUT)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/worker.py", line 1504, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TuneError): [36mray::WrappedTrackFunc.train()[39m (pid=9525, ip=10.204.3.82)
+  File "python/ray/_raylet.pyx", line 452, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 430, in ray._raylet.execute_task.function_executor
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/trainable.py", line 254, in train
+    result = self._train()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 195, in _train
+    self._report_thread_runner_error(block=True)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 238, in _report_thread_runner_error
+    .format(err_tb_str)))
+ray.tune.error.TuneError: Trial raised an exception. Traceback:
+[36mray::WrappedTrackFunc.train()[39m (pid=9525, ip=10.204.3.82)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+    self._entrypoint()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+    return self._trainable_func(config, self._status_reporter)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+    output = train_func(config)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+    args
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+    args
+  File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit
+Couldn't import umap
+Sampling dataset of 300000 training examples
+
+Trainingdataset:
+Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+Using Evaluationdataset:
+Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+== Status ==
+Memory usage on this node: 21.7/251.8 GiB
+Using AsyncHyperBand: num_stopped=0
+Bracket: Iter 64.000: None | Iter 16.000: None | Iter 4.000: None | Iter 1.000: None
+Resources requested: 1/40 CPUs, 0/1 GPUs, 0.0/204.1 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /cluster/home/metzgern/ray_results/4586243
+Number of trials: 4 (1 RUNNING, 3 PENDING)
++------------------------------------+----------+-------+--------------+
+| Trial name                         | status   | loc   | rec_layers   |
+|------------------------------------+----------+-------+--------------|
+| construct_and_train_model_08ac1128 | RUNNING  |       |              |
+| construct_and_train_model_08b23c2e | PENDING  |       |              |
+| construct_and_train_model_08b2b1f4 | PENDING  |       |              |
+| construct_and_train_model_08b2ff06 | PENDING  |       |              |
++------------------------------------+----------+-------+--------------+
+
+
+[2m[36m(pid=8891)[0m > /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py(13)construct_and_train_model()
+[2m[36m(pid=8891)[0m -> args
+[2m[36m(pid=8891)[0m (Pdb) 
+[2m[36m(pid=8891)[0m 2020-03-27 14:59:06,682	ERROR function_runner.py:93 -- Runner Thread raised error.
+[2m[36m(pid=8891)[0m Traceback (most recent call last):
+[2m[36m(pid=8891)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8891)[0m     self._entrypoint()
+[2m[36m(pid=8891)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+[2m[36m(pid=8891)[0m     return self._trainable_func(config, self._status_reporter)
+[2m[36m(pid=8891)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+[2m[36m(pid=8891)[0m     output = train_func(config)
+[2m[36m(pid=8891)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8891)[0m     args
+[2m[36m(pid=8891)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8891)[0m     args
+[2m[36m(pid=8891)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+[2m[36m(pid=8891)[0m     return self.dispatch_line(frame)
+[2m[36m(pid=8891)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+[2m[36m(pid=8891)[0m     if self.quitting: raise BdbQuit
+[2m[36m(pid=8891)[0m bdb.BdbQuit
+[2m[36m(pid=8891)[0m Exception in thread Thread-1:
+[2m[36m(pid=8891)[0m Traceback (most recent call last):
+[2m[36m(pid=8891)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/threading.py", line 926, in _bootstrap_inner
+[2m[36m(pid=8891)[0m     self.run()
+[2m[36m(pid=8891)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8891)[0m     self._entrypoint()
+[2m[36m(pid=8891)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8891)[0m     self._entrypoint()
+[2m[36m(pid=8891)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+[2m[36m(pid=8891)[0m     return self._trainable_func(config, self._status_reporter)
+[2m[36m(pid=8891)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+[2m[36m(pid=8891)[0m     output = train_func(config)
+[2m[36m(pid=8891)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8891)[0m     args
+[2m[36m(pid=8891)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8891)[0m     args
+[2m[36m(pid=8891)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+[2m[36m(pid=8891)[0m     return self.dispatch_line(frame)
+[2m[36m(pid=8891)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+[2m[36m(pid=8891)[0m     if self.quitting: raise BdbQuit
+[2m[36m(pid=8891)[0m bdb.BdbQuit
+[2m[36m(pid=8891)[0m 
+== Status ==
+Memory usage on this node: 28.2/251.8 GiB
+Using AsyncHyperBand: num_stopped=0
+Bracket: Iter 64.000: None | Iter 16.000: None | Iter 4.000: None | Iter 1.000: None
+Resources requested: 3/40 CPUs, 0/1 GPUs, 0.0/204.1 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /cluster/home/metzgern/ray_results/4586243
+Number of trials: 4 (3 RUNNING, 1 ERROR)
++------------------------------------+----------+-------+--------------+
+| Trial name                         | status   | loc   | rec_layers   |
+|------------------------------------+----------+-------+--------------|
+| construct_and_train_model_08ac1128 | RUNNING  |       |              |
+| construct_and_train_model_08b23c2e | RUNNING  |       |              |
+| construct_and_train_model_08b2b1f4 | ERROR    |       |              |
+| construct_and_train_model_08b2ff06 | RUNNING  |       |              |
++------------------------------------+----------+-------+--------------+
+Number of errored trials: 1
++------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Trial name                         |   # failures | error file                                                                                                                                             |
+|------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| construct_and_train_model_08b2b1f4 |            1 | /cluster/home/metzgern/ray_results/4586243/construct_and_train_model_08b2b1f4_3_iterations=100,rec_layers=1.0006_2020-03-27_14-58-29vy34ptbe/error.txt |
++------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+[2m[36m(pid=8902)[0m > /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py(13)construct_and_train_model()
+[2m[36m(pid=8902)[0m -> args
+[2m[36m(pid=8902)[0m (Pdb) 
+[2m[36m(pid=8902)[0m 2020-03-27 14:59:06,923	ERROR function_runner.py:93 -- Runner Thread raised error.
+[2m[36m(pid=8902)[0m Traceback (most recent call last):
+[2m[36m(pid=8902)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8902)[0m     self._entrypoint()
+[2m[36m(pid=8902)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+[2m[36m(pid=8902)[0m     return self._trainable_func(config, self._status_reporter)
+[2m[36m(pid=8902)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+[2m[36m(pid=8902)[0m     output = train_func(config)
+[2m[36m(pid=8902)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8902)[0m     args
+[2m[36m(pid=8902)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8902)[0m     args
+[2m[36m(pid=8902)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+[2m[36m(pid=8902)[0m     return self.dispatch_line(frame)
+[2m[36m(pid=8902)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+[2m[36m(pid=8902)[0m     if self.quitting: raise BdbQuit
+[2m[36m(pid=8902)[0m bdb.BdbQuit
+[2m[36m(pid=8902)[0m Exception in thread Thread-1:
+[2m[36m(pid=8902)[0m Traceback (most recent call last):
+[2m[36m(pid=8902)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/threading.py", line 926, in _bootstrap_inner
+[2m[36m(pid=8902)[0m     self.run()
+[2m[36m(pid=8902)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8902)[0m     self._entrypoint()
+[2m[36m(pid=8902)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8902)[0m     self._entrypoint()
+[2m[36m(pid=8902)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+[2m[36m(pid=8902)[0m     return self._trainable_func(config, self._status_reporter)
+[2m[36m(pid=8902)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+[2m[36m(pid=8902)[0m     output = train_func(config)
+[2m[36m(pid=8902)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8902)[0m     args
+[2m[36m(pid=8902)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8902)[0m     args
+[2m[36m(pid=8902)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+[2m[36m(pid=8902)[0m     return self.dispatch_line(frame)
+[2m[36m(pid=8902)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+[2m[36m(pid=8902)[0m     if self.quitting: raise BdbQuit
+[2m[36m(pid=8902)[0m bdb.BdbQuit
+[2m[36m(pid=8902)[0m 
+[2m[36m(pid=8890)[0m > /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py(13)construct_and_train_model()
+[2m[36m(pid=8890)[0m -> args
+[2m[36m(pid=8890)[0m (Pdb) 
+[2m[36m(pid=8890)[0m 2020-03-27 14:59:07,195	ERROR function_runner.py:93 -- Runner Thread raised error.
+[2m[36m(pid=8890)[0m Traceback (most recent call last):
+[2m[36m(pid=8890)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8890)[0m     self._entrypoint()
+[2m[36m(pid=8890)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+[2m[36m(pid=8890)[0m     return self._trainable_func(config, self._status_reporter)
+[2m[36m(pid=8890)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+[2m[36m(pid=8890)[0m     output = train_func(config)
+[2m[36m(pid=8890)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8890)[0m     args
+[2m[36m(pid=8890)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8890)[0m     args
+[2m[36m(pid=8890)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+[2m[36m(pid=8890)[0m     return self.dispatch_line(frame)
+[2m[36m(pid=8890)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+[2m[36m(pid=8890)[0m     if self.quitting: raise BdbQuit
+[2m[36m(pid=8890)[0m bdb.BdbQuit
+[2m[36m(pid=8890)[0m Exception in thread Thread-1:
+[2m[36m(pid=8890)[0m Traceback (most recent call last):
+[2m[36m(pid=8890)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/threading.py", line 926, in _bootstrap_inner
+[2m[36m(pid=8890)[0m     self.run()
+[2m[36m(pid=8890)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8890)[0m     self._entrypoint()
+[2m[36m(pid=8890)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8890)[0m     self._entrypoint()
+[2m[36m(pid=8890)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+[2m[36m(pid=8890)[0m     return self._trainable_func(config, self._status_reporter)
+[2m[36m(pid=8890)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+[2m[36m(pid=8890)[0m     output = train_func(config)
+[2m[36m(pid=8890)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8890)[0m     args
+[2m[36m(pid=8890)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8890)[0m     args
+[2m[36m(pid=8890)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+[2m[36m(pid=8890)[0m     return self.dispatch_line(frame)
+[2m[36m(pid=8890)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+[2m[36m(pid=8890)[0m     if self.quitting: raise BdbQuit
+[2m[36m(pid=8890)[0m bdb.BdbQuit
+[2m[36m(pid=8890)[0m 
+[2m[36m(pid=8887)[0m > /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py(13)construct_and_train_model()
+[2m[36m(pid=8887)[0m -> args
+[2m[36m(pid=8887)[0m (Pdb) 
+[2m[36m(pid=8887)[0m 2020-03-27 14:59:07,549	ERROR function_runner.py:93 -- Runner Thread raised error.
+[2m[36m(pid=8887)[0m Traceback (most recent call last):
+[2m[36m(pid=8887)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8887)[0m     self._entrypoint()
+[2m[36m(pid=8887)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+[2m[36m(pid=8887)[0m     return self._trainable_func(config, self._status_reporter)
+[2m[36m(pid=8887)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+[2m[36m(pid=8887)[0m     output = train_func(config)
+[2m[36m(pid=8887)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8887)[0m     args
+[2m[36m(pid=8887)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8887)[0m     args
+[2m[36m(pid=8887)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+[2m[36m(pid=8887)[0m     return self.dispatch_line(frame)
+[2m[36m(pid=8887)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+[2m[36m(pid=8887)[0m     if self.quitting: raise BdbQuit
+[2m[36m(pid=8887)[0m bdb.BdbQuit
+[2m[36m(pid=8887)[0m Exception in thread Thread-1:
+[2m[36m(pid=8887)[0m Traceback (most recent call last):
+[2m[36m(pid=8887)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/threading.py", line 926, in _bootstrap_inner
+[2m[36m(pid=8887)[0m     self.run()
+[2m[36m(pid=8887)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8887)[0m     self._entrypoint()
+[2m[36m(pid=8887)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=8887)[0m     self._entrypoint()
+[2m[36m(pid=8887)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+[2m[36m(pid=8887)[0m     return self._trainable_func(config, self._status_reporter)
+[2m[36m(pid=8887)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+[2m[36m(pid=8887)[0m     output = train_func(config)
+[2m[36m(pid=8887)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8887)[0m     args
+[2m[36m(pid=8887)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=8887)[0m     args
+[2m[36m(pid=8887)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+[2m[36m(pid=8887)[0m     return self.dispatch_line(frame)
+[2m[36m(pid=8887)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+[2m[36m(pid=8887)[0m     if self.quitting: raise BdbQuit
+[2m[36m(pid=8887)[0m bdb.BdbQuit
+[2m[36m(pid=8887)[0m 
+[2m[36m(pid=9525)[0m > /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py(13)construct_and_train_model()
+[2m[36m(pid=9525)[0m -> args
+[2m[36m(pid=9525)[0m (Pdb) 
+[2m[36m(pid=9525)[0m 2020-03-27 14:59:11,066	ERROR function_runner.py:93 -- Runner Thread raised error.
+[2m[36m(pid=9525)[0m Traceback (most recent call last):
+[2m[36m(pid=9525)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=9525)[0m     self._entrypoint()
+[2m[36m(pid=9525)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+[2m[36m(pid=9525)[0m     return self._trainable_func(config, self._status_reporter)
+[2m[36m(pid=9525)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+[2m[36m(pid=9525)[0m     output = train_func(config)
+[2m[36m(pid=9525)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=9525)[0m     args
+[2m[36m(pid=9525)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=9525)[0m     args
+[2m[36m(pid=9525)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+[2m[36m(pid=9525)[0m     return self.dispatch_line(frame)
+[2m[36m(pid=9525)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+[2m[36m(pid=9525)[0m     if self.quitting: raise BdbQuit
+[2m[36m(pid=9525)[0m bdb.BdbQuit
+[2m[36m(pid=9525)[0m Exception in thread Thread-1:
+[2m[36m(pid=9525)[0m Traceback (most recent call last):
+[2m[36m(pid=9525)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/threading.py", line 926, in _bootstrap_inner
+[2m[36m(pid=9525)[0m     self.run()
+[2m[36m(pid=9525)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=9525)[0m     self._entrypoint()
+[2m[36m(pid=9525)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 93, in run
+[2m[36m(pid=9525)[0m     self._entrypoint()
+[2m[36m(pid=9525)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 141, in entrypoint
+[2m[36m(pid=9525)[0m     return self._trainable_func(config, self._status_reporter)
+[2m[36m(pid=9525)[0m   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/function_runner.py", line 267, in _trainable_func
+[2m[36m(pid=9525)[0m     output = train_func(config)
+[2m[36m(pid=9525)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=9525)[0m     args
+[2m[36m(pid=9525)[0m   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 13, in construct_and_train_model
+[2m[36m(pid=9525)[0m     args
+[2m[36m(pid=9525)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 88, in trace_dispatch
+[2m[36m(pid=9525)[0m     return self.dispatch_line(frame)
+[2m[36m(pid=9525)[0m   File "/cluster/apps/python/3.7.4/x86_64/lib64/python3.7/bdb.py", line 113, in dispatch_line
+[2m[36m(pid=9525)[0m     if self.quitting: raise BdbQuit
+[2m[36m(pid=9525)[0m bdb.BdbQuit
+[2m[36m(pid=9525)[0m 
+== Status ==
+Memory usage on this node: 27.4/251.8 GiB
+Using AsyncHyperBand: num_stopped=0
+Bracket: Iter 64.000: None | Iter 16.000: None | Iter 4.000: None | Iter 1.000: None
+Resources requested: 0/40 CPUs, 0/1 GPUs, 0.0/204.1 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /cluster/home/metzgern/ray_results/4586243
+Number of trials: 5 (5 ERROR)
++------------------------------------+----------+-------+--------------+
+| Trial name                         | status   | loc   | rec_layers   |
+|------------------------------------+----------+-------+--------------|
+| construct_and_train_model_08ac1128 | ERROR    |       |              |
+| construct_and_train_model_08b23c2e | ERROR    |       |              |
+| construct_and_train_model_08b2b1f4 | ERROR    |       |              |
+| construct_and_train_model_08b2ff06 | ERROR    |       |              |
+| construct_and_train_model_08b34920 | ERROR    |       |              |
++------------------------------------+----------+-------+--------------+
+Number of errored trials: 5
++------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Trial name                         |   # failures | error file                                                                                                                                             |
+|------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| construct_and_train_model_08ac1128 |            1 | /cluster/home/metzgern/ray_results/4586243/construct_and_train_model_08ac1128_1_iterations=100,rec_layers=3.0851_2020-03-27_14-58-270kk_64au/error.txt |
+| construct_and_train_model_08b23c2e |            1 | /cluster/home/metzgern/ray_results/4586243/construct_and_train_model_08b23c2e_2_iterations=100,rec_layers=4.6016_2020-03-27_14-58-298teetdfl/error.txt |
+| construct_and_train_model_08b2b1f4 |            1 | /cluster/home/metzgern/ray_results/4586243/construct_and_train_model_08b2b1f4_3_iterations=100,rec_layers=1.0006_2020-03-27_14-58-29vy34ptbe/error.txt |
+| construct_and_train_model_08b2ff06 |            1 | /cluster/home/metzgern/ray_results/4586243/construct_and_train_model_08b2ff06_4_iterations=100,rec_layers=2.5117_2020-03-27_14-58-29c_n7pri8/error.txt |
+| construct_and_train_model_08b34920 |            1 | /cluster/home/metzgern/ray_results/4586243/construct_and_train_model_08b34920_5_iterations=100,rec_layers=1.7338_2020-03-27_14-59-061bpt24ve/error.txt |
++------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Traceback (most recent call last):
+  File "run_models.py", line 343, in <module>
+    **config)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/ray/tune/tune.py", line 345, in run
+    raise TuneError("Trials did not complete", errored_trials)
+ray.tune.error.TuneError: ('Trials did not complete', [construct_and_train_model_08ac1128, construct_and_train_model_08b23c2e, construct_and_train_model_08b2b1f4, construct_and_train_model_08b2ff06, construct_and_train_model_08b34920])

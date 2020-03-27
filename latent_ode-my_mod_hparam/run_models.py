@@ -40,8 +40,9 @@ from lib.utils import compute_loss_all_batches
 
 # Nando's additional libraries
 from tqdm import tqdm
-from ray import tune
 
+import ray
+from ray import tune, init
 from ray.tune.schedulers import AsyncHyperBandScheduler
 from ray.tune.suggest.bayesopt import BayesOptSearch
 from lib.training import construct_and_train_model, train_it
@@ -289,6 +290,10 @@ if __name__ == '__main__':
 
 	############
 
+	# initialize ray to run local
+	init(local_mode=True)
+
+
 	config = {
 		"config": {
 			"data_obj": data_obj,
@@ -300,7 +305,7 @@ if __name__ == '__main__':
 			"validationwriter": validationwriter
 		}
 		,
-		"config": {
+		"test_config": {
 			"iterations": 100,
 		},
 				
@@ -312,9 +317,30 @@ if __name__ == '__main__':
 
 	sched = AsyncHyperBandScheduler(time_attr="training_iteration", metric="mean_accuracy", mode="max")
 
+	
+	config = {
+		#this dictionairy in dictionary does not work
+		"spec_config":{
+			"args": args,
+			"data_obj": data_obj,
+			"args": args,
+			"file_name": file_name,
+			"optimizer": optimizer,
+			"experimentID": experimentID,
+			"trainwriter": trainwriter,
+			"validationwriter": validationwriter,
+			"input_dim": input_dim
+		},
+
+		"rec_layers":  tune.sample_from(lambda _: np.random.choice(range(1,7)) ),
+		"rec_dims":  tune.sample_from(lambda _: np.random.choice(range(1,100))),
+	}
+	
+	#construct_and_train_model(config)
+
 	search_alg = BayesOptSearch(
 		space,
-		max_concurrent=4,
+		max_concurrent=1,
 		metric="mean_accuracy",
 		mode="max",
 		utility_kwargs={
@@ -323,24 +349,22 @@ if __name__ == '__main__':
 			"xi": 0.0
 		})
 
+
+
+	#construct_and_train_model(config)
+
 	analysis = tune.run(
 		construct_and_train_model,
 		name=str(experimentID),
-		scheduler=sched,
-		search_alg=search_alg,
-		
-		num_samples=5,
+		#scheduler=sched,
+		#search_alg=search_alg,
+
 		stop={
 			"training_iteration": 25
 		},
 
-		resources_per_trial={
-			"cpu": 20,
-			"gpu": 0
-		},
-
-		
-		**config)
+		config=config
+	)
 
 	print("Best config is:", analysis.get_best_config(metric="mean_accuracy"))
 	

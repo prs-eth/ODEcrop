@@ -744,3 +744,8 @@ class FastTensorDataLoader:
 
 	def __len__(self):
 		return self.n_batches
+
+
+class Bunch(object):
+  def __init__(self, adict):
+    self.__dict__.update(adict)

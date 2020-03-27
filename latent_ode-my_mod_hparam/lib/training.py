@@ -1,7 +1,15 @@
 
-import lib.utils
+import lib.utils as utils
 from lib.utils import compute_loss_all_batches
+from lib.utils import Bunch
+
+from lib.ode_func import ODEFunc, ODEFunc_w_Poisson
+from lib.diffeq_solver import DiffeqSolver
+
 from ray.tune import track
+
+import torch.nn as nn
+
 import pdb
 
 def construct_and_train_model(config):
@@ -9,9 +17,28 @@ def construct_and_train_model(config):
 
 	pdb.set_trace()
 
-	#get arguments
-	args 
+	args = config["spec_config"]["args"]
 
+	# namespace to dict
+	argsdict = vars(args)
+
+	for key in config.keys():
+		if not key=='spec_config':
+			argsdict[key] = config[key]
+
+	# namespace to dict
+	args = Bunch(argsdict)
+
+	# onrolle the other parameters:
+	data_obj = config["spec_config"]["data_obj"]
+	file_name = config["spec_config"]["file_name"]
+	optimizer = config["spec_config"]["optimizer"]
+	experimentID = config["spec_config"]["experimentID"]
+	trainwriter = config["spec_config"]["trainwriter"]
+	validationwriter = config["spec_config"]["validationwriter"]
+	input_dim = config["spec_config"]["input_dim"]
+
+	#pdb.set_trace()
 
 	n_ode_gru_dims = args.latents
 	method = args.ode_method
