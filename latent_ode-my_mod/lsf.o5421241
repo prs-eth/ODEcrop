@@ -1,69 +1,0 @@
-Lmod has detected the following error: The following module(s) are unknown:
-"pytorch/1.4.0" "cuda/10.0.13"
-
-Please check the spelling or version number. Also try "module spider ..."
-It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
-
-
-
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/run_models.py
-run_models.py --niters 80 -n 300000 -b 2000 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method dopri5 --random-seed 6001
-  0%|          | 0/11520 [00:00<?, ?it/s]  0%|          | 1/11520 [00:01<3:24:46,  1.07s/it]  0%|          | 2/11520 [00:01<3:13:18,  1.01s/it]  0%|          | 3/11520 [00:02<3:07:11,  1.03it/s]  0%|          | 4/11520 [00:03<3:05:49,  1.03it/s]  0%|          | 5/11520 [00:04<3:01:38,  1.06it/s]  0%|          | 6/11520 [00:05<3:00:07,  1.07it/s]  0%|          | 7/11520 [00:06<3:09:38,  1.01it/s]  0%|          | 8/11520 [00:08<3:32:43,  1.11s/it]  0%|          | 9/11520 [00:09<4:00:43,  1.25s/it]  0%|          | 10/11520 [00:11<4:17:52,  1.34s/it]  0%|          | 11/11520 [00:12<4:41:17,  1.47s/it]Couldn't import umap
-Sampling dataset of 300000 training examples
-
-Trainingdataset:
-Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-Using Evaluationdataset:
-Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
-Traceback (most recent call last):
-  File "run_models.py", line 295, in <module>
-    train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/base_models.py", line 132, in compute_all_losses
-    mode = batch_dict["mode"])
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/ode_rnn.py", line 73, in get_reconstruction
-    data_and_mask, truth_time_steps, run_backwards = False)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/encoder_decoder.py", line 288, in run_odernn
-    ode_sol = self.z0_diffeq_solver(prev_y, time_points)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
-    result = self.forward(*input, **kwargs)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/diffeq_solver.py", line 41, in forward
-    rtol=self.odeint_rtol, atol=self.odeint_atol, method = self.ode_method)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/odeint.py", line 76, in odeint
-    solution = solver.integrate(t)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/solvers.py", line 31, in integrate
-    y = self.advance(t[i])
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/dopri5.py", line 90, in advance
-    self.rk_state = self._adaptive_dopri5_step(self.rk_state)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/dopri5.py", line 103, in _adaptive_dopri5_step
-    y1, f1, y1_error, k = _runge_kutta_step(self.func, y0, f0, t0, dt, tableau=_DORMAND_PRINCE_SHAMPINE_TABLEAU)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/rk_common.py", line 52, in _runge_kutta_step
-    tuple(k_.append(f_) for k_, f_ in zip(k, func(ti, yi)))
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/misc.py", line 187, in <lambda>
-    func = lambda t, y: tuple(-f_ for f_ in _base_reverse_func(-t, y))
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/misc.py", line 179, in <lambda>
-    func = lambda t, y: (_base_nontuple_func_(t, y[0]),)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
-    result = self.forward(*input, **kwargs)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/ode_func.py", line 36, in forward
-    grad = self.get_ode_gradient_nn(t_local, y)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod/lib/ode_func.py", line 42, in get_ode_gradient_nn
-    return self.gradient_net(y)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
-    result = self.forward(*input, **kwargs)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/container.py", line 100, in forward
-    input = module(input)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/module.py", line 532, in __call__
-    result = self.forward(*input, **kwargs)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/activation.py", line 295, in forward
-    return torch.tanh(input)
-RuntimeError: CUDA out of memory. Tried to allocate 20.00 MiB (GPU 0; 7.93 GiB total capacity; 7.36 GiB already allocated; 10.56 MiB free; 7.40 GiB reserved in total by PyTorch)
-  0%|          | 11/11520 [00:13<4:03:36,  1.27s/it]
