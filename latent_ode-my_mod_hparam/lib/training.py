@@ -1,23 +1,31 @@
+"""
+author: Nando Metzger
+metzgern@ethz.ch
+"""
+
+import os
+from random import SystemRandom
 
 import lib.utils as utils
 from lib.utils import compute_loss_all_batches
 from lib.utils import Bunch
+from lib.ode_rnn import *
 
 from lib.ode_func import ODEFunc, ODEFunc_w_Poisson
 from lib.diffeq_solver import DiffeqSolver
 
-from ray.tune import track
-
 import torch.nn as nn
+import torch
+from torch.utils.tensorboard import SummaryWriter
+import torch.optim as optim
 
+from tqdm import tqdm
 import pdb
 
 def construct_and_train_model(config):
 	# Create ODE-GRU model
 
-	pdb.set_trace()
-
-	args = config["spec_config"]["args"]
+	args = config["spec_config"][0]["args"]
 
 	# namespace to dict
 	argsdict = vars(args)
@@ -30,15 +38,49 @@ def construct_and_train_model(config):
 	args = Bunch(argsdict)
 
 	# onrolle the other parameters:
-	data_obj = config["spec_config"]["data_obj"]
-	file_name = config["spec_config"]["file_name"]
-	optimizer = config["spec_config"]["optimizer"]
-	experimentID = config["spec_config"]["experimentID"]
-	trainwriter = config["spec_config"]["trainwriter"]
-	validationwriter = config["spec_config"]["validationwriter"]
-	input_dim = config["spec_config"]["input_dim"]
+	data_obj = config["spec_config"][0]["data_obj"]
+	file_name = config["spec_config"][0]["file_name"]
+	experimentID = config["spec_config"][0]["experimentID"]
+	input_command = config["spec_config"][0]["input_command"]
+	device = config["spec_config"][0]["device"]
 
-	#pdb.set_trace()
+	##############################################################################
+
+	# set seed
+	torch.manual_seed(args.random_seed)
+	np.random.seed(args.random_seed)
+
+	if experimentID is None:
+		# Make a new experiment ID
+		experimentID = int(SystemRandom().random()*10000000)
+
+
+	##############################################################################
+
+	input_dim = data_obj["input_dim"]
+
+	classif_per_tp = False
+	if ("classif_per_tp" in data_obj):
+		# do classification per time point rather than on a time series as a whole
+		classif_per_tp = data_obj["classif_per_tp"]
+
+	if args.classif and (args.dataset == "hopper" or args.dataset == "periodic"):
+		raise Exception("Classification task is not available for MuJoCo and 1d datasets")
+
+	n_labels = 1
+	if args.classif:
+		if ("n_labels" in data_obj):
+			n_labels = data_obj["n_labels"]
+		else:
+			raise Exception("Please provide number of labels for classification task")
+
+
+	##############################################################################
+	# Create Model
+
+
+	obsrv_std = 0.01
+	obsrv_std = torch.Tensor([obsrv_std]).to(device)
 
 	n_ode_gru_dims = args.latents
 	method = args.ode_method
@@ -51,7 +93,7 @@ def construct_and_train_model(config):
 		raise Exception("Extrapolation for ODE-RNN not implemented")
 
 	ode_func_net = utils.create_net(n_ode_gru_dims, n_ode_gru_dims, 
-		n_layers = args.rec_layers, n_units = args.units, nonlinear = nn.Tanh)
+		n_layers = int(args.rec_layers), n_units = int(args.units), nonlinear = nn.Tanh)
 
 	rec_ode_func = ODEFunc(
 		input_dim = input_dim, 
@@ -72,25 +114,56 @@ def construct_and_train_model(config):
 		).to(device)
 
 
+	##################################################################
+	
+	if args.tensorboard:
+		comment = '_'
+		if args.classic_rnn:
+			nntype = 'rnn'
 
-	train_it(model,
+		elif args.ode_rnn:
+			nntype = 'ode'
+
+		comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_ode-units:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-lay:" + str(args.rec_layers) + "_solver" + str(args.ode_method) + "_seed" +str(args.random_seed)
+
+		validationtensorboard_dir = "runs/expID" + str(experimentID) + "_VALID" + comment
+		validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
+		
+		tensorboard_dir = "runs/expID" + str(experimentID) + "_TRAIN" + comment
+		trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
+		
+	##################################################################
+
+	##################################################################
+	# Training
+
+	num_batches = data_obj["n_train_batches"]
+
+	train_res, test_res = train_it(
+		model,
 		data_obj,
 		args,
 		file_name,
-		optimizer,
 		experimentID,
 		trainwriter,
-		validationwriter)
+		validationwriter,
+		input_command,
+		device
+	)
+
+	# because it is fmin, we have to bring back some kind of loss, therefore 1-...
+	return 1-test_res["accuracy"]
 
 def train_it(
 		model,
 		data_obj,
 		args,
 		file_name,
-		optimizer,
 		experimentID,
 		trainwriter,
-		validationwriter):
+		validationwriter,
+		input_command,
+		device):
 
 	"""
 	parameters:
@@ -98,24 +171,51 @@ def train_it(
 		data_obj,
 		args,
 		file_name,
-		optimizer,
 		experimentID,
 		trainwriter,
 		validationwriter,
+		device
 	"""
-	
+
+	ckpt_path = os.path.join(args.save, "experiment_" + str(experimentID) + '.ckpt')
+	top_ckpt_path = os.path.join(args.save, "experiment_" + str(experimentID) + '_topscore.ckpt')
+	best_test_acc = 0
+
 	log_path = "logs/" + file_name + "_" + str(experimentID) + ".log"
 	if not os.path.exists("logs/"):
 		utils.makedirs("logs/")
 	logger = utils.get_logger(logpath=log_path, filepath=os.path.abspath(__file__))
 	logger.info(input_command)
-
-	optimizer = optim.Adamax(model.parameters(), lr=args.lr)
+	
+	if args.optimizer == 'adagrad':
+		optimizer = torch.optim.Adagrad(model.parameters(), lr=args.lr, lr_decay=0, weight_decay=0, initial_accumulator_value=0, eps=1e-10)
+	elif args.optimizer == 'adadelta':
+		optimizer = optim.Adadelta(model.parameters(), lr=args.lr*100, rho=0.9, eps=1e-06, weight_decay=0)
+	elif args.optimizer == 'adam':
+		optimizer = optim.Adam(model.parameters(), lr=args.lr/10, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
+	elif args.optimizer == 'adaw':
+		optimizer = optim.AdamW(model.parameters(), lr=args.lr/10, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.01, amsgrad=False)
+	elif args.optimizer == 'sparseadam':
+		optimizer = optim.SparseAdam(model.parameters(), lr=args.lr/10, betas=(0.9, 0.999), eps=1e-08)
+	elif args.optimizer == 'ASGD':
+		optimizer = optim.ASGD(params, lr=0.01, lambd=0.0001, alpha=0.75, t0=1000000.0, weight_decay=0)
+	elif args.optimizer == 'LBFGS':
+		optimizer = optim.LBFGS(params, lr=1) 
+	elif args.optimizer == 'RMSprop':
+		optimizer = optim.RMSprop(params, lr=0.01)
+	elif args.optimizer == 'rprop':
+		optimizer = optim.Rprop(params, lr=0.01)
+	elif args.optimizer == 'SGD':
+		optim.SGD(params, lr=args.lr, momentum=0, dampening=0, weight_decay=0, nesterov=False)
+	elif args.optimizer == 'adamax': #standard: adamax
+		optimizer = optim.Adamax(model.parameters(), lr=args.lr)
+	else:
+		raise Exception("Optimizer not supported. Please change it!")
 
 	num_batches = data_obj["n_train_batches"]
 
 	
-	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
+	for itr in (range(1, num_batches * (args.niters) + 1)):
 		optimizer.zero_grad()
 		utils.update_learning_rate(optimizer, decay_rate = 0.999, lowest = args.lr / 10)
 
@@ -130,8 +230,8 @@ def train_it(
 		train_res["loss"].backward()
 		optimizer.step()
 
-		n_iters_to_viz = 0.2
-		if (itr % round(n_iters_to_viz * num_batches + 0.499999)== 0) and (itr!=0):
+		n_iters_to_viz = 0.5
+		if (itr % round(n_iters_to_viz * num_batches - 0.499999)== 0) and (itr!=0):
 			
 			with torch.no_grad():
 
@@ -147,15 +247,15 @@ def train_it(
 					test_res["loss"].detach(), test_res["likelihood"].detach(), 
 					test_res["kl_first_p"], test_res["std_first_p"])
 		 	
-				logger.info("Experiment " + str(experimentID))
+				#logger.info("Experiment " + str(experimentID))
 				logger.info(message)
-				logger.info("KL coef: {}".format(kl_coef))
-				logger.info("Train loss (one batch): {}".format(train_res["loss"].detach()))
-				logger.info("Train CE loss (one batch): {}".format(train_res["ce_loss"].detach()))
+				#logger.info("KL coef: {}".format(kl_coef))
+				#logger.info("Train loss (one batch): {}".format(train_res["loss"].detach()))
+				#logger.info("Train CE loss (one batch): {}".format(train_res["ce_loss"].detach()))
 				
 				# write training numbers
 				if "accuracy" in train_res:
-					logger.info("Classification accuracy (TRAIN): {:.4f}".format(train_res["accuracy"]))
+					#logger.info("Classification accuracy (TRAIN): {:.4f}".format(train_res["accuracy"]))
 					trainwriter.add_scalar('Classification_accuracy', train_res["accuracy"], itr*args.batch_size)
 				
 				if "loss" in train_res:
@@ -172,11 +272,11 @@ def train_it(
 				
 				#write test numbers
 				if "auc" in test_res:
-					logger.info("Classification AUC (TEST): {:.4f}".format(test_res["auc"]))
+					#logger.info("Classification AUC (TEST): {:.4f}".format(test_res["auc"]))
 					validationwriter.add_scalar('Classification_AUC', test_res["auc"], itr*args.batch_size)
 					
 				if "mse" in test_res:
-					logger.info("Test MSE: {:.4f}".format(test_res["mse"]))
+					#logger.info("Test MSE: {:.4f}".format(test_res["mse"]))
 					validationwriter.add_scalar('MSE', test_res["mse"], itr*args.batch_size)
 					
 				if "accuracy" in test_res:
@@ -184,26 +284,17 @@ def train_it(
 					validationwriter.add_scalar('Classification_accuracy', test_res["accuracy"], itr*args.batch_size)
 
 				if "pois_likelihood" in test_res:
-					logger.info("Poisson likelihood: {}".format(test_res["pois_likelihood"]))
+					#logger.info("Poisson likelihood: {}".format(test_res["pois_likelihood"]))
 					validationwriter.add_scalar('Poisson_likelihood', test_res["pois_likelihood"], itr*args.batch_size)
 				
 				if "loss" in train_res:
 					validationwriter.add_scalar('loss', test_res["loss"].detach(), itr*args.batch_size)
 				
 				if "ce_loss" in test_res:
-					logger.info("CE loss: {}".format(test_res["ce_loss"]))
+					#logger.info("CE loss: {}".format(test_res["ce_loss"]))
 					validationwriter.add_scalar('CE_loss', test_res["ce_loss"], itr*args.batch_size)
 	
-				logger.info("-----------------------------------------------------------------------------------")
-
-				# ray tune elements:
-				"""
-				reporter(
-					timesteps_total=itr*args.batch_size,
-					mean_accuracy=test_res["accuracy"]  )
-				"""
-				track.log(mean_accuracy=test_res["accuracy"])
-
+				#logger.info("-----------------------------------------------------------------------------------")
 
 				torch.save({
 					'args': args,
@@ -216,17 +307,5 @@ def train_it(
 						'args': args,
 						'state_dict': model.state_dict(),
 					}, top_ckpt_path)
-			
-			# Plotting
-			if args.viz:
-				with torch.no_grad():
-					test_dict = utils.get_next_batch(data_obj["test_dataloader"])
-
-					print("plotting....")
-					if isinstance(model, LatentODE) and (args.dataset == "periodic"): #and not args.classic_rnn and not args.ode_rnn:
-						plot_id = itr // num_batches // n_iters_to_viz
-						viz.draw_all_plots_one_dim(test_dict, model, 
-							plot_name = file_name + "_" + str(experimentID) + "_{:03d}".format(plot_id) + ".png",
-						 	experimentID = experimentID, save=True)
-						plt.pause(0.01)
-						
+	
+	return train_res, test_res

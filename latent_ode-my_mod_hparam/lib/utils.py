@@ -551,8 +551,6 @@ def compute_loss_all_batches(model,
 	hard_test_labels =  torch.Tensor([]).long().to(device)
 	hard_classif_predictions = torch.Tensor([]).long().to(device)
 	
-	print("Computing loss... ")
-	
 	for i in (range(n_batches)):
 		#pdb.set_trace()
 		batch_dict = get_next_batch(test_dataloader)
@@ -749,3 +747,33 @@ class FastTensorDataLoader:
 class Bunch(object):
   def __init__(self, adict):
     self.__dict__.update(adict)
+
+
+def hyperopt_summary(trials, best):
+
+	best_res = 0
+	print("-----------------------------------------------------------------------------------------------------------------")
+	print('TRIAL PROTOCOL:')
+	print("-----------------------------------------------------------------------------------------------------------------")
+
+	for i, trial in enumerate(trials.trials[:]):
+		message = 'Trial: {:04d} | Test-Accuracy: {:.3f} %| Hyperparameters: {} |'.format(
+			i+1, 
+			(1-trial["result"]["loss"])*100,
+			trial["misc"]["vals"] )
+
+		#pdb.set_trace()
+		print(message)
+
+		if best_res<1-trial["result"]["loss"]:
+			best_res = 1-trial["result"]["loss"]
+
+	print("-----------------------------------------------------------------------------------------------------------------")
+	message2 = "Best configuration: {:.3f} %, with Hyperparmeters: {}".format(
+		best_res*100,
+		best
+	)
+	print(message2)
+	print("-----------------------------------------------------------------------------------------------------------------")
+
+

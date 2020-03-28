@@ -40,17 +40,15 @@ from lib.utils import compute_loss_all_batches
 
 # Nando's additional libraries
 from tqdm import tqdm
+from hyperopt import hp
+from hyperopt import fmin, tpe, space_eval, Trials
 
-import ray
-from ray import tune, init
-from ray.tune.schedulers import AsyncHyperBandScheduler
-from ray.tune.suggest.bayesopt import BayesOptSearch
 from lib.training import construct_and_train_model, train_it
-
+from lib.utils import hyperopt_summary
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=300000, help="Size of the dataset")
+parser.add_argument('-n',  type=int, default=10000, help="Size of the dataset")
 parser.add_argument('-validn',  type=int, default=60000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
@@ -101,6 +99,8 @@ parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise ampl
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
 parser.add_argument('--ode-method', type=str, default='euler',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
+parser.add_argument('--optimizer', type=str, default='adamax',
+					help="Chose from: adamax ")
 
 
 args = parser.parse_args()
@@ -113,16 +113,8 @@ utils.makedirs(args.save)
 #####################################################################################################
 
 if __name__ == '__main__':
-	torch.manual_seed(args.random_seed)
-	np.random.seed(args.random_seed)
 
 	experimentID = args.load
-	if experimentID is None:
-		# Make a new experiment ID
-		experimentID = int(SystemRandom().random()*10000000)
-	ckpt_path = os.path.join(args.save, "experiment_" + str(experimentID) + '.ckpt')
-	top_ckpt_path = os.path.join(args.save, "experiment_" + str(experimentID) + '_topscore.ckpt')
-	best_test_acc = 0
 
 	print("Sampling dataset of {} training examples".format(args.n))
 	
@@ -160,224 +152,53 @@ if __name__ == '__main__':
 	if args.dataset == "hopper":
 		obsrv_std = 1e-3 
 
-	obsrv_std = torch.Tensor([obsrv_std]).to(device)
-
-	z0_prior = Normal(torch.Tensor([0.0]).to(device), torch.Tensor([1.]).to(device))
-
-	if args.rnn_vae:
-		if args.poisson: #not used
-			print("Poisson process likelihood not implemented for RNN-VAE: ignoring --poisson")
-
-		# Create RNN-VAE model
-		model = RNN_VAE(input_dim, args.latents, 
-			device = device, 
-			rec_dims = args.rec_dims, 
-			concat_mask = True, 
-			obsrv_std = obsrv_std,
-			z0_prior = z0_prior,
-			use_binary_classif = args.classif,
-			classif_per_tp = classif_per_tp,
-			linear_classifier = args.linear_classif,
-			n_units = args.units,
-			input_space_decay = args.input_decay,
-			cell = args.rnn_cell,
-			n_labels = n_labels,
-			train_classif_w_reconstr = (args.dataset == "physionet")
-			).to(device)
-
-
-	elif args.classic_rnn: #not used
-		if args.poisson:
-			print("Poisson process likelihood not implemented for RNN: ignoring --poisson")
-
-		if args.extrap:
-			raise Exception("Extrapolation for standard RNN not implemented")
-		# Create RNN model
-		model = Classic_RNN(input_dim, args.latents, device, 
-			concat_mask = True, obsrv_std = obsrv_std,
-			n_units = args.units,
-			use_binary_classif = args.classif,
-			classif_per_tp = classif_per_tp,
-			linear_classifier = args.linear_classif,
-			input_space_decay = args.input_decay,
-			cell = args.rnn_cell,
-			n_labels = n_labels,
-			train_classif_w_reconstr = (args.dataset == "physionet")
-			).to(device)
-		
-	elif args.ode_rnn: # using this thing
-		# Create ODE-GRU model
-		n_ode_gru_dims = args.latents
-		method = args.ode_method
-		#print(args.ode_method)
-		
-		if args.poisson:
-			print("Poisson process likelihood not implemented for ODE-RNN: ignoring --poisson")
-
-		if args.extrap:
-			raise Exception("Extrapolation for ODE-RNN not implemented")
-
-		ode_func_net = utils.create_net(n_ode_gru_dims, n_ode_gru_dims, 
-			n_layers = args.rec_layers, n_units = args.units, nonlinear = nn.Tanh)
-
-		rec_ode_func = ODEFunc(
-			input_dim = input_dim, 
-			latent_dim = n_ode_gru_dims,
-			ode_func_net = ode_func_net,
-			device = device).to(device)
-
-		z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, method, args.latents, 
-			odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
-	
-		model = ODE_RNN(input_dim, n_ode_gru_dims, device = device, 
-			z0_diffeq_solver = z0_diffeq_solver, n_gru_units = args.gru_units,
-			concat_mask = True, obsrv_std = obsrv_std,
-			use_binary_classif = args.classif,
-			classif_per_tp = classif_per_tp,
-			n_labels = n_labels,
-			train_classif_w_reconstr = (args.dataset == "physionet")
-			).to(device)
-	elif args.latent_ode:
-		model = create_LatentODE_model(args, input_dim, z0_prior, obsrv_std, device, 
-			classif_per_tp = classif_per_tp,
-			n_labels = n_labels)
-	else:
-		raise Exception("Model not specified")
-
 	##################################################################
 
 	if args.viz:
 		viz = Visualizations(device)
 	
 	##################################################################
-	
-	if args.tensorboard:
-		comment = '_'
-		if args.classic_rnn:
-			nntype = 'rnn'
 
-		elif args.ode_rnn:
-			nntype = 'ode'
-
-		comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_uts:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-dims:" + str(args.rec_dims) + "_rec-lay:" + str(args.rec_layers) + "_solver" + str(args.ode_method) + "_seed" +str(args.random_seed)
-
-		validationtensorboard_dir = "runs/expID" + str(experimentID) + "_VALID" + comment
-		validationwriter = SummaryWriter(validationtensorboard_dir, comment=comment)
-		
-		tensorboard_dir = "runs/expID" + str(experimentID) + "_TRAIN" + comment
-		trainwriter = SummaryWriter(tensorboard_dir, comment=comment)
-		
-	##################################################################
-	
 	#Load checkpoint and evaluate the model
 	if args.load is not None:
 		#utils.get_ckpt_model(ckpt_path, model, device)
 		utils.get_ckpt_model(top_ckpt_path, model, device)
 		exit()
 
-	##################################################################
-	# Training
+	#################################################################
+	# Optimization
+	
 
-	log_path = "logs/" + file_name + "_" + str(experimentID) + ".log"
-	if not os.path.exists("logs/"):
-		utils.makedirs("logs/")
-	logger = utils.get_logger(logpath=log_path, filepath=os.path.abspath(__file__))
-	logger.info(input_command)
-
-	optimizer = optim.Adamax(model.parameters(), lr=args.lr)
-
-	num_batches = data_obj["n_train_batches"]
-
-	############
-
-	# initialize ray to run local
-	init(local_mode=True)
-
-
-	config = {
-		"config": {
-			"data_obj": data_obj,
-			"args": args,
-			"file_name": file_name,
-			"optimizer": optimizer,
-			"experimentID": experimentID,
-			"trainwriter": trainwriter,
-			"validationwriter": validationwriter
-		}
-		,
-		"test_config": {
-			"iterations": 100,
-		},
-				
-	}
-
-	space = {
-		"rec_layers": (1, 6),
-	}
-
-	sched = AsyncHyperBandScheduler(time_attr="training_iteration", metric="mean_accuracy", mode="max")
-
-	spec_args = {
+	# create a specification dictionary for training
+	spec_config = {
 			"args": args,
 			"data_obj": data_obj,
 			"args": args,
 			"file_name": file_name,
-			"optimizer": optimizer,
 			"experimentID": experimentID,
-			"trainwriter": trainwriter,
-			"validationwriter": validationwriter,
-			"input_dim": input_dim
+			"input_command": input_command,
+			"device": device
 		},
 	
-	config = {
-		#this dictionairy in dictionary does not work
-		"spec_config":file_name,
-	
-
-		"rec_layers":  tune.sample_from(lambda _: np.random.choice(range(1,7)) ),
-		"rec_dims":  tune.sample_from(lambda _: np.random.choice(range(1,100))),
+	hyper_config = {
+		"spec_config": spec_config, # fixed argument space
+		"rec_layers": hp.quniform('rec_layers', 1, 6, 1),
+		"units": hp.quniform('ode_units', 1, 1000, 1)
 	}
-	
-	#construct_and_train_model(config)
-
-	search_alg = BayesOptSearch(
-		space,
-		max_concurrent=1,
-		metric="mean_accuracy",
-		mode="max",
-		utility_kwargs={
-			"kind": "ucb",
-			"kappa": 2.5,
-			"xi": 0.0
-		})
-
-
 
 	#construct_and_train_model(config)
 
-	analysis = tune.run(
-		construct_and_train_model,
-		name=str(experimentID),
-		#scheduler=sched,
-		#search_alg=search_alg,
+	trials = Trials()
 
-		stop={
-			"training_iteration": 25
-		},
+	best = fmin(construct_and_train_model,
+		hyper_config,
+		trials=trials,
+		algo=tpe.suggest,
+		max_evals=10)
 
-		config=config
-	)
 
-	print("Best config is:", analysis.get_best_config(metric="mean_accuracy"))
-	
+	hyperopt_summary(trials, best)
 	############
 
-						
-	validationwriter.close()
-	trainwriter.close()
-	
-	torch.save({
-		'args': args,
-		'state_dict': model.state_dict(),
-	}, ckpt_path)
+
 
