@@ -1,0 +1,2920 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"cuda/10.0.13" "pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "cuda/10.0.13" "pytorch/1.4.0"
+
+
+
+Couldn't import umap
+Sampling dataset of 300000 training examples
+
+Trainingdataset:
+Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+Using Evaluationdataset:
+Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/2 [00:00<?, ?trial/s, best loss=?]/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py
+
+run_models.py --niters 40 -n 300000 -b 2000 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method dopri5 --random-seed 6003
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [00:25<?, ?trial/s, best loss=?]Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.764909 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.3997
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [00:48<?, ?trial/s, best loss=?]Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.397364 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.6082
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [01:12<?, ?trial/s, best loss=?]Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.229023 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.6536
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [01:36<?, ?trial/s, best loss=?]Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.170214 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.6671
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [02:00<?, ?trial/s, best loss=?]Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.086399 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.6981
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [02:19<?, ?trial/s, best loss=?]Epoch 0001 [Test seq (cond on sampled tp)] | Loss 1.053874 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.6856
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [02:38<?, ?trial/s, best loss=?]Epoch 0001 [Test seq (cond on sampled tp)] | Loss 0.953968 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7245
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [02:57<?, ?trial/s, best loss=?]Epoch 0001 [Test seq (cond on sampled tp)] | Loss 0.939687 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7314
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [03:17<?, ?trial/s, best loss=?]Epoch 0001 [Test seq (cond on sampled tp)] | Loss 0.878744 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7503
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [03:38<?, ?trial/s, best loss=?]Epoch 0001 [Test seq (cond on sampled tp)] | Loss 0.850737 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7650
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [03:58<?, ?trial/s, best loss=?]Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.865869 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7619
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [04:18<?, ?trial/s, best loss=?]Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.828276 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7666
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [04:40<?, ?trial/s, best loss=?]Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.812357 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7753
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [05:01<?, ?trial/s, best loss=?]Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.810129 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7765
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [05:22<?, ?trial/s, best loss=?]Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.794104 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7791
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [05:43<?, ?trial/s, best loss=?]Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.800736 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7796
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [06:04<?, ?trial/s, best loss=?]Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.772981 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7841
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [06:26<?, ?trial/s, best loss=?]Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.764494 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7878
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [06:47<?, ?trial/s, best loss=?]Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.762528 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7938
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [07:09<?, ?trial/s, best loss=?]Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.749617 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7937
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [07:31<?, ?trial/s, best loss=?]Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.757262 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7899
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [07:54<?, ?trial/s, best loss=?]Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.746304 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7947
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [08:16<?, ?trial/s, best loss=?]Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.738286 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7984
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [08:38<?, ?trial/s, best loss=?]Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.733486 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7963
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [08:59<?, ?trial/s, best loss=?]Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.723565 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8025
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [09:20<?, ?trial/s, best loss=?]Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.733109 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7991
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [09:42<?, ?trial/s, best loss=?]Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.714802 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8036
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [10:03<?, ?trial/s, best loss=?]Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.739987 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7956
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [10:25<?, ?trial/s, best loss=?]Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.709789 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8055
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [10:47<?, ?trial/s, best loss=?]Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.698745 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8062
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [11:09<?, ?trial/s, best loss=?]Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.707297 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8083
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [11:31<?, ?trial/s, best loss=?]Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.694819 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8091
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [11:52<?, ?trial/s, best loss=?]Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.717293 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7962
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [12:15<?, ?trial/s, best loss=?]Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.695431 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8091
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [12:37<?, ?trial/s, best loss=?]Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.688445 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8101
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [12:59<?, ?trial/s, best loss=?]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.687324 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8127
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [13:22<?, ?trial/s, best loss=?]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.689937 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8082
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [13:46<?, ?trial/s, best loss=?]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.686635 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8086
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [14:08<?, ?trial/s, best loss=?]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.682187 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8126
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [14:30<?, ?trial/s, best loss=?]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.670479 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8152
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [14:51<?, ?trial/s, best loss=?]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.678184 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8147
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [15:12<?, ?trial/s, best loss=?]Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.674013 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8141
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [15:33<?, ?trial/s, best loss=?]Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.681674 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8087
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [15:54<?, ?trial/s, best loss=?]Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.678169 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8139
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [16:15<?, ?trial/s, best loss=?]Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.662294 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8173
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [16:35<?, ?trial/s, best loss=?]Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.658877 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8186
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [16:56<?, ?trial/s, best loss=?]Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.676760 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8178
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [17:16<?, ?trial/s, best loss=?]Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.676312 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8159
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [17:37<?, ?trial/s, best loss=?]Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.658416 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8203
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [17:58<?, ?trial/s, best loss=?]Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.656024 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8198
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [18:19<?, ?trial/s, best loss=?]Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.649487 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8234
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [18:39<?, ?trial/s, best loss=?]Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.654230 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8214
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [19:00<?, ?trial/s, best loss=?]Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.657762 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8216
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [19:20<?, ?trial/s, best loss=?]Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.650877 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8225
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [19:41<?, ?trial/s, best loss=?]Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.648137 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8244
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [20:02<?, ?trial/s, best loss=?]Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.642612 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8244
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [20:22<?, ?trial/s, best loss=?]Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.645881 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8218
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [20:43<?, ?trial/s, best loss=?]Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.647390 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8245
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [21:03<?, ?trial/s, best loss=?]Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.647020 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8253
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [21:24<?, ?trial/s, best loss=?]Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.638515 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8263
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [21:45<?, ?trial/s, best loss=?]Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.636654 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8279
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [22:07<?, ?trial/s, best loss=?]Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.633743 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8280
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [22:29<?, ?trial/s, best loss=?]Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.633682 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8283
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [22:51<?, ?trial/s, best loss=?]Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.632404 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8274
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [23:13<?, ?trial/s, best loss=?]Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.634627 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8277
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [23:35<?, ?trial/s, best loss=?]Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.628319 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8307
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [23:57<?, ?trial/s, best loss=?]Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.628259 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8310
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [24:19<?, ?trial/s, best loss=?]Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.629185 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8295
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [24:41<?, ?trial/s, best loss=?]Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.625772 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8291
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [25:03<?, ?trial/s, best loss=?]Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.638563 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8281
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [25:24<?, ?trial/s, best loss=?]Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.624963 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8307
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [25:46<?, ?trial/s, best loss=?]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.621840 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8302
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [26:08<?, ?trial/s, best loss=?]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.621228 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8327
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [26:30<?, ?trial/s, best loss=?]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.630312 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8316
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [26:52<?, ?trial/s, best loss=?]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.622014 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8307
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [27:14<?, ?trial/s, best loss=?]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.624274 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8290
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [27:35<?, ?trial/s, best loss=?]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.619787 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8325
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [27:57<?, ?trial/s, best loss=?]Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.617889 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8321
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [28:19<?, ?trial/s, best loss=?]Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.615568 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8320
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [28:41<?, ?trial/s, best loss=?]Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.623993 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8286
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [29:03<?, ?trial/s, best loss=?]Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.619958 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8326
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [29:25<?, ?trial/s, best loss=?]Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.619612 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8332
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [29:46<?, ?trial/s, best loss=?]Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.613909 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8335
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [30:08<?, ?trial/s, best loss=?]Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.625393 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8318
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [30:30<?, ?trial/s, best loss=?]Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.616257 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8350
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [30:52<?, ?trial/s, best loss=?]Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.613077 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8330
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [31:14<?, ?trial/s, best loss=?]Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.609671 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8346
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [31:36<?, ?trial/s, best loss=?]Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.614264 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8351
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [31:58<?, ?trial/s, best loss=?]Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.610530 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8347
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [32:19<?, ?trial/s, best loss=?]Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.608930 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8337
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [32:41<?, ?trial/s, best loss=?]Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.611400 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8352
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [33:03<?, ?trial/s, best loss=?]Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.610760 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8342
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [33:25<?, ?trial/s, best loss=?]Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.608745 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8317
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [33:49<?, ?trial/s, best loss=?]Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.604729 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8363
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [34:14<?, ?trial/s, best loss=?]Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.609522 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8368
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [34:40<?, ?trial/s, best loss=?]Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.610897 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8332
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [35:06<?, ?trial/s, best loss=?]Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.601220 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8374
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [35:33<?, ?trial/s, best loss=?]Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.600024 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8387
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [35:59<?, ?trial/s, best loss=?]Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.601727 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8375
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [36:22<?, ?trial/s, best loss=?]Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.599791 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8379
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [36:44<?, ?trial/s, best loss=?]Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.606664 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8362
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [37:05<?, ?trial/s, best loss=?]Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.601472 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8378
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [37:26<?, ?trial/s, best loss=?]Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.601526 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8376
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [37:47<?, ?trial/s, best loss=?]Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.596773 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8382
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [38:07<?, ?trial/s, best loss=?]Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.598734 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8356
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [38:28<?, ?trial/s, best loss=?]Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.604404 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8353
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [38:49<?, ?trial/s, best loss=?]Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.597781 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8366
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [39:10<?, ?trial/s, best loss=?]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.594416 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8393
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [39:32<?, ?trial/s, best loss=?]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.596658 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8399
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [39:52<?, ?trial/s, best loss=?]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.593642 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8396
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [40:13<?, ?trial/s, best loss=?]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.597474 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8382
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [40:35<?, ?trial/s, best loss=?]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.595729 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8378
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [40:56<?, ?trial/s, best loss=?]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.601398 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8365
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [41:17<?, ?trial/s, best loss=?]Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.596103 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8370
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [41:38<?, ?trial/s, best loss=?]Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.595449 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8388
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [41:59<?, ?trial/s, best loss=?]Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.602572 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8353
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [42:20<?, ?trial/s, best loss=?]Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.592881 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8407
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [42:41<?, ?trial/s, best loss=?]Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.589921 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8402
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [43:02<?, ?trial/s, best loss=?]Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.599809 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8385
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [43:23<?, ?trial/s, best loss=?]Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.593626 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8407
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [43:44<?, ?trial/s, best loss=?]Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.595087 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8410
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [44:05<?, ?trial/s, best loss=?]Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.590799 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8374
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [44:28<?, ?trial/s, best loss=?]Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.585081 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8421
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [44:50<?, ?trial/s, best loss=?]Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.586152 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8415
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [45:12<?, ?trial/s, best loss=?]Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.586455 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8408
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [45:35<?, ?trial/s, best loss=?]Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.587657 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8396
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [45:57<?, ?trial/s, best loss=?]Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.589902 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8415
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [46:19<?, ?trial/s, best loss=?]Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.585080 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8413
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [46:41<?, ?trial/s, best loss=?]Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.589769 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8372
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [47:03<?, ?trial/s, best loss=?]Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.581791 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8422
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [47:25<?, ?trial/s, best loss=?]Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.585676 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8410
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [47:47<?, ?trial/s, best loss=?]Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.588151 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8393
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [48:09<?, ?trial/s, best loss=?]Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.578963 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8426
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [48:31<?, ?trial/s, best loss=?]Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.579939 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8434
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [48:54<?, ?trial/s, best loss=?]Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.580746 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8418
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [49:15<?, ?trial/s, best loss=?]Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.578485 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8422
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [49:38<?, ?trial/s, best loss=?]Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.584051 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8417
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [50:00<?, ?trial/s, best loss=?]Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.580508 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8427
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [50:22<?, ?trial/s, best loss=?]Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.583424 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8413
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [50:46<?, ?trial/s, best loss=?]Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.577623 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8424
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [51:12<?, ?trial/s, best loss=?]Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.584230 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8403
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [51:38<?, ?trial/s, best loss=?]Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.587645 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8377
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [52:02<?, ?trial/s, best loss=?]Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.578479 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8416
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [52:25<?, ?trial/s, best loss=?]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.581382 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8433
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [52:50<?, ?trial/s, best loss=?]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.575069 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8438
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [53:13<?, ?trial/s, best loss=?]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.575122 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8435
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [53:36<?, ?trial/s, best loss=?]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.577833 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8429
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [53:59<?, ?trial/s, best loss=?]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.574751 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8431
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [54:22<?, ?trial/s, best loss=?]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.582234 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8406
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [54:45<?, ?trial/s, best loss=?]Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.576102 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8422
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [55:08<?, ?trial/s, best loss=?]Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.573725 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8431
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [55:31<?, ?trial/s, best loss=?]Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.590615 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8377
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [55:54<?, ?trial/s, best loss=?]Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.572731 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8447
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [56:17<?, ?trial/s, best loss=?]Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.577880 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8425
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [56:44<?, ?trial/s, best loss=?]Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.590937 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8414
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [57:08<?, ?trial/s, best loss=?]Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.574827 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8452
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [57:31<?, ?trial/s, best loss=?]Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.575350 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8449
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [57:55<?, ?trial/s, best loss=?]Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.572554 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8429
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [58:19<?, ?trial/s, best loss=?]Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.568599 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8450
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [58:42<?, ?trial/s, best loss=?]Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.571048 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8435
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [59:05<?, ?trial/s, best loss=?]Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.569170 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8439
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [59:30<?, ?trial/s, best loss=?]Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.570345 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8437
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [59:53<?, ?trial/s, best loss=?]Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.575474 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8458
+
+                                                     Number of labeled examples: 55740
+  0%|          | 0/2 [1:00:17<?, ?trial/s, best loss=?]Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.571187 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8442
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:00:40<?, ?trial/s, best loss=?]Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.578705 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8395
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:01:03<?, ?trial/s, best loss=?]Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.568317 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8452
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:01:26<?, ?trial/s, best loss=?]Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.573258 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8438
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:01:49<?, ?trial/s, best loss=?]Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.571188 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8431
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:02:12<?, ?trial/s, best loss=?]Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.566015 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8454
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:02:35<?, ?trial/s, best loss=?]Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.576306 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8441
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:02:58<?, ?trial/s, best loss=?]Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.565198 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8453
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:03:21<?, ?trial/s, best loss=?]Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.565402 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8442
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:03:43<?, ?trial/s, best loss=?]Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.572301 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8446
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:04:06<?, ?trial/s, best loss=?]Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.564884 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8460
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:04:29<?, ?trial/s, best loss=?]Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.575550 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8432
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:04:56<?, ?trial/s, best loss=?]Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.566405 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8456
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:05:19<?, ?trial/s, best loss=?]Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.569622 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8439
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:05:42<?, ?trial/s, best loss=?]Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.574095 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8413
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:06:05<?, ?trial/s, best loss=?]Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.563751 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8460
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:06:28<?, ?trial/s, best loss=?]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.566366 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8468
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:06:51<?, ?trial/s, best loss=?]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.561463 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8475
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:07:13<?, ?trial/s, best loss=?]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.563773 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8463
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:07:36<?, ?trial/s, best loss=?]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.564172 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8471
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:07:59<?, ?trial/s, best loss=?]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.562133 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8461
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:08:22<?, ?trial/s, best loss=?]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.567136 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8442
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:08:45<?, ?trial/s, best loss=?]Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.563725 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8450
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:09:08<?, ?trial/s, best loss=?]Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.560692 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8473
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:09:31<?, ?trial/s, best loss=?]Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.577103 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8411
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:09:54<?, ?trial/s, best loss=?]Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.560788 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8470
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:10:16<?, ?trial/s, best loss=?]Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.565500 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8453
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:10:42<?, ?trial/s, best loss=?]Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.583930 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8431
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:11:06<?, ?trial/s, best loss=?]Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.559644 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8487
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:11:30<?, ?trial/s, best loss=?]Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.562740 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8479
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:11:54<?, ?trial/s, best loss=?]Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.562684 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8448
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:12:20<?, ?trial/s, best loss=?]Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.557118 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8487
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:12:47<?, ?trial/s, best loss=?]Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.558242 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8478
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:13:10<?, ?trial/s, best loss=?]Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.557964 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8460
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:13:33<?, ?trial/s, best loss=?]Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.556869 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8486
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:13:56<?, ?trial/s, best loss=?]Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.560823 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8490
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:14:18<?, ?trial/s, best loss=?]Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.562549 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8462
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:14:42<?, ?trial/s, best loss=?]Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.562187 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8444
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:15:06<?, ?trial/s, best loss=?]Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.557598 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8497
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:15:30<?, ?trial/s, best loss=?]Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.562324 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8466
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:15:54<?, ?trial/s, best loss=?]Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.561613 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8467
+
+                                                       Number of labeled examples: 55740
+  0%|          | 0/2 [1:16:19<?, ?trial/s, best loss=?]Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.555883 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8489
+
+ 50%|█████     | 1/2 [1:16:35<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]build_posterior_wrapper took 0.002603 seconds
+
+TPE using 1/1 trials with best loss 0.151112
+
+/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py
+
+/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py
+
+run_models.py --niters 40 -n 300000 -b 2000 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method dopri5 --random-seed 6003
+
+run_models.py --niters 40 -n 300000 -b 2000 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method dopri5 --random-seed 6003
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:17:06<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.830246 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.830246 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.3876
+
+Classification accuracy (TEST): 0.3876
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:17:37<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.380237 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.380237 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.6017
+
+Classification accuracy (TEST): 0.6017
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:18:09<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.223582 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.223582 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.6467
+
+Classification accuracy (TEST): 0.6467
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:18:42<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.230784 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.230784 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.6245
+
+Classification accuracy (TEST): 0.6245
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:19:15<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.105402 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0000 [Test seq (cond on sampled tp)] | Loss 1.105402 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.6830
+
+Classification accuracy (TEST): 0.6830
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:19:49<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0001 [Test seq (cond on sampled tp)] | Loss 1.051283 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0001 [Test seq (cond on sampled tp)] | Loss 1.051283 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.6913
+
+Classification accuracy (TEST): 0.6913
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:20:21<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0001 [Test seq (cond on sampled tp)] | Loss 0.985234 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0001 [Test seq (cond on sampled tp)] | Loss 0.985234 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7158
+
+Classification accuracy (TEST): 0.7158
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:20:53<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0001 [Test seq (cond on sampled tp)] | Loss 1.015481 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0001 [Test seq (cond on sampled tp)] | Loss 1.015481 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7021
+
+Classification accuracy (TEST): 0.7021
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:21:25<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0001 [Test seq (cond on sampled tp)] | Loss 0.977165 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0001 [Test seq (cond on sampled tp)] | Loss 0.977165 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7205
+
+Classification accuracy (TEST): 0.7205
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:21:57<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0001 [Test seq (cond on sampled tp)] | Loss 0.907794 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0001 [Test seq (cond on sampled tp)] | Loss 0.907794 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7372
+
+Classification accuracy (TEST): 0.7372
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:22:30<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.884978 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.884978 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7515
+
+Classification accuracy (TEST): 0.7515
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:23:03<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.868211 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.868211 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7572
+
+Classification accuracy (TEST): 0.7572
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:23:37<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.857216 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.857216 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7583
+
+Classification accuracy (TEST): 0.7583
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:24:13<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.836052 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.836052 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7689
+
+Classification accuracy (TEST): 0.7689
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:24:49<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.815057 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0002 [Test seq (cond on sampled tp)] | Loss 0.815057 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7764
+
+Classification accuracy (TEST): 0.7764
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:25:25<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.798233 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.798233 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7813
+
+Classification accuracy (TEST): 0.7813
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:26:01<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.801705 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.801705 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7824
+
+Classification accuracy (TEST): 0.7824
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:26:35<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.788796 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.788796 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7834
+
+Classification accuracy (TEST): 0.7834
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:27:10<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.814309 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.814309 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7784
+
+Classification accuracy (TEST): 0.7784
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:27:42<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.785051 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0003 [Test seq (cond on sampled tp)] | Loss 0.785051 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7801
+
+Classification accuracy (TEST): 0.7801
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:28:14<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.767172 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.767172 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7908
+
+Classification accuracy (TEST): 0.7908
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:28:48<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.753472 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.753472 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7941
+
+Classification accuracy (TEST): 0.7941
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:29:22<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.758708 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.758708 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7893
+
+Classification accuracy (TEST): 0.7893
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:29:57<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.773650 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.773650 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7870
+
+Classification accuracy (TEST): 0.7870
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:30:30<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.738236 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0004 [Test seq (cond on sampled tp)] | Loss 0.738236 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7978
+
+Classification accuracy (TEST): 0.7978
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:31:03<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.741022 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.741022 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7961
+
+Classification accuracy (TEST): 0.7961
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:31:38<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.735914 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.735914 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7978
+
+Classification accuracy (TEST): 0.7978
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:32:12<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.742128 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.742128 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7943
+
+Classification accuracy (TEST): 0.7943
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:32:47<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.749330 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.749330 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.7953
+
+Classification accuracy (TEST): 0.7953
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:33:21<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.719460 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0005 [Test seq (cond on sampled tp)] | Loss 0.719460 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8036
+
+Classification accuracy (TEST): 0.8036
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:33:56<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.723699 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.723699 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8037
+
+Classification accuracy (TEST): 0.8037
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:34:31<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.714184 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.714184 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8060
+
+Classification accuracy (TEST): 0.8060
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:35:05<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.718634 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.718634 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8001
+
+Classification accuracy (TEST): 0.8001
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:35:40<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.722488 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.722488 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8048
+
+Classification accuracy (TEST): 0.8048
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:36:15<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.701476 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0006 [Test seq (cond on sampled tp)] | Loss 0.701476 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8073
+
+Classification accuracy (TEST): 0.8073
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:36:51<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.716864 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.716864 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8065
+
+Classification accuracy (TEST): 0.8065
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:37:27<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.713030 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.713030 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8023
+
+Classification accuracy (TEST): 0.8023
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:38:02<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.701659 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.701659 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8084
+
+Classification accuracy (TEST): 0.8084
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:38:42<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.693196 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.693196 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8095
+
+Classification accuracy (TEST): 0.8095
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:39:23<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.686251 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.686251 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8136
+
+Classification accuracy (TEST): 0.8136
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:40:05<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.686107 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0007 [Test seq (cond on sampled tp)] | Loss 0.686107 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8126
+
+Classification accuracy (TEST): 0.8126
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:40:45<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.708948 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.708948 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8068
+
+Classification accuracy (TEST): 0.8068
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:41:26<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.686158 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.686158 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8113
+
+Classification accuracy (TEST): 0.8113
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:42:03<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.676172 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.676172 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8176
+
+Classification accuracy (TEST): 0.8176
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:42:39<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.678105 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.678105 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8170
+
+Classification accuracy (TEST): 0.8170
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:43:14<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.670042 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0008 [Test seq (cond on sampled tp)] | Loss 0.670042 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8182
+
+Classification accuracy (TEST): 0.8182
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:43:49<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.680251 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.680251 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8160
+
+Classification accuracy (TEST): 0.8160
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:44:25<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.671470 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.671470 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8179
+
+Classification accuracy (TEST): 0.8179
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:45:00<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.666183 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.666183 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8177
+
+Classification accuracy (TEST): 0.8177
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:45:35<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.666473 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.666473 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8208
+
+Classification accuracy (TEST): 0.8208
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:46:11<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.658844 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0009 [Test seq (cond on sampled tp)] | Loss 0.658844 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8206
+
+Classification accuracy (TEST): 0.8206
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:46:46<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.669532 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.669532 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8143
+
+Classification accuracy (TEST): 0.8143
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:47:22<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.666179 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.666179 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8219
+
+Classification accuracy (TEST): 0.8219
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:47:57<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.667605 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.667605 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8174
+
+Classification accuracy (TEST): 0.8174
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:48:33<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.672530 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.672530 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8203
+
+Classification accuracy (TEST): 0.8203
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:49:08<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.658958 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0010 [Test seq (cond on sampled tp)] | Loss 0.658958 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8197
+
+Classification accuracy (TEST): 0.8197
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:49:43<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.653153 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.653153 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8192
+
+Classification accuracy (TEST): 0.8192
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:50:18<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.651721 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.651721 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8212
+
+Classification accuracy (TEST): 0.8212
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:50:53<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.649710 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.649710 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8243
+
+Classification accuracy (TEST): 0.8243
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:51:29<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.643836 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.643836 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8264
+
+Classification accuracy (TEST): 0.8264
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:52:06<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.641666 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0011 [Test seq (cond on sampled tp)] | Loss 0.641666 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8250
+
+Classification accuracy (TEST): 0.8250
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:52:43<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.648279 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.648279 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8234
+
+Classification accuracy (TEST): 0.8234
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:53:23<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.653749 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.653749 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8201
+
+Classification accuracy (TEST): 0.8201
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:54:01<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.639931 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.639931 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8283
+
+Classification accuracy (TEST): 0.8283
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:54:42<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.642659 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.642659 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8230
+
+Classification accuracy (TEST): 0.8230
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:55:20<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.635019 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0012 [Test seq (cond on sampled tp)] | Loss 0.635019 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8282
+
+Classification accuracy (TEST): 0.8282
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:55:56<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.634058 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.634058 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8280
+
+Classification accuracy (TEST): 0.8280
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:56:33<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.635722 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.635722 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8301
+
+Classification accuracy (TEST): 0.8301
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:57:09<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.631538 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.631538 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8281
+
+Classification accuracy (TEST): 0.8281
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:57:44<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.629761 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.629761 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8279
+
+Classification accuracy (TEST): 0.8279
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:58:20<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.629338 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0013 [Test seq (cond on sampled tp)] | Loss 0.629338 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8295
+
+Classification accuracy (TEST): 0.8295
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:58:55<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.627960 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.627960 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8292
+
+Classification accuracy (TEST): 0.8292
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [1:59:31<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.628954 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.628954 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8275
+
+Classification accuracy (TEST): 0.8275
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:00:07<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.626719 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.626719 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8273
+
+Classification accuracy (TEST): 0.8273
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:00:43<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.625599 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.625599 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8307
+
+Classification accuracy (TEST): 0.8307
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:01:19<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.624615 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.624615 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8276
+
+Classification accuracy (TEST): 0.8276
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:01:54<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.631144 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0014 [Test seq (cond on sampled tp)] | Loss 0.631144 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8314
+
+Classification accuracy (TEST): 0.8314
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:02:29<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.625832 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.625832 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8278
+
+Classification accuracy (TEST): 0.8278
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:03:06<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.619231 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.619231 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8316
+
+Classification accuracy (TEST): 0.8316
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:03:41<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.616008 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.616008 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8332
+
+Classification accuracy (TEST): 0.8332
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:04:17<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.622581 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.622581 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8306
+
+Classification accuracy (TEST): 0.8306
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:04:53<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.617217 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0015 [Test seq (cond on sampled tp)] | Loss 0.617217 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8334
+
+Classification accuracy (TEST): 0.8334
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:05:31<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.621273 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.621273 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8313
+
+Classification accuracy (TEST): 0.8313
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:06:07<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.620303 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.620303 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8313
+
+Classification accuracy (TEST): 0.8313
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:06:43<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.611008 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.611008 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8354
+
+Classification accuracy (TEST): 0.8354
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:07:19<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.612077 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.612077 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8340
+
+Classification accuracy (TEST): 0.8340
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:07:56<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.611534 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0016 [Test seq (cond on sampled tp)] | Loss 0.611534 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8334
+
+Classification accuracy (TEST): 0.8334
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:08:31<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.616873 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.616873 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8336
+
+Classification accuracy (TEST): 0.8336
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:09:07<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.615820 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.615820 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8313
+
+Classification accuracy (TEST): 0.8313
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:09:42<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.611125 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.611125 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8335
+
+Classification accuracy (TEST): 0.8335
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:10:17<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.613343 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.613343 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8348
+
+Classification accuracy (TEST): 0.8348
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:10:52<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.613227 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0017 [Test seq (cond on sampled tp)] | Loss 0.613227 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8318
+
+Classification accuracy (TEST): 0.8318
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:11:26<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.607351 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.607351 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8316
+
+Classification accuracy (TEST): 0.8316
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:12:01<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.608478 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.608478 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8349
+
+Classification accuracy (TEST): 0.8349
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:12:36<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.605490 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.605490 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8370
+
+Classification accuracy (TEST): 0.8370
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:13:12<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.610197 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.610197 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8312
+
+Classification accuracy (TEST): 0.8312
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:13:46<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.603629 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0018 [Test seq (cond on sampled tp)] | Loss 0.603629 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8367
+
+Classification accuracy (TEST): 0.8367
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:14:21<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.601722 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.601722 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8366
+
+Classification accuracy (TEST): 0.8366
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:14:56<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.610668 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.610668 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8331
+
+Classification accuracy (TEST): 0.8331
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:15:32<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.600057 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.600057 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8374
+
+Classification accuracy (TEST): 0.8374
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:16:07<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.603118 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.603118 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8360
+
+Classification accuracy (TEST): 0.8360
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:16:42<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.597388 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0019 [Test seq (cond on sampled tp)] | Loss 0.597388 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8379
+
+Classification accuracy (TEST): 0.8379
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:17:17<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.599887 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.599887 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8388
+
+Classification accuracy (TEST): 0.8388
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:17:52<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.595661 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.595661 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8384
+
+Classification accuracy (TEST): 0.8384
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:18:28<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.599419 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.599419 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8368
+
+Classification accuracy (TEST): 0.8368
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:19:08<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.595578 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.595578 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8386
+
+Classification accuracy (TEST): 0.8386
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:19:48<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.594448 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0020 [Test seq (cond on sampled tp)] | Loss 0.594448 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8390
+
+Classification accuracy (TEST): 0.8390
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:20:26<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.594447 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.594447 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8385
+
+Classification accuracy (TEST): 0.8385
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:21:06<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.596217 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.596217 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8376
+
+Classification accuracy (TEST): 0.8376
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:21:45<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.595777 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.595777 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8371
+
+Classification accuracy (TEST): 0.8371
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:22:21<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.590667 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.590667 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8393
+
+Classification accuracy (TEST): 0.8393
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:22:56<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.595719 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.595719 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8368
+
+Classification accuracy (TEST): 0.8368
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:23:31<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.592045 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0021 [Test seq (cond on sampled tp)] | Loss 0.592045 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8403
+
+Classification accuracy (TEST): 0.8403
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:24:06<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.598421 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.598421 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8354
+
+Classification accuracy (TEST): 0.8354
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:24:41<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.596789 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.596789 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8376
+
+Classification accuracy (TEST): 0.8376
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:25:17<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.590885 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.590885 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8378
+
+Classification accuracy (TEST): 0.8378
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:25:52<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.592905 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.592905 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8384
+
+Classification accuracy (TEST): 0.8384
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:26:28<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.583429 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0022 [Test seq (cond on sampled tp)] | Loss 0.583429 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8411
+
+Classification accuracy (TEST): 0.8411
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:27:04<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.595715 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.595715 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8389
+
+Classification accuracy (TEST): 0.8389
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:27:41<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.589691 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.589691 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8390
+
+Classification accuracy (TEST): 0.8390
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:28:19<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.587295 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.587295 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8407
+
+Classification accuracy (TEST): 0.8407
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:28:55<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.586241 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.586241 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8407
+
+Classification accuracy (TEST): 0.8407
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:29:30<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.583552 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0023 [Test seq (cond on sampled tp)] | Loss 0.583552 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8416
+
+Classification accuracy (TEST): 0.8416
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:30:05<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.602125 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.602125 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8370
+
+Classification accuracy (TEST): 0.8370
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:30:40<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.584324 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.584324 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8405
+
+Classification accuracy (TEST): 0.8405
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:31:16<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.585185 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.585185 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8409
+
+Classification accuracy (TEST): 0.8409
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:31:51<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.584827 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.584827 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8414
+
+Classification accuracy (TEST): 0.8414
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:32:26<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.582701 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0024 [Test seq (cond on sampled tp)] | Loss 0.582701 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8390
+
+Classification accuracy (TEST): 0.8390
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:33:03<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.583505 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.583505 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8395
+
+Classification accuracy (TEST): 0.8395
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:33:38<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.581202 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.581202 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8419
+
+Classification accuracy (TEST): 0.8419
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:34:13<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.580477 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.580477 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8429
+
+Classification accuracy (TEST): 0.8429
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:34:48<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.586121 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.586121 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8385
+
+Classification accuracy (TEST): 0.8385
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:35:22<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.577946 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0025 [Test seq (cond on sampled tp)] | Loss 0.577946 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8428
+
+Classification accuracy (TEST): 0.8428
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:35:56<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.579930 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.579930 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8417
+
+Classification accuracy (TEST): 0.8417
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:36:31<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.576923 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.576923 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8427
+
+Classification accuracy (TEST): 0.8427
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:37:06<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.577548 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.577548 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8442
+
+Classification accuracy (TEST): 0.8442
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:37:41<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.575558 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.575558 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8433
+
+Classification accuracy (TEST): 0.8433
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:38:16<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.572930 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0026 [Test seq (cond on sampled tp)] | Loss 0.572930 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8438
+
+Classification accuracy (TEST): 0.8438
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:38:50<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.583899 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.583899 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8435
+
+Classification accuracy (TEST): 0.8435
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:39:25<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.574898 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.574898 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8428
+
+Classification accuracy (TEST): 0.8428
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:40:00<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.572378 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.572378 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8435
+
+Classification accuracy (TEST): 0.8435
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:40:35<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.581370 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.581370 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8413
+
+Classification accuracy (TEST): 0.8413
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:41:10<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.583072 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0027 [Test seq (cond on sampled tp)] | Loss 0.583072 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8425
+
+Classification accuracy (TEST): 0.8425
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:41:45<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.572331 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.572331 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8447
+
+Classification accuracy (TEST): 0.8447
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:42:21<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.571653 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.571653 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8438
+
+Classification accuracy (TEST): 0.8438
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:42:55<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.574314 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.574314 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8430
+
+Classification accuracy (TEST): 0.8430
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:43:38<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.584872 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.584872 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8402
+
+Classification accuracy (TEST): 0.8402
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:44:21<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.577114 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.577114 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8421
+
+Classification accuracy (TEST): 0.8421
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:45:02<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.575294 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0028 [Test seq (cond on sampled tp)] | Loss 0.575294 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8451
+
+Classification accuracy (TEST): 0.8451
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:45:42<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.576087 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.576087 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8433
+
+Classification accuracy (TEST): 0.8433
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:46:22<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.578894 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.578894 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8422
+
+Classification accuracy (TEST): 0.8422
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:46:58<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.580488 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.580488 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8416
+
+Classification accuracy (TEST): 0.8416
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:47:33<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.574318 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.574318 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8434
+
+Classification accuracy (TEST): 0.8434
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:48:08<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.569137 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0029 [Test seq (cond on sampled tp)] | Loss 0.569137 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8456
+
+Classification accuracy (TEST): 0.8456
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:48:43<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.578310 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.578310 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8435
+
+Classification accuracy (TEST): 0.8435
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:49:17<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.573611 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.573611 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8431
+
+Classification accuracy (TEST): 0.8431
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:49:52<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.569605 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.569605 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8451
+
+Classification accuracy (TEST): 0.8451
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:50:27<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.575758 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.575758 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8419
+
+Classification accuracy (TEST): 0.8419
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:51:02<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.573491 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0030 [Test seq (cond on sampled tp)] | Loss 0.573491 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8453
+
+Classification accuracy (TEST): 0.8453
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:51:36<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.580435 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.580435 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8433
+
+Classification accuracy (TEST): 0.8433
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:52:11<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.571844 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.571844 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8436
+
+Classification accuracy (TEST): 0.8436
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:52:46<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.569543 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.569543 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8452
+
+Classification accuracy (TEST): 0.8452
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:53:21<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.586290 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.586290 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8427
+
+Classification accuracy (TEST): 0.8427
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:53:56<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.565007 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0031 [Test seq (cond on sampled tp)] | Loss 0.565007 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8451
+
+Classification accuracy (TEST): 0.8451
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:54:31<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.564877 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.564877 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8442
+
+Classification accuracy (TEST): 0.8442
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:55:06<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.566590 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.566590 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8471
+
+Classification accuracy (TEST): 0.8471
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:55:41<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.561164 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.561164 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8496
+
+Classification accuracy (TEST): 0.8496
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:56:16<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.576644 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.576644 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8435
+
+Classification accuracy (TEST): 0.8435
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:56:51<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.560691 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0032 [Test seq (cond on sampled tp)] | Loss 0.560691 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8481
+
+Classification accuracy (TEST): 0.8481
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:57:25<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.563462 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.563462 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8476
+
+Classification accuracy (TEST): 0.8476
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:58:00<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.562210 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.562210 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8468
+
+Classification accuracy (TEST): 0.8468
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:58:35<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.562912 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.562912 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8474
+
+Classification accuracy (TEST): 0.8474
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:59:11<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.562795 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.562795 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8462
+
+Classification accuracy (TEST): 0.8462
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [2:59:51<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.558084 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0033 [Test seq (cond on sampled tp)] | Loss 0.558084 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8493
+
+Classification accuracy (TEST): 0.8493
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:00:29<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.564949 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.564949 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8487
+
+Classification accuracy (TEST): 0.8487
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:01:04<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.563988 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.563988 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8466
+
+Classification accuracy (TEST): 0.8466
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:01:40<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.559979 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.559979 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8472
+
+Classification accuracy (TEST): 0.8472
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:02:16<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.561599 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.561599 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8463
+
+Classification accuracy (TEST): 0.8463
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:02:51<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.566972 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0034 [Test seq (cond on sampled tp)] | Loss 0.566972 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8462
+
+Classification accuracy (TEST): 0.8462
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:03:26<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.566549 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.566549 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8476
+
+Classification accuracy (TEST): 0.8476
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:04:01<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.558010 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.558010 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8484
+
+Classification accuracy (TEST): 0.8484
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:04:36<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.562479 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.562479 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8471
+
+Classification accuracy (TEST): 0.8471
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:05:12<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.560279 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.560279 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8495
+
+Classification accuracy (TEST): 0.8495
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:05:48<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.567713 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.567713 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8445
+
+Classification accuracy (TEST): 0.8445
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:06:22<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.566485 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0035 [Test seq (cond on sampled tp)] | Loss 0.566485 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8471
+
+Classification accuracy (TEST): 0.8471
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:06:58<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.563533 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.563533 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8469
+
+Classification accuracy (TEST): 0.8469
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:07:35<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.573805 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.573805 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8442
+
+Classification accuracy (TEST): 0.8442
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:08:11<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.557111 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.557111 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8491
+
+Classification accuracy (TEST): 0.8491
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:08:46<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.558768 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.558768 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8473
+
+Classification accuracy (TEST): 0.8473
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:09:21<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.554682 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0036 [Test seq (cond on sampled tp)] | Loss 0.554682 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8501
+
+Classification accuracy (TEST): 0.8501
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:09:56<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.571078 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.571078 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8437
+
+Classification accuracy (TEST): 0.8437
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:10:30<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.565888 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.565888 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8473
+
+Classification accuracy (TEST): 0.8473
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:11:05<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.558539 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.558539 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8496
+
+Classification accuracy (TEST): 0.8496
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:11:41<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.563046 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.563046 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8487
+
+Classification accuracy (TEST): 0.8487
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:12:16<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.553454 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0037 [Test seq (cond on sampled tp)] | Loss 0.553454 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8506
+
+Classification accuracy (TEST): 0.8506
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:12:52<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.556051 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.556051 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8510
+
+Classification accuracy (TEST): 0.8510
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:13:28<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.555075 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.555075 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8486
+
+Classification accuracy (TEST): 0.8486
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:14:03<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.575767 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.575767 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8459
+
+Classification accuracy (TEST): 0.8459
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:14:39<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.566089 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.566089 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8470
+
+Classification accuracy (TEST): 0.8470
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:15:15<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.558950 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0038 [Test seq (cond on sampled tp)] | Loss 0.558950 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8483
+
+Classification accuracy (TEST): 0.8483
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:15:50<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.560746 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.560746 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8464
+
+Classification accuracy (TEST): 0.8464
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:16:26<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.557916 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.557916 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8494
+
+Classification accuracy (TEST): 0.8494
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:17:01<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.560328 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.560328 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8466
+
+Classification accuracy (TEST): 0.8466
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:17:36<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.566363 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.566363 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8464
+
+Classification accuracy (TEST): 0.8464
+
+                                                                                      Number of labeled examples: 55740
+ 50%|█████     | 1/2 [3:18:12<1:16:35, 4595.22s/trial, best loss: 0.15111230714029422]Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.553626 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Epoch 0039 [Test seq (cond on sampled tp)] | Loss 0.553626 | Likelihood 0.000000 | KL fp 0.0000 | FP STD 0.0000|
+
+Classification accuracy (TEST): 0.8496
+
+Classification accuracy (TEST): 0.8496
+
+100%|██████████| 2/2 [3:18:30<00:00, 5411.37s/trial, best loss: 0.1503767491926803]   100%|██████████| 2/2 [3:18:30<00:00, 5955.47s/trial, best loss: 0.1503767491926803]
+
+-----------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+-----------------------------------------------------------------------------------------------------------------
+Trial: 0001   |   Test-Accuracy: 84.889 %   |   Hyperparameters: {'ode_units': [59.0], 'rec_layers': [5.0]}   |
+Trial: 0002   |   Test-Accuracy: 84.962 %   |   Hyperparameters: {'ode_units': [518.0], 'rec_layers': [5.0]}   |
+-----------------------------------------------------------------------------------------------------------------
+Best configuration: 84.962 %, with Hyperparmeters: {'ode_units': 518.0, 'rec_layers': 5.0}
+-----------------------------------------------------------------------------------------------------------------

@@ -18,20 +18,22 @@ Dataset Crops
 
 Using Evaluationdataset:
 Dataset Crops
-    Number of datapoints: 55740
+    Number of datapoints: 1000
     Root Location: data/Crops
     Reduce: average
 
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py
+  0%|          | 0/30 [00:00<?, ?trial/s, best loss=?]                                                      runs/expID9141057_TRAINode_ns:300000_ba:500_ode-units:500_gru-uts:50_lats:35_rec-lay:4_solver:dopri5_seed:6003_optim:adamax
+  0%|          | 0/30 [00:00<?, ?trial/s, best loss=?]job exception: CUDA out of memory. Tried to allocate 2.00 MiB (GPU 0; 7.93 GiB total capacity; 7.29 GiB already allocated; 2.56 MiB free; 7.40 GiB reserved in total by PyTorch)
 
-run_models.py --niters 40 -n 300000 -b 2000 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method dopri5 --random-seed 6003
+  0%|          | 0/30 [00:05<?, ?trial/s, best loss=?]
 
-job exception: CUDA out of memory. Tried to allocate 20.00 MiB (GPU 0; 10.73 GiB total capacity; 9.82 GiB already allocated; 17.56 MiB free; 9.86 GiB reserved in total by PyTorch)
-
-  0%|          | 0/15 [00:05<?, ?trial/s, best loss=?]
+-----------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
 Traceback (most recent call last):
-  File "run_models.py", line 199, in <module>
-    max_evals=15)
+  File "run_models.py", line 178, in <module>
+    max_evals=30)
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 482, in fmin
     show_progressbar=show_progressbar,
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 686, in fmin
@@ -88,4 +90,13 @@ Traceback (most recent call last):
     result = self.forward(*input, **kwargs)
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/activation.py", line 295, in forward
     return torch.tanh(input)
-RuntimeError: CUDA out of memory. Tried to allocate 20.00 MiB (GPU 0; 10.73 GiB total capacity; 9.82 GiB already allocated; 17.56 MiB free; 9.86 GiB reserved in total by PyTorch)
+RuntimeError: CUDA out of memory. Tried to allocate 2.00 MiB (GPU 0; 7.93 GiB total capacity; 7.29 GiB already allocated; 2.56 MiB free; 7.40 GiB reserved in total by PyTorch)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_models.py", line 185, in <module>
+    hyperopt_summary(trials)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/utils.py", line 776, in hyperopt_summary
+    best_param
+UnboundLocalError: local variable 'best_param' referenced before assignment

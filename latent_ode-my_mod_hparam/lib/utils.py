@@ -51,7 +51,7 @@ def get_logger(logpath, filepath, package_files=[],
 		console_handler = logging.StreamHandler()
 		console_handler.setLevel(level)
 		logger.addHandler(console_handler)
-	logger.info(filepath)
+	#logger.info(filepath)
 
 	for f in package_files:
 		logger.info(f)
@@ -640,7 +640,7 @@ def compute_loss_all_batches(model,
 			hard_classif_predictions = hard_classif_predictions[0,idx_not_nan]
 			hard_test_labels = hard_test_labels[0,0,idx_not_nan]
 			
-			print("Number of labeled examples: {}".format(len(hard_test_labels.reshape(-1))))
+			#print("Number of labeled examples: {}".format(len(hard_test_labels.reshape(-1))))
 			
 			total["accuracy"] = sk.metrics.accuracy_score(
 					hard_test_labels.cpu().numpy(), 
@@ -749,7 +749,7 @@ class Bunch(object):
     self.__dict__.update(adict)
 
 
-def hyperopt_summary(trials, best):
+def hyperopt_summary(trials):
 
 	best_res = 0
 	print("")
@@ -768,11 +768,12 @@ def hyperopt_summary(trials, best):
 
 		if best_res<1-trial["result"]["loss"]:
 			best_res = 1-trial["result"]["loss"]
+			best_param = trial["misc"]["vals"]
 
 	print("-----------------------------------------------------------------------------------------------------------------")
 	message2 = "Best configuration: {:.3f} %, with Hyperparmeters: {}".format(
 		best_res*100,
-		best
+		best_param
 	)
 	print(message2)
 	print("-----------------------------------------------------------------------------------------------------------------")

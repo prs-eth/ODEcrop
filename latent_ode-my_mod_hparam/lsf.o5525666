@@ -1,0 +1,90 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"cuda/10.0.13" "pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "cuda/10.0.13" "pytorch/1.4.0"
+
+
+
+Couldn't import umap
+Sampling dataset of 300000 training examples
+
+Trainingdataset:
+Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+Using Evaluationdataset:
+Dataset Crops
+    Number of datapoints: 1000
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/30 [00:00<?, ?trial/s, best loss=?]                                                      runs/expID5228386_TRAINode_ns:300000_ba:500_ode-units:500_gru-uts:50_lats:35_rec-lay:4_solver:dopri5_seed:6003_optim:SGD
+  0%|          | 0/30 [00:00<?, ?trial/s, best loss=?]                                                      label pred
+  0%|          | 0/30 [00:01<?, ?trial/s, best loss=?]                                                      tensor([[[0.0000e+00, 1.0000e+00, 8.5084e-10,  ..., 0.0000e+00,
+          0.0000e+00, 0.0000e+00],
+         [0.0000e+00, 1.0000e+00, 1.1372e-10,  ..., 0.0000e+00,
+          0.0000e+00, 0.0000e+00],
+         [0.0000e+00, 1.0000e+00, 3.1595e-10,  ..., 0.0000e+00,
+          0.0000e+00, 0.0000e+00],
+         ...,
+         [0.0000e+00, 9.5260e-01, 5.0625e-05,  ..., 0.0000e+00,
+          0.0000e+00, 0.0000e+00],
+         [0.0000e+00, 1.0000e+00, 7.4502e-11,  ..., 0.0000e+00,
+          0.0000e+00, 0.0000e+00],
+         [0.0000e+00, 1.0000e+00, 1.5481e-09,  ..., 0.0000e+00,
+          0.0000e+00, 0.0000e+00]]], device='cuda:0',
+       grad_fn=<SqueezeBackward1>)
+  0%|          | 0/30 [00:01<?, ?trial/s, best loss=?]                                                      labels
+  0%|          | 0/30 [00:01<?, ?trial/s, best loss=?]                                                      tensor([[0.0000, 1.0000, 0.0000,  ..., 0.0000, 0.0000, 0.0000],
+        [0.0000, 1.0000, 0.0000,  ..., 0.0000, 0.0000, 0.0000],
+        [1.0000, 0.0000, 0.0000,  ..., 0.0000, 0.0000, 0.0000],
+        ...,
+        [0.0000, 0.0000, 0.0000,  ..., 0.0000, 0.0000, 0.0000],
+        [1.0000, 0.0000, 0.0000,  ..., 0.0000, 0.0000, 0.0000],
+        [0.6706, 0.0000, 0.3294,  ..., 0.0000, 0.0000, 0.0000]],
+       device='cuda:0')
+  0%|          | 0/30 [00:01<?, ?trial/s, best loss=?]job exception: CE loss is Nan!
+
+  0%|          | 0/30 [00:01<?, ?trial/s, best loss=?]
+
+-----------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "run_models.py", line 178, in <module>
+    max_evals=30)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 482, in fmin
+    show_progressbar=show_progressbar,
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 686, in fmin
+    show_progressbar=show_progressbar,
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 509, in fmin
+    rval.exhaust()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 330, in exhaust
+    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 286, in run
+    self.serial_evaluate()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 165, in serial_evaluate
+    result = self.domain.evaluate(spec, ctrl)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 894, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 151, in construct_and_train_model
+    device
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 229, in train_it
+    train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/base_models.py", line 169, in compute_all_losses
+    raise Exception("CE loss is Nan!")
+Exception: CE loss is Nan!
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_models.py", line 185, in <module>
+    hyperopt_summary(trials)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/utils.py", line 776, in hyperopt_summary
+    best_param
+UnboundLocalError: local variable 'best_param' referenced before assignment

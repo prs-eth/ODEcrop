@@ -6,6 +6,7 @@
 
 import os
 import sys
+import traceback
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot
@@ -49,10 +50,10 @@ from lib.utils import hyperopt_summary
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=10000, help="Size of the dataset")
-parser.add_argument('-validn',  type=int, default=60000, help="Size of the validation dataset")
+parser.add_argument('-validn',  type=int, default=1000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
-parser.add_argument('-b', '--batch-size', type=int, default=2000)
+parser.add_argument('-b', '--batch-size', type=int, default=20000)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
 
 parser.add_argument('--save', type=str, default='experiments/', help="Path for save checkpoints")
@@ -97,11 +98,12 @@ parser.add_argument('-t', '--timepoints', type=int, default=100, help="Total num
 parser.add_argument('--max-t',  type=float, default=5., help="We subsample points in the interval [0, args.max_tp]")
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
-parser.add_argument('--ode-method', type=str, default='dopri5',
+parser.add_argument('--ode-method', type=str, default='euler',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
-parser.add_argument('--optimizer', type=str, default='adamax',
-					help="Chose from: adamax (default), adagrad, adadelta, adam, adaw, sparseadam, ASGD, LBFGS, RMSprop, rprop, SGD")
-
+parser.add_argument('--optimizer', type=str, default='SGD',
+					help="Chose from: adamax (default), adagrad, adadelta, adam, adaw, sparseadam, ASGD, RMSprop, rprop, SGD")
+					# working: adamax, adagrad, adadelta, adam, adaw, ASGD, rprop
+					# not working sparseadam(need sparse gradients), LBFGS(missing closure), RMSprop(CE loss is NAN)
 
 args = parser.parse_args()
 
@@ -128,34 +130,9 @@ if __name__ == '__main__':
 	utils.makedirs("results/")
 
 	##################################################################
+	# Dataset
+
 	data_obj = parse_datasets(args, device)
-	input_dim = data_obj["input_dim"]
-
-	classif_per_tp = False
-	if ("classif_per_tp" in data_obj):
-		# do classification per time point rather than on a time series as a whole
-		classif_per_tp = data_obj["classif_per_tp"]
-
-	if args.classif and (args.dataset == "hopper" or args.dataset == "periodic"):
-		raise Exception("Classification task is not available for MuJoCo and 1d datasets")
-
-	n_labels = 1
-	if args.classif:
-		if ("n_labels" in data_obj):
-			n_labels = data_obj["n_labels"]
-		else:
-			raise Exception("Please provide number of labels for classification task")
-
-	##################################################################
-	# Create the model
-	obsrv_std = 0.01
-	if args.dataset == "hopper":
-		obsrv_std = 1e-3 
-
-	##################################################################
-
-	if args.viz:
-		viz = Visualizations(device)
 	
 	##################################################################
 
@@ -166,7 +143,7 @@ if __name__ == '__main__':
 		exit()
 
 	#################################################################
-	# Optimization
+	# Hyperparameter Optimization
 	
 
 	# create a specification dictionary for training
@@ -182,25 +159,54 @@ if __name__ == '__main__':
 	
 	hyper_config = {
 		"spec_config": spec_config, # fixed argument space
-		"rec_layers": hp.quniform('rec_layers', 1, 6, 1),
-		#"units": hp.quniform('ode_units', 1, 1000, 1),
-		#"latents": hp.quniform('latents', 5, 80, 1),
-		"gru-units": hp.quniform('latents', 5, 200, 1),
+
+		#"rec_layers": hp.quniform('rec_layers', 1, 4, 1),
+		#"units": hp.quniform('ode_units', 20, 500, 10), # default: 500
+		#"latents": hp.quniform('latents', 5, 65, 5), # default: 35
+		#"gru-units": hp.quniform('gru-units', 5, 70, 5), # default: 50
+		"optimizer": hp.choice('optimizer',['adamax', 'adam', 'rprop']), #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD']
+		"lr": hp.loguniform('lr', 0.001, 0.1),
+		#"random-seed":  hp.randint('seed', 5)
 	}
 
-	#construct_and_train_model(config)
+	try:
+		trials = Trials()
+		best = fmin(construct_and_train_model,
+			hyper_config,
+			trials=trials,
+			algo=tpe.suggest,
+			max_evals=30)
 
-	trials = Trials()
+	except KeyboardInterrupt:
+		best=None
+		hyperopt_summary(trials)
 
-	best = fmin(construct_and_train_model,
-		hyper_config,
-		trials=trials,
-		algo=tpe.suggest,
-		max_evals=15)
+	except Exception:
+		hyperopt_summary(trials)
+		traceback.print_exc(file=sys.stdout)
+
+	hyperopt_summary(trials)
 
 
-	hyperopt_summary(trials, best)
-	############
+	"""
+	SPACE = {
+		"rec_layers": hp.quniform('rec_layers', 1, 5, 1),
+		"units": hp.quniform('ode_units', 1, 500, 1), # default: 500
+		#"latents": hp.quniform('latents', 5, 65, 1), # default: 35
+		#"gru-units": hp.quniform('latents', 5, 70, 1), # default: 50
+		#"optimizer": hp.choice('optimizer',['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'sparseadam', 'ASGD', 'LBFGS', 'RMSprop', 'rprop', 'SGD']),
+		#"lr": hp.loguniform('lr', 0.0001, 0.1),
+		#"random-seed":  hp.randint('seed', 5)
+		'learning_rate': 
+			hp.loguniform('learning_rate',np.log(0.01),np.log(0.5)),
+		'max_depth': 
+			hp.choice('max_depth', range(1, 30, 1)),
+		'num_leaves': 
+			hp.choice('num_leaves', range(2, 100, 1)),
+		'subsample': 
+			hp.uniform('subsample', 0.1, 1.0)
+	}
+	"""
 
 
 
