@@ -82,7 +82,7 @@ def construct_and_train_model(config):
 	obsrv_std = 0.01
 	obsrv_std = torch.Tensor([obsrv_std]).to(device)
 
-	n_ode_gru_dims = args.latents
+	n_ode_gru_dims = int(args.latents)
 	method = args.ode_method
 	#print(args.ode_method)
 	
@@ -101,11 +101,11 @@ def construct_and_train_model(config):
 		ode_func_net = ode_func_net,
 		device = device).to(device)
 
-	z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, method, args.latents, 
+	z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, method, int(args.latents), 
 		odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
 
 	model = ODE_RNN(input_dim, n_ode_gru_dims, device = device, 
-		z0_diffeq_solver = z0_diffeq_solver, n_gru_units = args.gru_units,
+		z0_diffeq_solver = z0_diffeq_solver, n_gru_units = int(args.gru_units),
 		concat_mask = True, obsrv_std = obsrv_std,
 		use_binary_classif = args.classif,
 		classif_per_tp = classif_per_tp,
@@ -230,7 +230,7 @@ def train_it(
 		train_res["loss"].backward()
 		optimizer.step()
 
-		n_iters_to_viz = 0.5
+		n_iters_to_viz = 0.2
 		if (itr % round(n_iters_to_viz * num_batches - 0.499999)== 0) and (itr!=0):
 			
 			with torch.no_grad():

@@ -1,9 +1,9 @@
 Lmod has detected the following error: The following module(s) are unknown:
-"pytorch/1.4.0" "cuda/10.0.13"
+"cuda/10.0.13" "pytorch/1.4.0"
 
 Please check the spelling or version number. Also try "module spider ..."
 It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
+  $ module --ignore-cache load "cuda/10.0.13" "pytorch/1.4.0"
 
 
 
@@ -22,16 +22,16 @@ Dataset Crops
     Root Location: data/Crops
     Reduce: average
 
-  0%|          | 0/10 [00:00<?, ?trial/s, best loss=?]/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py
+  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py
 
-run_models.py --niters 500 -n 300000 -b 2000 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method adaptive_heun --random-seed 6003
+run_models.py --niters 40 -n 300000 -b 2000 -l 35 --dataset crop --ode-rnn --rec-dims 100 --rec-layers 4 --gen-layers 1 --units 500 --gru-units 50 --classif --ode-method dopri5 --random-seed 6003
 
-job exception: CUDA out of memory. Tried to allocate 20.00 MiB (GPU 0; 10.92 GiB total capacity; 9.71 GiB already allocated; 15.50 MiB free; 10.34 GiB reserved in total by PyTorch)
+job exception: CUDA out of memory. Tried to allocate 20.00 MiB (GPU 0; 10.73 GiB total capacity; 9.82 GiB already allocated; 17.56 MiB free; 9.86 GiB reserved in total by PyTorch)
 
-  0%|          | 0/10 [00:13<?, ?trial/s, best loss=?]
+  0%|          | 0/15 [00:05<?, ?trial/s, best loss=?]
 Traceback (most recent call last):
-  File "run_models.py", line 197, in <module>
-    max_evals=10)
+  File "run_models.py", line 199, in <module>
+    max_evals=15)
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 482, in fmin
     show_progressbar=show_progressbar,
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 686, in fmin
@@ -64,10 +64,10 @@ Traceback (most recent call last):
     solution = solver.integrate(t)
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/solvers.py", line 31, in integrate
     y = self.advance(t[i])
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/adaptive_heun.py", line 79, in advance
-    self.rk_state = self._adaptive_heun_step(self.rk_state)
-  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/adaptive_heun.py", line 92, in _adaptive_heun_step
-    y1, f1, y1_error, k = _runge_kutta_step(self.func, y0, f0, t0, dt, tableau=_ADAPTIVE_HEUN_TABLEAU)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/dopri5.py", line 90, in advance
+    self.rk_state = self._adaptive_dopri5_step(self.rk_state)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/dopri5.py", line 103, in _adaptive_dopri5_step
+    y1, f1, y1_error, k = _runge_kutta_step(self.func, y0, f0, t0, dt, tableau=_DORMAND_PRINCE_SHAMPINE_TABLEAU)
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/rk_common.py", line 52, in _runge_kutta_step
     tuple(k_.append(f_) for k_, f_ in zip(k, func(ti, yi)))
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torchdiffeq/_impl/misc.py", line 187, in <lambda>
@@ -88,4 +88,4 @@ Traceback (most recent call last):
     result = self.forward(*input, **kwargs)
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/torch/nn/modules/activation.py", line 295, in forward
     return torch.tanh(input)
-RuntimeError: CUDA out of memory. Tried to allocate 20.00 MiB (GPU 0; 10.92 GiB total capacity; 9.71 GiB already allocated; 15.50 MiB free; 10.34 GiB reserved in total by PyTorch)
+RuntimeError: CUDA out of memory. Tried to allocate 20.00 MiB (GPU 0; 10.73 GiB total capacity; 9.82 GiB already allocated; 17.56 MiB free; 9.86 GiB reserved in total by PyTorch)

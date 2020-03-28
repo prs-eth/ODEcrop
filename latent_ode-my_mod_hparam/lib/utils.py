@@ -752,12 +752,13 @@ class Bunch(object):
 def hyperopt_summary(trials, best):
 
 	best_res = 0
+	print("")
 	print("-----------------------------------------------------------------------------------------------------------------")
 	print('TRIAL PROTOCOL:')
 	print("-----------------------------------------------------------------------------------------------------------------")
 
 	for i, trial in enumerate(trials.trials[:]):
-		message = 'Trial: {:04d} | Test-Accuracy: {:.3f} %| Hyperparameters: {} |'.format(
+		message = 'Trial: {:04d}   |   Test-Accuracy: {:.3f} %   |   Hyperparameters: {}   |'.format(
 			i+1, 
 			(1-trial["result"]["loss"])*100,
 			trial["misc"]["vals"] )

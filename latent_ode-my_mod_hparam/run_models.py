@@ -97,10 +97,10 @@ parser.add_argument('-t', '--timepoints', type=int, default=100, help="Total num
 parser.add_argument('--max-t',  type=float, default=5., help="We subsample points in the interval [0, args.max_tp]")
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
-parser.add_argument('--ode-method', type=str, default='euler',
+parser.add_argument('--ode-method', type=str, default='dopri5',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
 parser.add_argument('--optimizer', type=str, default='adamax',
-					help="Chose from: adamax ")
+					help="Chose from: adamax (default), adagrad, adadelta, adam, adaw, sparseadam, ASGD, LBFGS, RMSprop, rprop, SGD")
 
 
 args = parser.parse_args()
@@ -183,7 +183,9 @@ if __name__ == '__main__':
 	hyper_config = {
 		"spec_config": spec_config, # fixed argument space
 		"rec_layers": hp.quniform('rec_layers', 1, 6, 1),
-		"units": hp.quniform('ode_units', 1, 1000, 1)
+		#"units": hp.quniform('ode_units', 1, 1000, 1),
+		#"latents": hp.quniform('latents', 5, 80, 1),
+		"gru-units": hp.quniform('latents', 5, 200, 1),
 	}
 
 	#construct_and_train_model(config)
@@ -194,7 +196,7 @@ if __name__ == '__main__':
 		hyper_config,
 		trials=trials,
 		algo=tpe.suggest,
-		max_evals=10)
+		max_evals=15)
 
 
 	hyperopt_summary(trials, best)
