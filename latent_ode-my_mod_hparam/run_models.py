@@ -108,14 +108,20 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 args = parser.parse_args()
 
 #print("I'm running on GPU") if torch.cuda.is_available() else print("I'm running on CPU")
-if torch.cuda.device_count() > 1:
-	num_gpus_avail = torch.cuda.device_count()
-	print("I'm counting gpu's: ", num_gpus_avail)
-	print("Means I will train ", , " models, with different random seeds")
+num_gpus = torch.cuda.device_count()
 
-if num_gpus_avail>1:
-	for ind in num_gpus_avail:
+print(num_gpus)
+if num_gpus> 0:
+	
+	print("I'm counting gpu's: ", num_gpusl)
+	print("Means I will train ", num_gpus , " models, with different random seeds")
+
+if num_gpus>1:
+	device = []
+	for ind in num_gpus:
 		device.append("cuda:" + ind)
+
+	pdb.set_trace()
 else:
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -142,7 +148,6 @@ if __name__ == '__main__':
 
 	##################################################################
 	# Dataset
-
 	data_obj = parse_datasets(args, device)
 	
 	##################################################################
@@ -150,13 +155,12 @@ if __name__ == '__main__':
 	#Load checkpoint and evaluate the model
 	if args.load is not None:
 		#utils.get_ckpt_model(ckpt_path, model, device)
-		utils.get_ckpt_model(top_ckpt_path, model, device)
+		utils.get_ckpt_model(top_ckpt_path, model, device[0])
 		exit()
 
 	#################################################################
 	# Hyperparameter Optimization
 	
-
 	# create a specification dictionary for training
 	spec_config = {
 			"args": args,
@@ -197,27 +201,4 @@ if __name__ == '__main__':
 		traceback.print_exc(file=sys.stdout)
 
 	hyperopt_summary(trials)
-
-
-	"""
-	SPACE = {
-		"rec_layers": hp.quniform('rec_layers', 1, 5, 1),
-		"units": hp.quniform('ode_units', 1, 500, 1), # default: 500
-		#"latents": hp.quniform('latents', 5, 65, 1), # default: 35
-		#"gru-units": hp.quniform('latents', 5, 70, 1), # default: 50
-		#"optimizer": hp.choice('optimizer',['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'sparseadam', 'ASGD', 'LBFGS', 'RMSprop', 'rprop', 'SGD']),
-		#"lr": hp.loguniform('lr', 0.0001, 0.1),
-		#"random-seed":  hp.randint('seed', 5)
-		'learning_rate': 
-			hp.loguniform('learning_rate',np.log(0.01),np.log(0.5)),
-		'max_depth': 
-			hp.choice('max_depth', range(1, 30, 1)),
-		'num_leaves': 
-			hp.choice('num_leaves', range(2, 100, 1)),
-		'subsample': 
-			hp.uniform('subsample', 0.1, 1.0)
-	}
-	"""
-
-
 

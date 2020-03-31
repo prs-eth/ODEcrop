@@ -9,6 +9,7 @@ from random import SystemRandom
 import lib.utils as utils
 from lib.utils import compute_loss_all_batches
 from lib.utils import Bunch
+from lib.construct import get_ODE_RNN_model
 from lib.ode_rnn import *
 
 from lib.ode_func import ODEFunc, ODEFunc_w_Poisson
@@ -21,6 +22,7 @@ import torch.optim as optim
 
 from tqdm import tqdm
 import pdb
+
 
 def construct_and_train_model(config):
 	# Create ODE-GRU model
@@ -47,8 +49,8 @@ def construct_and_train_model(config):
 	##############################################################################
 
 	# set seed
-	#torch.manual_seed(args.random_seed)
-	#np.random.seed(args.random_seed)
+	torch.manual_seed(args.random_seed)
+	np.random.seed(args.random_seed)
 
 	if experimentID is None:
 		# Make a new experiment ID
@@ -58,7 +60,7 @@ def construct_and_train_model(config):
 	##############################################################################
 
 	input_dim = data_obj["input_dim"]
-
+	pdb.set_trace()
 	classif_per_tp = False
 	if ("classif_per_tp" in data_obj):
 		# do classification per time point rather than on a time series as a whole
@@ -78,45 +80,7 @@ def construct_and_train_model(config):
 	##############################################################################
 	# Create Model
 
-	if torch.cuda.device_count() > 1:
-		
-		print("I'm counting: ", torch.cuda.device_count())
-
-
-	#get ODE_RNN model
-	model = get_ODE_RNN_model()
-	obsrv_std = 0.01
-	obsrv_std = torch.Tensor([obsrv_std]).to(device)
-
-	n_ode_gru_dims = int(args.latents)
-	method = args.ode_method
-
-	if args.poisson:
-		print("Poisson process likelihood not implemented for ODE-RNN: ignoring --poisson")
-
-	if args.extrap:
-		raise Exception("Extrapolation for ODE-RNN not implemented")
-
-	ode_func_net = utils.create_net(n_ode_gru_dims, n_ode_gru_dims, 
-		n_layers = int(args.rec_layers), n_units = int(args.units), nonlinear = nn.Tanh)
-
-	rec_ode_func = ODEFunc(
-		input_dim = input_dim, 
-		latent_dim = n_ode_gru_dims,
-		ode_func_net = ode_func_net,
-		device = device).to(device)
-
-	z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, method, int(args.latents), 
-		odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
-
-	model = ODE_RNN(input_dim, n_ode_gru_dims, device = device, 
-		z0_diffeq_solver = z0_diffeq_solver, n_gru_units = int(args.gru_units),
-		concat_mask = True, obsrv_std = obsrv_std,
-		use_binary_classif = args.classif,
-		classif_per_tp = classif_per_tp,
-		n_labels = n_labels,
-		train_classif_w_reconstr = (args.dataset == "physionet")
-		).to(device)
+	model = get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp)
 
 
 	##################################################################
@@ -157,7 +121,23 @@ def construct_and_train_model(config):
 		device
 	)
 
+	train_res_2, test_res_2 = train_it(
+		model,
+		data_obj,
+		args,
+		file_name,
+		experimentID,
+		trainwriter,
+		validationwriter,
+		input_command,
+		device
+	)
+
+
 	# because it is fmin, we have to bring back some kind of loss, therefore 1-...
+	pdb.set_trace()
+
+
 	return 1-test_res["accuracy"]
 
 def train_it(
@@ -193,30 +173,7 @@ def train_it(
 	logger = utils.get_logger(logpath=log_path, filepath=os.path.abspath(__file__))
 	#logger.info(input_command)
 	
-	if args.optimizer == 'adagrad':
-		optimizer = torch.optim.Adagrad(model.parameters(), lr=args.lr, lr_decay=0, weight_decay=0, initial_accumulator_value=0, eps=1e-10)
-	elif args.optimizer == 'adadelta':
-		optimizer = optim.Adadelta(model.parameters(), lr=args.lr, rho=0.9, eps=1e-06, weight_decay=0)
-	elif args.optimizer == 'adam':
-		optimizer = optim.Adam(model.parameters(), lr=args.lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
-	elif args.optimizer == 'adaw':
-		optimizer = optim.AdamW(model.parameters(), lr=args.lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.01, amsgrad=False)
-	elif args.optimizer == 'sparseadam':
-		optimizer = optim.SparseAdam(model.parameters(), lr=args.lr, betas=(0.9, 0.999), eps=1e-08)
-	elif args.optimizer == 'ASGD':
-		optimizer = optim.ASGD(model.parameters(), lr=args.lr, lambd=0.0001, alpha=0.75, t0=1000000.0, weight_decay=0)
-	elif args.optimizer == 'LBFGS':
-		optimizer = optim.LBFGS(model.parameters(), lr=args.lr) 
-	elif args.optimizer == 'RMSprop':
-		optimizer = optim.RMSprop(model.parameters(), lr=args.lr)
-	elif args.optimizer == 'rprop':
-		optimizer = optim.Rprop(model.parameters(), lr=args.lr)
-	elif args.optimizer == 'SGD':
-		optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=0, dampening=0, weight_decay=0, nesterov=False)
-	elif args.optimizer == 'adamax': #standard: adamax
-		optimizer = optim.Adamax(model.parameters(), lr=args.lr)
-	else:
-		raise Exception("Optimizer not supported. Please change it!")
+	optimizer = get_optimizer(args, model.parameters())
 
 	num_batches = data_obj["n_train_batches"]
 
@@ -237,7 +194,6 @@ def train_it(
 		optimizer.step()
 
 		n_iters_to_viz = 0.333
-		pdb.set_trace()
 		vizualization_intervall =(round(n_iters_to_viz * num_batches - 0.499999) if round(n_iters_to_viz * num_batches - 0.499999)>0 else 1)
 		if (itr!=1) and (itr % round(n_iters_to_viz * num_batches - 0.499999)== 0) :
 			

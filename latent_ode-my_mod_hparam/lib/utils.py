@@ -24,6 +24,7 @@ import h5py
 import pdb
 
 
+
 def makedirs(dirname):
 	if not os.path.exists(dirname):
 		os.makedirs(dirname)
@@ -528,7 +529,6 @@ def split_and_subsample_batch(data_dict, args, data_type = "train"):
 
 
 
-
 def compute_loss_all_batches(model,
 	test_dataloader, args,
 	n_batches, experimentID, device,
@@ -779,3 +779,30 @@ def hyperopt_summary(trials):
 	print("-----------------------------------------------------------------------------------------------------------------")
 
 
+
+def get_optimizer(args, params):
+
+	if args.optimizer == 'adagrad':
+		optimizer = torch.optim.Adagrad(model.parameters(), lr=args.lr, lr_decay=0, weight_decay=0, initial_accumulator_value=0, eps=1e-10)
+	elif args.optimizer == 'adadelta':
+		optimizer = optim.Adadelta(model.parameters(), lr=args.lr, rho=0.9, eps=1e-06, weight_decay=0)
+	elif args.optimizer == 'adam':
+		optimizer = optim.Adam(model.parameters(), lr=args.lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
+	elif args.optimizer == 'adaw':
+		optimizer = optim.AdamW(model.parameters(), lr=args.lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.01, amsgrad=False)
+	elif args.optimizer == 'sparseadam':
+		optimizer = optim.SparseAdam(model.parameters(), lr=args.lr, betas=(0.9, 0.999), eps=1e-08)
+	elif args.optimizer == 'ASGD':
+		optimizer = optim.ASGD(model.parameters(), lr=args.lr, lambd=0.0001, alpha=0.75, t0=1000000.0, weight_decay=0)
+	elif args.optimizer == 'LBFGS':
+		optimizer = optim.LBFGS(model.parameters(), lr=args.lr) 
+	elif args.optimizer == 'RMSprop':
+		optimizer = optim.RMSprop(model.parameters(), lr=args.lr)
+	elif args.optimizer == 'rprop':
+		optimizer = optim.Rprop(model.parameters(), lr=args.lr)
+	elif args.optimizer == 'SGD':
+		optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=0, dampening=0, weight_decay=0, nesterov=False)
+	elif args.optimizer == 'adamax': #standard: adamax
+		optimizer = optim.Adamax(model.parameters(), lr=args.lr)
+	else:
+		raise Exception("Optimizer not supported. Please change it!")
