@@ -1,0 +1,9 @@
+
+The following have been reloaded with a version change:
+  1) cuda/10.1.243 => cuda/8.0.61     3) python_gpu/3.7.4 => python_gpu/3.6.1
+  2) cudnn/7.6.4 => cudnn/6.0
+
+Traceback (most recent call last):
+  File "script.py", line 1, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
