@@ -78,7 +78,13 @@ def construct_and_train_model(config):
 	##############################################################################
 	# Create Model
 
+	if torch.cuda.device_count() > 1:
+		
+		print("I'm counting: ", torch.cuda.device_count())
 
+
+	#get ODE_RNN model
+	model = get_ODE_RNN_model()
 	obsrv_std = 0.01
 	obsrv_std = torch.Tensor([obsrv_std]).to(device)
 
@@ -231,7 +237,9 @@ def train_it(
 		optimizer.step()
 
 		n_iters_to_viz = 0.333
-		if (itr % round(n_iters_to_viz * num_batches - 0.499999)== 0) and (itr!=0):
+		pdb.set_trace()
+		vizualization_intervall =(round(n_iters_to_viz * num_batches - 0.499999) if round(n_iters_to_viz * num_batches - 0.499999)>0 else 1)
+		if (itr!=1) and (itr % round(n_iters_to_viz * num_batches - 0.499999)== 0) :
 			
 			with torch.no_grad():
 

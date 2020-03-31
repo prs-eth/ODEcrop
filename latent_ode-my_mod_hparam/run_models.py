@@ -49,7 +49,7 @@ from lib.utils import hyperopt_summary
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=10000, help="Size of the dataset")
+parser.add_argument('-n',  type=int, default=30000, help="Size of the dataset")
 parser.add_argument('-validn',  type=int, default=1000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
@@ -100,7 +100,7 @@ parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise ampl
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
 parser.add_argument('--ode-method', type=str, default='euler',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
-parser.add_argument('--optimizer', type=str, default='SGD',
+parser.add_argument('--optimizer', type=str, default='adamax',
 					help="Chose from: adamax (default), adagrad, adadelta, adam, adaw, sparseadam, ASGD, RMSprop, rprop, SGD")
 					# working: adamax, adagrad, adadelta, adam, adaw, ASGD, rprop
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure), RMSprop(CE loss is NAN)
@@ -108,7 +108,18 @@ parser.add_argument('--optimizer', type=str, default='SGD',
 args = parser.parse_args()
 
 #print("I'm running on GPU") if torch.cuda.is_available() else print("I'm running on CPU")
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+if torch.cuda.device_count() > 1:
+	num_gpus_avail = torch.cuda.device_count()
+	print("I'm counting gpu's: ", num_gpus_avail)
+	print("Means I will train ", , " models, with different random seeds")
+
+if num_gpus_avail>1:
+	for ind in num_gpus_avail:
+		device.append("cuda:" + ind)
+else:
+	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+
 file_name = os.path.basename(__file__)[:-3]
 utils.makedirs(args.save)
 
@@ -164,7 +175,7 @@ if __name__ == '__main__':
 		#"units": hp.quniform('ode_units', 20, 500, 10), # default: 500
 		#"latents": hp.quniform('latents', 5, 65, 5), # default: 35
 		#"gru-units": hp.quniform('gru-units', 5, 70, 5), # default: 50
-		"optimizer": hp.choice('optimizer',['adamax', 'adam', 'rprop']), #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD']
+		"optimizer": hp.choice('optimizer',['adamax', 'adam', 'SGD']), #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD']
 		"lr": hp.loguniform('lr', 0.001, 0.1),
 		#"random-seed":  hp.randint('seed', 5)
 	}

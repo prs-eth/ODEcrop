@@ -18,46 +18,44 @@ Dataset Crops
 
 Using Evaluationdataset:
 Dataset Crops
-    Number of datapoints: 1000
+    Number of datapoints: 10000
     Root Location: data/Crops
     Reduce: average
 
-  0%|          | 0/30 [00:00<?, ?trial/s, best loss=?]                                                      runs/expID5228386_TRAINode_ns:300000_ba:500_ode-units:500_gru-uts:50_lats:35_rec-lay:4_solver:dopri5_seed:6003_optim:SGD
   0%|          | 0/30 [00:00<?, ?trial/s, best loss=?]                                                      label pred
-  0%|          | 0/30 [00:01<?, ?trial/s, best loss=?]                                                      tensor([[[0.0000e+00, 1.0000e+00, 8.5084e-10,  ..., 0.0000e+00,
-          0.0000e+00, 0.0000e+00],
-         [0.0000e+00, 1.0000e+00, 1.1372e-10,  ..., 0.0000e+00,
-          0.0000e+00, 0.0000e+00],
-         [0.0000e+00, 1.0000e+00, 3.1595e-10,  ..., 0.0000e+00,
-          0.0000e+00, 0.0000e+00],
+  0%|          | 0/30 [3:14:46<?, ?trial/s, best loss=?]                                                        tensor([[[1.3436e-02, 9.8614e-01, 2.0863e-04,  ..., 9.2579e-10,
+          1.0372e-05, 1.0164e-09],
+         [9.7747e-04, 9.9875e-01, 5.0134e-08,  ..., 1.0783e-10,
+          3.6923e-07, 1.4417e-12],
+         [1.5750e-02, 9.8256e-01, 1.4722e-04,  ..., 2.9676e-08,
+          7.9425e-05, 1.4060e-09],
          ...,
-         [0.0000e+00, 9.5260e-01, 5.0625e-05,  ..., 0.0000e+00,
-          0.0000e+00, 0.0000e+00],
-         [0.0000e+00, 1.0000e+00, 7.4502e-11,  ..., 0.0000e+00,
-          0.0000e+00, 0.0000e+00],
-         [0.0000e+00, 1.0000e+00, 1.5481e-09,  ..., 0.0000e+00,
-          0.0000e+00, 0.0000e+00]]], device='cuda:0',
+         [1.2487e-02, 9.8737e-01, 7.2501e-06,  ..., 6.2419e-10,
+          3.6289e-05, 8.4063e-11],
+         [1.6317e-01, 7.3756e-01, 9.9129e-02,  ..., 1.6178e-09,
+          6.2008e-07, 1.3225e-08],
+         [3.6981e-02, 9.5295e-01, 9.3396e-16,  ..., 1.4304e-18,
+          1.3748e-17, 2.8822e-24]]], device='cuda:0',
        grad_fn=<SqueezeBackward1>)
-  0%|          | 0/30 [00:01<?, ?trial/s, best loss=?]                                                      labels
-  0%|          | 0/30 [00:01<?, ?trial/s, best loss=?]                                                      tensor([[0.0000, 1.0000, 0.0000,  ..., 0.0000, 0.0000, 0.0000],
-        [0.0000, 1.0000, 0.0000,  ..., 0.0000, 0.0000, 0.0000],
-        [1.0000, 0.0000, 0.0000,  ..., 0.0000, 0.0000, 0.0000],
+  0%|          | 0/30 [3:14:46<?, ?trial/s, best loss=?]                                                        labels
+  0%|          | 0/30 [3:14:46<?, ?trial/s, best loss=?]                                                        tensor([[1., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 1., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
         ...,
-        [0.0000, 0.0000, 0.0000,  ..., 0.0000, 0.0000, 0.0000],
-        [1.0000, 0.0000, 0.0000,  ..., 0.0000, 0.0000, 0.0000],
-        [0.6706, 0.0000, 0.3294,  ..., 0.0000, 0.0000, 0.0000]],
-       device='cuda:0')
-  0%|          | 0/30 [00:01<?, ?trial/s, best loss=?]job exception: CE loss is Nan!
+        [0., 1., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+        [1., 0., 0.,  ..., 0., 0., 0.]], device='cuda:0')
+  0%|          | 0/30 [3:14:46<?, ?trial/s, best loss=?]job exception: CE loss is Nan!
 
-  0%|          | 0/30 [00:01<?, ?trial/s, best loss=?]
+  0%|          | 0/30 [3:14:46<?, ?trial/s, best loss=?]
 
 -----------------------------------------------------------------------------------------------------------------
 TRIAL PROTOCOL:
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 Traceback (most recent call last):
-  File "run_models.py", line 178, in <module>
-    max_evals=30)
+  File "run_models.py", line 199, in <module>
+    #"random-seed":  hp.randint('seed', 5)
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 482, in fmin
     show_progressbar=show_progressbar,
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 686, in fmin
@@ -72,10 +70,10 @@ Traceback (most recent call last):
     result = self.domain.evaluate(spec, ctrl)
   File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 894, in evaluate
     rval = self.fn(pyll_rval)
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 151, in construct_and_train_model
-    device
-  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 229, in train_it
-    train_res = model.compute_all_losses(batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 150, in construct_and_train_model
+    input_command,
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 228, in train_it
+    batch_dict = utils.get_next_batch(data_obj["train_dataloader"])
   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/base_models.py", line 169, in compute_all_losses
     raise Exception("CE loss is Nan!")
 Exception: CE loss is Nan!
@@ -83,8 +81,8 @@ Exception: CE loss is Nan!
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "run_models.py", line 185, in <module>
-    hyperopt_summary(trials)
+  File "run_models.py", line 206, in <module>
+    'subsample': 
   File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/utils.py", line 776, in hyperopt_summary
     best_param
 UnboundLocalError: local variable 'best_param' referenced before assignment
