@@ -178,7 +178,10 @@ def compute_multiclass_CE_loss(label_predictions, true_label, mask):
 		# ce_loss = ce_loss / n_traj_samples
 
 	else: #Nando's alternative:
-		ce_loss = -(true_label * torch.log(label_predictions)).sum(dim=1).mean()
+
+		# use a very small number to avoid numerical problems
+		eps = 1e-10
+		ce_loss = -(true_label * torch.log(label_predictions + eps)).sum(dim=1).mean()
 
 	return ce_loss
 

@@ -49,11 +49,11 @@ from lib.utils import hyperopt_summary
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=30000, help="Size of the dataset")
-parser.add_argument('-validn',  type=int, default=1000, help="Size of the validation dataset")
+parser.add_argument('-n',  type=int, default=300000, help="Size of the dataset")
+parser.add_argument('-validn',  type=int, default=60000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
-parser.add_argument('-b', '--batch-size', type=int, default=20000)
+parser.add_argument('-b', '--batch-size', type=int, default=1000)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
 
 parser.add_argument('--save', type=str, default='experiments/', help="Path for save checkpoints")
@@ -110,21 +110,20 @@ args = parser.parse_args()
 #print("I'm running on GPU") if torch.cuda.is_available() else print("I'm running on CPU")
 num_gpus = torch.cuda.device_count()
 
-print(num_gpus)
 if num_gpus> 0:
 	
-	print("I'm counting gpu's: ", num_gpusl)
+	print("I'm counting gpu's: ", num_gpus)
 	print("Means I will train ", num_gpus , " models, with different random seeds")
 
-if num_gpus>1:
-	device = []
-	for ind in num_gpus:
-		device.append("cuda:" + ind)
 
-	pdb.set_trace()
+Devices = []
+if num_gpus>0:
+	for ind in range(num_gpus):
+		Devices.append("cuda:" + str(ind))
+
+	print("My Devices: ", Devices)
 else:
-	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
+	Devices.append( torch.device("cuda:0" if torch.cuda.is_available() else "cpu") )
 
 file_name = os.path.basename(__file__)[:-3]
 utils.makedirs(args.save)
@@ -148,39 +147,51 @@ if __name__ == '__main__':
 
 	##################################################################
 	# Dataset
-	data_obj = parse_datasets(args, device)
+
+
+
+	# MOVE THIS ONE TO THE TRAINING SCRIPT!!
+	Data_obj = []
+	for i, device in enumerate(Devices):
+		Data_obj.append(parse_datasets(args, device))
 	
+
 	##################################################################
 
 	#Load checkpoint and evaluate the model
 	if args.load is not None:
 		#utils.get_ckpt_model(ckpt_path, model, device)
-		utils.get_ckpt_model(top_ckpt_path, model, device[0])
+		utils.get_ckpt_model(top_ckpt_path, model, Devices[0])
 		exit()
 
 	#################################################################
 	# Hyperparameter Optimization
 	
+	num_seeds = 5
+
 	# create a specification dictionary for training
 	spec_config = {
 			"args": args,
-			"data_obj": data_obj,
+			"Data_obj": Data_obj,
 			"args": args,
 			"file_name": file_name,
 			"experimentID": experimentID,
 			"input_command": input_command,
-			"device": device
+			"Devices": Devices,
+			"num_gpus": num_gpus,
+			"num_seeds": num_seeds
 		},
 	
 	hyper_config = {
 		"spec_config": spec_config, # fixed argument space
 
 		#"rec_layers": hp.quniform('rec_layers', 1, 4, 1),
-		#"units": hp.quniform('ode_units', 20, 500, 10), # default: 500
-		#"latents": hp.quniform('latents', 5, 65, 5), # default: 35
-		#"gru-units": hp.quniform('gru-units', 5, 70, 5), # default: 50
-		"optimizer": hp.choice('optimizer',['adamax', 'adam', 'SGD']), #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD']
+		#"units": hp.quniform('ode_units', 10, 400, 40), # default: 500
+		#"latents": hp.quniform('latents', 15, 80, 5), # default: 35
+		#"gru-units": hp.quniform('gru-units', 30, 120, 5), # default: 50
+		"optimizer": hp.choice('optimizer',['adamax', 'adagrad', 'adadelta', 'adam']), #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD']
 		"lr": hp.loguniform('lr', 0.001, 0.1),
+		"batch-size": batch-size,  #not working yet!!
 		#"random-seed":  hp.randint('seed', 5)
 	}
 
@@ -190,7 +201,7 @@ if __name__ == '__main__':
 			hyper_config,
 			trials=trials,
 			algo=tpe.suggest,
-			max_evals=30)
+			max_evals=7)
 
 	except KeyboardInterrupt:
 		best=None

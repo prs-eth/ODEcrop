@@ -94,5 +94,4 @@ class ODE_RNN(Baseline):
 		return outputs, extra_info
 
 
-
-
+# modified function

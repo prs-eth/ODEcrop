@@ -1,0 +1,1802 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"pytorch/1.4.0" "cuda/10.0.13"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
+
+
+
+Couldn't import umap
+Sampling dataset of 300000 training examples
+
+Trainingdataset:
+Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+Using Evaluationdataset:
+Dataset Crops
+    Number of datapoints: 10000
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/30 [00:00<?, ?trial/s, best loss=?]  3%|▎         | 1/30 [2:41:54<78:15:13, 9714.26s/trial, best loss: 0.14290000000000003]build_posterior_wrapper took 0.002738 seconds
+
+TPE using 1/1 trials with best loss 0.142900
+
+  7%|▋         | 2/30 [5:25:00<75:43:20, 9735.75s/trial, best loss: 0.14090000000000003]build_posterior_wrapper took 0.002890 seconds
+
+build_posterior_wrapper took 0.002890 seconds
+
+TPE using 2/2 trials with best loss 0.140900
+
+TPE using 2/2 trials with best loss 0.140900
+
+ 10%|█         | 3/30 [8:48:07<78:32:00, 10471.14s/trial, best loss: 0.14090000000000003]build_posterior_wrapper took 0.003119 seconds
+
+build_posterior_wrapper took 0.003119 seconds
+
+build_posterior_wrapper took 0.003119 seconds
+
+TPE using 3/3 trials with best loss 0.140900
+
+TPE using 3/3 trials with best loss 0.140900
+
+TPE using 3/3 trials with best loss 0.140900
+
+ 13%|█▎        | 4/30 [11:12:38<71:43:33, 9931.30s/trial, best loss: 0.14090000000000003]build_posterior_wrapper took 0.002982 seconds
+
+build_posterior_wrapper took 0.002982 seconds
+
+build_posterior_wrapper took 0.002982 seconds
+
+build_posterior_wrapper took 0.002982 seconds
+
+TPE using 4/4 trials with best loss 0.140900
+
+TPE using 4/4 trials with best loss 0.140900
+
+TPE using 4/4 trials with best loss 0.140900
+
+TPE using 4/4 trials with best loss 0.140900
+
+ 17%|█▋        | 5/30 [13:44:52<67:18:20, 9692.02s/trial, best loss: 0.14090000000000003]build_posterior_wrapper took 0.003215 seconds
+
+build_posterior_wrapper took 0.003215 seconds
+
+build_posterior_wrapper took 0.003215 seconds
+
+build_posterior_wrapper took 0.003215 seconds
+
+build_posterior_wrapper took 0.003215 seconds
+
+TPE using 5/5 trials with best loss 0.140900
+
+TPE using 5/5 trials with best loss 0.140900
+
+TPE using 5/5 trials with best loss 0.140900
+
+TPE using 5/5 trials with best loss 0.140900
+
+TPE using 5/5 trials with best loss 0.140900
+
+ 20%|██        | 6/30 [16:29:59<65:02:36, 9756.51s/trial, best loss: 0.14090000000000003]build_posterior_wrapper took 0.003248 seconds
+
+build_posterior_wrapper took 0.003248 seconds
+
+build_posterior_wrapper took 0.003248 seconds
+
+build_posterior_wrapper took 0.003248 seconds
+
+build_posterior_wrapper took 0.003248 seconds
+
+build_posterior_wrapper took 0.003248 seconds
+
+TPE using 6/6 trials with best loss 0.140900
+
+TPE using 6/6 trials with best loss 0.140900
+
+TPE using 6/6 trials with best loss 0.140900
+
+TPE using 6/6 trials with best loss 0.140900
+
+TPE using 6/6 trials with best loss 0.140900
+
+TPE using 6/6 trials with best loss 0.140900
+
+ 23%|██▎       | 7/30 [19:03:21<61:16:13, 9590.16s/trial, best loss: 0.1401]             build_posterior_wrapper took 0.003011 seconds
+
+build_posterior_wrapper took 0.003011 seconds
+
+build_posterior_wrapper took 0.003011 seconds
+
+build_posterior_wrapper took 0.003011 seconds
+
+build_posterior_wrapper took 0.003011 seconds
+
+build_posterior_wrapper took 0.003011 seconds
+
+build_posterior_wrapper took 0.003011 seconds
+
+TPE using 7/7 trials with best loss 0.140100
+
+TPE using 7/7 trials with best loss 0.140100
+
+TPE using 7/7 trials with best loss 0.140100
+
+TPE using 7/7 trials with best loss 0.140100
+
+TPE using 7/7 trials with best loss 0.140100
+
+TPE using 7/7 trials with best loss 0.140100
+
+TPE using 7/7 trials with best loss 0.140100
+
+ 27%|██▋       | 8/30 [21:25:36<56:40:22, 9273.73s/trial, best loss: 0.1401]build_posterior_wrapper took 0.002991 seconds
+
+build_posterior_wrapper took 0.002991 seconds
+
+build_posterior_wrapper took 0.002991 seconds
+
+build_posterior_wrapper took 0.002991 seconds
+
+build_posterior_wrapper took 0.002991 seconds
+
+build_posterior_wrapper took 0.002991 seconds
+
+build_posterior_wrapper took 0.002991 seconds
+
+build_posterior_wrapper took 0.002991 seconds
+
+TPE using 8/8 trials with best loss 0.140100
+
+TPE using 8/8 trials with best loss 0.140100
+
+TPE using 8/8 trials with best loss 0.140100
+
+TPE using 8/8 trials with best loss 0.140100
+
+TPE using 8/8 trials with best loss 0.140100
+
+TPE using 8/8 trials with best loss 0.140100
+
+TPE using 8/8 trials with best loss 0.140100
+
+TPE using 8/8 trials with best loss 0.140100
+
+ 30%|███       | 9/30 [24:17:13<55:53:11, 9580.54s/trial, best loss: 0.1391]build_posterior_wrapper took 0.002886 seconds
+
+build_posterior_wrapper took 0.002886 seconds
+
+build_posterior_wrapper took 0.002886 seconds
+
+build_posterior_wrapper took 0.002886 seconds
+
+build_posterior_wrapper took 0.002886 seconds
+
+build_posterior_wrapper took 0.002886 seconds
+
+build_posterior_wrapper took 0.002886 seconds
+
+build_posterior_wrapper took 0.002886 seconds
+
+build_posterior_wrapper took 0.002886 seconds
+
+TPE using 9/9 trials with best loss 0.139100
+
+TPE using 9/9 trials with best loss 0.139100
+
+TPE using 9/9 trials with best loss 0.139100
+
+TPE using 9/9 trials with best loss 0.139100
+
+TPE using 9/9 trials with best loss 0.139100
+
+TPE using 9/9 trials with best loss 0.139100
+
+TPE using 9/9 trials with best loss 0.139100
+
+TPE using 9/9 trials with best loss 0.139100
+
+TPE using 9/9 trials with best loss 0.139100
+
+ 33%|███▎      | 10/30 [28:54:01<64:56:14, 11688.71s/trial, best loss: 0.1391]build_posterior_wrapper took 0.003099 seconds
+
+build_posterior_wrapper took 0.003099 seconds
+
+build_posterior_wrapper took 0.003099 seconds
+
+build_posterior_wrapper took 0.003099 seconds
+
+build_posterior_wrapper took 0.003099 seconds
+
+build_posterior_wrapper took 0.003099 seconds
+
+build_posterior_wrapper took 0.003099 seconds
+
+build_posterior_wrapper took 0.003099 seconds
+
+build_posterior_wrapper took 0.003099 seconds
+
+build_posterior_wrapper took 0.003099 seconds
+
+TPE using 10/10 trials with best loss 0.139100
+
+TPE using 10/10 trials with best loss 0.139100
+
+TPE using 10/10 trials with best loss 0.139100
+
+TPE using 10/10 trials with best loss 0.139100
+
+TPE using 10/10 trials with best loss 0.139100
+
+TPE using 10/10 trials with best loss 0.139100
+
+TPE using 10/10 trials with best loss 0.139100
+
+TPE using 10/10 trials with best loss 0.139100
+
+TPE using 10/10 trials with best loss 0.139100
+
+TPE using 10/10 trials with best loss 0.139100
+
+ 37%|███▋      | 11/30 [31:05:20<55:39:31, 10545.85s/trial, best loss: 0.1391]build_posterior_wrapper took 0.003118 seconds
+
+build_posterior_wrapper took 0.003118 seconds
+
+build_posterior_wrapper took 0.003118 seconds
+
+build_posterior_wrapper took 0.003118 seconds
+
+build_posterior_wrapper took 0.003118 seconds
+
+build_posterior_wrapper took 0.003118 seconds
+
+build_posterior_wrapper took 0.003118 seconds
+
+build_posterior_wrapper took 0.003118 seconds
+
+build_posterior_wrapper took 0.003118 seconds
+
+build_posterior_wrapper took 0.003118 seconds
+
+build_posterior_wrapper took 0.003118 seconds
+
+TPE using 11/11 trials with best loss 0.139100
+
+TPE using 11/11 trials with best loss 0.139100
+
+TPE using 11/11 trials with best loss 0.139100
+
+TPE using 11/11 trials with best loss 0.139100
+
+TPE using 11/11 trials with best loss 0.139100
+
+TPE using 11/11 trials with best loss 0.139100
+
+TPE using 11/11 trials with best loss 0.139100
+
+TPE using 11/11 trials with best loss 0.139100
+
+TPE using 11/11 trials with best loss 0.139100
+
+TPE using 11/11 trials with best loss 0.139100
+
+TPE using 11/11 trials with best loss 0.139100
+
+ 40%|████      | 12/30 [33:55:07<52:11:28, 10438.25s/trial, best loss: 0.1391]build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+build_posterior_wrapper took 0.003158 seconds
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+TPE using 12/12 trials with best loss 0.139100
+
+ 43%|████▎     | 13/30 [36:29:18<47:36:33, 10081.98s/trial, best loss: 0.1391]build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+build_posterior_wrapper took 0.002728 seconds
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+TPE using 13/13 trials with best loss 0.139100
+
+ 47%|████▋     | 14/30 [39:12:14<44:24:02, 9990.14s/trial, best loss: 0.13829999999999998]build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+build_posterior_wrapper took 0.003103 seconds
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+TPE using 14/14 trials with best loss 0.138300
+
+ 50%|█████     | 15/30 [42:09:07<42:24:18, 10177.21s/trial, best loss: 0.13829999999999998]build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+build_posterior_wrapper took 0.002615 seconds
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+TPE using 15/15 trials with best loss 0.138300
+
+ 53%|█████▎    | 16/30 [44:48:33<38:51:53, 9993.85s/trial, best loss: 0.13829999999999998] build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+build_posterior_wrapper took 0.002984 seconds
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+TPE using 16/16 trials with best loss 0.138300
+
+ 57%|█████▋    | 17/30 [47:31:40<35:51:54, 9931.86s/trial, best loss: 0.13829999999999998]build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+build_posterior_wrapper took 0.003314 seconds
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+TPE using 17/17 trials with best loss 0.138300
+
+ 60%|██████    | 18/30 [50:14:02<32:54:57, 9874.76s/trial, best loss: 0.13690000000000002]build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+build_posterior_wrapper took 0.003213 seconds
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+TPE using 18/18 trials with best loss 0.136900
+
+ 63%|██████▎   | 19/30 [52:41:12<29:12:54, 9561.30s/trial, best loss: 0.13690000000000002]build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+build_posterior_wrapper took 0.002921 seconds
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+TPE using 19/19 trials with best loss 0.136900
+
+ 67%|██████▋   | 20/30 [55:58:59<28:28:51, 10253.13s/trial, best loss: 0.13690000000000002]build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+build_posterior_wrapper took 0.003278 seconds
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+TPE using 20/20 trials with best loss 0.136900
+
+ 70%|███████   | 21/30 [58:18:09<24:12:18, 9682.05s/trial, best loss: 0.13690000000000002] build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+build_posterior_wrapper took 0.002815 seconds
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+TPE using 21/21 trials with best loss 0.136900
+
+ 73%|███████▎  | 22/30 [60:27:01<20:12:56, 9097.05s/trial, best loss: 0.13690000000000002]build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+build_posterior_wrapper took 0.002999 seconds
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+TPE using 22/22 trials with best loss 0.136900
+
+ 77%|███████▋  | 23/30 [63:18:02<18:22:02, 9446.14s/trial, best loss: 0.13690000000000002]build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+build_posterior_wrapper took 0.003310 seconds
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+TPE using 23/23 trials with best loss 0.136900
+
+ 80%|████████  | 24/30 [65:37:26<15:12:10, 9121.76s/trial, best loss: 0.13690000000000002]build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+build_posterior_wrapper took 0.003065 seconds
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+TPE using 24/24 trials with best loss 0.136900
+
+ 83%|████████▎ | 25/30 [69:35:09<14:48:40, 10664.15s/trial, best loss: 0.13690000000000002]build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+build_posterior_wrapper took 0.003174 seconds
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+TPE using 25/25 trials with best loss 0.136900
+
+ 87%|████████▋ | 26/30 [72:00:59<11:12:39, 10089.78s/trial, best loss: 0.13690000000000002]build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+build_posterior_wrapper took 0.002706 seconds
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+TPE using 26/26 trials with best loss 0.136900
+
+ 90%|█████████ | 27/30 [74:16:52<7:55:26, 9508.73s/trial, best loss: 0.13690000000000002]  build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+build_posterior_wrapper took 0.002556 seconds
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+TPE using 27/27 trials with best loss 0.136900
+
+ 93%|█████████▎| 28/30 [76:47:01<5:11:57, 9358.67s/trial, best loss: 0.13690000000000002]build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+build_posterior_wrapper took 0.002926 seconds
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+TPE using 28/28 trials with best loss 0.136900
+
+ 97%|█████████▋| 29/30 [79:16:39<2:34:04, 9244.65s/trial, best loss: 0.13690000000000002]build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+build_posterior_wrapper took 0.003138 seconds
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+TPE using 29/29 trials with best loss 0.136900
+
+100%|██████████| 30/30 [82:08:46<00:00, 9569.34s/trial, best loss: 0.13690000000000002]  100%|██████████| 30/30 [82:08:46<00:00, 9857.55s/trial, best loss: 0.13690000000000002]
+
+-----------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+-----------------------------------------------------------------------------------------------------------------
+Trial: 0001   |   Test-Accuracy: 85.710 %   |   Hyperparameters: {'gru-units': [65.0], 'ode_units': [460.0], 'rec_layers': [2.0]}   |
+Trial: 0002   |   Test-Accuracy: 85.910 %   |   Hyperparameters: {'gru-units': [55.0], 'ode_units': [260.0], 'rec_layers': [3.0]}   |
+Trial: 0003   |   Test-Accuracy: 85.220 %   |   Hyperparameters: {'gru-units': [20.0], 'ode_units': [450.0], 'rec_layers': [4.0]}   |
+Trial: 0004   |   Test-Accuracy: 85.680 %   |   Hyperparameters: {'gru-units': [60.0], 'ode_units': [470.0], 'rec_layers': [1.0]}   |
+Trial: 0005   |   Test-Accuracy: 85.770 %   |   Hyperparameters: {'gru-units': [70.0], 'ode_units': [350.0], 'rec_layers': [2.0]}   |
+Trial: 0006   |   Test-Accuracy: 85.780 %   |   Hyperparameters: {'gru-units': [15.0], 'ode_units': [300.0], 'rec_layers': [3.0]}   |
+Trial: 0007   |   Test-Accuracy: 85.990 %   |   Hyperparameters: {'gru-units': [10.0], 'ode_units': [100.0], 'rec_layers': [3.0]}   |
+Trial: 0008   |   Test-Accuracy: 85.870 %   |   Hyperparameters: {'gru-units': [35.0], 'ode_units': [410.0], 'rec_layers': [1.0]}   |
+Trial: 0009   |   Test-Accuracy: 86.090 %   |   Hyperparameters: {'gru-units': [60.0], 'ode_units': [340.0], 'rec_layers': [3.0]}   |
+Trial: 0010   |   Test-Accuracy: 81.200 %   |   Hyperparameters: {'gru-units': [35.0], 'ode_units': [370.0], 'rec_layers': [4.0]}   |
+Trial: 0011   |   Test-Accuracy: 85.840 %   |   Hyperparameters: {'gru-units': [20.0], 'ode_units': [150.0], 'rec_layers': [1.0]}   |
+Trial: 0012   |   Test-Accuracy: 85.970 %   |   Hyperparameters: {'gru-units': [50.0], 'ode_units': [230.0], 'rec_layers': [3.0]}   |
+Trial: 0013   |   Test-Accuracy: 85.720 %   |   Hyperparameters: {'gru-units': [45.0], 'ode_units': [210.0], 'rec_layers': [2.0]}   |
+Trial: 0014   |   Test-Accuracy: 86.170 %   |   Hyperparameters: {'gru-units': [50.0], 'ode_units': [440.0], 'rec_layers': [2.0]}   |
+Trial: 0015   |   Test-Accuracy: 85.410 %   |   Hyperparameters: {'gru-units': [50.0], 'ode_units': [390.0], 'rec_layers': [3.0]}   |
+Trial: 0016   |   Test-Accuracy: 85.840 %   |   Hyperparameters: {'gru-units': [40.0], 'ode_units': [310.0], 'rec_layers': [2.0]}   |
+Trial: 0017   |   Test-Accuracy: 86.150 %   |   Hyperparameters: {'gru-units': [70.0], 'ode_units': [250.0], 'rec_layers': [3.0]}   |
+Trial: 0018   |   Test-Accuracy: 86.310 %   |   Hyperparameters: {'gru-units': [70.0], 'ode_units': [170.0], 'rec_layers': [3.0]}   |
+Trial: 0019   |   Test-Accuracy: 85.680 %   |   Hyperparameters: {'gru-units': [10.0], 'ode_units': [140.0], 'rec_layers': [2.0]}   |
+Trial: 0020   |   Test-Accuracy: 84.880 %   |   Hyperparameters: {'gru-units': [35.0], 'ode_units': [410.0], 'rec_layers': [4.0]}   |
+Trial: 0021   |   Test-Accuracy: 85.970 %   |   Hyperparameters: {'gru-units': [25.0], 'ode_units': [30.0], 'rec_layers': [2.0]}   |
+Trial: 0022   |   Test-Accuracy: 85.920 %   |   Hyperparameters: {'gru-units': [65.0], 'ode_units': [60.0], 'rec_layers': [1.0]}   |
+Trial: 0023   |   Test-Accuracy: 85.980 %   |   Hyperparameters: {'gru-units': [45.0], 'ode_units': [180.0], 'rec_layers': [4.0]}   |
+Trial: 0024   |   Test-Accuracy: 85.720 %   |   Hyperparameters: {'gru-units': [55.0], 'ode_units': [90.0], 'rec_layers': [2.0]}   |
+Trial: 0025   |   Test-Accuracy: 85.220 %   |   Hyperparameters: {'gru-units': [30.0], 'ode_units': [500.0], 'rec_layers': [3.0]}   |
+Trial: 0026   |   Test-Accuracy: 86.300 %   |   Hyperparameters: {'gru-units': [65.0], 'ode_units': [190.0], 'rec_layers': [2.0]}   |
+Trial: 0027   |   Test-Accuracy: 85.770 %   |   Hyperparameters: {'gru-units': [65.0], 'ode_units': [160.0], 'rec_layers': [1.0]}   |
+Trial: 0028   |   Test-Accuracy: 82.470 %   |   Hyperparameters: {'gru-units': [70.0], 'ode_units': [200.0], 'rec_layers': [4.0]}   |
+Trial: 0029   |   Test-Accuracy: 86.120 %   |   Hyperparameters: {'gru-units': [60.0], 'ode_units': [100.0], 'rec_layers': [2.0]}   |
+Trial: 0030   |   Test-Accuracy: 85.120 %   |   Hyperparameters: {'gru-units': [55.0], 'ode_units': [280.0], 'rec_layers': [3.0]}   |
+-----------------------------------------------------------------------------------------------------------------
+Best configuration: 86.310 %, with Hyperparmeters: {'gru-units': [70.0], 'ode_units': [170.0], 'rec_layers': [3.0]}
+-----------------------------------------------------------------------------------------------------------------
