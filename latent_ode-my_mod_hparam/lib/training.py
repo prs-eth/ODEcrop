@@ -11,6 +11,7 @@ from lib.utils import compute_loss_all_batches
 from lib.utils import Bunch, get_optimizer
 from lib.construct import get_ODE_RNN_model
 from lib.ode_rnn import *
+from lib.parse_datasets import parse_datasets
 
 from lib.ode_func import ODEFunc, ODEFunc_w_Poisson
 from lib.diffeq_solver import DiffeqSolver
@@ -34,15 +35,18 @@ def construct_and_train_model(config):
 	# namespace to dict
 	argsdict = vars(args)
 
+	print("")
 	for key in config.keys():
 		if not key=='spec_config':
 			argsdict[key] = config[key]
+			print(key, " : ", argsdict[key])
+	print("")
 
 	# namespace to dict
 	args = Bunch(argsdict)
 
 	# onrolle the other parameters:
-	Data_obj = config["spec_config"][0]["Data_obj"]
+	#Data_obj = config["spec_config"][0]["Data_obj"]
 	file_name = config["spec_config"][0]["file_name"]
 	experimentID = config["spec_config"][0]["experimentID"]
 	input_command = config["spec_config"][0]["input_command"]
@@ -51,23 +55,24 @@ def construct_and_train_model(config):
 	num_seeds = config["spec_config"][0]["num_seeds"]
 
 	num_gpus = max(num_gpus,1)
-	
-
+	args.batch_size = int(args.batch_size)
 	##############################################################################
 
 	# set seed
 	torch.manual_seed(args.random_seed)
 	np.random.seed(args.random_seed)
 
-	
 	randID = int(SystemRandom().random()*100000)*1000
 	ExperimentID = []
 	for i in range(num_seeds):
 		ExperimentID.append(randID + i)
 	
-	print(ExperimentID)
-
 	##############################################################################
+	# Dataset
+	Data_obj = []
+	for i, device in enumerate(Devices):
+		Data_obj.append(parse_datasets(args, device))
+
 	data_obj = Data_obj[0]
 
 	input_dim = data_obj["input_dim"]
@@ -187,8 +192,6 @@ def train_it(
 		input_command,
 		Devices #List of devices
 	"""
-
-	print(args)
 
 	Ckpt_path = []
 	Top_ckpt_path = []
