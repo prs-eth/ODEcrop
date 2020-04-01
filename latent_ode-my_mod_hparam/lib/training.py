@@ -222,8 +222,8 @@ def train_it(
 	test_res = [None] * num_gpus
 
 
-	for itr in (range(1, num_batches * (args.niters) + 1)):
-
+	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
+		pdb.set_trace()
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()
 		for i, device in enumerate(Devices):
@@ -331,5 +331,6 @@ def train_it(
 							'args': args,
 							'state_dict': Model[i].state_dict(),
 						}, Top_ckpt_path[i])
-	
+
+	print(Best_test_acc[0])
 	return train_res, test_res

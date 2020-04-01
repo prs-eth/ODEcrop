@@ -50,8 +50,8 @@ from lib.utils import hyperopt_summary
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=100000, help="Size of the dataset")
-parser.add_argument('-validn',  type=int, default=40000, help="Size of the validation dataset")
-parser.add_argument('--niters', type=int, default=10) # default=300
+parser.add_argument('-validn',  type=int, default=20000, help="Size of the validation dataset")
+parser.add_argument('--niters', type=int, default=2) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=1000)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
@@ -104,7 +104,7 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 					help="Chose from: adamax (default), adagrad, adadelta, adam, adaw, sparseadam, ASGD, RMSprop, rprop, SGD")
 					# working: adamax, adagrad, adadelta, adam, adaw, ASGD, rprop
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure), RMSprop(CE loss is NAN)
-parser.add_argument('--num-seeds', type=int, default=5,
+parser.add_argument('--num-seeds', type=int, default=3,
 					help="number of runs to average from. Default=3")
 
 args = parser.parse_args()
@@ -185,7 +185,7 @@ if __name__ == '__main__':
 			"num_seeds": args.num_seeds
 		},
 	
-	optimizer_choice =  ['adamax', 'adam']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD'] RMSprop?
+	optimizer_choice =  ['adam']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD'] RMSprop?
 	print(optimizer_choice)
 
 	hyper_config = {
@@ -195,8 +195,8 @@ if __name__ == '__main__':
 		#"units": hp.quniform('ode_units', 10, 400, 40), # default: 500
 		#"latents": hp.quniform('latents', 15, 80, 5), # default: 35
 		#"gru-units": hp.quniform('gru-units', 30, 120, 5), # default: 50
-		"optimizer": hp.choice('optimizer', optimizer_choice), 
-		"lr": hp.loguniform('lr', np.log(0.001), np.log(0.1)),
+		#"optimizer": hp.choice('optimizer', optimizer_choice), 
+		#"lr": hp.loguniform('lr', np.log(0.001), np.log(0.1)),
 		#"batch_size": hp.qloguniform('batch_size', np.log(50), np.log(3000), 50),  #not working yet!!
 		#"random-seed":  hp.randint('seed', 5)
 	}

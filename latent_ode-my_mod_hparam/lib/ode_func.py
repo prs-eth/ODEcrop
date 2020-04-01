@@ -23,6 +23,7 @@ class ODEFunc(nn.Module):
 		self.input_dim = input_dim
 		self.device = device
 
+		#Here: make the initialization different
 		utils.init_network_weights(ode_func_net)
 		self.gradient_net = ode_func_net
 
