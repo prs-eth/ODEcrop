@@ -49,7 +49,7 @@ from lib.utils import hyperopt_summary
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=10000, help="Size of the dataset")
+parser.add_argument('-n',  type=int, default=20000, help="Size of the dataset")
 parser.add_argument('-validn',  type=int, default=5000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
@@ -98,7 +98,7 @@ parser.add_argument('-t', '--timepoints', type=int, default=100, help="Total num
 parser.add_argument('--max-t',  type=float, default=5., help="We subsample points in the interval [0, args.max_tp]")
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
-parser.add_argument('--ode-method', type=str, default='euler',
+parser.add_argument('--ode-method', type=str, default='dopri5',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
 parser.add_argument('--optimizer', type=str, default='adamax',
 					help="Chose from: adamax (default), adagrad, adadelta, adam, adaw, sparseadam, ASGD, RMSprop, rprop, SGD")
@@ -186,7 +186,7 @@ if __name__ == '__main__':
 		},
 	
 	optimizer_choice =  ['adam']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD'] RMSprop?
-	print(optimizer_choice)
+	print("optimizer choices: ", optimizer_choice)
 
 	hyper_config = {
 		"spec_config": spec_config, # fixed argument space

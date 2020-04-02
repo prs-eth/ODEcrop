@@ -128,8 +128,10 @@ def construct_and_train_model(config):
 	# Training
 	Train_res = [None]*num_seeds
 	Test_res = [None]*num_seeds
+	Best_test_acc = [None]*num_seeds
+
 	for i in range(num_seeds):
-		Train_res[i], Test_res[i] = train_it(
+		Train_res[i], Test_res[i], Best_test_acc[i] = train_it(
 			[Model[i]],
 			Data_obj,
 			args,
@@ -152,14 +154,19 @@ def construct_and_train_model(config):
 
 
 	mean_test_acc = np.mean(Test_acc)
-	var_test_acc = np.var(Test_acc)
-	mean_train_acc = np.mean(Train_acc)
-	var_train_acc = np.var(Train_acc)
+	var_test_acc = sum((abs(Test_acc - mean_test_acc)**2)/(num_seeds-1))
 
+	mean_best_test_acc = np.mean(Best_test_acc)
+	var_best_test_acc = sum((abs(Best_test_acc - mean_best_test_acc)**2)/(num_seeds-1))
+
+	mean_train_acc = np.mean(Train_acc)
+	var_train_acc = sum((abs(Train_acc - mean_train_acc)**2)/(num_seeds-1))
+
+	pdb.set_trace()
 		
 	return_dict = {
-		'loss': 1-mean_test_acc,
-		'loss_variance': var_test_acc,
+		'loss': 1-mean_best_test_acc,
+		'loss_variance': var_best_test_acc,
 		#'true_loss': 1-mean_test_acc,
 		#'true_loss_variance':var_test_acc,
 		'status': STATUS_OK,
@@ -223,7 +230,7 @@ def train_it(
 
 
 	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
-		pdb.set_trace()
+		
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()
 		for i, device in enumerate(Devices):
@@ -333,4 +340,4 @@ def train_it(
 						}, Top_ckpt_path[i])
 
 	print(Best_test_acc[0])
-	return train_res, test_res
+	return train_res, test_res, Best_test_acc[0]

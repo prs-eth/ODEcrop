@@ -767,7 +767,7 @@ def hyperopt_summary(trials):
 		message = 'Trial: {:04d}   |   Test-Accuracy: {:.3f} %   |   Standard deviation: {:.3f} %   |   Hyperparameters: {}   |'.format(
 			i+1, 
 			(1-trial["result"]["loss"])*100,
-			np.sqrt(trial["result"]["loss_variance"]*100),
+			np.sqrt(trial["result"]["loss_variance"])*100,
 			trial["misc"]["vals"] )
 
 		
@@ -785,7 +785,7 @@ def hyperopt_summary(trials):
 	print("-----------------------------------------------------------------------------------------------------------------")
 	message2 = "Best configuration: {:.3f} % (+-{:.3f}) , with Hyperparmeters: {}".format(
 		best_res*100,
-		np.sqrt(best_var*100),
+		np.sqrt(best_var)*100,
 		best_param
 	)
 	print(message2)
