@@ -48,3 +48,9 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 		).to(device)
 
 	return model
+
+
+
+def  get_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
+	model = None
+	return model
