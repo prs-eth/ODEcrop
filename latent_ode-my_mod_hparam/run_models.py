@@ -185,7 +185,7 @@ if __name__ == '__main__':
 			"num_seeds": args.num_seeds
 		},
 	
-	optimizer_choice =  ['adamax', 'adam']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD'] RMSprop?
+	optimizer_choice =  ['adam']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD'] RMSprop?
 	print(optimizer_choice)
 
 	hyper_config = {
@@ -195,8 +195,8 @@ if __name__ == '__main__':
 		#"units": hp.quniform('ode_units', 10, 400, 40), # default: 500
 		#"latents": hp.quniform('latents', 15, 80, 5), # default: 35
 		#"gru-units": hp.quniform('gru-units', 30, 120, 5), # default: 50
-		"optimizer": hp.choice('optimizer', optimizer_choice), 
-		"lr": hp.loguniform('lr', np.log(0.001), np.log(0.1)),
+		#"optimizer": hp.choice('optimizer', optimizer_choice), 
+		#"lr": hp.loguniform('lr', np.log(0.001), np.log(0.1)),
 		#"batch_size": hp.qloguniform('batch_size', np.log(50), np.log(3000), 50),  #not working yet!!
 		#"random-seed":  hp.randint('seed', 5)
 	}
