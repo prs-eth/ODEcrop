@@ -49,8 +49,8 @@ from lib.utils import hyperopt_summary
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=100000, help="Size of the dataset")
-parser.add_argument('-validn',  type=int, default=20000, help="Size of the validation dataset")
+parser.add_argument('-n',  type=int, default=200000, help="Size of the dataset")
+parser.add_argument('-validn',  type=int, default=10000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=2) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=1000)
@@ -196,7 +196,7 @@ if __name__ == '__main__':
 		#"latents": hp.quniform('latents', 15, 80, 5), # default: 35
 		#"gru-units": hp.quniform('gru-units', 30, 120, 5), # default: 50
 		#"optimizer": hp.choice('optimizer', optimizer_choice), 
-		#"lr": hp.loguniform('lr', np.log(0.001), np.log(0.1)),
+		"lr": hp.loguniform('lr', np.log(0.0001), np.log(0.01)),
 		#"batch_size": hp.qloguniform('batch_size', np.log(50), np.log(3000), 50),  #not working yet!!
 		#"random-seed":  hp.randint('seed', 5)
 	}
@@ -207,15 +207,17 @@ if __name__ == '__main__':
 			hyper_config,
 			trials=trials,
 			algo=tpe.suggest,
-			max_evals=5)
+			max_evals=7)
 
 	except KeyboardInterrupt:
 		best=None
+		print(optimizer_choice)
 		hyperopt_summary(trials)
 
 	except Exception:
 		hyperopt_summary(trials)
 		traceback.print_exc(file=sys.stdout)
 
+	print("optimizer choice", optimizer_choice)
 	hyperopt_summary(trials)
 
