@@ -881,7 +881,7 @@ def plot_confusion_matrix(correct_labels, predict_labels, labels, title='Confusi
 	ax.set_ylim(len(cm)-0.5, -0.5)
 
 	for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-		ax.text(j, i, format(cm[i, j], 'd') if cm[i,j]!=0 else '.', horizontalalignment="center", fontsize=6, verticalalignment='center', color= "black")
+		ax.text(j, i, format(cm[i, j], 'd') if cm[i,j]!=0 else '.', horizontalalignment="center", fontsize=3.5, verticalalignment='center', color= "black")
 	fig.set_tight_layout(True)
 	#summary = tfplot.figure.to_summary(fig, tag=tensor_name)
 	return 1, fig
