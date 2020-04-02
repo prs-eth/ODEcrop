@@ -49,7 +49,7 @@ from lib.utils import hyperopt_summary
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=20000, help="Size of the dataset")
+parser.add_argument('-n',  type=int, default=10000, help="Size of the dataset")
 parser.add_argument('-validn',  type=int, default=5000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
@@ -98,14 +98,15 @@ parser.add_argument('-t', '--timepoints', type=int, default=100, help="Total num
 parser.add_argument('--max-t',  type=float, default=5., help="We subsample points in the interval [0, args.max_tp]")
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
-parser.add_argument('--ode-method', type=str, default='dopri5',
+parser.add_argument('--ode-method', type=str, default='euler',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
 parser.add_argument('--optimizer', type=str, default='adamax',
 					help="Chose from: adamax (default), adagrad, adadelta, adam, adaw, sparseadam, ASGD, RMSprop, rprop, SGD")
 					# working: adamax, adagrad, adadelta, adam, adaw, ASGD, rprop
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure), RMSprop(CE loss is NAN)
-parser.add_argument('--num-seeds', type=int, default=3,
-					help="number of runs to average from. Default=3")
+parser.add_argument('--num-seeds', type=int, default=1, help="Number of runs to average from. Default=3")
+parser.add_argument('--num-search', type=int, default=1, help="Number of search steps to be executed")
+
 
 args = parser.parse_args()
 
@@ -207,7 +208,7 @@ if __name__ == '__main__':
 			hyper_config,
 			trials=trials,
 			algo=tpe.suggest,
-			max_evals=1)
+			max_evals=args.num_search)
 
 	except KeyboardInterrupt:
 		best=None

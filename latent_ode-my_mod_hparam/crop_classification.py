@@ -778,8 +778,13 @@ class Crops(object):
 	def eval_file(self):
 		return 'eval.hdf5'
 	
-	#def get_label(self, record_id):
-	#	return self.label_dict[record_id]
+	@property
+	def get_label(self, record_id):
+		return self.label_dict[record_id]
+	
+	@property
+	def label_list(self):
+		return self.label
 	
 	def __getitem__(self, index):
 		

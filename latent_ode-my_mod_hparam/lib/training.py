@@ -8,7 +8,7 @@ from random import SystemRandom
 
 import lib.utils as utils
 from lib.utils import compute_loss_all_batches
-from lib.utils import Bunch, get_optimizer
+from lib.utils import Bunch, get_optimizer, plot_confusion_matrix
 from lib.construct import get_ODE_RNN_model
 from lib.ode_rnn import *
 from lib.parse_datasets import parse_datasets
@@ -104,7 +104,7 @@ def construct_and_train_model(config):
 	
 	if args.tensorboard:
 		Validationwriter = []
-		Trainwriter = []
+		#Trainwriter = []
 		for i in range(num_seeds):
 			comment = '_'
 			if args.classic_rnn:
@@ -119,7 +119,7 @@ def construct_and_train_model(config):
 			Validationwriter.append( SummaryWriter(validationtensorboard_dir, comment=comment) )
 			
 			tensorboard_dir = "runs/expID" + str(ExperimentID[i]) + "_TRAIN" + comment
-			Trainwriter.append( SummaryWriter(tensorboard_dir, comment=comment) )
+			#Trainwriter.append( SummaryWriter(tensorboard_dir, comment=comment) )
 		
 			print(tensorboard_dir)
 	##################################################################
@@ -137,7 +137,7 @@ def construct_and_train_model(config):
 			args,
 			file_name,
 			[ExperimentID[i]],
-			[Trainwriter[i]],
+			#[Trainwriter[i]],
 			[Validationwriter[i]],
 			input_command,
 			[Devices[0]]
@@ -161,8 +161,6 @@ def construct_and_train_model(config):
 
 	mean_train_acc = np.mean(Train_acc)
 	var_train_acc = sum((abs(Train_acc - mean_train_acc)**2)/(num_seeds-1))
-
-	pdb.set_trace()
 		
 	return_dict = {
 		'loss': 1-mean_best_test_acc,
@@ -182,7 +180,7 @@ def train_it(
 		args,
 		file_name,
 		ExperimentID,
-		Trainwriter,
+		#Trainwriter,
 		Validationwriter,
 		input_command,
 		Devices):
@@ -227,6 +225,7 @@ def train_it(
 	train_res = [None] * num_gpus
 	batch_dict = [None] * num_gpus
 	test_res = [None] * num_gpus
+	label_dict = [None]* num_gpus
 
 
 	for itr in (range(1, num_batches * (args.niters) + 1)):
@@ -264,7 +263,7 @@ def train_it(
 			with torch.no_grad():
 
 				for i, device in enumerate(Devices): #Bottbleneck????
-					test_res[i] = compute_loss_all_batches(Model[i], 
+					test_res[i], label_dict[i] = compute_loss_all_batches(Model[i], 
 						Data_obj[i]["test_dataloader"], args,
 						n_batches = Data_obj[i]["n_test_batches"],
 						experimentID = ExperimentID[i],
@@ -287,39 +286,39 @@ def train_it(
 					# write training numbers
 					if "accuracy" in train_res[i]:
 						#Logger[i].info("Classification accuracy (TRAIN): {:.4f}".format(train_res["accuracy"]))
-						Trainwriter[i].add_scalar('Classification_accuracy', train_res[i]["accuracy"], itr*args.batch_size)
+						Validationwriter[i].add_scalar('Classification_accuracy/train', train_res[i]["accuracy"], itr*args.batch_size)
 					
 					if "loss" in train_res[i]:
-						Trainwriter[i].add_scalar('loss', train_res[i]["loss"].detach(), itr*args.batch_size)
+						Validationwriter[i].add_scalar('loss/train', train_res[i]["loss"].detach(), itr*args.batch_size)
 					
 					if "ce_loss" in train_res[i]:
-						Trainwriter[i].add_scalar('CE_loss', train_res[i]["ce_loss"].detach(), itr*args.batch_size)
+						Validationwriter[i].add_scalar('CE_loss/train', train_res[i]["ce_loss"].detach(), itr*args.batch_size)
 					
 					if "mse" in train_res[i]:
-						Trainwriter[i].add_scalar('MSE', train_res[i]["mse"], itr*args.batch_size)
+						Validationwriter[i].add_scalar('MSE/train', train_res[i]["mse"], itr*args.batch_size)
 					
 					if "pois_likelihood" in train_res[i]:
-						Trainwriter[i].add_scalar('Poisson_likelihood', train_res[i]["pois_likelihood"], itr*args.batch_size)
+						Validationwriter[i].add_scalar('Poisson_likelihood/train', train_res[i]["pois_likelihood"], itr*args.batch_size)
 					
 					#write test numbers
 					if "auc" in test_res[i]:
 						#Logger[i].info("Classification AUC (TEST): {:.4f}".format(test_res["auc"]))
-						Validationwriter[i].add_scalar('Classification_AUC', test_res[i]["auc"], itr*args.batch_size)
+						Validationwriter[i].add_scalar('Classification_AUC/validation', test_res[i]["auc"], itr*args.batch_size)
 						
 					if "mse" in test_res[i]:
 						#Logger[i].info("Test MSE: {:.4f}".format(test_res["mse"]))
-						Validationwriter[i].add_scalar('MSE', test_res[i]["mse"], itr*args.batch_size)
+						Validationwriter[i].add_scalar('MSE/validation', test_res[i]["mse"], itr*args.batch_size)
 						
 					if "accuracy" in test_res[i]:
 						#Logger[i].info("Classification accuracy (TEST): {:.4f}".format(test_res["accuracy"]))
-						Validationwriter[i].add_scalar('Classification_accuracy', test_res[i]["accuracy"], itr*args.batch_size)
+						Validationwriter[i].add_scalar('Classification_accuracy/validation', test_res[i]["accuracy"], itr*args.batch_size)
 
 					if "pois_likelihood" in test_res[i]:
 						#Logger[i].info("Poisson likelihood: {}".format(test_res["pois_likelihood"]))
-						Validationwriter[i].add_scalar('Poisson_likelihood', test_res[i]["pois_likelihood"], itr*args.batch_size)
+						Validationwriter[i].add_scalar('Poisson_likelihood/validation', test_res[i]["pois_likelihood"], itr*args.batch_size)
 					
 					if "loss" in train_res[i]:
-						Validationwriter[i].add_scalar('loss', test_res[i]["loss"].detach(), itr*args.batch_size)
+						Validationwriter[i].add_scalar('loss/validation', test_res[i]["loss"].detach(), itr*args.batch_size)
 					
 					if "ce_loss" in test_res[i]:
 						#Logger[i].info("CE loss: {}".format(test_res["ce_loss"]))
@@ -338,6 +337,12 @@ def train_it(
 							'args': args,
 							'state_dict': Model[i].state_dict(),
 						}, Top_ckpt_path[i])
+
+
+					#make confusion matrix
+					_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
+					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
+
 
 	print(Best_test_acc[0])
 	return train_res, test_res, Best_test_acc[0]

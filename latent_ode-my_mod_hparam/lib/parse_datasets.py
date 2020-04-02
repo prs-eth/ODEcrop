@@ -274,7 +274,7 @@ def parse_datasets(args, device):
 				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False)
 				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False)
 				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False)
-
+			
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
 					"test_dataloader": utils.inf_generator(test_dataloader), #changed to validate on the evalutation set #attention, might be another naming convention...
