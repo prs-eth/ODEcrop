@@ -49,9 +49,15 @@ from lib.utils import hyperopt_summary
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
+<<<<<<< HEAD
 parser.add_argument('-n',  type=int, default=200000, help="Size of the dataset")
 parser.add_argument('-validn',  type=int, default=10000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=2) # default=300
+=======
+parser.add_argument('-n',  type=int, default=10000, help="Size of the dataset")
+parser.add_argument('-validn',  type=int, default=5000, help="Size of the validation dataset")
+parser.add_argument('--niters', type=int, default=1) # default=300
+>>>>>>> 4a3b7a8756e4b7b95144e5dd670b609a12e0ced4
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=1000)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
@@ -207,7 +213,11 @@ if __name__ == '__main__':
 			hyper_config,
 			trials=trials,
 			algo=tpe.suggest,
+<<<<<<< HEAD
 			max_evals=7)
+=======
+			max_evals=1)
+>>>>>>> 4a3b7a8756e4b7b95144e5dd670b609a12e0ced4
 
 	except KeyboardInterrupt:
 		best=None
