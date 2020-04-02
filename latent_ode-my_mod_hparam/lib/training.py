@@ -229,7 +229,7 @@ def train_it(
 	test_res = [None] * num_gpus
 
 
-	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
+	for itr in (range(1, num_batches * (args.niters) + 1)):
 		
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()
