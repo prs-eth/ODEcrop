@@ -36,10 +36,11 @@ def construct_and_train_model(config):
 	argsdict = vars(args)
 
 	print("")
+	print("Testing hyperparameters:")
 	for key in config.keys():
 		if not key=='spec_config':
 			argsdict[key] = config[key]
-			print(key, " : ", argsdict[key])
+			print(key+ " : "+ str(argsdict[key]))
 	print("")
 
 	# namespace to dict
@@ -55,7 +56,9 @@ def construct_and_train_model(config):
 	num_seeds = config["spec_config"][0]["num_seeds"]
 
 	num_gpus = max(num_gpus,1)
-	args.batch_size = int(args.batch_size)
+	if isinstance(args.batch_size, tuple):
+		args.batch_size = int(args.batch_size[0])
+	args.gru_units = int(args.gru_units)
 	##############################################################################
 
 	# set seed
@@ -99,7 +102,8 @@ def construct_and_train_model(config):
 	for i in range(num_seeds):
 		Model.append(get_ODE_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
 
-	#pdb.set_trace()
+	if args.classic_rnn:
+		raise Exception("RNN not implemented yet!")
 	##################################################################
 	
 	if args.tensorboard:
@@ -262,7 +266,7 @@ def train_it(
 			
 			with torch.no_grad():
 
-				for i, device in enumerate(Devices): #Bottbleneck????
+				for i, device in enumerate(Devices): #Bottleneck????
 					test_res[i], label_dict[i] = compute_loss_all_batches(Model[i], 
 						Data_obj[i]["test_dataloader"], args,
 						n_batches = Data_obj[i]["n_test_batches"],
@@ -322,7 +326,7 @@ def train_it(
 					
 					if "ce_loss" in test_res[i]:
 						#Logger[i].info("CE loss: {}".format(test_res["ce_loss"]))
-						Validationwriter[i].add_scalar('CE_loss', test_res[i]["ce_loss"], itr*args.batch_size)
+						Validationwriter[i].add_scalar('CE_loss/validation', test_res[i]["ce_loss"], itr*args.batch_size)
 		
 					#logger.info("-----------------------------------------------------------------------------------")
 
