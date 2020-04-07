@@ -97,6 +97,7 @@ def construct_and_train_model(config):
 
 	##############################################################################
 	# Create Model
+	#pdb.set_trace()
 
 	Model = []
 	for i in range(num_seeds):
@@ -126,10 +127,10 @@ def construct_and_train_model(config):
 			#Trainwriter.append( SummaryWriter(tensorboard_dir, comment=comment) )
 		
 			print(tensorboard_dir)
-	##################################################################
-
+			
 	##################################################################
 	# Training
+	
 	Train_res = [None]*num_seeds
 	Test_res = [None]*num_seeds
 	Best_test_acc = [None]*num_seeds
@@ -232,7 +233,7 @@ def train_it(
 	label_dict = [None]* num_gpus
 
 
-	for itr in (range(1, num_batches * (args.niters) + 1)):
+	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
 		
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()

@@ -49,7 +49,7 @@ from lib.utils import hyperopt_summary
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=20000, help="Size of the dataset")
+parser.add_argument('-n',  type=int, default=8000, help="Size of the dataset")
 parser.add_argument('-validn',  type=int, default=4000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
@@ -82,11 +82,11 @@ parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run R
 parser.add_argument('-l', '--latents', type=int, default=45, help="Size of the latent state")
 parser.add_argument('--rec-dims', type=int, default=100, help="Dimensionality of the recognition model (ODE or RNN).")
 
-parser.add_argument('--rec-layers', type=int, default=3, help="Number of layers in ODE func in recognition ODE") 
+parser.add_argument('--rec-layers', type=int, default=1, help="Number of layers in ODE func in recognition ODE") 
 parser.add_argument('--gen-layers', type=int, default=2, help="Number of layers in ODE func in generative ODE")
 
-parser.add_argument('-u', '--units', type=int, default=210, help="Number of units per layer in ODE func")
-parser.add_argument('-g', '--gru-units', type=int, default=70, help="Number of units per layer in each of GRU update networks")
+parser.add_argument('-u', '--units', type=int, default=200, help="Number of units per layer in ODE func")
+parser.add_argument('-g', '--gru-units', type=int, default=110, help="Number of units per layer in each of GRU update networks")
 
 parser.add_argument('--poisson', action='store_true', help="Model poisson-process likelihood for the density of events in addition to reconstruction.")
 parser.add_argument('--classif', default="True", action='store_true', help="Include binary classification loss -- used for Physionet dataset for hospiral mortality")
@@ -106,7 +106,7 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure), RMSprop(CE loss is NAN)
 
 parser.add_argument('--num-seeds', type=int, default=3, help="Number of runs to average from. Default=3")
-parser.add_argument('--num-search', type=int, default=1, help="Number of search steps to be executed")
+parser.add_argument('--num-search', type=int, default=2, help="Number of search steps to be executed")
 parser.add_argument('--hparams', nargs='*', help="a set of: rec_layers, units, latents, gru_units, optimizer, lr, batch_size, ode_method")
 
 
@@ -198,19 +198,19 @@ if __name__ == '__main__':
 		args.hparams = []
 
 	if 'rec_layers' in args.hparams:
-		hyper_config["rec_layers"] = hp.quniform('rec_layers', 1, 4, 1)
+		hyper_config["rec_layers"] = hp.quniform('rec_layers', 1, 2, 1)
 	
 	if 'units' in args.hparams:
-		hyper_config["units"] = hp.quniform('ode_units', 10, 400, 60) # default: 500
+		hyper_config["units"] = hp.quniform('ode_units', 10, 300, 5) # default: 500
 	
 	if 'latents' in args.hparams:
-		hyper_config["latents"] = hp.quniform('latents', 15, 100, 5) # default: 35
+		hyper_config["latents"] = hp.quniform('latents', 15, 150, 5) # default: 35
 
 	if 'gru_units' in args.hparams:
-		hyper_config["gru_units"] = hp.quniform('gru_units', 30, 120, 5) # default: 50
+		hyper_config["gru_units"] = hp.quniform('gru_units', 30, 250, 5) # default: 50
 
 	if 'optimizer' in args.hparams:
-		optimizer_choice =  ['adamax']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD'] RMSprop?
+		optimizer_choice =  ['rprop']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD', 'RMSprop'] RMSprop?
 		print("optimizer choices: ", optimizer_choice)
 		hyper_config["optimizer"] = hp.choice('optimizer', optimizer_choice)
 	
@@ -218,7 +218,7 @@ if __name__ == '__main__':
 		hyper_config["lr"] = hp.loguniform('lr', np.log(0.0001), np.log(0.1))
 	
 	if 'batch_size' in args.hparams:
-		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(50), np.log(4000), 50), 
+		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(100), np.log(4000), 25), 
 	
 	if 'ode_method' in args.hparams:
 		solver_choice = ['euler', 'dopri5'] #['explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun']
