@@ -40,7 +40,7 @@ def construct_and_train_model(config):
 	for key in config.keys():
 		if not key=='spec_config':
 			argsdict[key] = config[key]
-			print(key+ " : "+ str(argsdict[key]))
+			print(key + " : " + str(argsdict[key]))
 	print("")
 
 	# namespace to dict
@@ -62,13 +62,15 @@ def construct_and_train_model(config):
 	##############################################################################
 
 	# set seed
-	torch.manual_seed(args.random_seed)
-	np.random.seed(args.random_seed)
 
-	randID = int(SystemRandom().random()*100000)*1000
+
+	randID = int(SystemRandom().random()*10000)*1000
 	ExperimentID = []
 	for i in range(num_seeds):
 		ExperimentID.append(randID + i)
+
+	torch.manual_seed(args.random_seed)
+	np.random.seed(args.random_seed)
 	
 	##############################################################################
 	# Dataset
@@ -233,7 +235,7 @@ def train_it(
 	label_dict = [None]* num_gpus
 
 
-	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
+	for itr in (range(1, num_batches * (args.niters) + 1)):
 		
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()

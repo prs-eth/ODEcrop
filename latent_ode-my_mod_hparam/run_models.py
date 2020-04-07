@@ -106,7 +106,7 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure), RMSprop(CE loss is NAN)
 
 parser.add_argument('--num-seeds', type=int, default=3, help="Number of runs to average from. Default=3")
-parser.add_argument('--num-search', type=int, default=2, help="Number of search steps to be executed")
+parser.add_argument('--num-search', type=int, default=1, help="Number of search steps to be executed")
 parser.add_argument('--hparams', nargs='*', help="a set of: rec_layers, units, latents, gru_units, optimizer, lr, batch_size, ode_method")
 
 
