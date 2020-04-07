@@ -221,7 +221,7 @@ if __name__ == '__main__':
 		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(100), np.log(4000), 25), 
 	
 	if 'ode_method' in args.hparams:
-		solver_choice = ['euler', 'dopri5'] #['explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun']
+		solver_choice = ['dopri5'] #['explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun']
 		print("Solver choices: ", solver_choice)
 		hyper_config["ode_method"] = hp.choice('ODE_solver', solver_choice)
 	

@@ -69,8 +69,8 @@ def construct_and_train_model(config):
 	for i in range(num_seeds):
 		ExperimentID.append(randID + i)
 
-	torch.manual_seed(args.random_seed)
-	np.random.seed(args.random_seed)
+	#torch.manual_seed(args.random_seed)
+	#np.random.seed(args.random_seed)
 	
 	##############################################################################
 	# Dataset
