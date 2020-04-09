@@ -9,7 +9,7 @@ from random import SystemRandom
 import lib.utils as utils
 from lib.utils import compute_loss_all_batches
 from lib.utils import Bunch, get_optimizer, plot_confusion_matrix
-from lib.construct import get_ODE_RNN_model
+from lib.construct import get_ODE_RNN_model, get_classic_RNN_model
 from lib.ode_rnn import *
 from lib.parse_datasets import parse_datasets
 
@@ -96,17 +96,20 @@ def construct_and_train_model(config):
 		else:
 			raise Exception("Please provide number of labels for classification task")
 
-
 	##############################################################################
 	# Create Model
 	#pdb.set_trace()
 
 	Model = []
-	for i in range(num_seeds):
-		Model.append(get_ODE_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
+	if args.ode_rnn:
+		for i in range(num_seeds):
+			Model.append(get_ODE_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
 
 	if args.classic_rnn:
-		raise Exception("RNN not implemented yet!")
+		for i in range(num_seeds):
+			Model.append(get_classic_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
+
+
 	##################################################################
 	
 	if args.tensorboard:
@@ -235,7 +238,7 @@ def train_it(
 	label_dict = [None]* num_gpus
 
 
-	for itr in (range(1, num_batches * (args.niters) + 1)):
+	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
 		
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()

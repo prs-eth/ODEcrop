@@ -1,0 +1,312 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"pytorch/1.4.0" "cuda/10.0.13"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
+
+
+
+Couldn't import umap
+I'm counting gpu's:  1
+Means I will train  1  models, with different random seeds
+My Devices:  ['cuda:0']
+Sampling dataset of 300000 training examples
+Solver choices:  ['dopri5']
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Testing hyperparameters:
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     ode_method : dopri5
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Trainingdataset:
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Using Evaluationdataset:
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]2020-04-07 11:58:09.317592: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
+2020-04-07 11:58:09.318303: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
+2020-04-07 11:58:09.318320: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+                                                     runs/expID5785000_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785001_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785002_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785003_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785004_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785005_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785006_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785007_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785008_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785009_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785010_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785011_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785012_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785013_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID5785014_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:dopri5_seed:6000_optim:adamax
+  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                     0.8632759239325439
+  0%|          | 0/1 [2:34:36<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                       0.862038033728023
+  0%|          | 0/1 [5:00:58<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                       0.8630068173663438
+  0%|          | 0/1 [7:25:28<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                       0.8634015069967708
+  0%|          | 0/1 [9:53:20<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                       0.8636526731252242
+  0%|          | 0/1 [12:21:21<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                        0.8641908862576246
+  0%|          | 0/1 [14:55:06<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                        0.8637961966271978
+  0%|          | 0/1 [17:28:27<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                        0.8634373878722641
+  0%|          | 0/1 [19:59:23<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                        0.8647290993900251
+  0%|          | 0/1 [22:22:20<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                        0.8668460710441335
+  0%|          | 0/1 [24:56:29<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                        0.8627377108001435
+  0%|          | 0/1 [27:32:52<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                        0.8646573376390384
+  0%|          | 0/1 [30:07:40<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                        0.8643523501973448
+  0%|          | 0/1 [32:48:16<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                        0.8623071402942232
+  0%|          | 0/1 [35:23:50<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method dopri5 --random-seed 6000 --num-search 1 --num-seeds 15 --hparams ode_method
+
+                                                        0.8620200932902763
+  0%|          | 0/1 [38:05:14<?, ?trial/s, best loss=?]                                                        {'loss': 0.13637005142925485, 'loss_variance': 1.5533144706613618e-06, 'status': 'ok'}
+  0%|          | 0/1 [38:05:14<?, ?trial/s, best loss=?]100%|██████████| 1/1 [38:05:14<00:00, 137114.74s/trial, best loss: 0.13637005142925485]100%|██████████| 1/1 [38:05:14<00:00, 137114.74s/trial, best loss: 0.13637005142925485]
+
+-----------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+-----------------------------------------------------------------------------------------------------------------
+Trial: 0001   |   Test-Accuracy: 86.363 %   |   Standard deviation: 0.125 %   |   Hyperparameters: {'ODE_solver': [0]}   |
+-----------------------------------------------------------------------------------------------------------------
+Best configuration: 86.363 % (+-0.125) , with Hyperparmeters: {'ODE_solver': [0]}
+-----------------------------------------------------------------------------------------------------------------

@@ -14,7 +14,7 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 
 
 #sh test_cityscapes.sh
-python run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
+python run_models.py --niters 55 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --optimizer adagrad --random-seed 6001 --num-search 9 --num-seeds 3 --hparams lr
 
 # RNN
-#python run_models.py --niters 80 -n 300000 -b 500 -l 45 --dataset crop --classic-rnn --random-seed 1012
+#python run_models.py --niters 55 -n 300000 -validn 60000 -b 500 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 5 -num-seeds 2python run_models.py --niters 1 -n 300000 -validn 60000 -b 500 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 5 --num-seeds 2

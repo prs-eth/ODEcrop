@@ -76,7 +76,7 @@ parser.add_argument('--z0-encoder', type=str, default='odernn', help="Type of en
 parser.add_argument('--classic-rnn', action='store_true', help="Run RNN baseline: classic RNN that sees true points at every point. Used for interpolation only.")
 parser.add_argument('--rnn-cell', default="gru", help="RNN Cell type. Available: gru (default), expdecay")
 parser.add_argument('--input-decay', action='store_true', help="For RNN: use the input that is the weighted average of impirical mean and previous value (like in GRU-D)")
-parser.add_argument('--ode-rnn', default=True, action='store_true', help="Run ODE-RNN baseline: RNN-style that sees true points at every point. Used for interpolation only.")
+parser.add_argument('--ode-rnn', action='store_true', help="Run ODE-RNN baseline: RNN-style that sees true points at every point. Used for interpolation only.")
 parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run RNN baseline: seq2seq model with sampling of the h0 and ELBO loss.")
 
 parser.add_argument('-l', '--latents', type=int, default=45, help="Size of the latent state")
@@ -210,12 +210,12 @@ if __name__ == '__main__':
 		hyper_config["gru_units"] = hp.quniform('gru_units', 30, 250, 5) # default: 50
 
 	if 'optimizer' in args.hparams:
-		optimizer_choice =  ['rprop']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD', 'RMSprop'] RMSprop?
+		optimizer_choice =  ['adagrad']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD', 'RMSprop'] RMSprop?
 		print("optimizer choices: ", optimizer_choice)
 		hyper_config["optimizer"] = hp.choice('optimizer', optimizer_choice)
 	
 	if 'lr' in args.hparams:
-		hyper_config["lr"] = hp.loguniform('lr', np.log(0.0001), np.log(0.1))
+		hyper_config["lr"] = hp.loguniform('lr', np.log(0.002), np.log(0.1))
 	
 	if 'batch_size' in args.hparams:
 		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(100), np.log(4000), 25), 
@@ -238,9 +238,14 @@ if __name__ == '__main__':
 
 		if 'optimizer' in args.hparams:
 			print("Optimizer choices: ",optimizer_choice)
-		if 'ode-method' in args.hparams:
-			print("Solver choices: ", solver_choice)
-		
+		else:
+			print("Used Optimizer:", args.optimizer)
+
+		if 'ode_method' in args.hparams:
+			print("ODE-Solver choices: ", solver_choice)
+		else:
+			print("Used Ode-Solver", args.ode_method)
+			
 		hyperopt_summary(trials)
 
 	except Exception:
@@ -249,7 +254,13 @@ if __name__ == '__main__':
 
 	if 'optimizer' in args.hparams:
 		print("Optimizer choices: ",optimizer_choice)
-	if 'ode-method' in args.hparams:
-		print("Solver choices: ", solver_choice)
+	else:
+		print("Used Optimizer:", args.optimizer)
+
+	if 'ode_method' in args.hparams:
+		print("ODE-Solver choices: ", solver_choice)
+	else:
+		print("Used Ode-Solver", args.ode_method)
+
 	hyperopt_summary(trials)
 
