@@ -79,14 +79,14 @@ parser.add_argument('--input-decay', action='store_true', help="For RNN: use the
 parser.add_argument('--ode-rnn', action='store_true', help="Run ODE-RNN baseline: RNN-style that sees true points at every point. Used for interpolation only.")
 parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run RNN baseline: seq2seq model with sampling of the h0 and ELBO loss.")
 
-parser.add_argument('-l', '--latents', type=int, default=45, help="Size of the latent state")
+parser.add_argument('-l', '--latents', type=int, default=70, help="Size of the latent state")
 parser.add_argument('--rec-dims', type=int, default=100, help="Dimensionality of the recognition model (ODE or RNN).")
 
-parser.add_argument('--rec-layers', type=int, default=1, help="Number of layers in ODE func in recognition ODE") 
+parser.add_argument('--rec-layers', type=int, default=2, help="Number of layers in ODE func in recognition ODE") 
 parser.add_argument('--gen-layers', type=int, default=2, help="Number of layers in ODE func in generative ODE")
 
-parser.add_argument('-u', '--units', type=int, default=200, help="Number of units per layer in ODE func")
-parser.add_argument('-g', '--gru-units', type=int, default=110, help="Number of units per layer in each of GRU update networks")
+parser.add_argument('-u', '--units', type=int, default=255, help="Number of units per layer in ODE func")
+parser.add_argument('-g', '--gru-units', type=int, default=100, help="Number of units per layer in each of GRU update networks")
 
 parser.add_argument('--poisson', action='store_true', help="Model poisson-process likelihood for the density of events in addition to reconstruction.")
 parser.add_argument('--classif', default="True", action='store_true', help="Include binary classification loss -- used for Physionet dataset for hospiral mortality")
@@ -201,24 +201,24 @@ if __name__ == '__main__':
 		hyper_config["rec_layers"] = hp.quniform('rec_layers', 1, 2, 1)
 	
 	if 'units' in args.hparams:
-		hyper_config["units"] = hp.quniform('ode_units', 10, 300, 5) # default: 500
+		hyper_config["units"] = hp.quniform('ode_units', 10, 350, 5) # default: 500
 	
 	if 'latents' in args.hparams:
-		hyper_config["latents"] = hp.quniform('latents', 15, 150, 5) # default: 35
+		hyper_config["latents"] = hp.quniform('latents', 20, 150, 5) # default: 35
 
 	if 'gru_units' in args.hparams:
 		hyper_config["gru_units"] = hp.quniform('gru_units', 30, 250, 5) # default: 50
 
 	if 'optimizer' in args.hparams:
-		optimizer_choice =  ['adagrad']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD', 'RMSprop'] RMSprop?
+		optimizer_choice =  ['adams']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD', 'RMSprop'] RMSprop?
 		print("optimizer choices: ", optimizer_choice)
 		hyper_config["optimizer"] = hp.choice('optimizer', optimizer_choice)
 	
 	if 'lr' in args.hparams:
-		hyper_config["lr"] = hp.loguniform('lr', np.log(0.002), np.log(0.1))
+		hyper_config["lr"] = hp.loguniform('lr', np.log(0.001), np.log(0.1))
 	
 	if 'batch_size' in args.hparams:
-		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(50), np.log(700), 20), 
+		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(100), np.log(1500), 20), 
 	
 	if 'ode_method' in args.hparams:
 		solver_choice = ['dopri5'] #['explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun']
@@ -236,8 +236,11 @@ if __name__ == '__main__':
 	except KeyboardInterrupt:
 		best=None
 
+		print("RNN-cell: ", args.rnn_cell)
+		print("defaut adapted LR's!!")
+
 		if 'optimizer' in args.hparams:
-			print("Optimizer choices: ",optimizer_choice)
+			print("Optimizer choices: ", optimizer_choice)
 		else:
 			print("Used Optimizer:", args.optimizer)
 
@@ -251,6 +254,9 @@ if __name__ == '__main__':
 	except Exception:
 		hyperopt_summary(trials)
 		traceback.print_exc(file=sys.stdout)
+
+	print("defaut adapted LR's!!")
+	print("RNN-cell: ", args.rnn_cell)
 
 	if 'optimizer' in args.hparams:
 		print("Optimizer choices: ",optimizer_choice)
