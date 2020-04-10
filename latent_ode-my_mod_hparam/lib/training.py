@@ -69,8 +69,8 @@ def construct_and_train_model(config):
 	for i in range(num_seeds):
 		ExperimentID.append(randID + i)
 
-	#torch.manual_seed(args.random_seed)
-	#np.random.seed(args.random_seed)
+	torch.manual_seed(args.random_seed)
+	np.random.seed(args.random_seed)
 	
 	##############################################################################
 	# Dataset
@@ -101,6 +101,7 @@ def construct_and_train_model(config):
 	#pdb.set_trace()
 
 	Model = []
+
 	if args.ode_rnn:
 		for i in range(num_seeds):
 			Model.append(get_ODE_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
@@ -153,9 +154,6 @@ def construct_and_train_model(config):
 			[Devices[0]]
 		)
 	
-
-	# because it is fmin, we have to bring back some kind of loss, therefore 1-...
-	
 	Test_acc = []
 	Train_acc = []
 	for i in range(num_seeds):
@@ -171,7 +169,8 @@ def construct_and_train_model(config):
 
 	mean_train_acc = np.mean(Train_acc)
 	var_train_acc = sum((abs(Train_acc - mean_train_acc)**2)/(num_seeds-1))
-		
+	
+	# because it is fmin, we have to bring back some kind of loss, therefore 1-...
 	return_dict = {
 		'loss': 1-mean_best_test_acc,
 		'loss_variance': var_best_test_acc,

@@ -10,7 +10,7 @@ from lib.rnn_baselines import *
 from lib.ode_func import ODEFunc, ODEFunc_w_Poisson
 from lib.diffeq_solver import DiffeqSolver
 
-
+import pdb
 
 
 def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
@@ -18,7 +18,11 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 	obsrv_std = 0.01
 	obsrv_std = torch.Tensor([obsrv_std]).to(device)
 
-	n_ode_gru_dims = int(args.latents)
+	if args.rnn_cell=='lstm':
+		n_ode_gru_dims = int(args.latents)*2
+	else:
+		n_ode_gru_dims = int(args.latents)
+
 
 	if args.poisson:
 		print("Poisson process likelihood not implemented for ODE-RNN: ignoring --poisson")
@@ -35,7 +39,7 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 		ode_func_net = ode_func_net,
 		device = device).to(device)
 
-	z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, args.ode_method, int(args.latents), 
+	z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, args.ode_method, n_ode_gru_dims, 
 		odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
 
 	model = ODE_RNN(input_dim, n_ode_gru_dims, device = device, 
@@ -44,7 +48,8 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 		use_binary_classif = args.classif,
 		classif_per_tp = classif_per_tp,
 		n_labels = n_labels,
-		train_classif_w_reconstr = (args.dataset == "physionet")
+		train_classif_w_reconstr = (args.dataset == "physionet"),
+		RNNcell = args.rnn_cell
 		).to(device)
 
 	return model

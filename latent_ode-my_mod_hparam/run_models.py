@@ -53,7 +53,7 @@ parser.add_argument('-n',  type=int, default=8000, help="Size of the dataset")
 parser.add_argument('-validn',  type=int, default=4000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
-parser.add_argument('-b', '--batch-size', type=int, default=1000)
+parser.add_argument('-b', '--batch-size', type=int, default=700)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
 
 parser.add_argument('--save', type=str, default='experiments/', help="Path for save checkpoints")
@@ -74,7 +74,7 @@ parser.add_argument('--latent-ode', action='store_true', help="Run Latent ODE se
 parser.add_argument('--z0-encoder', type=str, default='odernn', help="Type of encoder for Latent ODE model: odernn or rnn")
 
 parser.add_argument('--classic-rnn', action='store_true', help="Run RNN baseline: classic RNN that sees true points at every point. Used for interpolation only.")
-parser.add_argument('--rnn-cell', default="gru", help="RNN Cell type. Available: gru (default), expdecay")
+parser.add_argument('--rnn-cell', default="gru", help="RNN Cell type. Available: gru (default), expdecay, lstm")
 parser.add_argument('--input-decay', action='store_true', help="For RNN: use the input that is the weighted average of impirical mean and previous value (like in GRU-D)")
 parser.add_argument('--ode-rnn', action='store_true', help="Run ODE-RNN baseline: RNN-style that sees true points at every point. Used for interpolation only.")
 parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run RNN baseline: seq2seq model with sampling of the h0 and ELBO loss.")
@@ -218,7 +218,7 @@ if __name__ == '__main__':
 		hyper_config["lr"] = hp.loguniform('lr', np.log(0.002), np.log(0.1))
 	
 	if 'batch_size' in args.hparams:
-		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(100), np.log(4000), 25), 
+		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(50), np.log(700), 20), 
 	
 	if 'ode_method' in args.hparams:
 		solver_choice = ['dopri5'] #['explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun']

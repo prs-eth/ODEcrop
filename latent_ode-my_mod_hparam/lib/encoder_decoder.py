@@ -7,10 +7,12 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn.functional import relu
-import lib.utils as utils
-from torch.distributions import Categorical, Normal
-import lib.utils as utils
+import math
 from torch.nn.modules.rnn import LSTM, GRU
+from torch.distributions import Categorical, Normal
+
+import lib.utils as utils
+import lib.utils as utils
 from lib.utils import get_device
 
 import pdb
@@ -63,6 +65,80 @@ class GRU_unit(nn.Module):
 		update_gate = self.update_gate(y_concat)
 		reset_gate = self.reset_gate(y_concat)
 		concat = torch.cat([y_mean * reset_gate, y_std * reset_gate, x], -1)
+		#pdb.set_trace()
+		new_state, new_state_std = utils.split_last_dim(self.new_state_net(concat))
+		new_state_std = new_state_std.abs()
+
+		new_y = (1-update_gate) * new_state + update_gate * y_mean
+		new_y_std = (1-update_gate) * new_state_std + update_gate * y_std
+
+		assert(not torch.isnan(new_y).any())
+
+		if masked_update:
+			# IMPORTANT: assumes that x contains both data and mask
+			# update only the hidden states for hidden state only if at least one feature is present for the current time point
+			n_data_dims = x.size(-1)//2
+			mask = x[:, :, n_data_dims:]
+			utils.check_mask(x[:, :, :n_data_dims], mask)
+			
+			mask = (torch.sum(mask, -1, keepdim = True) > 0).float()
+
+			assert(not torch.isnan(mask).any())
+
+			new_y = mask * new_y + (1-mask) * y_mean
+			new_y_std = mask * new_y_std + (1-mask) * y_std
+
+			if torch.isnan(new_y).any():
+				print("new_y is nan!")
+				print(mask)
+				print(y_mean)
+				print(prev_new_y)
+				exit()
+
+		new_y_std = new_y_std.abs()
+		return new_y, new_y_std
+
+class GRU_standard_unit(nn.Module):
+	def __init__(self, latent_dim, input_dim, 
+		update_gate = None,
+		reset_gate = None,
+		new_state_net = None,
+		n_units = 100,
+		device = torch.device("cpu")):
+		super(GRU_unit, self).__init__()
+
+		if update_gate is None:
+			self.update_gate = nn.Sequential(
+			   nn.Linear(latent_dim * 2 + input_dim, latent_dim),
+			   nn.Sigmoid())
+			utils.init_network_weights(self.update_gate)
+		else: 
+			self.update_gate  = update_gate
+
+		if reset_gate is None:
+			self.reset_gate = nn.Sequential(
+			   nn.Linear(latent_dim * 2 + input_dim, latent_dim),
+			   nn.Sigmoid())
+			utils.init_network_weights(self.reset_gate)
+		else: 
+			self.reset_gate  = reset_gate
+
+		if new_state_net is None:
+			self.new_state_net = nn.Sequential(
+			   nn.Linear(latent_dim * 2 + input_dim, latent_dim * 2),
+			   )
+			utils.init_network_weights(self.new_state_net)
+		else: 
+			self.new_state_net  = new_state_net
+
+
+	def forward(self, y_mean, y_std, x, masked_update = True):
+		#pdb.set_trace()
+		y_concat = torch.cat([y_mean, y_std, x], -1)
+
+		update_gate = self.update_gate(y_concat)
+		reset_gate = self.reset_gate(y_concat)
+		concat = torch.cat([y_mean * reset_gate, y_std * reset_gate, x], -1)
 		
 		new_state, new_state_std = utils.split_last_dim(self.new_state_net(concat))
 		new_state_std = new_state_std.abs()
@@ -94,6 +170,87 @@ class GRU_unit(nn.Module):
 				exit()
 
 		new_y_std = new_y_std.abs()
+		return new_y, new_y_std
+
+
+#TODO: Implement a LSTM cell
+# LSTM-unit code inspired by Ricard's answer to https://stackoverflow.com/questions/50168224/does-a-clean-and-extendable-lstm-implementation-exists-in-pytorch
+class LSTM_unit(nn.Module):
+
+	def __init__(self, hidden_size, input_size):
+		super(LSTM_unit, self).__init__()
+		self.input_size = input_size
+		self.hidden_size = hidden_size//2
+		self.i2h = nn.Linear(input_size, 4 * self.hidden_size)
+		self.h2h = nn.Linear(self.hidden_size, 4 * self.hidden_size)
+		self.reset_parameters()
+
+	def reset_parameters(self):
+		std = 1.0 / math.sqrt(self.hidden_size)
+		for w in self.parameters():
+			w.data.uniform_(-std, std)
+
+	def forward(self, y_mean, y_std, x, masked_update = True):
+		#forward(self, x, hidden):
+
+		h, c = y_mean
+		h = h.view(h.size(1), -1)
+		c = c.view(c.size(1), -1)
+		x_short = x.view(x.size(1), -1)
+
+		# Linear mappings
+		preact = self.i2h(x_short) + self.h2h(h)
+
+		# activations
+		gates = preact[:, :3 * self.hidden_size].sigmoid()
+		g_t = preact[:, 3 * self.hidden_size:].tanh()
+		i_t = gates[:, :self.hidden_size]
+		f_t = gates[:, self.hidden_size:2 * self.hidden_size]
+		o_t = gates[:, -self.hidden_size:]
+
+		c_t = torch.mul(c, f_t) + torch.mul(i_t, g_t)
+
+		h_t = torch.mul(o_t, c_t.tanh())
+
+		new_h = h_t.view(1, h_t.size(0), -1)
+		new_c = c_t.view(1, c_t.size(0), -1)
+		
+		new_y = (new_h, new_c)
+
+		if masked_update:
+			# IMPORTANT: assumes that x contains both data and mask
+			# update only the hidden states for hidden state only if at least one feature is present for the current time point
+			n_data_dims = x.size(-1)//2
+			mask = x[:, :, n_data_dims:]
+			#pdb.set_trace()
+			utils.check_mask(x[:, :, :n_data_dims], mask)
+			
+			mask = (torch.sum(mask, -1, keepdim = True) > 0).float()
+
+			assert(not torch.isnan(mask).any())
+
+			new_h = mask * new_h + (1-mask) * y_mean[0]
+			new_c = mask * new_c + (1-mask) * y_mean[1]
+
+			new_y = (new_h, new_c)
+
+			if torch.isnan(new_h).any():
+				print("new_y is nan!")
+				print(mask)
+				print(new_h)
+				print(y_mean)
+				exit()
+			if torch.isnan(new_c).any():
+				print("new_y is nan!")
+				print(mask)
+				print(new_c)
+				print(y_mean)
+				exit()
+		
+		# just return a dummy tensor, since it is not used later for this project.
+		new_y_std = y_std
+
+		#return h_t, (h_t, c_t)
 		return new_y, new_y_std
 
 
@@ -167,8 +324,6 @@ class Encoder_z0_RNN(nn.Module):
 
 
 
-
-
 class Encoder_z0_ODE_RNN(nn.Module):
 	# Derive z0 by running ode backwards.
 	# For every y_i we have two versions: encoded from data and derived from ODE by running it backwards from t_i+1 to t_i
@@ -177,7 +332,8 @@ class Encoder_z0_ODE_RNN(nn.Module):
 	def __init__(self, latent_dim, input_dim, z0_diffeq_solver = None, 
 		z0_dim = None, GRU_update = None, 
 		n_gru_units = 100, 
-		device = torch.device("cpu")):
+		device = torch.device("cpu"),
+		RNNcell = 'gru'):
 		
 		super(Encoder_z0_ODE_RNN, self).__init__()
 
@@ -186,10 +342,17 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		else:
 			self.z0_dim = z0_dim
 
+		self.RNNcell = RNNcell
+
 		if GRU_update is None:
-			self.GRU_update = GRU_unit(latent_dim, input_dim, 
-				n_units = n_gru_units, 
-				device=device).to(device)
+			if self.RNNcell=='gru':
+				self.GRU_update = GRU_unit(latent_dim, input_dim, 
+					n_units = n_gru_units, 
+					device=device).to(device)
+			elif self.RNNcell=='lstm':
+				self.GRU_update = LSTM_unit(latent_dim, input_dim)
+			else:
+				raise Exception("Invalid RNNcell type. Hint: expdecay not available for ODE-RNN")
 		else:
 			self.GRU_update = GRU_update
 
@@ -251,9 +414,20 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		device = get_device(data)
 
-		prev_y = torch.zeros((1, n_traj, self.latent_dim)).to(device)
-		prev_std = torch.zeros((1, n_traj, self.latent_dim)).to(device)
+		if self.RNNcell=='lstm':
+			prev_h = torch.zeros((1, n_traj, self.latent_dim//2)).to(device)
+			prev_h_std = torch.zeros((1, n_traj, self.latent_dim//2)).to(device)
 
+			ci = torch.zeros((1, n_traj, self.latent_dim//2)).to(device)
+			ci_std = torch.zeros((1, n_traj, self.latent_dim//2)).to(device)
+			
+			#concatinate cell state and hidden state
+			prev_y = torch.cat([prev_h, ci], -1)
+			prev_std = torch.cat([prev_h_std, ci_std], -1)
+		else:
+			prev_y = torch.zeros((1, n_traj, self.latent_dim)).to(device)
+			prev_std = torch.zeros((1, n_traj, self.latent_dim)).to(device)
+		
 		prev_t, t_i = time_steps[-1] + 0.01,  time_steps[-1]
 
 		interval_length = time_steps[-1] - time_steps[0]
@@ -298,7 +472,20 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			yi_ode = ode_sol[:, :, -1, :]
 			xi = data[:,i,:].unsqueeze(0)
 			
-			yi, yi_std = self.GRU_update(yi_ode, prev_std, xi)
+			if self.RNNcell=='lstm':
+				h_i_ode = yi_ode[:,:,:self.latent_dim//2]
+				c_i_ode = yi_ode[:,:,self.latent_dim//2:]
+				h_c_lstm = (h_i_ode, c_i_ode)
+
+				# actually this is a LSTM update here:
+				outi, yi_std = self.GRU_update(h_c_lstm, prev_std, xi)
+
+				# the RNN cell is a LSTM and outi:=(yi,ci), we only need h as latent dim
+				yi = torch.cat([outi[0], outi[1]], -1)
+			else:
+				# GRU-unit: the output is directly the hidden state
+				yi, yi_std = self.GRU_update(yi_ode, prev_std, xi)
+
 
 			prev_y, prev_std = yi, yi_std			
 			prev_t, t_i = time_steps[i],  time_steps[i-1]

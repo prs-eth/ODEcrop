@@ -28,7 +28,8 @@ class ODE_RNN(Baseline):
 	def __init__(self, input_dim, latent_dim, device = torch.device("cpu"),
 		z0_diffeq_solver = None, n_gru_units = 100,  n_units = 100,
 		concat_mask = False, obsrv_std = 0.1, use_binary_classif = False,
-		classif_per_tp = False, n_labels = 1, train_classif_w_reconstr = False):
+		classif_per_tp = False, n_labels = 1, train_classif_w_reconstr = False,
+		RNNcell = 'gru'):
 
 		Baseline.__init__(self, input_dim, latent_dim, device = device, 
 			obsrv_std = obsrv_std, use_binary_classif = use_binary_classif,
@@ -37,13 +38,14 @@ class ODE_RNN(Baseline):
 			train_classif_w_reconstr = train_classif_w_reconstr)
 
 		ode_rnn_encoder_dim = latent_dim
-	
+
 		self.ode_gru = Encoder_z0_ODE_RNN( 
 			latent_dim = ode_rnn_encoder_dim, 
 			input_dim = (input_dim) * 2, # input and the mask
 			z0_diffeq_solver = z0_diffeq_solver, 
 			n_gru_units = n_gru_units, 
-			device = device).to(device)
+			device = device,
+			RNNcell = RNNcell).to(device)
 
 		self.z0_diffeq_solver = z0_diffeq_solver
 

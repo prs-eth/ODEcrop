@@ -22,6 +22,8 @@ from torch.distributions import Independent
 from torch.nn.parameter import Parameter
 from lib.base_models import Baseline, VAE_Baseline
 
+import pdb
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Exponential decay of the hidden states for RNN
 # adapted from GRU-D implementation: https://github.com/zhiyongc/GRU-D/
@@ -153,6 +155,8 @@ def run_rnn(inputs, delta_ts, cell, first_hidden=None,
 			w_input_decay, b_input_decay)
 
 	all_hiddens = []
+	all_lstm_hiddens = []
+	all_lstm_cell = []
 	hidden = first_hidden
 
 	if hidden is not None:
@@ -187,16 +191,39 @@ def run_rnn(inputs, delta_ts, cell, first_hidden=None,
 		prev_hidden = hidden
 		hidden = cell(input_w_t, hidden)
 
+		
 		if masked_update and (mask is not None) and (prev_hidden is not None):
 			# update only the hidden states for hidden state only if at least one feature is present for the current time point
 			summed_mask = (torch.sum(mask_i, -1, keepdim = True) > 0).float()
 			assert(not torch.isnan(summed_mask).any())
-			hidden = summed_mask * hidden + (1-summed_mask) * prev_hidden
 
-		all_hiddens.append(hidden)
+			if isinstance(cell, LSTMCell):
+				# LSTM cell has two states to update
+				lstm_hidden = summed_mask * hidden[0] + (1-summed_mask) * prev_hidden[0]
+				lstm_cell = summed_mask * hidden[1] + (1-summed_mask) * prev_hidden[1]
+				hidden = (lstm_hidden, lstm_cell)
+			else:
+				hidden = summed_mask * hidden + (1-summed_mask) * prev_hidden
 
-	all_hiddens = torch.stack(all_hiddens, 0)
-	all_hiddens = all_hiddens.permute(1,0,2).unsqueeze(0)
+		if isinstance(cell, LSTMCell):
+			all_lstm_hiddens.append(hidden[0])
+			all_lstm_cell.append(hidden[1])
+		else:
+			all_hiddens.append(hidden)
+
+	if isinstance(cell, LSTMCell):
+		all_lstm_hiddens = torch.stack(all_lstm_hiddens, 0)
+		all_lstm_hiddens = all_lstm_hiddens.permute(1,0,2).unsqueeze(0)
+
+		all_lstm_cell = torch.stack(all_lstm_cell, 0)
+		all_lstm_cell = all_lstm_cell.permute(1,0,2).unsqueeze(0)
+
+		ind = 0 # 0 because we return the hidden state to make outputs, 1 for the cell state as an output
+		all_hiddens = (all_lstm_hiddens, all_lstm_cell)[ind] 
+		hidden = hidden[ind]
+	else:
+		all_hiddens = torch.stack(all_hiddens, 0)
+		all_hiddens = all_hiddens.permute(1,0,2).unsqueeze(0)
 	return hidden, all_hiddens
 
 
@@ -244,6 +271,14 @@ class Classic_RNN(Baseline):
 				input_size_for_decay = input_dim,
 				hidden_size = latent_dim, 
 				device = device)
+		elif cell == "lstm":
+			# TODO:
+			#raise Exception("LSTM for classic RNN not implemented yet")
+			self.rnn_cell = LSTMCell(encoder_dim + 1, latent_dim) # +1 for delta t 
+		elif cell == "classic":
+			# TODO:
+			raise Exception("RNNcell for classic RNN not implemented yet")
+			self.rnn_cell = RNNCell(encoder_dim + 1, latent_dim)# +1 for delta t 
 		else:
 			raise Exception("Unknown RNN cell: {}".format(cell))
 
@@ -291,10 +326,12 @@ class Classic_RNN(Baseline):
 			decoder = self.decoder)
 
 		outputs = self.decoder(all_hiddens)
+		#pdb.set_trace()
 		# Shift outputs for computing the loss -- we should compare the first output to the second data point, etc.
 		first_point = data[:,0,:]
 		outputs = utils.shift_outputs(outputs, first_point)
 
+		
 		extra_info = {"first_point": (hidden_state.unsqueeze(0), 0.0, hidden_state.unsqueeze(0))}
 
 		if self.use_binary_classif:
