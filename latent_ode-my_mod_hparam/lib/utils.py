@@ -769,15 +769,17 @@ def hyperopt_summary(trials):
 
 	best_res = 0
 	print("")
-	print("-----------------------------------------------------------------------------------------------------------------")
+	print("---------------------------------------------------------------------------------------------------------------------------")
 	print('TRIAL PROTOCOL:')
-	print("-----------------------------------------------------------------------------------------------------------------")
+	print("---------------------------------------------------------------------------------------------------------------------------")
 
 	for i, trial in enumerate(trials.trials[:]):
-		message = 'Trial: {:04d}   |   Test-Accuracy: {:.3f} %   |   Standard deviation: {:.3f} %   |   Hyperparameters: {}   |'.format(
+		message = 'Trial: {:04d}  |  #runs: {}  |  Mean Acc.: {:.3f} %  |  Std: {:.3f} %  |  Best Acc.: {:.3f} %  |  Hparams: {}  |'.format(
 			i+1, 
+			trial["result"]["num_seeds"],
 			(1-trial["result"]["loss"])*100,
 			np.sqrt(trial["result"]["loss_variance"])*100,
+			(trial["result"]["best_acc"])*100,
 			trial["misc"]["vals"] )
 
 		
@@ -791,42 +793,45 @@ def hyperopt_summary(trials):
 			best_res = 1-trial["result"]["loss"]
 			best_var = trial["result"]["loss_variance"]
 			best_param = trial["misc"]["vals"]
+			best_of_best_res = trial["result"]["best_acc"]
 
-	print("-----------------------------------------------------------------------------------------------------------------")
-	message2 = "Best configuration: {:.3f} % (+-{:.3f}) , with Hyperparmeters: {}".format(
+	print("---------------------------------------------------------------------------------------------------------------------------")
+	message2 = "Best configuration mean: {:.3f} % (+-{:.3f}) (best run: {:.3f} %) , with Hyperparmeters: {}".format(
 		best_res*100,
 		np.sqrt(best_var)*100,
+		best_of_best_res*100,
 		best_param
 	)
 	print(message2)
-	print("-----------------------------------------------------------------------------------------------------------------")
+	print("---------------------------------------------------------------------------------------------------------------------------")
 
 
 
 def get_optimizer(args, params):
 
+	
 	if args.optimizer == 'adagrad':
-		optimizer = torch.optim.Adagrad(params, lr=args.lr, lr_decay=0, weight_decay=0, initial_accumulator_value=0, eps=1e-10)
+		optimizer = torch.optim.Adagrad(params, lr=args.lr*5, lr_decay=0, weight_decay=0, initial_accumulator_value=0, eps=1e-10)
 	elif args.optimizer == 'adadelta':
-		optimizer = optim.Adadelta(params, lr=args.lr, rho=0.9, eps=1e-06, weight_decay=0)
+		optimizer = optim.Adadelta(params, lr=args.lr*100*5, rho=0.9, eps=1e-06, weight_decay=0)
 	elif args.optimizer == 'adam':
-		optimizer = optim.Adam(params, lr=args.lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
+		optimizer = optim.Adam(params, lr=args.lr/10*5, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
 	elif args.optimizer == 'adaw':
-		optimizer = optim.AdamW(params, lr=args.lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.01, amsgrad=False)
+		optimizer = optim.AdamW(params, lr=args.lr/10*5, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.01, amsgrad=False)
 	elif args.optimizer == 'sparseadam':
-		optimizer = optim.SparseAdam(params, lr=args.lr, betas=(0.9, 0.999), eps=1e-08)
+		optimizer = optim.SparseAdam(params/10*5, lr=args.lr, betas=(0.9, 0.999), eps=1e-08)
 	elif args.optimizer == 'ASGD':
-		optimizer = optim.ASGD(params, lr=args.lr, lambd=0.0001, alpha=0.75, t0=1000000.0, weight_decay=0)
+		optimizer = optim.ASGD(params, lr=args.lr*5, lambd=0.0001, alpha=0.75, t0=1000000.0, weight_decay=0)
 	elif args.optimizer == 'LBFGS':
-		optimizer = optim.LBFGS(params, lr=args.lr) 
+		optimizer = optim.LBFGS(params, lr=args.lr*100*5) 
 	elif args.optimizer == 'RMSprop':
-		optimizer = optim.RMSprop(params, lr=args.lr)
+		optimizer = optim.RMSprop(params, lr=args.lr*5)
 	elif args.optimizer == 'rprop':
-		optimizer = optim.Rprop(params, lr=args.lr)
+		optimizer = optim.Rprop(params, lr=args.lr*5)
 	elif args.optimizer == 'SGD':
-		optimizer = optim.SGD(params, lr=args.lr, momentum=0, dampening=0, weight_decay=0, nesterov=False)
+		optimizer = optim.SGD(params, lr=args.lr*5, momentum=0, dampening=0, weight_decay=0, nesterov=False)
 	elif args.optimizer == 'adamax': #standard: adamax
-		optimizer = optim.Adamax(params, lr=args.lr)
+		optimizer = optim.Adamax(params, lr=args.lr) # best lr=0.01, standard is lr=0.002, mutiply every other by factor 5 as well
 	else:
 		raise Exception("Optimizer not supported. Please change it!")
 

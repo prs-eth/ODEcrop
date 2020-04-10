@@ -166,6 +166,7 @@ def construct_and_train_model(config):
 
 	mean_best_test_acc = np.mean(Best_test_acc)
 	var_best_test_acc = sum((abs(Best_test_acc - mean_best_test_acc)**2)/(num_seeds-1))
+	best_of_best_test_acc = np.max(Best_test_acc)
 
 	mean_train_acc = np.mean(Train_acc)
 	var_train_acc = sum((abs(Train_acc - mean_train_acc)**2)/(num_seeds-1))
@@ -177,6 +178,8 @@ def construct_and_train_model(config):
 		#'true_loss': 1-mean_test_acc,
 		#'true_loss_variance':var_test_acc,
 		'status': STATUS_OK,
+		'num_seeds': num_seeds,
+		'best_acc': best_of_best_test_acc
 	}
 
 	print(return_dict)
@@ -237,7 +240,7 @@ def train_it(
 	label_dict = [None]* num_gpus
 
 
-	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
+	for itr in (range(1, num_batches * (args.niters) + 1)):
 		
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()
