@@ -276,7 +276,7 @@ def train_it(
 			
 			with torch.no_grad():
 
-				for i, device in enumerate(Devices): #Bottleneck????
+				for i, device in enumerate(Devices):
 					test_res[i], label_dict[i] = compute_loss_all_batches(Model[i], 
 						Data_obj[i]["test_dataloader"], args,
 						n_batches = Data_obj[i]["n_test_batches"],
