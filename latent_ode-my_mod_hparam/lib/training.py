@@ -123,6 +123,8 @@ def construct_and_train_model(config):
 
 			elif args.ode_rnn:
 				nntype = 'ode'
+			else:
+				raise Exception("please select a model")
 
 			comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_ode-units:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-lay:" + str(args.rec_layers) + "_solver:" + str(args.ode_method) + "_seed:" +str(args.random_seed) + "_optim:" +str(args.optimizer)
 

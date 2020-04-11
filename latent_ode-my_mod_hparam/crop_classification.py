@@ -35,6 +35,7 @@ class Crops(object):
 		self.device = device
 		self.args = args
 		self.second = False
+		self.normalize = True
 				
 		if download:
 			self.download()
@@ -70,9 +71,9 @@ class Crops(object):
 		print('Downloading data...')
 		
 		# get the dataset from the web
-		os.system('wget ftp://m1370728:m1370728@138.246.224.34/data.zip')
-		os.system('unzip data.zip -d ' + self.raw_folder)
-		os.system('rm data.zip')
+		#os.system('wget ftp://m1370728:m1370728@138.246.224.34/data.zip')
+		#os.system('unzip data.zip -d ' + self.raw_folder)
+		#os.system('rm data.zip')
 		
 		#Processing data
 		print('Scanning data...')
@@ -126,9 +127,10 @@ class Crops(object):
 		for filename in tqdm(os.listdir(train_localdir)):
 			
 			#starting a new batch
+			X_mod = np.zeros((raw_batchsize, maxobs, nfeatures))
 			Y_mod = np.zeros((raw_batchsize, maxobs, nclasses))
 			mask = np.zeros((raw_batchsize, maxobs, nfeatures),dtype=bool)
-		
+			
 			with open(os.path.join(train_localdir, filename), "rb") as f:
 				
 				#Unpacking procedure with pickels
@@ -153,6 +155,8 @@ class Crops(object):
 						timeind = np.nonzero(times==t)[1]
 						
 						#place at correct position
+						X_mod[sampleind, ind0, :] = X[sampleind, timeind, :]
+						X_mod[sampleind, ind0, timeC] = 0 #set to zero
 						Y_mod[sampleind, ind0, :] = Y[sampleind, timeind, :]
 						
 						#mark as observed in mask
@@ -168,10 +172,12 @@ class Crops(object):
 						timeind = np.nonzero(times==t)[1]
 						
 						#place at correct position
+						X_mod[sampleind, ind, :] = X[sampleind, timeind, :]
 						Y_mod[sampleind, ind, :] = Y[sampleind, timeind, :]
 						
 						#mark as observed in mask
 						mask[sampleind, ind, :] = True
+
 						
 				# cloud/weather mask
 				# 1 is observed, 0 is not observed, due to clouds/ice/snow and stuff
@@ -179,7 +185,11 @@ class Crops(object):
 				badweather_obs = np.nonzero(np.sum(Y_mod[:,:,badweather_labels], axis=2)!=0)
 				mask[badweather_obs[0], badweather_obs[1], :] = 0
 				
+				#"destroy" data, that is corrputed by bad weather. We will never use it!
+				X_mod[~mask] = 0
+				
 				#Truncate the timestamp-column (timeC) from the features and mask
+				X_mod = np.delete(X_mod, (timeC), axis=2)
 				X_mask_mod = np.delete(mask, (timeC), axis=2)
 				
 				#truncate and renormalize the labels
@@ -196,9 +206,14 @@ class Crops(object):
 				
 				samples_to_delete = np.unique(np.hstack([ unobserved_datapt, no_labels, too_few_obs_tp] ))
 				
+				X_mod = np.delete(X_mod, (samples_to_delete), axis=0)
 				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
 				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
+
+				#make assumptions about the label, harden
+				Y_mod = np.sum(Y_mod, axis=1)/np.repeat(np.sum(Y_mod, axis=(1,2))[:,None], repeats=nclasses-badweather_labels.size, axis=1)
 				
+
 				trainbatchsizes.append(Y_mod.shape[0])
 		ntrainsamples =sum(trainbatchsizes)
 		testbatchsizes = []
@@ -471,7 +486,7 @@ class Crops(object):
 				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
 				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
 				
-				#make assumptions about the label
+				#make assumptions about the label, harden
 				Y_mod = np.sum(Y_mod, axis=1)/np.repeat(np.sum(Y_mod, axis=(1,2))[:,None], repeats=nclasses-badweather_labels.size, axis=1)
 				
 				#for statistics
@@ -728,7 +743,24 @@ class Crops(object):
 				hdf5_file_eval["mask"][start_ix:stop_ix, ...] = X_mask_mod
 				hdf5_file_eval["labels"][start_ix:stop_ix, ...] = Y_mod
 				
-				
+		if self.normalize:
+			
+			print("Calculating mean and standard deviation of training dataset...")
+			training_mean2 = np.ma.array(hdf5_file_train["data"][:], mask=~hdf5_file_train["mask"][:]).mean(axis=(0,1))
+			training_std2 = np.ma.array(hdf5_file_train["data"][:], mask=~hdf5_file_train["mask"][:]).std(axis=(0,1),ddof=1)
+			
+			print("Normalizing data. This may take some time ...")
+			#sorry for this large one-liner, but it's just normalization of the observed values
+			hdf5_file_train["data"][:] = np.divide(  np.subtract(hdf5_file_train["data"], training_mean2, out=np.zeros_like(hdf5_file_train["data"][:]), where=hdf5_file_train["mask"][:])  ,  training_std2  , out=np.zeros_like(hdf5_file_train["data"][:]), where=hdf5_file_train["mask"][:])
+			hdf5_file_test["data"][:] = np.divide(  np.subtract(hdf5_file_test["data"], training_mean2, out=np.zeros_like(hdf5_file_test["data"][:]), where=hdf5_file_test["mask"][:])  ,  training_std2  , out=np.zeros_like(hdf5_file_test["data"][:]), where=hdf5_file_test["mask"][:])
+			hdf5_file_eval["data"][:] = np.divide(  np.subtract(hdf5_file_eval["data"], training_mean2, out=np.zeros_like(hdf5_file_eval["data"][:]), where=hdf5_file_eval["mask"][:])  ,  training_std2  , out=np.zeros_like(hdf5_file_eval["data"][:]), where=hdf5_file_eval["mask"][:])
+
+			# hdf5_file_train["data"][:] = (hdf5_file_train["data"] - training_mean2) / training_std2
+			# hdf5_file_test["data"][:] = (hdf5_file_test["data"] - training_mean2) / training_std2
+			# hdf5_file_eval["data"][:] = (hdf5_file_eval["data"] - training_mean2) / training_std2
+
+		print("Preprocessing finished")
+		
 		hdf5_file_train.close()
 		hdf5_file_test.close()
 		hdf5_file_eval.close()
@@ -791,7 +823,6 @@ class Crops(object):
 		#should accept indices and should output the datasamples, as read from disk
 		if isinstance(index, slice):
 			# do your handling for a slice object:
-			pdb.set_trace()
 			output = []
 			start = 0 if index.start is None else index.start
 			step = 1 if index.start is None else index.step
@@ -826,7 +857,6 @@ class Crops(object):
 				#return (data, time_stamps, mask, labels)
 		else:
             # Do your handling for a plain index
-			#pdb.set_trace()
 
 			if self.second:
 				raise Exception('Tensorformat not implemented yet!')
@@ -904,9 +934,7 @@ def variable_time_collate_fn_crop(batch, args, device = torch.device("cpu"), dat
 		combined_tt = tt
 		
 	else: #tensor_format (more efficient), must agree with the __getitem__ function
-		#TODO: Tensorformat
-		pdb.set_trace()
-	
+		# Tensorformat	
 		data, tt, mask, labels = batch
 		
 		combined_tt = tt
