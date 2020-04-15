@@ -1,0 +1,1030 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"cuda/10.0.13" "pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "cuda/10.0.13" "pytorch/1.4.0"
+
+
+
+Couldn't import umap
+I'm counting gpu's:  1
+Means I will train  1  models, with different random seeds
+My Devices:  ['cuda:0']
+Sampling dataset of 300000 training examples
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Testing hyperparameters:
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Trainingdataset:
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Using Evaluationdataset:
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]2020-04-08 01:08:33.246297: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
+2020-04-08 01:08:33.247525: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
+2020-04-08 01:08:33.247540: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+                                                     runs/expID8835000_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835001_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835002_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835003_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835004_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835005_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835006_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835007_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835008_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835009_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835010_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835011_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835012_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835013_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835014_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835015_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835016_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835017_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835018_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835019_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835020_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835021_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835022_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835023_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835024_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835025_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835026_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835027_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835028_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]                                                     runs/expID8835029_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:bosh3_seed:6000_optim:adamax
+  0%|          | 0/1 [00:09<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                     0.8622353785432365
+  0%|          | 0/1 [2:18:02<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                       0.8626480086114101
+  0%|          | 0/1 [4:35:57<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                       0.8630426982418371
+  0%|          | 0/1 [6:52:14<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                       0.8623430211697165
+  0%|          | 0/1 [9:10:32<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                       0.8637064944384643
+  0%|          | 0/1 [11:42:04<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8625044851094367
+  0%|          | 0/1 [14:23:33<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8629171151776104
+  0%|          | 0/1 [17:03:56<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8640832436311446
+  0%|          | 0/1 [19:45:18<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8640653031933979
+  0%|          | 0/1 [22:24:12<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8625941872981701
+  0%|          | 0/1 [25:06:22<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8639576605669178
+  0%|          | 0/1 [27:47:22<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8619662719770362
+  0%|          | 0/1 [30:19:49<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8646393972012917
+  0%|          | 0/1 [32:56:05<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8643882310728381
+  0%|          | 0/1 [35:31:31<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8639935414424113
+  0%|          | 0/1 [38:09:34<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8622174381054898
+  0%|          | 0/1 [40:47:15<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8621994976677431
+  0%|          | 0/1 [43:16:17<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8642626480086114
+  0%|          | 0/1 [45:44:54<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8645317545748116
+  0%|          | 0/1 [48:15:27<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8629171151776104
+  0%|          | 0/1 [50:39:15<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.862935055615357
+  0%|          | 0/1 [53:00:11<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8627735916756368
+  0%|          | 0/1 [55:10:49<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8639217796914245
+  0%|          | 0/1 [57:19:03<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8635629709364908
+  0%|          | 0/1 [59:34:09<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8643344097595982
+  0%|          | 0/1 [61:49:54<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8627018299246502
+  0%|          | 0/1 [64:07:01<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8627197703623969
+  0%|          | 0/1 [66:30:37<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8632938643702907
+  0%|          | 0/1 [68:56:46<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8648905633297452
+  0%|          | 0/1 [71:43:23<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method bosh3 --random-seed 6000 --num-search 1 --num-seeds 30
+
+                                                        0.8643164693218515
+  0%|          | 0/1 [74:31:52<?, ?trial/s, best loss=?]                                                        {'loss': 0.13664454012677896, 'loss_variance': 7.56140369328117e-07, 'status': 'ok'}
+  0%|          | 0/1 [74:31:52<?, ?trial/s, best loss=?]100%|██████████| 1/1 [74:31:52<00:00, 268312.24s/trial, best loss: 0.13664454012677896]100%|██████████| 1/1 [74:31:52<00:00, 268312.25s/trial, best loss: 0.13664454012677896]
+
+-----------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+-----------------------------------------------------------------------------------------------------------------
+Trial: 0001   |   Test-Accuracy: 86.336 %   |   Standard deviation: 0.087 %   |   Hyperparameters: {}   |
+-----------------------------------------------------------------------------------------------------------------
+Best configuration: 86.336 % (+-0.087) , with Hyperparmeters: {}
+-----------------------------------------------------------------------------------------------------------------
