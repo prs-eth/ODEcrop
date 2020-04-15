@@ -75,6 +75,7 @@ parser.add_argument('--z0-encoder', type=str, default='odernn', help="Type of en
 
 parser.add_argument('--classic-rnn', action='store_true', help="Run RNN baseline: classic RNN that sees true points at every point. Used for interpolation only.")
 parser.add_argument('--rnn-cell', default="gru", help="RNN Cell type. Available: gru (default), expdecay, lstm")
+parser.add_argument('--ode-type', default="linear", help="ODE Function type. Available: linear (default, use --rec-layers and --units to adjust size), gru")
 parser.add_argument('--input-decay', action='store_true', help="For RNN: use the input that is the weighted average of impirical mean and previous value (like in GRU-D)")
 parser.add_argument('--ode-rnn', action='store_true', help="Run ODE-RNN baseline: RNN-style that sees true points at every point. Used for interpolation only.")
 parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run RNN baseline: seq2seq model with sampling of the h0 and ELBO loss.")
@@ -97,6 +98,7 @@ parser.add_argument('--extrap', action='store_true', help="Set extrapolation mod
 parser.add_argument('-t', '--timepoints', type=int, default=100, help="Total number of time-points")
 parser.add_argument('--max-t',  type=float, default=5., help="We subsample points in the interval [0, args.max_tp]")
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
+
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
 parser.add_argument('--ode-method', type=str, default='euler',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
@@ -236,6 +238,9 @@ if __name__ == '__main__':
 	except KeyboardInterrupt:
 		best=None
 
+		print("ODE-RNN ", args.ode_rnn)
+		print("Classic-RNN: ", args.classic_rnn)
+		print("ODE-type: ", args.ode_type)
 		print("RNN-cell: ", args.rnn_cell)
 		print("defaut adapted LR's!!")
 
@@ -252,11 +257,32 @@ if __name__ == '__main__':
 		hyperopt_summary(trials)
 
 	except Exception:
+
+		print("ODE-RNN ", args.ode_rnn)
+		print("Classic-RNN: ", args.classic_rnn)
+		print("ODE-type: ", args.ode_type)
+		print("RNN-cell: ", args.rnn_cell)
+		print("defaut adapted LR's!!")
+
+		if 'optimizer' in args.hparams:
+			print("Optimizer choices: ", optimizer_choice)
+		else:
+			print("Used Optimizer:", args.optimizer)
+
+		if 'ode_method' in args.hparams:
+			print("ODE-Solver choices: ", solver_choice)
+		else:
+			print("Used Ode-Solver", args.ode_method)
+
 		hyperopt_summary(trials)
+
 		traceback.print_exc(file=sys.stdout)
 
-	print("defaut adapted LR's!!")
-	print("RNN-cell: ", args.rnn_cell)
+		print("ODE-RNN ", args.ode_rnn)
+		print("Classic-RNN: ", args.classic_rnn)
+		print("ODE-type: ", args.ode_type)
+		print("RNN-cell: ", args.rnn_cell)
+		print("defaut adapted LR's!!")
 
 	if 'optimizer' in args.hparams:
 		print("Optimizer choices: ",optimizer_choice)

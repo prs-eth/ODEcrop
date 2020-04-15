@@ -124,7 +124,9 @@ def init_network_weights(net, std = 0.1):
 			#nn.init.xavier_normal_(m.weight, gain=1.0)
 			#nn.init.kaiming_normal_(m.weight, gain=1.0)
 			#nn.init.sparse_(m.weight, sparsity=0.1, std=0.01)
-			nn.init.constant_(m.bias, val=0)
+			
+			if not m.bias is None:
+				nn.init.constant_(m.bias, val=0)
 
 
 def flatten(x, dim):

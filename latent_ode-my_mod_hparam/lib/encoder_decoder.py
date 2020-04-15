@@ -173,7 +173,7 @@ class GRU_standard_unit(nn.Module):
 		return new_y, new_y_std
 
 
-#TODO: Implement a LSTM cell
+#Implement a LSTM cell
 # LSTM-unit code inspired by Ricard's answer to https://stackoverflow.com/questions/50168224/does-a-clean-and-extendable-lstm-implementation-exists-in-pytorch
 class LSTM_unit(nn.Module):
 
@@ -352,7 +352,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			elif self.RNNcell=='lstm':
 				self.GRU_update = LSTM_unit(latent_dim, input_dim)
 			else:
-				raise Exception("Invalid RNNcell type. Hint: expdecay not available for ODE-RNN")
+				raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
 		else:
 			self.GRU_update = GRU_update
 

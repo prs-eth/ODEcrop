@@ -7,7 +7,9 @@ import lib.utils as utils
 from lib.ode_rnn import *
 from lib.rnn_baselines import *
 
-from lib.ode_func import ODEFunc, ODEFunc_w_Poisson
+
+from lib.ode_func import ODEFunc
+from lib.gru_ode import FullGRUODECell_Autonomous
 from lib.diffeq_solver import DiffeqSolver
 
 import pdb
@@ -30,8 +32,14 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 	if args.extrap:
 		raise Exception("Extrapolation for ODE-RNN not implemented")
 
-	ode_func_net = utils.create_net(n_ode_gru_dims, n_ode_gru_dims, 
+	if args.ode_type=="linear":
+		ode_func_net = utils.create_net(n_ode_gru_dims, n_ode_gru_dims, 
 		n_layers = int(args.rec_layers), n_units = int(args.units), nonlinear = nn.Tanh)
+	elif args.ode_type=="gru":
+		ode_func_net = FullGRUODECell_Autonomous(n_ode_gru_dims, bias=True)
+
+	else:
+		raise Exception("Invalid ODE-type. Choose linear or gru.")
 
 	rec_ode_func = ODEFunc(
 		input_dim = input_dim, 
