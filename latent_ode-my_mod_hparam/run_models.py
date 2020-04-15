@@ -278,11 +278,11 @@ if __name__ == '__main__':
 
 		traceback.print_exc(file=sys.stdout)
 
-		print("ODE-RNN ", args.ode_rnn)
-		print("Classic-RNN: ", args.classic_rnn)
-		print("ODE-type: ", args.ode_type)
-		print("RNN-cell: ", args.rnn_cell)
-		print("defaut adapted LR's!!")
+	print("ODE-RNN ", args.ode_rnn)
+	print("Classic-RNN: ", args.classic_rnn)
+	print("ODE-type: ", args.ode_type)
+	print("RNN-cell: ", args.rnn_cell)
+	print("defaut adapted LR's!!")
 
 	if 'optimizer' in args.hparams:
 		print("Optimizer choices: ",optimizer_choice)
