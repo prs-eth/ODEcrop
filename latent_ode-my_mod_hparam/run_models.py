@@ -52,7 +52,7 @@ parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=8000, help="Size of the dataset")
 parser.add_argument('-validn',  type=int, default=4000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
-parser.add_argument('--lr',  type=float, default=1e-2, help="Starting learning rate.")
+parser.add_argument('--lr',  type=float, default=0.00762, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=700)
 parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
 
@@ -207,7 +207,7 @@ if __name__ == '__main__':
 		hyper_config["units"] = hp.quniform('ode_units', 10, 350, 5) # default: 500
 	
 	if 'latents' in args.hparams:
-		hyper_config["latents"] = hp.quniform('latents', 20, 150, 5) # default: 35
+		hyper_config["latents"] = hp.quniform('latents', 20, 200, 5) # default: 35
 
 	if 'gru_units' in args.hparams:
 		hyper_config["gru_units"] = hp.quniform('gru_units', 30, 250, 5) # default: 50
@@ -241,6 +241,7 @@ if __name__ == '__main__':
 
 		print("ODE-RNN ", args.ode_rnn)
 		print("Classic-RNN: ", args.classic_rnn)
+		print("Stacked layers: ", args.stacking)
 		print("ODE-type: ", args.ode_type)
 		print("RNN-cell: ", args.rnn_cell)
 		print("defaut adapted LR's!!")
@@ -261,6 +262,7 @@ if __name__ == '__main__':
 
 		print("ODE-RNN ", args.ode_rnn)
 		print("Classic-RNN: ", args.classic_rnn)
+		print("Stacked layers: ", args.stacking)
 		print("ODE-type: ", args.ode_type)
 		print("RNN-cell: ", args.rnn_cell)
 		print("defaut adapted LR's!!")
@@ -281,6 +283,7 @@ if __name__ == '__main__':
 
 	print("ODE-RNN ", args.ode_rnn)
 	print("Classic-RNN: ", args.classic_rnn)
+	print("Stacked layers: ", args.stacking)
 	print("ODE-type: ", args.ode_type)
 	print("RNN-cell: ", args.rnn_cell)
 	print("defaut adapted LR's!!")
