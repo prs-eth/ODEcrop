@@ -126,7 +126,7 @@ def construct_and_train_model(config):
 			else:
 				raise Exception("please select a model")
 
-			comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_ode-units:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-lay:" + str(args.rec_layers) + "_solver:" + str(args.ode_method) + "_seed:" +str(args.random_seed) + "_optim:" +str(args.optimizer)
+			comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_ode-units:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-lay:" + str(args.rec_layers) + "_solver:" + str(args.ode_method) + "_seed:" +str(args.random_seed) + "_optim:" + str(args.optimizer) + "_stackin:" + str(args.stacking)
 
 			validationtensorboard_dir = "runs/expID" + str(ExperimentID[i]) + "_VALID" + comment
 			Validationwriter.append( SummaryWriter(validationtensorboard_dir, comment=comment) )
@@ -247,7 +247,8 @@ def train_it(
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()
 		for i, device in enumerate(Devices):
-			utils.update_learning_rate(Optimizer[i], decay_rate = 0.999, lowest = args.lr / 10)
+			# default decay_rate = 0.999, lowest= args.lr/10
+			utils.update_learning_rate(Optimizer[i], decay_rate = 0.9995, lowest = args.lr / 50)
 
 		wait_until_kl_inc = 10
 		if itr // num_batches < wait_until_kl_inc:
