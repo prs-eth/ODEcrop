@@ -53,7 +53,7 @@ class Baseline(nn.Module):
 		linear_classifier = False,
 		n_labels = 1,
 		train_classif_w_reconstr = False,
-		RNN_type=False ):
+		RNN_type=False):
 		super(Baseline, self).__init__()
 
 		self.input_dim = input_dim

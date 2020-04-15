@@ -272,8 +272,6 @@ class Classic_RNN(Baseline):
 				hidden_size = latent_dim, 
 				device = device)
 		elif cell == "lstm":
-			# TODO:
-			#raise Exception("LSTM for classic RNN not implemented yet")
 			self.rnn_cell = LSTMCell(encoder_dim + 1, latent_dim) # +1 for delta t 
 		elif cell == "classic":
 			# TODO:

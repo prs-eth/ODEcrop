@@ -81,7 +81,8 @@ parser.add_argument('--ode-rnn', action='store_true', help="Run ODE-RNN baseline
 parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run RNN baseline: seq2seq model with sampling of the h0 and ELBO loss.")
 
 parser.add_argument('-l', '--latents', type=int, default=70, help="Size of the latent state")
-parser.add_argument('--rec-dims', type=int, default=100, help="Dimensionality of the recognition model (ODE or RNN).")
+parser.add_argument('--stacking', type=int, default=1, help="Number of hidden layer-trajectories that should be stacked")
+parser.add_argument('--rec-dims', type=int, default=100, help="Dimensionality of the recognition model (RNN).")
 
 parser.add_argument('--rec-layers', type=int, default=2, help="Number of layers in ODE func in recognition ODE") 
 parser.add_argument('--gen-layers', type=int, default=2, help="Number of layers in ODE func in generative ODE")

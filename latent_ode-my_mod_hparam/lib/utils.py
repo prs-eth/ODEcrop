@@ -406,8 +406,6 @@ def shift_outputs(outputs, first_datapoint = None):
 	return outputs
 
 
-
-
 def split_data_extrap(data_dict, dataset = ""):
 	device = get_device(data_dict["data"])
 
@@ -679,8 +677,7 @@ def check_mask(data, mask):
 
 
 
-#experimental of Nando:
-
+# Experimental of Nando:
 class FastTensorDataLoader:
 	"""
 	A DataLoader-like object for a set of tensors that can be much faster than

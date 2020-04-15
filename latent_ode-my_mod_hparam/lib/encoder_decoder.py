@@ -389,7 +389,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			last_yi, last_yi_std, _, extra_info = self.run_odernn(
 				data, time_steps, run_backwards = run_backwards,
 				save_info = save_info)
-
+			
 		means_z0 = last_yi.reshape(1, n_traj, self.latent_dim)
 		std_z0 = last_yi_std.reshape(1, n_traj, self.latent_dim)
 
@@ -485,7 +485,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			else:
 				# GRU-unit: the output is directly the hidden state
 				yi, yi_std = self.GRU_update(yi_ode, prev_std, xi)
-
 
 			prev_y, prev_std = yi, yi_std			
 			prev_t, t_i = time_steps[i],  time_steps[i-1]

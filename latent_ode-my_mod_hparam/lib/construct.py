@@ -51,16 +51,31 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 	z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, args.ode_method, n_ode_gru_dims, 
 		odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
 
-	model = ODE_RNN(input_dim, n_ode_gru_dims, device = device, 
-		z0_diffeq_solver = z0_diffeq_solver, n_gru_units = int(args.gru_units),
-		concat_mask = True, obsrv_std = obsrv_std,
-		use_binary_classif = args.classif,
-		classif_per_tp = classif_per_tp,
-		n_labels = n_labels,
-		train_classif_w_reconstr = (args.dataset == "physionet"),
-		RNNcell = args.rnn_cell
-		).to(device)
+	if args.stacking==1:
+		model = ODE_RNN(input_dim, n_ode_gru_dims, device = device, 
+			z0_diffeq_solver = z0_diffeq_solver, n_gru_units = int(args.gru_units),
+			concat_mask = True, obsrv_std = obsrv_std,
+			use_binary_classif = args.classif,
+			classif_per_tp = classif_per_tp,
+			n_labels = n_labels,
+			train_classif_w_reconstr = (args.dataset == "physionet"),
+			RNNcell = args.rnn_cell,
+			).to(device)
+	elif args.stacking>1:
+		model = ML_ODE_RNN(input_dim, n_ode_gru_dims, device = device, 
+			z0_diffeq_solver = z0_diffeq_solver, n_gru_units = int(args.gru_units),
+			concat_mask = True, obsrv_std = obsrv_std,
+			use_binary_classif = args.classif,
+			classif_per_tp = classif_per_tp,
+			n_labels = n_labels,
+			train_classif_w_reconstr = (args.dataset == "physionet"),
+			RNNcell = args.rnn_cell,
+			stacking = args.stacking,
+			).to(device)
+	else:
+		raise Exception("Number of stacked layers must be greater or equal to 1.")
 
+	
 	return model
 
 
