@@ -1,0 +1,70 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"cuda/10.0.13" "pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "cuda/10.0.13" "pytorch/1.4.0"
+
+
+
+Couldn't import umap
+I'm counting gpu's:  1
+Means I will train  1  models, with different random seeds
+My Devices:  ['cuda:0']
+Sampling dataset of 50000 training examples
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Testing hyperparameters:
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]job exception: Unable to open file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]
+ODE-RNN  True
+Classic-RNN:  False
+ODE-type:  gru
+RNN-cell:  gru
+defaut adapted LR's!!
+Used Optimizer: adamax
+Used Ode-Solver euler
+
+---------------------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "run_models.py", line 236, in <module>
+    max_evals=args.num_search)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 482, in fmin
+    show_progressbar=show_progressbar,
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 686, in fmin
+    show_progressbar=show_progressbar,
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 509, in fmin
+    rval.exhaust()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 330, in exhaust
+    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 286, in run
+    self.serial_evaluate()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 165, in serial_evaluate
+    result = self.domain.evaluate(spec, ctrl)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 894, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 79, in construct_and_train_model
+    Data_obj.append(parse_datasets(args, device))
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/parse_datasets.py", line 214, in parse_datasets
+    device = device, list_form = list_form)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/crop_classification.py", line 54, in __init__
+    self.hdf5dataloader = h5py.File(os.path.join(self.processed_folder, data_file), "r")
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/h5py/_hl/files.py", line 408, in __init__
+    swmr=swmr)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/h5py/_hl/files.py", line 173, in make_fid
+    fid = h5f.open(name, flags, fapl=fapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 88, in h5py.h5f.open
+OSError: Unable to open file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_models.py", line 277, in <module>
+    hyperopt_summary(trials)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/utils.py", line 819, in hyperopt_summary
+    np.sqrt(best_var)*100,
+UnboundLocalError: local variable 'best_var' referenced before assignment

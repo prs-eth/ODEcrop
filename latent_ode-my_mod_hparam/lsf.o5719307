@@ -1,0 +1,1389 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"pytorch/1.4.0" "cuda/10.0.13"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
+
+
+
+Couldn't import umap
+I'm counting gpu's:  1
+Means I will train  1  models, with different random seeds
+My Devices:  ['cuda:0']
+Sampling dataset of 300000 training examples
+  0%|          | 0/13 [00:00<?, ?trial/s, best loss=?]                                                      Testing hyperparameters:
+  0%|          | 0/13 [00:00<?, ?trial/s, best loss=?]                                                      lr : 0.012388190834188236
+  0%|          | 0/13 [00:00<?, ?trial/s, best loss=?]                                                      Trainingdataset:
+  0%|          | 0/13 [00:04<?, ?trial/s, best loss=?]                                                      Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/13 [00:04<?, ?trial/s, best loss=?]                                                      Using Evaluationdataset:
+  0%|          | 0/13 [00:04<?, ?trial/s, best loss=?]                                                      Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/13 [00:04<?, ?trial/s, best loss=?]2020-04-10 13:59:54.120096: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
+2020-04-10 13:59:54.122339: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
+2020-04-10 13:59:54.122356: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+                                                      runs/expID9798000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+  0%|          | 0/13 [00:09<?, ?trial/s, best loss=?]                                                      runs/expID9798001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+  0%|          | 0/13 [00:09<?, ?trial/s, best loss=?]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                      0.8400071761750987
+  0%|          | 0/13 [3:58:50<?, ?trial/s, best loss=?]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                        0.8607104413347686
+  0%|          | 0/13 [9:12:17<?, ?trial/s, best loss=?]                                                        {'loss': 0.14964119124506636, 'loss_variance': 0.00021431259413580108, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.8607104413347686}
+  0%|          | 0/13 [9:12:17<?, ?trial/s, best loss=?]  8%|▊         | 1/13 [9:12:17<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]build_posterior_wrapper took 0.001968 seconds
+
+build_posterior_wrapper took 0.001968 seconds
+
+TPE using 1/1 trials with best loss 0.149641
+
+TPE using 1/1 trials with best loss 0.149641
+
+                                                                                          Testing hyperparameters:
+  8%|▊         | 1/13 [9:12:17<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]                                                                                          lr : 0.013226281510883656
+  8%|▊         | 1/13 [9:12:17<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]                                                                                          Trainingdataset:
+  8%|▊         | 1/13 [9:12:17<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]                                                                                          Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+  8%|▊         | 1/13 [9:12:17<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]                                                                                          Using Evaluationdataset:
+  8%|▊         | 1/13 [9:12:17<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]                                                                                          Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+  8%|▊         | 1/13 [9:12:17<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]                                                                                          runs/expID1269000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+  8%|▊         | 1/13 [9:12:17<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]                                                                                          runs/expID1269001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+  8%|▊         | 1/13 [9:12:17<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8605310369573017
+  8%|▊         | 1/13 [14:35:22<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                           0.8587908144958737
+  8%|▊         | 1/13 [22:13:00<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636]                                                                                           {'loss': 0.1403390742734123, 'loss_variance': 1.5141871076292989e-06, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.8605310369573017}
+  8%|▊         | 1/13 [22:13:00<110:27:30, 33137.53s/trial, best loss: 0.14964119124506636] 15%|█▌        | 2/13 [22:13:00<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123] build_posterior_wrapper took 0.001857 seconds
+
+build_posterior_wrapper took 0.001857 seconds
+
+build_posterior_wrapper took 0.001857 seconds
+
+build_posterior_wrapper took 0.001857 seconds
+
+TPE using 2/2 trials with best loss 0.140339
+
+TPE using 2/2 trials with best loss 0.140339
+
+TPE using 2/2 trials with best loss 0.140339
+
+TPE using 2/2 trials with best loss 0.140339
+
+                                                                                          Testing hyperparameters:
+ 15%|█▌        | 2/13 [22:13:00<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123]                                                                                          lr : 0.007064576572093578
+ 15%|█▌        | 2/13 [22:13:00<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123]                                                                                          Trainingdataset:
+ 15%|█▌        | 2/13 [22:13:00<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123]                                                                                          Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+ 15%|█▌        | 2/13 [22:13:00<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123]                                                                                          Using Evaluationdataset:
+ 15%|█▌        | 2/13 [22:13:00<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123]                                                                                          Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+ 15%|█▌        | 2/13 [22:13:00<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123]                                                                                          runs/expID3516000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 15%|█▌        | 2/13 [22:13:00<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123]                                                                                          runs/expID3516001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 15%|█▌        | 2/13 [22:13:00<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.86254036598493
+ 15%|█▌        | 2/13 [26:20:10<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8612845353426624
+ 15%|█▌        | 2/13 [30:21:19<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123]                                                                                          {'loss': 0.13808754933620382, 'loss_variance': 7.885553010291782e-07, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.86254036598493}
+ 15%|█▌        | 2/13 [30:21:19<113:49:00, 37249.17s/trial, best loss: 0.1403390742734123] 23%|██▎       | 3/13 [30:21:19<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]build_posterior_wrapper took 0.001675 seconds
+
+build_posterior_wrapper took 0.001675 seconds
+
+build_posterior_wrapper took 0.001675 seconds
+
+build_posterior_wrapper took 0.001675 seconds
+
+build_posterior_wrapper took 0.001675 seconds
+
+build_posterior_wrapper took 0.001675 seconds
+
+TPE using 3/3 trials with best loss 0.138088
+
+TPE using 3/3 trials with best loss 0.138088
+
+TPE using 3/3 trials with best loss 0.138088
+
+TPE using 3/3 trials with best loss 0.138088
+
+TPE using 3/3 trials with best loss 0.138088
+
+TPE using 3/3 trials with best loss 0.138088
+
+                                                                                          Testing hyperparameters:
+ 23%|██▎       | 3/13 [30:21:20<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]                                                                                          lr : 0.011885570809289195
+ 23%|██▎       | 3/13 [30:21:20<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]                                                                                          Trainingdataset:
+ 23%|██▎       | 3/13 [30:21:20<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+ 23%|██▎       | 3/13 [30:21:20<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]                                                                                          Using Evaluationdataset:
+ 23%|██▎       | 3/13 [30:21:20<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+ 23%|██▎       | 3/13 [30:21:20<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID9596000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 23%|██▎       | 3/13 [30:21:20<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID9596001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 23%|██▎       | 3/13 [30:21:20<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8615536419088625
+ 23%|██▎       | 3/13 [36:00:29<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8610513096519555
+ 23%|██▎       | 3/13 [42:51:08<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382]                                                                                          {'loss': 0.13869752421959092, 'loss_variance': 1.2616884816463504e-07, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.8615536419088625}
+ 23%|██▎       | 3/13 [42:51:08<96:50:42, 34864.22s/trial, best loss: 0.13808754933620382] 31%|███       | 4/13 [42:51:08<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]build_posterior_wrapper took 0.002574 seconds
+
+build_posterior_wrapper took 0.002574 seconds
+
+build_posterior_wrapper took 0.002574 seconds
+
+build_posterior_wrapper took 0.002574 seconds
+
+build_posterior_wrapper took 0.002574 seconds
+
+build_posterior_wrapper took 0.002574 seconds
+
+build_posterior_wrapper took 0.002574 seconds
+
+build_posterior_wrapper took 0.002574 seconds
+
+TPE using 4/4 trials with best loss 0.138088
+
+TPE using 4/4 trials with best loss 0.138088
+
+TPE using 4/4 trials with best loss 0.138088
+
+TPE using 4/4 trials with best loss 0.138088
+
+TPE using 4/4 trials with best loss 0.138088
+
+TPE using 4/4 trials with best loss 0.138088
+
+TPE using 4/4 trials with best loss 0.138088
+
+TPE using 4/4 trials with best loss 0.138088
+
+                                                                                          Testing hyperparameters:
+ 31%|███       | 4/13 [42:51:08<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]                                                                                          lr : 0.0055493942206635205
+ 31%|███       | 4/13 [42:51:08<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]                                                                                          Trainingdataset:
+ 31%|███       | 4/13 [42:51:08<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+ 31%|███       | 4/13 [42:51:08<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]                                                                                          Using Evaluationdataset:
+ 31%|███       | 4/13 [42:51:08<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+ 31%|███       | 4/13 [42:51:08<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID7481000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 31%|███       | 4/13 [42:51:08<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID7481001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 31%|███       | 4/13 [42:51:08<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8616254036598493
+ 31%|███       | 4/13 [48:14:59<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8599569429494079
+ 31%|███       | 4/13 [53:42:46<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382]                                                                                          {'loss': 0.13920882669537138, 'loss_variance': 1.3918805711432357e-06, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.8616254036598493}
+ 31%|███       | 4/13 [53:42:46<94:45:13, 37901.45s/trial, best loss: 0.13808754933620382] 38%|███▊      | 5/13 [53:42:46<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]build_posterior_wrapper took 0.001865 seconds
+
+build_posterior_wrapper took 0.001865 seconds
+
+build_posterior_wrapper took 0.001865 seconds
+
+build_posterior_wrapper took 0.001865 seconds
+
+build_posterior_wrapper took 0.001865 seconds
+
+build_posterior_wrapper took 0.001865 seconds
+
+build_posterior_wrapper took 0.001865 seconds
+
+build_posterior_wrapper took 0.001865 seconds
+
+build_posterior_wrapper took 0.001865 seconds
+
+build_posterior_wrapper took 0.001865 seconds
+
+TPE using 5/5 trials with best loss 0.138088
+
+TPE using 5/5 trials with best loss 0.138088
+
+TPE using 5/5 trials with best loss 0.138088
+
+TPE using 5/5 trials with best loss 0.138088
+
+TPE using 5/5 trials with best loss 0.138088
+
+TPE using 5/5 trials with best loss 0.138088
+
+TPE using 5/5 trials with best loss 0.138088
+
+TPE using 5/5 trials with best loss 0.138088
+
+TPE using 5/5 trials with best loss 0.138088
+
+TPE using 5/5 trials with best loss 0.138088
+
+                                                                                          Testing hyperparameters:
+ 38%|███▊      | 5/13 [53:42:47<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]                                                                                          lr : 0.012809366630251005
+ 38%|███▊      | 5/13 [53:42:47<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]                                                                                          Trainingdataset:
+ 38%|███▊      | 5/13 [53:42:47<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+ 38%|███▊      | 5/13 [53:42:47<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]                                                                                          Using Evaluationdataset:
+ 38%|███▊      | 5/13 [53:42:47<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+ 38%|███▊      | 5/13 [53:42:47<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID1407000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 38%|███▊      | 5/13 [53:42:47<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID1407001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 38%|███▊      | 5/13 [53:42:47<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8598134194474345
+ 38%|███▊      | 5/13 [64:45:29<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8588805166846071
+ 38%|███▊      | 5/13 [70:38:55<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382]                                                                                          {'loss': 0.14065303193397916, 'loss_variance': 4.351537824455219e-07, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.8598134194474345}
+ 38%|███▊      | 5/13 [70:38:55<85:01:24, 38260.62s/trial, best loss: 0.13808754933620382] 46%|████▌     | 6/13 [70:38:55<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+build_posterior_wrapper took 0.003087 seconds
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+TPE using 6/6 trials with best loss 0.138088
+
+                                                                                          Testing hyperparameters:
+ 46%|████▌     | 6/13 [70:38:56<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]                                                                                          lr : 0.010209270394102936
+ 46%|████▌     | 6/13 [70:38:56<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]                                                                                          Trainingdataset:
+ 46%|████▌     | 6/13 [70:38:56<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+ 46%|████▌     | 6/13 [70:38:56<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]                                                                                          Using Evaluationdataset:
+ 46%|████▌     | 6/13 [70:38:56<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+ 46%|████▌     | 6/13 [70:38:56<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID9887000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 46%|████▌     | 6/13 [70:38:56<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID9887001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 46%|████▌     | 6/13 [70:38:56<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.861194833153929
+ 46%|████▌     | 6/13 [75:08:15<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8623250807319699
+ 46%|████▌     | 6/13 [79:52:00<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382]                                                                                          {'loss': 0.1382400430570505, 'loss_variance': 6.387297938336845e-07, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.8623250807319699}
+ 46%|████▌     | 6/13 [79:52:00<87:38:31, 45073.07s/trial, best loss: 0.13808754933620382] 54%|█████▍    | 7/13 [79:52:00<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+build_posterior_wrapper took 0.002246 seconds
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+TPE using 7/7 trials with best loss 0.138088
+
+                                                                                          Testing hyperparameters:
+ 54%|█████▍    | 7/13 [79:52:00<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]                                                                                          lr : 0.014406420661168783
+ 54%|█████▍    | 7/13 [79:52:00<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]                                                                                          Trainingdataset:
+ 54%|█████▍    | 7/13 [79:52:00<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+ 54%|█████▍    | 7/13 [79:52:00<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]                                                                                          Using Evaluationdataset:
+ 54%|█████▍    | 7/13 [79:52:00<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+ 54%|█████▍    | 7/13 [79:52:00<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID9880000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 54%|█████▍    | 7/13 [79:52:00<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID9880001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 54%|█████▍    | 7/13 [79:52:00<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8588446358091137
+ 54%|█████▍    | 7/13 [85:16:58<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8605130965195551
+ 54%|█████▍    | 7/13 [91:32:53<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382]                                                                                          {'loss': 0.14032113383566558, 'loss_variance': 1.3918805711432357e-06, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.8605130965195551}
+ 54%|█████▍    | 7/13 [91:32:53<69:10:39, 41506.64s/trial, best loss: 0.13808754933620382] 62%|██████▏   | 8/13 [91:32:53<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+build_posterior_wrapper took 0.001708 seconds
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+TPE using 8/8 trials with best loss 0.138088
+
+                                                                                          Testing hyperparameters:
+ 62%|██████▏   | 8/13 [91:32:53<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]                                                                                          lr : 0.009780150298997014
+ 62%|██████▏   | 8/13 [91:32:53<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]                                                                                          Trainingdataset:
+ 62%|██████▏   | 8/13 [91:32:53<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+ 62%|██████▏   | 8/13 [91:32:53<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]                                                                                          Using Evaluationdataset:
+ 62%|██████▏   | 8/13 [91:32:53<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+ 62%|██████▏   | 8/13 [91:32:53<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID6885000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 62%|██████▏   | 8/13 [91:32:53<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID6885001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 62%|██████▏   | 8/13 [91:32:53<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8606925008970219
+ 62%|██████▏   | 8/13 [95:43:51<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8614818801578759
+ 62%|██████▏   | 8/13 [99:55:34<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382]                                                                                          {'loss': 0.13891280947255114, 'loss_variance': 3.115598087331911e-07, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.8614818801578759}
+ 62%|██████▏   | 8/13 [99:55:34<57:52:32, 41670.54s/trial, best loss: 0.13808754933620382] 69%|██████▉   | 9/13 [99:55:34<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+build_posterior_wrapper took 0.001957 seconds
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+TPE using 9/9 trials with best loss 0.138088
+
+                                                                                          Testing hyperparameters:
+ 69%|██████▉   | 9/13 [99:55:35<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]                                                                                          lr : 0.006824450298821491
+ 69%|██████▉   | 9/13 [99:55:35<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]                                                                                          Trainingdataset:
+ 69%|██████▉   | 9/13 [99:55:35<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+ 69%|██████▉   | 9/13 [99:55:35<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]                                                                                          Using Evaluationdataset:
+ 69%|██████▉   | 9/13 [99:55:35<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]                                                                                          Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+ 69%|██████▉   | 9/13 [99:55:35<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID6920000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 69%|██████▉   | 9/13 [99:55:35<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]                                                                                          runs/expID6920001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 69%|██████▉   | 9/13 [99:55:35<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                          0.8615715823466092
+ 69%|██████▉   | 9/13 [103:58:20<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                           0.8616254036598493
+ 69%|██████▉   | 9/13 [108:02:57<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382]                                                                                           {'loss': 0.13840150699677078, 'loss_variance': 1.4483668794420307e-09, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.8616254036598493}
+ 69%|██████▉   | 9/13 [108:02:57<42:27:51, 38217.76s/trial, best loss: 0.13808754933620382] 77%|███████▋  | 10/13 [108:02:57<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+build_posterior_wrapper took 0.002345 seconds
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+TPE using 10/10 trials with best loss 0.138088
+
+                                                                                            Testing hyperparameters:
+ 77%|███████▋  | 10/13 [108:02:58<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]                                                                                            lr : 0.0054267571264273355
+ 77%|███████▋  | 10/13 [108:02:58<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]                                                                                            Trainingdataset:
+ 77%|███████▋  | 10/13 [108:02:58<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]                                                                                            Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+ 77%|███████▋  | 10/13 [108:02:58<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]                                                                                            Using Evaluationdataset:
+ 77%|███████▋  | 10/13 [108:02:58<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]                                                                                            Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+ 77%|███████▋  | 10/13 [108:02:58<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]                                                                                            runs/expID993000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 77%|███████▋  | 10/13 [108:02:58<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]                                                                                            runs/expID993001_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax
+ 77%|███████▋  | 10/13 [108:02:58<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                            0.8603336921420882
+ 77%|███████▋  | 10/13 [111:59:02<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+run_models.py --niters 60 -n 300000 -validn 60000 --ode-rnn --ode-method dopri5 --random-seed 6001 --num-search 13 --num-seeds 2 --rnn-cell lstm --optimizer adamax --hparams lr
+
+                                                                                            0.8599210620739146
+ 77%|███████▋  | 10/13 [115:47:51<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382]                                                                                            {'loss': 0.13987262289199864, 'loss_variance': 8.513178658047606e-08, 'status': 'ok', 'num_seeds': 2, 'best_acc': 0.8603336921420882}
+ 77%|███████▋  | 10/13 [115:47:51<29:36:15, 35525.29s/trial, best loss: 0.13808754933620382] 85%|████████▍ | 11/13 [115:47:51<18:27:51, 33235.94s/trial, best loss: 0.13808754933620382]build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+build_posterior_wrapper took 0.001740 seconds
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+TPE using 11/11 trials with best loss 0.138088
+
+                                                                                            Testing hyperparameters:
+ 85%|████████▍ | 11/13 [115:47:52<18:27:51, 33235.94s/trial, best loss: 0.13808754933620382]                                                                                            lr : 0.005447387443513064
+ 85%|████████▍ | 11/13 [115:47:52<18:27:51, 33235.94s/trial, best loss: 0.13808754933620382]                                                                                            Downloading data...
+ 85%|████████▍ | 11/13 [115:47:52<18:27:51, 33235.94s/trial, best loss: 0.13808754933620382]--2020-04-15 09:47:39--  ftp://m1370728:*password*@138.246.224.34/data.zip
+           => ‘data.zip’
+Connecting to 138.246.224.34:21... failed: Connection refused.
+unzip:  cannot find or open data.zip, data.zip.zip or data.zip.ZIP.
+rm: cannot remove 'data.zip': No such file or directory
+                                                                                            Scanning data...
+ 85%|████████▍ | 11/13 [115:47:52<18:27:51, 33235.94s/trial, best loss: 0.13808754933620382]job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+job exception: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+
+ 85%|████████▍ | 11/13 [115:48:32<21:03:22, 37901.11s/trial, best loss: 0.13808754933620382]
+
+---------------------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+---------------------------------------------------------------------------------------------------------------------------
+Trial: 0001  |  #runs: 2  |  Mean Acc.: 85.036 %  |  Std: 1.464 %  |  Best Acc.: 86.071 %  |  Hparams: {'lr': [0.012388190834188236]}  |
+Trial: 0002  |  #runs: 2  |  Mean Acc.: 85.966 %  |  Std: 0.123 %  |  Best Acc.: 86.053 %  |  Hparams: {'lr': [0.013226281510883656]}  |
+Trial: 0003  |  #runs: 2  |  Mean Acc.: 86.191 %  |  Std: 0.089 %  |  Best Acc.: 86.254 %  |  Hparams: {'lr': [0.007064576572093578]}  |
+Trial: 0004  |  #runs: 2  |  Mean Acc.: 86.130 %  |  Std: 0.036 %  |  Best Acc.: 86.155 %  |  Hparams: {'lr': [0.011885570809289195]}  |
+Trial: 0005  |  #runs: 2  |  Mean Acc.: 86.079 %  |  Std: 0.118 %  |  Best Acc.: 86.163 %  |  Hparams: {'lr': [0.0055493942206635205]}  |
+Trial: 0006  |  #runs: 2  |  Mean Acc.: 85.935 %  |  Std: 0.066 %  |  Best Acc.: 85.981 %  |  Hparams: {'lr': [0.012809366630251005]}  |
+Trial: 0007  |  #runs: 2  |  Mean Acc.: 86.176 %  |  Std: 0.080 %  |  Best Acc.: 86.233 %  |  Hparams: {'lr': [0.010209270394102936]}  |
+Trial: 0008  |  #runs: 2  |  Mean Acc.: 85.968 %  |  Std: 0.118 %  |  Best Acc.: 86.051 %  |  Hparams: {'lr': [0.014406420661168783]}  |
+Trial: 0009  |  #runs: 2  |  Mean Acc.: 86.109 %  |  Std: 0.056 %  |  Best Acc.: 86.148 %  |  Hparams: {'lr': [0.009780150298997014]}  |
+Trial: 0010  |  #runs: 2  |  Mean Acc.: 86.160 %  |  Std: 0.004 %  |  Best Acc.: 86.163 %  |  Hparams: {'lr': [0.006824450298821491]}  |
+Trial: 0011  |  #runs: 2  |  Mean Acc.: 86.013 %  |  Std: 0.029 %  |  Best Acc.: 86.033 %  |  Hparams: {'lr': [0.0054267571264273355]}  |
+---------------------------------------------------------------------------------------------------------------------------
+Best configuration mean: 86.191 % (+-0.089) (best run: 86.254 %) , with Hyperparmeters: {'lr': [0.007064576572093578]}
+---------------------------------------------------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "run_models.py", line 239, in <module>
+    best=None
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 482, in fmin
+    show_progressbar=show_progressbar,
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 686, in fmin
+    show_progressbar=show_progressbar,
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 509, in fmin
+    rval.exhaust()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 330, in exhaust
+    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 286, in run
+    self.serial_evaluate()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 165, in serial_evaluate
+    result = self.domain.evaluate(spec, ctrl)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 894, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 77, in construct_and_train_model
+    Data_obj = []
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/parse_datasets.py", line 214, in parse_datasets
+    device = device, list_form = list_form)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/crop_classification.py", line 40, in __init__
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/crop_classification.py", line 117, in download
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/h5py/_hl/files.py", line 408, in __init__
+    swmr=swmr)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/h5py/_hl/files.py", line 179, in make_fid
+    fid = h5f.create(name, h5f.ACC_TRUNC, fapl=fapl, fcpl=fcpl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 108, in h5py.h5f.create
+OSError: Unable to create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
+defaut adapted LR's!!
+Shuffeled!!
+ODE-RNN True
+Classic-RNN False
+RNN-cell:  lstm
+Used RNN_cell: lstm
+Used Optimizer: adamax
+Used Ode-Solver dopri5
+
+---------------------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+---------------------------------------------------------------------------------------------------------------------------
+Trial: 0001  |  #runs: 2  |  Mean Acc.: 85.036 %  |  Std: 1.464 %  |  Best Acc.: 86.071 %  |  Hparams: {'lr': [0.012388190834188236]}  |
+Trial: 0002  |  #runs: 2  |  Mean Acc.: 85.966 %  |  Std: 0.123 %  |  Best Acc.: 86.053 %  |  Hparams: {'lr': [0.013226281510883656]}  |
+Trial: 0003  |  #runs: 2  |  Mean Acc.: 86.191 %  |  Std: 0.089 %  |  Best Acc.: 86.254 %  |  Hparams: {'lr': [0.007064576572093578]}  |
+Trial: 0004  |  #runs: 2  |  Mean Acc.: 86.130 %  |  Std: 0.036 %  |  Best Acc.: 86.155 %  |  Hparams: {'lr': [0.011885570809289195]}  |
+Trial: 0005  |  #runs: 2  |  Mean Acc.: 86.079 %  |  Std: 0.118 %  |  Best Acc.: 86.163 %  |  Hparams: {'lr': [0.0055493942206635205]}  |
+Trial: 0006  |  #runs: 2  |  Mean Acc.: 85.935 %  |  Std: 0.066 %  |  Best Acc.: 85.981 %  |  Hparams: {'lr': [0.012809366630251005]}  |
+Trial: 0007  |  #runs: 2  |  Mean Acc.: 86.176 %  |  Std: 0.080 %  |  Best Acc.: 86.233 %  |  Hparams: {'lr': [0.010209270394102936]}  |
+Trial: 0008  |  #runs: 2  |  Mean Acc.: 85.968 %  |  Std: 0.118 %  |  Best Acc.: 86.051 %  |  Hparams: {'lr': [0.014406420661168783]}  |
+Trial: 0009  |  #runs: 2  |  Mean Acc.: 86.109 %  |  Std: 0.056 %  |  Best Acc.: 86.148 %  |  Hparams: {'lr': [0.009780150298997014]}  |
+Trial: 0010  |  #runs: 2  |  Mean Acc.: 86.160 %  |  Std: 0.004 %  |  Best Acc.: 86.163 %  |  Hparams: {'lr': [0.006824450298821491]}  |
+Trial: 0011  |  #runs: 2  |  Mean Acc.: 86.013 %  |  Std: 0.029 %  |  Best Acc.: 86.033 %  |  Hparams: {'lr': [0.0054267571264273355]}  |
+---------------------------------------------------------------------------------------------------------------------------
+Best configuration mean: 86.191 % (+-0.089) (best run: 86.254 %) , with Hyperparmeters: {'lr': [0.007064576572093578]}
+---------------------------------------------------------------------------------------------------------------------------

@@ -36,6 +36,7 @@ class Crops(object):
 		self.args = args
 		self.second = False
 		self.normalize = True
+		self.shuffle = True
 				
 		if download:
 			self.download()
@@ -399,6 +400,12 @@ class Crops(object):
 		observed = 0
 		missing = 0
 		
+		# prepare shuffeling of samples
+		indices = np.arange(ntrainsamples)
+		
+		if self.shuffle:
+			np.random.shuffle(indices)
+
 		#Training data
 		print("Building training dataset...")
 		first_batch = True
@@ -507,9 +514,15 @@ class Crops(object):
 					stop_ix += valid_batchsize
 					
 				#fill in data to hdf5 file
-				hdf5_file_train["data"][start_ix:stop_ix, ...] = X_mod
-				hdf5_file_train["mask"][start_ix:stop_ix, ...] = X_mask_mod
-				hdf5_file_train["labels"][start_ix:stop_ix, ...] = Y_mod
+				sorted_indices = np.sort(indices[start_ix:stop_ix])
+				
+				hdf5_file_train["data"][sorted_indices, ...] = X_mod
+				hdf5_file_train["mask"][sorted_indices, ...] = X_mask_mod
+				hdf5_file_train["labels"][sorted_indices, ...] = Y_mod
+				
+				#hdf5_file_train["data"][start_ix:stop_ix, ...] = X_mod
+				#hdf5_file_train["mask"][start_ix:stop_ix, ...] = X_mask_mod
+				#hdf5_file_train["labels"][start_ix:stop_ix, ...] = Y_mod
 				
 				
 		

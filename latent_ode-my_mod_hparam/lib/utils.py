@@ -687,7 +687,7 @@ class FastTensorDataLoader:
 	TensorDataset + DataLoader because dataloader grabs individual indices of
 	the dataset and calls cat (slow).
 	"""
-	def __init__(self, dataset, batch_size=32, shuffle=False):
+	def __init__(self, dataset, batch_size=32, shuffle=False, batch_shuffle=True):
 		"""
 		Initialize a FastTensorDataLoader.
 
@@ -705,6 +705,7 @@ class FastTensorDataLoader:
 		self.dataset_len = len(dataset)
 		self.batch_size = batch_size
 		self.shuffle = shuffle
+		self.batch_shuffle = batch_shuffle
 		self.timestamps = h5py.File(os.path.join(self.dataset.processed_folder, self.dataset.time_file), "r")["tt"][:]
 		
 		# Calculate # batches
@@ -718,13 +719,25 @@ class FastTensorDataLoader:
 			self.indices = np.random.permutation(self.dataset_len)
 		else:
 			self.indices = None
+		
+		self.batch_indices = np.arange(self.n_batches)
+		
+		if self.batch_shuffle:
+			np.random.shuffle(self.batch_indices)
+
+		self.bi = 0
 		self.i = 0
 		return self
 
 	def __next__(self):
-		if self.i >= self.dataset_len: #start from beginning again # new epoch??
+		if self.i >= self.dataset_len: #start from beginning again 
 			raise StopIteration 
 			self.i = 0
+		
+		if self.bi >= self.n_batches: #start from beginning again
+			raise StopIteration 
+			self.bi = 0
+
 		if self.indices is not None:
 			indices = np.sort(self.indices[self.i:self.i+self.batch_size])
 			#batch = torch.index_select(t, 0, indices)
@@ -740,12 +753,14 @@ class FastTensorDataLoader:
 				"mask": mask,
 				"labels": labels}
 		else:
-			#batch = self.dataset[self.i:self.i+self.batch_size]
 
-			data = torch.from_numpy( self.hdf5dataloader["data"][self.i:self.i+self.batch_size] ).float().to(self.dataset.device)
+			start = self.batch_indices[self.bi]*self.batch_size
+			stop = start + self.batch_size
+			
+			data = torch.from_numpy( self.hdf5dataloader["data"][start:stop] ).float().to(self.dataset.device)
 			time_stamps = torch.from_numpy( self.timestamps ).to(self.dataset.device)
-			mask = torch.from_numpy(self.hdf5dataloader["mask"][self.i:self.i+self.batch_size] ).float().to(self.dataset.device)
-			labels = torch.from_numpy( self.hdf5dataloader["labels"][self.i:self.i+self.batch_size] ).float().to(self.dataset.device)
+			mask = torch.from_numpy(self.hdf5dataloader["mask"][start:stop] ).float().to(self.dataset.device)
+			labels = torch.from_numpy( self.hdf5dataloader["labels"][start:stop] ).float().to(self.dataset.device)
 
 			data_dict = {
 				"data": data, 
@@ -756,6 +771,7 @@ class FastTensorDataLoader:
 		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type = self.dataset.mode)
 				
 		self.i += self.batch_size
+		self.bi +=1
 		return data_dict
 
 	def __len__(self):
