@@ -142,9 +142,10 @@ def construct_and_train_model(config):
 	Train_res = [None]*num_seeds
 	Test_res = [None]*num_seeds
 	Best_test_acc = [None]*num_seeds
+	Best_test_acc_step = [None]*num_seeds
 
 	for i in range(num_seeds):
-		Train_res[i], Test_res[i], Best_test_acc[i] = train_it(
+		Train_res[i], Test_res[i], Best_test_acc[i], Best_test_acc_step[i] = train_it(
 			[Model[i]],
 			Data_obj,
 			args,
@@ -169,6 +170,7 @@ def construct_and_train_model(config):
 	mean_best_test_acc = np.mean(Best_test_acc)
 	var_best_test_acc = sum((abs(Best_test_acc - mean_best_test_acc)**2)/(num_seeds-1))
 	best_of_best_test_acc = np.max(Best_test_acc)
+	best_of_best_test_acc_step = Best_test_acc_step[np.argmax(Best_test_acc)]
 
 	mean_train_acc = np.mean(Train_acc)
 	var_train_acc = sum((abs(Train_acc - mean_train_acc)**2)/(num_seeds-1))
@@ -181,7 +183,9 @@ def construct_and_train_model(config):
 		#'true_loss_variance':var_test_acc,
 		'status': STATUS_OK,
 		'num_seeds': num_seeds,
-		'best_acc': best_of_best_test_acc
+		'best_acc': best_of_best_test_acc,
+		'best_peak_step': best_of_best_test_acc_step,
+		'best_steps': Best_test_acc_step
 	}
 
 	print(return_dict)
@@ -215,6 +219,7 @@ def train_it(
 	Ckpt_path = []
 	Top_ckpt_path = []
 	Best_test_acc = []
+	Best_test_acc_step = []
 	Logger = []
 	Optimizer = []
 
@@ -223,6 +228,7 @@ def train_it(
 		Ckpt_path.append( os.path.join(args.save, "experiment_" + str(ExperimentID[i]) + '.ckpt') )
 		Top_ckpt_path.append( os.path.join(args.save, "experiment_" + str(ExperimentID[i]) + '_topscore.ckpt') )
 		Best_test_acc.append(0)
+		Best_test_acc_step.append(0)
 
 		log_path = "logs/" + file_name + "_" + str(ExperimentID[i]) + ".log"
 		if not os.path.exists("logs/"):
@@ -242,7 +248,7 @@ def train_it(
 	label_dict = [None]* num_gpus
 
 
-	for itr in (range(1, num_batches * (args.niters) + 1)):
+	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
 		
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()
@@ -348,6 +354,7 @@ def train_it(
 
 					if test_res[i]["accuracy"] > Best_test_acc[i]:
 						Best_test_acc[i] = test_res[i]["accuracy"]
+						Best_test_acc_step[i] = itr*args.batch_size
 						torch.save({
 							'args': args,
 							'state_dict': Model[i].state_dict(),
@@ -359,5 +366,5 @@ def train_it(
 					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
 
 
-	print(Best_test_acc[0])
-	return train_res, test_res, Best_test_acc[0]
+	print(Best_test_acc[0], " at step ", Best_test_acc_step[0])
+	return train_res, test_res, Best_test_acc[0], Best_test_acc_step[0]
