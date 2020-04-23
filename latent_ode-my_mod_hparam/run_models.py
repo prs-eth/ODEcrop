@@ -110,7 +110,7 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 
 parser.add_argument('--num-seeds', type=int, default=3, help="Number of runs to average from. Default=3")
 parser.add_argument('--num-search', type=int, default=1, help="Number of search steps to be executed")
-parser.add_argument('--hparams', nargs='*', help="a set of: rec_layers, units, latents, gru_units, optimizer, lr, batch_size, ode_method")
+parser.add_argument('--hparams', nargs='*', help="a set of (separated by blank spaces): rec_layers, units, latents, gru_units, optimizer, lr, batch_size, ode_method")
 
 
 args = parser.parse_args()
@@ -204,24 +204,24 @@ if __name__ == '__main__':
 		hyper_config["rec_layers"] = hp.quniform('rec_layers', 1, 2, 1)
 	
 	if 'units' in args.hparams:
-		hyper_config["units"] = hp.quniform('ode_units', 10, 350, 5) # default: 500
+		hyper_config["units"] = hp.quniform('ode_units', 10, 350, 5) # default: 500?
 	
 	if 'latents' in args.hparams:
-		hyper_config["latents"] = hp.quniform('latents', 20, 200, 5) # default: 35
+		hyper_config["latents"] = hp.quniform('latents', 120, 230, 3) # default: 100?
 
 	if 'gru_units' in args.hparams:
-		hyper_config["gru_units"] = hp.quniform('gru_units', 30, 250, 5) # default: 50
+		hyper_config["gru_units"] = hp.quniform('gru_units', 10, 60, 3) # default: 50?
 
 	if 'optimizer' in args.hparams:
-		optimizer_choice =  ['adams']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD', 'RMSprop'] RMSprop?
+		optimizer_choice =  ['adam']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD', 'RMSprop'] RMSprop?
 		print("optimizer choices: ", optimizer_choice)
 		hyper_config["optimizer"] = hp.choice('optimizer', optimizer_choice)
 	
 	if 'lr' in args.hparams:
-		hyper_config["lr"] = hp.loguniform('lr', np.log(0.001), np.log(0.1))
+		hyper_config["lr"] = hp.loguniform('lr', np.log(0.005), np.log(0.015))
 	
 	if 'batch_size' in args.hparams:
-		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(100), np.log(1500), 20), 
+		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(250), np.log(1000), 10), 
 	
 	if 'ode_method' in args.hparams:
 		solver_choice = ['dopri5'] #['explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun']

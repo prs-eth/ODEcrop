@@ -15,8 +15,14 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 
 #sh test_cityscapes.sh
 
-#python run_models.py --ode-rnn --ode-type gru -n 50000
-python run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 10 --num-seeds 1 --hparams batch-size
+#ODE-RNN
+#python run_models.py --niters 35 --lr 0.00762 -n 300000 -validn 60000 -l 70 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 5 --num-seeds 1 --hparams batch_size
+
+# ODE-GRU-(Bayes)
+python run_models.py --niters 30 -n 300000 -validn 60000 -b 740 --lr 0.0084761 -l 177 -g 42 --ode-rnn --ode-type gru --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 25 --num-seeds 1 --hparams lr
+
+# Stacking
+#python run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 -l 177 -g 42 --ode-rnn --stacking 2 --ode-type gru --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 3 --num-seeds 1 --hparams lr
 
 # RNN
 #python run_models.py --niters 60 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1
