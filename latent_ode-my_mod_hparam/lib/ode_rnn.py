@@ -224,9 +224,10 @@ class ML_ODE_RNN(Baseline):
 					data_topped[mask2[:,0], mask2[:,1]] = self.topper(pure_data[mask2[:,0], mask2[:,1]])
 
 					new_mask = data_and_mask[:,:,self.input_dim:][:,:,0][:,:,None].repeat(1,1,self.latent_dim)
-					data_and_mask_2 = torch.cat([data_topped, new_mask],-1)
+					data_and_mask = torch.cat([data_topped, new_mask],-1)
 
-				input_sequence = data_and_mask_2
+				input_sequence = data_and_mask
+
 				first_layer = False
 			else:
 				new_latent = latent_ys[0,:,:,:]

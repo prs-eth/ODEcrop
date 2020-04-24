@@ -22,10 +22,13 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 #python run_models.py --niters 30 -n 300000 -validn 60000 -b 420 --lr 0.0084761 -l 177 -g 42 --ode-rnn --ode-type gru --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 10 --num-seeds 1 --hparams lr
 
 # Stacking
-python run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 4 --num-seeds 1 --hparams units
+python run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 4 --num-seeds 1 --hparams units rec_layers
 
-# Star
-python run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 --ode-rnn --stacking 2 -ws --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 4 --num-seeds 1 --hparams lr
+# Stacking STAR
+#python run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 4 --num-seeds 1 --hparams lr
+
+# Stacking with shared weights
+#python run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 --ode-rnn --stacking 2 -ws --ode-type linear --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 4 --num-seeds 1 --hparams units
 
 
 # RNN (Baseline)
