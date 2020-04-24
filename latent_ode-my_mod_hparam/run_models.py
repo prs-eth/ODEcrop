@@ -210,7 +210,7 @@ if __name__ == '__main__':
 		hyper_config["latents"] = hp.quniform('latents', 120, 230, 3) # default: 100?
 
 	if 'gru_units' in args.hparams:
-		hyper_config["gru_units"] = hp.quniform('gru_units', 10, 60, 3) # default: 50?
+		hyper_config["gru_units"] = hp.quniform('gru_units', 10, 200, 3) # default: 50?
 
 	if 'optimizer' in args.hparams:
 		optimizer_choice =  ['adam']  #['adamax', 'adagrad', 'adadelta', 'adam', 'adaw', 'ASGD', 'rprop', 'SGD', 'RMSprop'] RMSprop?
@@ -218,10 +218,10 @@ if __name__ == '__main__':
 		hyper_config["optimizer"] = hp.choice('optimizer', optimizer_choice)
 	
 	if 'lr' in args.hparams:
-		hyper_config["lr"] = hp.loguniform('lr', np.log(0.005), np.log(0.015))
+		hyper_config["lr"] = hp.loguniform('lr', np.log(0.005), np.log(0.011))
 	
 	if 'batch_size' in args.hparams:
-		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(250), np.log(1000), 10), 
+		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(200), np.log(600), 10), 
 	
 	if 'ode_method' in args.hparams:
 		solver_choice = ['dopri5'] #['explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun']
