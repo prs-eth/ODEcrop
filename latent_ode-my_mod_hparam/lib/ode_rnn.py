@@ -99,13 +99,14 @@ class ODE_RNN(Baseline):
 		return outputs, extra_info
 
 
-# Nando's modified function
+# Nando's modified function of a multilayer ODE-RNN
 class ML_ODE_RNN(Baseline):
 	def __init__(self, input_dim, latent_dim, device = torch.device("cpu"),
 		z0_diffeq_solver = None, n_gru_units = 100,  n_units = 100,
 		concat_mask = False, obsrv_std = 0.1, use_binary_classif = False,
 		classif_per_tp = False, n_labels = 1, train_classif_w_reconstr = False,
-		RNNcell = 'gru', stacking = 1, linear_classifier = False):
+		RNNcell = 'gru', stacking = 1, linear_classifier = False,
+		weight_sharing=False, include_topper=False, linear_topper=False):
 
 		Baseline.__init__(self, input_dim, latent_dim, device = device, 
 			obsrv_std = obsrv_std, use_binary_classif = use_binary_classif,
@@ -114,24 +115,35 @@ class ML_ODE_RNN(Baseline):
 			train_classif_w_reconstr = train_classif_w_reconstr)
 
 		self.stacking = stacking
+		self.include_topper = include_topper
 		ode_rnn_encoder_dim = latent_dim
 
-		#need one Encoder_z0_ODE_RNN per layer.. for loop
+		if weight_sharing:
+			# If we want to perform weight sharing, we need to have a topper to reduce the dimensionality of the input to the latent dim
+			self.include_topper = True
+			input_dim_first = latent_dim
+		
+		else:
+			input_dim_first = input_dim
+
+		#need one Encoder_z0_ODE_RNN per layer.
 		self.ode_gru =[]
 		first_layer = True
 
 		for _ in range(stacking):
-
 			if first_layer:
 				# input and the mask
-				input_dimension = (input_dim)*2
+				input_dimension = (input_dim_first)*2
+
+				#reset boolean to enter other loop
 				first_layer = False
 			else:
-				 # otherwise we just take the latent dimension of the previous layer as the sequence
-				 # the input dimension is the dimension of the lantent dimension of the lower level trajectory plus the masking of this
-				 # therefore two times the latent_dimension.
+				# otherwise we just take the latent dimension of the previous layer as the sequence
+				# the input dimension is the dimension of the lantent dimension of the lower level trajectory plus the masking of this
+				# therefore two times the latent_dimension.
 				input_dimension = latent_dim*2
 
+			#append a different ODE-RNN for every layer
 			self.ode_gru.append(
 				Encoder_z0_ODE_RNN( 
 					latent_dim = ode_rnn_encoder_dim, 
@@ -139,8 +151,22 @@ class ML_ODE_RNN(Baseline):
 					z0_diffeq_solver = z0_diffeq_solver, 
 					n_gru_units = n_gru_units, 
 					device = device,
-					RNNcell = RNNcell).to(device)
+					RNNcell = RNNcell,
+				).to(device)
 			)
+
+		# construct topper
+		if self.include_topper:
+			if linear_topper:
+				self.topper = nn.Sequential(
+					nn.Linear(input_dim, latent_dim),
+					nn.Tanh(),)
+			else:
+				self.topper = nn.Sequential(
+					nn.Linear(input_dim, 100),
+					nn.Tanh(),
+					nn.Linear(100, latent_dim),
+					nn.Tanh(),)
 
 		self.z0_diffeq_solver = z0_diffeq_solver
 
@@ -180,11 +206,27 @@ class ML_ODE_RNN(Baseline):
 
 		All_latent_ys = []
 		first_layer = True
+		
+		n_traj, n_tp, n_dims = data_and_mask.size()
 
+		# run for every layer
 		for s in range(self.stacking):
 			
 			if first_layer:
-				input_sequence = data_and_mask
+
+				# if it is the first RNN-layer, transform the dimensionality of the input down using the topper NN
+				if self.include_topper:
+					pure_data = data_and_mask[:,:, :self.input_dim]
+					mask2 = torch.sum( data_and_mask[:,:,self.input_dim:].bool() , dim=2).nonzero()
+
+					data_topped = torch.zeros(n_traj, n_tp, self.latent_dim)
+
+					data_topped[mask2[:,0], mask2[:,1]] = self.topper(pure_data[mask2[:,0], mask2[:,1]])
+
+					new_mask = data_and_mask[:,:,self.input_dim:][:,:,0][:,:,None].repeat(1,1,self.latent_dim)
+					data_and_mask_2 = torch.cat([data_topped, new_mask],-1)
+
+				input_sequence = data_and_mask_2
 				first_layer = False
 			else:
 				new_latent = latent_ys[0,:,:,:]
@@ -196,11 +238,11 @@ class ML_ODE_RNN(Baseline):
 				
 				input_sequence = torch.cat([new_latent, latent_mask], -1)
 
+			# run one trajectory of ODE-RNN for every stacking-layer "s"
 			_, _, latent_ys, _ = self.ode_gru[s].run_odernn(
 				input_sequence, truth_time_steps, run_backwards = False)
 
 			latent_ys = latent_ys.permute(0,2,1,3)
-
 			All_latent_ys.append(latent_ys)
 
 		# get the last hidden state of the last latent ode-rnn trajectory

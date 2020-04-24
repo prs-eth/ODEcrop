@@ -247,8 +247,7 @@ def train_it(
 	test_res = [None] * num_gpus
 	label_dict = [None]* num_gpus
 
-
-	for itr in (range(1, num_batches * (args.niters) + 1)):
+	for itr in tqdm(range(1, num_batches * (args.niters) + 1)):
 		
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()
@@ -267,10 +266,8 @@ def train_it(
 		
 		for i, device in enumerate(Devices):
 			train_res[i] = Model[i].compute_all_losses(batch_dict[i], n_traj_samples = 3, kl_coef = kl_coef)
-		
 		#train_res= compute_all_losses_mod(Models, batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
 		
-
 		for i, device in enumerate(Devices):
 			train_res[i]["loss"].backward()
 		

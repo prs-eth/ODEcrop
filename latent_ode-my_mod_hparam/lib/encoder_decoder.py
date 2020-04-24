@@ -15,6 +15,8 @@ import lib.utils as utils
 import lib.utils as utils
 from lib.utils import get_device
 
+from lib.star import STAR_unit
+
 import pdb
 
 # GRU description: 
@@ -173,7 +175,7 @@ class GRU_standard_unit(nn.Module):
 		return new_y, new_y_std
 
 
-#Implement a LSTM cell
+# Implement a LSTM cell
 # LSTM-unit code inspired by Ricard's answer to https://stackoverflow.com/questions/50168224/does-a-clean-and-extendable-lstm-implementation-exists-in-pytorch
 class LSTM_unit(nn.Module):
 
@@ -344,15 +346,22 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		self.RNNcell = RNNcell
 
+		rnn_input = input_dim
+
 		if GRU_update is None:
+
 			if self.RNNcell=='gru':
-				self.GRU_update = GRU_unit(latent_dim, input_dim, 
-					n_units = n_gru_units, 
-					device=device).to(device)
+				self.GRU_update = GRU_unit(latent_dim, rnn_input, n_units = n_gru_units, device=device).to(device)
+
 			elif self.RNNcell=='lstm':
-				self.GRU_update = LSTM_unit(latent_dim, input_dim)
+				self.GRU_update = LSTM_unit(latent_dim, rnn_input).to(device)
+
+			elif self.RNNcell=="star":
+				self.GRU_update = STAR_unit(latent_dim, rnn_input).to(device)
+
 			else:
 				raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
+
 		else:
 			self.GRU_update = GRU_update
 
@@ -363,9 +372,9 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		self.extra_info = None
 
 		self.transform_z0 = nn.Sequential(
-		   nn.Linear(latent_dim * 2, 100),
-		   nn.Tanh(),
-		   nn.Linear(100, self.z0_dim * 2),)
+			nn.Linear(latent_dim * 2, 100),
+			nn.Tanh(),
+			nn.Linear(100, self.z0_dim * 2),)
 		utils.init_network_weights(self.transform_z0)
 
 
@@ -439,6 +448,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		assert(not torch.isnan(time_steps).any())
 
 		latent_ys = []
+
 		# Run ODE backwards and combine the y(t) estimates using gating
 		time_points_iter = range(0, len(time_steps))
 		if run_backwards:
