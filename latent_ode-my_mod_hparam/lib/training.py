@@ -247,13 +247,14 @@ def train_it(
 	test_res = [None] * num_gpus
 	label_dict = [None]* num_gpus
 
-<<<<<<< HEAD
-	for itr in (range(1, num_batches * (args.niters) + 1)):
-=======
+	# empty result placeholder
+	somedict = {}
+	test_res = [somedict]
+	test_res[0]["accuracy"] = float(0)
+
 	pbar = tqdm(range(1, num_batches * (args.niters) + 1))
 	
 	for itr in pbar:
->>>>>>> f4b92a1f5ef102b2bc0c14d681dc3525cc010259
 		
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()
@@ -371,7 +372,7 @@ def train_it(
 
 		#update progressbar
 		pbar.set_description(
-			"Train Acc: {:.3f} %  |  Test Acc: {:.3f} %  |  Best Test Acc.: {:.3f} % (Peak: {} samples)".format(
+			"Train Acc: {:.3f} %  |  Test Acc: {:.3f} %  |  Best Test Acc.: {:.3f} % (Peak: {} samples)  |".format(
 				train_res[0]["accuracy"],
 				test_res[0]["accuracy"],
 				Best_test_acc[i],

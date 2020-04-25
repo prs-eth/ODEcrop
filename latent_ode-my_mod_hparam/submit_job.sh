@@ -26,11 +26,7 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 # python run_models.py --niters 40 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 15 --num-seeds 1 --hparams latents gru_units
 
 # Stacking with shared weights
-<<<<<<< HEAD
 python run_models.py --niters 40 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 3 -ws --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 15 --num-seeds 1 --hparams lr
-=======
-python3 run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 --ode-rnn --stacking 2 -ws --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 1 --num-seeds 1 --hparams
->>>>>>> f4b92a1f5ef102b2bc0c14d681dc3525cc010259
 
 # RNN (Baseline)
 #python run_models.py --niters 60 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1
