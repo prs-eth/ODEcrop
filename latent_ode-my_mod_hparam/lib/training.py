@@ -247,7 +247,13 @@ def train_it(
 	test_res = [None] * num_gpus
 	label_dict = [None]* num_gpus
 
+<<<<<<< HEAD
 	for itr in (range(1, num_batches * (args.niters) + 1)):
+=======
+	pbar = tqdm(range(1, num_batches * (args.niters) + 1))
+	
+	for itr in pbar:
+>>>>>>> f4b92a1f5ef102b2bc0c14d681dc3525cc010259
 		
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()
@@ -363,5 +369,17 @@ def train_it(
 					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
 
 
+		#update progressbar
+		pbar.set_description(
+			"Train Acc: {:.3f} %  |  Test Acc: {:.3f} %  |  Best Test Acc.: {:.3f} % (Peak: {} samples)".format(
+				train_res[0]["accuracy"],
+				test_res[0]["accuracy"],
+				Best_test_acc[i],
+				Best_test_acc_step[0])
+		)
+
 	print(Best_test_acc[0], " at step ", Best_test_acc_step[0])
+
+
+	
 	return train_res, test_res, Best_test_acc[0], Best_test_acc_step[0]

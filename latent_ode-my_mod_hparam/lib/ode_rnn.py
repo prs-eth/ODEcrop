@@ -160,13 +160,13 @@ class ML_ODE_RNN(Baseline):
 			if linear_topper:
 				self.topper = nn.Sequential(
 					nn.Linear(input_dim, latent_dim),
-					nn.Tanh(),)
+					nn.Tanh(),).to(device)
 			else:
 				self.topper = nn.Sequential(
 					nn.Linear(input_dim, 100),
 					nn.Tanh(),
 					nn.Linear(100, latent_dim),
-					nn.Tanh(),)
+					nn.Tanh(),).to(device)
 
 		self.z0_diffeq_solver = z0_diffeq_solver
 
@@ -188,6 +188,8 @@ class ML_ODE_RNN(Baseline):
 			else:
 				self.classifier = create_classifier(z0_dim, n_labels)
 			utils.init_network_weights(self.classifier)
+
+		self.device = device
 
 
 	def get_reconstruction(self, time_steps_to_predict, data, truth_time_steps, 
@@ -219,7 +221,7 @@ class ML_ODE_RNN(Baseline):
 					pure_data = data_and_mask[:,:, :self.input_dim]
 					mask2 = torch.sum( data_and_mask[:,:,self.input_dim:].bool() , dim=2).nonzero()
 
-					data_topped = torch.zeros(n_traj, n_tp, self.latent_dim)
+					data_topped = torch.zeros(n_traj, n_tp, self.latent_dim).to(self.device)
 
 					data_topped[mask2[:,0], mask2[:,1]] = self.topper(pure_data[mask2[:,0], mask2[:,1]])
 
