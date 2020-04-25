@@ -28,8 +28,7 @@ python run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 -
 #python run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 4 --num-seeds 1 --hparams lr
 
 # Stacking with shared weights
-#python run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 --ode-rnn --stacking 2 -ws --ode-type linear --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 4 --num-seeds 1 --hparams units
-
+python3 run_models.py --niters 30 -n 300000 -validn 60000 -b 700 --lr 0.0084761 --ode-rnn --stacking 2 -ws --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 1 --num-seeds 1 --hparams
 
 # RNN (Baseline)
 #python run_models.py --niters 60 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1
