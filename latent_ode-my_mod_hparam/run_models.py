@@ -102,6 +102,7 @@ parser.add_argument('--max-t',  type=float, default=5., help="We subsample point
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
 
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
+parser.add_argument('-v', type=int, default=1, help="Verbosity of training. 0:=silence, 1:= standard progressbar, 2:= progressbar with additional content")
 
 parser.add_argument('--ode-method', type=str, default='euler',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")

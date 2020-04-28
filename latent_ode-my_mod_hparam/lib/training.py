@@ -252,8 +252,12 @@ def train_it(
 	test_res = [somedict]
 	test_res[0]["accuracy"] = float(0)
 
-	pbar = tqdm(range(1, num_batches * (args.niters) + 1))
+	if args.v==1 or args.v==2:
+		pbar = tqdm(range(1, num_batches * (args.niters) + 1))
+	else:
+		pbar = range(1, num_batches * (args.niters) + 1)
 	
+
 	for itr in pbar:
 		
 		for i, device in enumerate(Devices):
@@ -371,13 +375,14 @@ def train_it(
 
 
 		#update progressbar
-		pbar.set_description(
-			"Train Acc: {:.3f} %  |  Test Acc: {:.3f} %  |  Best Test Acc.: {:.3f} % (Peak: {} samples)  |".format(
-				train_res[0]["accuracy"],
-				test_res[0]["accuracy"],
-				Best_test_acc[i],
-				Best_test_acc_step[0])
-		)
+		if args.v==2:
+			pbar.set_description(
+				"Train Acc: {:.3f} %  |  Test Acc: {:.3f} %  |  Best Test Acc.: {:.3f} % (Peak: {} samples)  |".format(
+					train_res[0]["accuracy"],
+					test_res[0]["accuracy"],
+					Best_test_acc[i],
+					Best_test_acc_step[0])
+			)
 
 	print(Best_test_acc[0], " at step ", Best_test_acc_step[0])
 
