@@ -125,8 +125,15 @@ def construct_and_train_model(config):
 				nntype = 'ode'
 			else:
 				raise Exception("please select a model")
+			
+			ws_str = ""
+			bn_str = ""
+			if args.weight_sharing:
+				ws_str = "_WS"
+			if args.batchnorm:
+				ws_str = "_BN"
 
-			comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_ode-units:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-lay:" + str(args.rec_layers) + "_solver:" + str(args.ode_method) + "_seed:" +str(args.random_seed) + "_optim:" + str(args.optimizer) + "_stackin:" + str(args.stacking)
+			comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_ode-units:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-lay:" + str(args.rec_layers) + "_solver:" + str(args.ode_method) + "_seed:" +str(args.random_seed) + "_optim:" + str(args.optimizer) + "_stackin:" + str(args.stacking) + ws_str + bn_str
 
 			validationtensorboard_dir = "runs/expID" + str(ExperimentID[i]) + "_VALID" + comment
 			Validationwriter.append( SummaryWriter(validationtensorboard_dir, comment=comment) )
@@ -372,7 +379,7 @@ def train_it(
 					_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
 					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
 
-		fine_train_writer = True
+		fine_train_writer = False
 		if fine_train_writer:
 			if "loss" in train_res[i]:
 				Validationwriter[i].add_scalar('loss/train', train_res[i]["loss"].detach(), itr*args.batch_size)

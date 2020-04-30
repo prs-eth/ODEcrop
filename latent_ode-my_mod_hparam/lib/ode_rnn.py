@@ -21,6 +21,11 @@ from torch.distributions import Independent
 from torch.nn.parameter import Parameter
 from lib.base_models import Baseline
 from lib.base_models import create_classifier
+from lib.ode_func import ODEFunc
+from lib.diffeq_solver import DiffeqSolver
+
+from lib.gru_ode import FullGRUODECell_Autonomous
+
 
 import pdb
 
@@ -107,7 +112,8 @@ class ML_ODE_RNN(Baseline):
 		classif_per_tp = False, n_labels = 1, train_classif_w_reconstr = False,
 		RNNcell = 'gru', stacking = 1, linear_classifier = False,
 		weight_sharing = False, include_topper = False, linear_topper = False,
-		use_BN = True, resnet = False):
+		use_BN = True, resnet = False,
+		ode_type="linear", ode_units=200, rec_layers=1, ode_method="dopri5"):
 
 		Baseline.__init__(self, input_dim, latent_dim, device = device, 
 			obsrv_std = obsrv_std, use_binary_classif = use_binary_classif,
@@ -122,47 +128,101 @@ class ML_ODE_RNN(Baseline):
 		ode_rnn_encoder_dim = latent_dim
 
 		if weight_sharing or self.resnet or self.include_topper:
-			# If we want to perform weight sharing, we need to have a topper to reduce the dimensionality of the input to the latent dim
 			self.include_topper = True
-
-			# if the topper is used, we must set the input dimension of the first trajectory to latent dimensionality
 			input_dim_first = latent_dim
-
 		else:
-			# else we directly input the data with size input_dim
 			input_dim_first = input_dim
+
+		if RNNcell=='lstm':
+			n_ode_gru_dims = int(latent_dim)*2
+		else:
+			n_ode_gru_dims = int(latent_dim)
 
 		#need one Encoder_z0_ODE_RNN per layer.
 		self.ode_gru =[]
+		self.z0_diffeq_solver =[]
 		first_layer = True
 
-		for _ in range(stacking):
-			if first_layer:
-				# input and the mask
-				input_dimension = (input_dim_first)*2
+		if weight_sharing:
 
-				# reset boolean for the other layers
-				first_layer = False
-				
+			# ODE stuff
+			if ode_type=="linear":
+				ode_func_net = utils.create_net(n_ode_gru_dims, n_ode_gru_dims, 
+				n_layers = int(rec_layers), n_units = int(ode_units), nonlinear = nn.Tanh)
+			elif ode_type=="gru":
+				ode_func_net = FullGRUODECell_Autonomous(n_ode_gru_dims, bias=True)
 			else:
-				# otherwise we just take the latent dimension of the previous layer as the sequence
-				# the input dimension is the dimension of the lantent dimension of the lower level trajectory plus the masking of this
-				# therefore two times the latent_dimension.
-				input_dimension = latent_dim*2
+				raise Exception("Invalid ODE-type. Choose linear or gru.")
 
-			# append a different zo_ODE-RNN for every layer
-			self.ode_gru.append(
-				Encoder_z0_ODE_RNN( 
-					latent_dim = ode_rnn_encoder_dim, 
-					input_dim = input_dimension, 
-					z0_diffeq_solver = z0_diffeq_solver, 
-					n_gru_units = n_gru_units, 
-					device = device,
-					RNNcell = RNNcell,
-					use_BN = use_BN
-				).to(device)
-			)
+			rec_ode_func = ODEFunc( input_dim = input_dim, latent_dim = n_ode_gru_dims,
+				ode_func_net = ode_func_net, device = device).to(device)
 
+			z0_diffeq_solver0 = DiffeqSolver(input_dim, rec_ode_func, ode_method, n_ode_gru_dims, 
+				odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
+			
+			# Put it into the trajectory
+			Encoder0 = Encoder_z0_ODE_RNN( 
+				latent_dim = ode_rnn_encoder_dim, 
+				input_dim = latent_dim*2, 
+				z0_diffeq_solver = z0_diffeq_solver0, 
+				n_gru_units = n_gru_units, 
+				device = device,
+				RNNcell = RNNcell,
+				use_BN = use_BN
+			).to(device)
+			
+			for _ in range(stacking):
+				if first_layer:
+					# input and the mask
+					input_dimension = (input_dim_first)*2
+					first_layer = False
+					
+				else:
+					# otherwise we just take the latent dimension of the previous layer as the sequence
+					input_dimension = latent_dim*2
+
+				# append the same zo_ODE-RNN for every layer
+				self.ode_gru.append( Encoder0 )
+
+		else:
+				
+			for _ in range(stacking):
+				if first_layer:
+					# input and the mask
+					input_dimension = (input_dim_first)*2
+					first_layer = False
+					
+				else:
+					# otherwise we just take the latent dimension of the previous layer as the sequence
+					input_dimension = latent_dim*2
+
+				# ODE stuff
+				if ode_type=="linear":
+					ode_func_net = utils.create_net(n_ode_gru_dims, n_ode_gru_dims, 
+					n_layers = int(rec_layers), n_units = int(ode_units), nonlinear = nn.Tanh)
+				elif ode_type=="gru":
+					ode_func_net = FullGRUODECell_Autonomous(n_ode_gru_dims, bias=True)
+				else:
+					raise Exception("Invalid ODE-type. Choose linear or gru.")
+
+				rec_ode_func = ODEFunc( input_dim = input_dim, latent_dim = n_ode_gru_dims,
+					ode_func_net = ode_func_net, device = device).to(device)
+
+				z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, ode_method, n_ode_gru_dims, 
+						odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
+					
+				# append a different zo_ODE-RNN for every layer
+				self.ode_gru.append(
+					Encoder_z0_ODE_RNN( 
+						latent_dim = ode_rnn_encoder_dim, 
+						input_dim = input_dimension, 
+						z0_diffeq_solver = z0_diffeq_solver, 
+						n_gru_units = n_gru_units, 
+						device = device,
+						RNNcell = RNNcell,
+						use_BN = use_BN
+					).to(device)
+				)
 		# construct topper
 		if self.include_topper:
 			if linear_topper:

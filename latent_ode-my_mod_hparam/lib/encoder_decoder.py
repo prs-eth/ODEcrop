@@ -367,7 +367,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				self.GRU_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
 				self.ode_bn0 = nn.BatchNorm1d(latent_dim)
 
-
 			else:
 				raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
 

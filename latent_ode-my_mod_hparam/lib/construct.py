@@ -18,13 +18,14 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 	obsrv_std = 0.01
 	obsrv_std = torch.Tensor([obsrv_std]).to(device)
 
+	
 	if args.rnn_cell=='lstm':
 		# for LSTM the latent dimension is twice as large, because we have the hidden state & cell state 
 		n_ode_gru_dims = int(args.latents)*2
 	else:
 		n_ode_gru_dims = int(args.latents)
 
-
+	"""
 	if args.poisson:
 		print("Poisson process likelihood not implemented for ODE-RNN: ignoring --poisson")
 
@@ -48,10 +49,11 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 
 	z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, args.ode_method, n_ode_gru_dims, 
 		odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
+	"""
 
 	if args.stacking>=1:
-		model = ML_ODE_RNN(input_dim, n_ode_gru_dims, device = device, 
-			z0_diffeq_solver = z0_diffeq_solver, n_gru_units = int(args.gru_units),
+		model = ML_ODE_RNN(input_dim, n_ode_gru_dims, device = device,
+			 n_gru_units = int(args.gru_units),
 			concat_mask = True, obsrv_std = obsrv_std,
 			use_binary_classif = args.classif,
 			classif_per_tp = classif_per_tp,
@@ -62,8 +64,9 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 			weight_sharing = args.weight_sharing,
 			include_topper = args.topper, linear_topper = args.linear_topper,
 			use_BN = args.batchnorm,
-			resnet = args.resnet
-			).to(device)
+			resnet = args.resnet,
+			ode_type=args.ode_type, ode_units = args.units, rec_layers = args.rec_layers, ode_method = args.ode_method
+		).to(device)
 	else:
 		raise Exception("Number of stacked layers must be greater or equal to 1.")
 
