@@ -105,7 +105,6 @@ class GRU_standard_unit(nn.Module):
 		update_gate = None,
 		reset_gate = None,
 		new_state_net = None,
-		n_units = 100,
 		device = torch.device("cpu")):
 		super(GRU_unit, self).__init__()
 
@@ -333,9 +332,8 @@ class Encoder_z0_ODE_RNN(nn.Module):
 	# Continue until we get to z0
 	def __init__(self, latent_dim, input_dim, z0_diffeq_solver = None, 
 		z0_dim = None, GRU_update = None, 
-		n_gru_units = 100, 
-		device = torch.device("cpu"),
-		RNNcell = 'gru'):
+		n_gru_units = 100, device = torch.device("cpu"),
+		RNNcell = 'gru', use_BN=True):
 		
 		super(Encoder_z0_ODE_RNN, self).__init__()
 
@@ -352,12 +350,24 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 			if self.RNNcell=='gru':
 				self.GRU_update = GRU_unit(latent_dim, rnn_input, n_units = n_gru_units, device=device).to(device)
+				self.ode_bn0 = nn.BatchNorm1d(latent_dim)
+
+
+			elif self.RNNcell=='gru_small':
+				self.GRU_update = GRU_standard_unit(latent_dim, rnn_input, device=device).to(device)
+				self.ode_bn0 = nn.BatchNorm1d(latent_dim)
+
 
 			elif self.RNNcell=='lstm':
 				self.GRU_update = LSTM_unit(latent_dim, rnn_input).to(device)
+				
+				self.ode_bn0 = nn.BatchNorm1d(latent_dim)
+				self.ode_bn1 = nn.BatchNorm1d(latent_dim)
 
 			elif self.RNNcell=="star":
 				self.GRU_update = STAR_unit(latent_dim, rnn_input).to(device)
+				self.ode_bn0 = nn.BatchNorm1d(latent_dim)
+
 
 			else:
 				raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
@@ -365,6 +375,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		else:
 			self.GRU_update = GRU_update
 
+		self.use_BN = use_BN
 		self.z0_diffeq_solver = z0_diffeq_solver
 		self.latent_dim = latent_dim
 		self.input_dim = input_dim
@@ -376,6 +387,8 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			nn.Tanh(),
 			nn.Linear(100, self.z0_dim * 2),)
 		utils.init_network_weights(self.transform_z0)
+
+		self.output_bn = nn.BatchNorm1d(latent_dim)
 
 
 	def forward(self, data, time_steps, run_backwards = True, save_info = False):
@@ -487,16 +500,26 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				c_i_ode = yi_ode[:,:,self.latent_dim//2:]
 				h_c_lstm = (h_i_ode, c_i_ode)
 
+				# Batchnorm
+				if self.use_BN:
+					self.ode_bn0(h_i_ode.squeeze()).unsqueeze(0)
+					self.ode_bn1(c_i_ode.squeeze()).unsqueeze(0)
+
 				# actually this is a LSTM update here:
 				outi, yi_std = self.GRU_update(h_c_lstm, prev_std, xi)
 
 				# the RNN cell is a LSTM and outi:=(yi,ci), we only need h as latent dim
 				yi = torch.cat([outi[0], outi[1]], -1)
 			else:
+				
+				# Batchnorm
+				if self.use_BN:
+					self.ode_bn0(yi_ode.squeeze()).unsqueeze(0)
+
 				# GRU-unit: the output is directly the hidden state
 				yi, yi_std = self.GRU_update(yi_ode, prev_std, xi)
 
-			prev_y, prev_std = yi, yi_std			
+			prev_y, prev_std = yi, yi_std
 			prev_t, t_i = time_steps[i],  time_steps[i-1]
 
 			latent_ys.append(yi)
@@ -507,7 +530,14 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					 "time_points": time_points.detach(), "ode_sol": ode_sol.detach()}
 				extra_info.append(d)
 
+
 		latent_ys = torch.stack(latent_ys, 1)
+
+		#BatchNormalization for the outputs
+		if self.use_BN:
+			self.output_bn(latent_ys.squeeze().permute(0,2,1)).permute(0,2,1).unsqueeze(0)
+			#print(self.output_bn.running_mean)
+			#print(self.output_bn.running_var)
 
 		assert(not torch.isnan(yi).any())
 		assert(not torch.isnan(yi_std).any())

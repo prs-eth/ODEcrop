@@ -74,7 +74,7 @@ parser.add_argument('--latent-ode', action='store_true', help="Run Latent ODE se
 parser.add_argument('--z0-encoder', type=str, default='odernn', help="Type of encoder for Latent ODE model: odernn or rnn")
 
 parser.add_argument('--classic-rnn', action='store_true', help="Run RNN baseline: classic RNN that sees true points at every point. Used for interpolation only.")
-parser.add_argument('--rnn-cell', default="gru", help="RNN Cell type. Available: gru (default), expdecay, lstm, star")
+parser.add_argument('--rnn-cell', default="gru", help="RNN Cell type. Available: gru (default), gru_small, expdecay, lstm, star")
 parser.add_argument('--ode-type', default="linear", help="ODE Function type. Available: linear (default, use --rec-layers and --units to adjust size), gru")
 parser.add_argument('--input-decay', action='store_true', help="For RNN: use the input that is the weighted average of impirical mean and previous value (like in GRU-D)")
 parser.add_argument('--ode-rnn', action='store_true', help="Run ODE-RNN baseline: RNN-style that sees true points at every point. Used for interpolation only.")
@@ -83,6 +83,8 @@ parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run R
 parser.add_argument('-l', '--latents', type=int, default=70, help="Size of the latent state")
 parser.add_argument('--stacking', type=int, default=1, help="Number of hidden layer-trajectories that should be stacked")
 parser.add_argument('-ws', '--weight-sharing', action='store_true', help="Ties the weight together across different RNN-ODE-layers. Only useful if --stacking is larger than 2")
+parser.add_argument('-BN', '--BatchNorm', action='store_true', help="Applies batchnormalization to the outputs of the RNN-cells")
+
 
 parser.add_argument('--rec-layers', type=int, default=2, help="Number of layers in ODE func in recognition ODE") 
 parser.add_argument('-u', '--units', type=int, default=255, help="Number of units per layer in ODE func")
@@ -248,6 +250,7 @@ if __name__ == '__main__':
 		print("ODE-type: ", args.ode_type)
 		print("RNN-cell: ", args.rnn_cell)
 		print("Weight-sharing: ", args.weight_sharing)
+		print("Using BN: ", args.BatchNorm)
 		print("defaut adapted LR's!!")
 
 		if 'optimizer' in args.hparams:
@@ -270,6 +273,7 @@ if __name__ == '__main__':
 		print("ODE-type: ", args.ode_type)
 		print("RNN-cell: ", args.rnn_cell)
 		print("Weight-sharing: ", args.weight_sharing)
+		print("Using BN: ", args.BatchNorm)
 		print("defaut adapted LR's!!")
 
 		if 'optimizer' in args.hparams:
@@ -292,6 +296,7 @@ if __name__ == '__main__':
 	print("ODE-type: ", args.ode_type)
 	print("RNN-cell: ", args.rnn_cell)
 	print("Weight-sharing: ", args.weight_sharing)
+	print("Using BN: ", args.BatchNorm)
 	print("defaut adapted LR's!!")
 
 	if 'optimizer' in args.hparams:

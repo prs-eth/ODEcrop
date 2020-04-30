@@ -62,6 +62,7 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 			RNNcell = args.rnn_cell,
 			stacking = args.stacking,
 			weight_sharing = args.weight_sharing,
+			use_BN = args.BatchNorm,
 			).to(device)
 	else:
 		raise Exception("Number of stacked layers must be greater or equal to 1.")

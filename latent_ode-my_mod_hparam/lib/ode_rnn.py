@@ -106,7 +106,8 @@ class ML_ODE_RNN(Baseline):
 		concat_mask = False, obsrv_std = 0.1, use_binary_classif = False,
 		classif_per_tp = False, n_labels = 1, train_classif_w_reconstr = False,
 		RNNcell = 'gru', stacking = 1, linear_classifier = False,
-		weight_sharing=False, include_topper=False, linear_topper=False):
+		weight_sharing=False, include_topper=False, linear_topper=False,
+		use_BN=True):
 
 		Baseline.__init__(self, input_dim, latent_dim, device = device, 
 			obsrv_std = obsrv_std, use_binary_classif = use_binary_classif,
@@ -152,6 +153,7 @@ class ML_ODE_RNN(Baseline):
 					n_gru_units = n_gru_units, 
 					device = device,
 					RNNcell = RNNcell,
+					use_BN = use_BN
 				).to(device)
 			)
 
@@ -226,6 +228,9 @@ class ML_ODE_RNN(Baseline):
 					data_topped[mask2[:,0], mask2[:,1]] = self.topper(pure_data[mask2[:,0], mask2[:,1]])
 
 					new_mask = data_and_mask[:,:,self.input_dim:][:,:,0][:,:,None].repeat(1,1,self.latent_dim)
+
+					# TODO: Batchnormalization here
+
 					data_and_mask = torch.cat([data_topped, new_mask],-1)
 
 				input_sequence = data_and_mask

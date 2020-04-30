@@ -253,7 +253,7 @@ def train_it(
 	test_res[0]["accuracy"] = float(0)
 
 	if args.v==1 or args.v==2:
-		pbar = tqdm(range(1, num_batches * (args.niters) + 1))
+		pbar = tqdm(range(1, num_batches * (args.niters) + 1), position=0, leave=True, ncols=200)
 	else:
 		pbar = range(1, num_batches * (args.niters) + 1)
 	

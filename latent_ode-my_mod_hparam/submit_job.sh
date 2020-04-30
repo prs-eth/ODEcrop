@@ -14,19 +14,19 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 #sh test_cityscapes.sh
 
 # ODE-RNN
-#python run_models.py --niters 35 --lr 0.00762 -n 300000 -validn 60000 -l 70 -u 255 -rec-layers 2 --ode-rnn --ode-type linear --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 1 --num-seeds 1 --hparams 
+#python run_models.py --niters 20 --lr 0.00762 -n 300000 -validn 60000 -l 70 -u 255 -rec-layers 2 --ode-rnn --ode-type linear --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 1 --num-seeds 1 --hparams 
 
 # ODE-GRU-(Bayes)
-#python run_models.py --niters 30 -n 300000 -validn 60000 -b 420 --lr 0.0084761 -l 177 -g 42 --ode-rnn --ode-type gru --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 10 --num-seeds 1 --hparams lr
+#python run_models.py --niters 20 -n 300000 -validn 60000 -b 420 --lr 0.0084761 -l 177 -g 42 --ode-rnn --ode-type gru --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 10 --num-seeds 1 --hparams lr
 
 # Stacking
-#python run_models.py --niters 40 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 15 --num-seeds 1 --hparams batch_size
+python3 run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 -v 2
 
 # Stacking STAR
 # python run_models.py --niters 40 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 15 --num-seeds 1 --hparams latents gru_units
 
 # Stacking with shared weights
-python3 run_models.py --niters 40 -n 300000 -validn 60000 -b 600 --lr 0.0084761 -v 2 -l 18 --gru-units 18 --rec-layers 1 -u 40 --ode-rnn --stacking 5 -ws --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 15 --num-seeds 1 --hparams
+#python run_models.py --niters 40 -n 300000 -validn 60000 -b 600 --lr 0.0084761 -v 2 -l 18 --gru-units 18 --rec-layers 1 -u 40 --ode-rnn --stacking 5 -ws --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 15 --num-seeds 1 --hparams
 
 # RNN (Baseline)
 #python run_models.py --niters 60 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1
