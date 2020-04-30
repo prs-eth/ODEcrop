@@ -7,6 +7,7 @@ Gating Revisited: Deep Multi-layer RNNs That Can Be Trained
 https://arxiv.org/abs/1911.11033
 """
 
+import lib.utils as utils
 
 import torch
 import torch.nn as nn
@@ -21,19 +22,46 @@ import pdb
 
 class STAR_unit(nn.Module):
 
-	def __init__(self, hidden_size, input_size, bias=True):
+	def __init__(self, hidden_size, input_size,
+		n_units=0, bias=True):
 		super(STAR_unit, self).__init__()
+
 		self.input_size = input_size
 		self.hidden_size = hidden_size
 		self.bias = bias
 		
-		self.x_K = nn.Linear(input_size,  hidden_size, bias=bias)
-		self.x_z = nn.Linear(input_size,  hidden_size, bias=bias)
-		self.h_K = nn.Linear(hidden_size,  hidden_size, bias=bias)
-		
-		init.orthogonal_(self.x_K.weight) 
-		init.orthogonal_(self.x_z.weight)
-		init.orthogonal_(self.h_K.weight)
+		if n_units==0:
+			self.x_K = nn.Linear(input_size,  hidden_size, bias=bias)
+			self.x_z = nn.Linear(input_size,  hidden_size, bias=bias)
+			self.h_K = nn.Linear(hidden_size,  hidden_size, bias=bias)
+
+			init.orthogonal_(self.x_K.weight) 
+			init.orthogonal_(self.x_z.weight)
+			init.orthogonal_(self.h_K.weight)
+
+			self.x_K.bias.data.fill_(0.)
+			self.x_z.bias.data.fill_(0.)
+			#self.h_K.bias.data.fill_(0.)
+		else:
+
+			self.x_K = nn.Sequential(
+				nn.Linear(input_size, n_units),
+				nn.Tanh(),
+				nn.Linear(n_units, hidden_size))
+			utils.init_network_weights(self.x_K, initype="ortho")
+
+			self.x_z = nn.Sequential(
+				nn.Linear(input_size, n_units),
+				nn.Tanh(),
+				nn.Linear(n_units, hidden_size))
+			utils.init_network_weights(self.x_z, initype="ortho")
+
+			self.h_K = nn.Sequential(
+				nn.Linear(hidden_size, n_units),
+				nn.Tanh(),
+				nn.Linear(n_units, hidden_size))
+			utils.init_network_weights(self.h_K, initype="ortho")
+			
 		
 #		init.kaiming_normal_(self.x_K.weight) 
 #		init.kaiming_normal_(self.x_z.weight)
@@ -43,8 +71,6 @@ class STAR_unit(nn.Module):
 		#bias_f = torch.Tensor(bias_f)  
 		#self.bias_K = Variable(bias_f.cuda(), requires_grad=True)
 
-		self.x_K.bias.data.fill_(0.)
-		self.x_z.bias.data.fill_(0)
 		
 	def forward(self, hidden, y_std, x):
 				

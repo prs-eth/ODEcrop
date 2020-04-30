@@ -106,7 +106,7 @@ class GRU_standard_unit(nn.Module):
 		reset_gate = None,
 		new_state_net = None,
 		device = torch.device("cpu")):
-		super(GRU_unit, self).__init__()
+		super(GRU_standard_unit, self).__init__()
 
 		if update_gate is None:
 			self.update_gate = nn.Sequential(
@@ -324,7 +324,6 @@ class Encoder_z0_RNN(nn.Module):
 		return mean.unsqueeze(0), std.unsqueeze(0)
 
 
-
 class Encoder_z0_ODE_RNN(nn.Module):
 	# Derive z0 by running ode backwards.
 	# For every y_i we have two versions: encoded from data and derived from ODE by running it backwards from t_i+1 to t_i
@@ -365,7 +364,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				self.ode_bn1 = nn.BatchNorm1d(latent_dim)
 
 			elif self.RNNcell=="star":
-				self.GRU_update = STAR_unit(latent_dim, rnn_input).to(device)
+				self.GRU_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
 				self.ode_bn0 = nn.BatchNorm1d(latent_dim)
 
 
@@ -500,21 +499,12 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				c_i_ode = yi_ode[:,:,self.latent_dim//2:]
 				h_c_lstm = (h_i_ode, c_i_ode)
 
-				# Batchnorm
-				if self.use_BN:
-					self.ode_bn0(h_i_ode.squeeze()).unsqueeze(0)
-					self.ode_bn1(c_i_ode.squeeze()).unsqueeze(0)
-
 				# actually this is a LSTM update here:
 				outi, yi_std = self.GRU_update(h_c_lstm, prev_std, xi)
 
 				# the RNN cell is a LSTM and outi:=(yi,ci), we only need h as latent dim
 				yi = torch.cat([outi[0], outi[1]], -1)
 			else:
-				
-				# Batchnorm
-				if self.use_BN:
-					self.ode_bn0(yi_ode.squeeze()).unsqueeze(0)
 
 				# GRU-unit: the output is directly the hidden state
 				yi, yi_std = self.GRU_update(yi_ode, prev_std, xi)
@@ -530,12 +520,11 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					 "time_points": time_points.detach(), "ode_sol": ode_sol.detach()}
 				extra_info.append(d)
 
-
 		latent_ys = torch.stack(latent_ys, 1)
 
 		#BatchNormalization for the outputs
 		if self.use_BN:
-			self.output_bn(latent_ys.squeeze().permute(0,2,1)).permute(0,2,1).unsqueeze(0)
+			latent_ys = self.output_bn(latent_ys.squeeze().permute(0,2,1)).permute(0,2,1).unsqueeze(0)
 			#print(self.output_bn.running_mean)
 			#print(self.output_bn.running_var)
 

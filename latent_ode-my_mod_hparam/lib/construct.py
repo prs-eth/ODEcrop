@@ -7,13 +7,11 @@ import lib.utils as utils
 from lib.ode_rnn import *
 from lib.rnn_baselines import *
 
-
 from lib.ode_func import ODEFunc
 from lib.gru_ode import FullGRUODECell_Autonomous
 from lib.diffeq_solver import DiffeqSolver
 
 import pdb
-
 
 def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 
@@ -62,14 +60,14 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 			RNNcell = args.rnn_cell,
 			stacking = args.stacking,
 			weight_sharing = args.weight_sharing,
-			use_BN = args.BatchNorm,
+			include_topper = args.topper, linear_topper = args.linear_topper,
+			use_BN = args.batchnorm,
+			resnet = args.resnet
 			).to(device)
 	else:
 		raise Exception("Number of stacked layers must be greater or equal to 1.")
 
-	
 	return model
-
 
 
 def  get_classic_RNN_model(args, device, input_dim, n_labels, classif_per_tp):

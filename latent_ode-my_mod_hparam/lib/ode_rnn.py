@@ -106,8 +106,8 @@ class ML_ODE_RNN(Baseline):
 		concat_mask = False, obsrv_std = 0.1, use_binary_classif = False,
 		classif_per_tp = False, n_labels = 1, train_classif_w_reconstr = False,
 		RNNcell = 'gru', stacking = 1, linear_classifier = False,
-		weight_sharing=False, include_topper=False, linear_topper=False,
-		use_BN=True):
+		weight_sharing = False, include_topper = False, linear_topper = False,
+		use_BN = True, resnet = False):
 
 		Baseline.__init__(self, input_dim, latent_dim, device = device, 
 			obsrv_std = obsrv_std, use_binary_classif = use_binary_classif,
@@ -117,14 +117,19 @@ class ML_ODE_RNN(Baseline):
 
 		self.stacking = stacking
 		self.include_topper = include_topper
+		self.resnet = resnet
+		self.use_BN = use_BN
 		ode_rnn_encoder_dim = latent_dim
 
-		if weight_sharing:
+		if weight_sharing or self.resnet or self.include_topper:
 			# If we want to perform weight sharing, we need to have a topper to reduce the dimensionality of the input to the latent dim
 			self.include_topper = True
+
+			# if the topper is used, we must set the input dimension of the first trajectory to latent dimensionality
 			input_dim_first = latent_dim
-		
+
 		else:
+			# else we directly input the data with size input_dim
 			input_dim_first = input_dim
 
 		#need one Encoder_z0_ODE_RNN per layer.
@@ -136,15 +141,16 @@ class ML_ODE_RNN(Baseline):
 				# input and the mask
 				input_dimension = (input_dim_first)*2
 
-				#reset boolean to enter other loop
+				# reset boolean for the other layers
 				first_layer = False
+				
 			else:
 				# otherwise we just take the latent dimension of the previous layer as the sequence
 				# the input dimension is the dimension of the lantent dimension of the lower level trajectory plus the masking of this
 				# therefore two times the latent_dimension.
 				input_dimension = latent_dim*2
 
-			#append a different ODE-RNN for every layer
+			# append a different zo_ODE-RNN for every layer
 			self.ode_gru.append(
 				Encoder_z0_ODE_RNN( 
 					latent_dim = ode_rnn_encoder_dim, 
@@ -169,6 +175,10 @@ class ML_ODE_RNN(Baseline):
 					nn.Tanh(),
 					nn.Linear(100, latent_dim),
 					nn.Tanh(),).to(device)
+			
+			utils.init_network_weights(self.topper)
+
+			self.topper_bn = nn.BatchNorm1d(latent_dim)
 
 		self.z0_diffeq_solver = z0_diffeq_solver
 
@@ -181,6 +191,7 @@ class ML_ODE_RNN(Baseline):
 
 		z0_dim = latent_dim
 
+		# get the end-of-sequence classifier
 		if use_binary_classif: 
 			if linear_classifier:
 				self.classifier = nn.Sequential(
@@ -190,6 +201,8 @@ class ML_ODE_RNN(Baseline):
 			else:
 				self.classifier = create_classifier(z0_dim, n_labels)
 			utils.init_network_weights(self.classifier)
+
+			self.bn_lasthidden = nn.BatchNorm1d(latent_dim)
 
 		self.device = device
 
@@ -215,7 +228,7 @@ class ML_ODE_RNN(Baseline):
 
 		# run for every layer
 		for s in range(self.stacking):
-			
+						
 			if first_layer:
 
 				# if it is the first RNN-layer, transform the dimensionality of the input down using the topper NN
@@ -223,14 +236,17 @@ class ML_ODE_RNN(Baseline):
 					pure_data = data_and_mask[:,:, :self.input_dim]
 					mask2 = torch.sum( data_and_mask[:,:,self.input_dim:].bool() , dim=2).nonzero()
 
+					# create tensor of topperoutput, and fill in the corresponding locations
 					data_topped = torch.zeros(n_traj, n_tp, self.latent_dim).to(self.device)
+					if self.use_BN:
+						data_topped[mask2[:,0], mask2[:,1]] = self.topper_bn( self.topper(pure_data[mask2[:,0], mask2[:,1]]) )
+					else:
+						data_topped[mask2[:,0], mask2[:,1]] = self.topper(pure_data[mask2[:,0], mask2[:,1]])
 
-					data_topped[mask2[:,0], mask2[:,1]] = self.topper(pure_data[mask2[:,0], mask2[:,1]])
-
+					# create mask with the new size
 					new_mask = data_and_mask[:,:,self.input_dim:][:,:,0][:,:,None].repeat(1,1,self.latent_dim)
 
-					# TODO: Batchnormalization here
-
+					#replace the data_and_mask
 					data_and_mask = torch.cat([data_topped, new_mask],-1)
 
 				input_sequence = data_and_mask
@@ -251,6 +267,11 @@ class ML_ODE_RNN(Baseline):
 				input_sequence, truth_time_steps, run_backwards = False)
 
 			latent_ys = latent_ys.permute(0,2,1,3)
+
+			# add the output as a residual, if it is a ResNet
+			if self.resnet:
+				latent_ys = latent_ys + input_sequence.unsqueeze(0)[:,:,:,:self.latent_dim]
+
 			All_latent_ys.append(latent_ys)
 
 		# get the last hidden state of the last latent ode-rnn trajectory
@@ -270,6 +291,8 @@ class ML_ODE_RNN(Baseline):
 			if self.classif_per_tp:
 				extra_info["label_predictions"] = self.classifier(latent_ys)
 			else:
+				if self.use_BN:
+					last_hidden = self.bn_lasthidden(last_hidden.squeeze()).unsqueeze(0)
 				extra_info["label_predictions"] = self.classifier(last_hidden).squeeze(-1)
 
 		# outputs shape: [n_traj_samples, n_traj, n_tp, n_dims]

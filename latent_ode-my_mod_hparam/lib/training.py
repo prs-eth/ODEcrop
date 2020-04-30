@@ -253,11 +253,10 @@ def train_it(
 	test_res[0]["accuracy"] = float(0)
 
 	if args.v==1 or args.v==2:
-		pbar = tqdm(range(1, num_batches * (args.niters) + 1), position=0, leave=True, ncols=200)
+		pbar = tqdm(range(1, num_batches * (args.niters) + 1), position=0, leave=True, ncols=160)
 	else:
 		pbar = range(1, num_batches * (args.niters) + 1)
 	
-
 	for itr in pbar:
 		
 		for i, device in enumerate(Devices):
@@ -373,15 +372,22 @@ def train_it(
 					_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
 					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
 
+		fine_train_writer = True
+		if fine_train_writer:
+			if "loss" in train_res[i]:
+				Validationwriter[i].add_scalar('loss/train', train_res[i]["loss"].detach(), itr*args.batch_size)
+			if "accuracy" in train_res[i]:
+				Validationwriter[i].add_scalar('Classification_accuracy/train', train_res[i]["accuracy"], itr*args.batch_size)
+					
 
 		#update progressbar
 		if args.v==2:
 			pbar.set_description(
-				"Train Acc: {:.3f} %  |  Test Acc: {:.3f} %  |  Best Test Acc.: {:.3f} % (Peak: {} samples)  |".format(
-					train_res[0]["accuracy"],
-					test_res[0]["accuracy"],
-					Best_test_acc[i],
-					Best_test_acc_step[0])
+				"Train Ac: {:.3f} %  |  Test Ac: {:.3f} %, Peak Test Ac.: {:.3f} % (at {} batches)  |".format(
+					train_res[0]["accuracy"]*100,
+					test_res[0]["accuracy"]*100,
+					Best_test_acc[i]*100,
+					Best_test_acc_step[0]//args.batch_size)
 			)
 
 	print(Best_test_acc[0], " at step ", Best_test_acc_step[0])

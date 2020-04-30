@@ -115,10 +115,14 @@ def split_last_dim(data):
 	return res
 
 
-def init_network_weights(net, std = 0.1):
+def init_network_weights(net, std = 0.1, initype="ortho"):
 	for m in net.modules():
 		if isinstance(m, nn.Linear):
-			nn.init.normal_(m.weight, mean=0, std=std)
+			if initype=="ortho":
+				nn.init.orthogonal_(m.weight)
+			else:
+				nn.init.normal_(m.weight, mean=0, std=std)
+
 			#nn.init.xavier_uniform_(m.weight, gain=1.0)
 			#nn.init.kaiming_uniform_(m.weight, gain=1.0)
 			#nn.init.xavier_normal_(m.weight, gain=1.0)

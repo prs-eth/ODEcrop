@@ -83,12 +83,16 @@ parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run R
 parser.add_argument('-l', '--latents', type=int, default=70, help="Size of the latent state")
 parser.add_argument('--stacking', type=int, default=1, help="Number of hidden layer-trajectories that should be stacked")
 parser.add_argument('-ws', '--weight-sharing', action='store_true', help="Ties the weight together across different RNN-ODE-layers. Only useful if --stacking is larger than 2")
-parser.add_argument('-BN', '--BatchNorm', action='store_true', help="Applies batchnormalization to the outputs of the RNN-cells")
-
+parser.add_argument('-BN', '--batchnorm', action='store_true', help="Applies batchnormalization to the outputs of the RNN-cells")
+parser.add_argument('-RN', '--resnet', action='store_true', help="Turns the trajectories into residual trajectories.")
 
 parser.add_argument('--rec-layers', type=int, default=2, help="Number of layers in ODE func in recognition ODE") 
 parser.add_argument('-u', '--units', type=int, default=255, help="Number of units per layer in ODE func")
 parser.add_argument('-g', '--gru-units', type=int, default=100, help="Number of units per layer in each of GRU update networks")
+
+parser.add_argument('--linear-classif', default=False, action='store_true', help="If using a classifier, use a linear classifier instead of 1-layer NN")
+parser.add_argument('--topper', default=False, action='store_true', help="If a topper to transform the input before the first trajectory should be used")
+parser.add_argument('--linear-topper', default=False, action='store_true', help="If using a topper, use a linear classifier instead of 1-layer NN, else a 2-layer NN is used")
 
 parser.add_argument('--rec-dims', type=int, default=100, help="Dimensionality of the recognition model (RNN).")
 parser.add_argument('--gen-layers', type=int, default=2, help="Number of layers in ODE func in generative ODE")
@@ -96,7 +100,6 @@ parser.add_argument('--gen-layers', type=int, default=2, help="Number of layers 
 parser.add_argument('--poisson', action='store_true', help="Model poisson-process likelihood for the density of events in addition to reconstruction.")
 parser.add_argument('--classif', default="True", action='store_true', help="Include binary classification loss -- used for Physionet dataset for hospiral mortality")
 
-parser.add_argument('--linear-classif', default=False, action='store_true', help="If using a classifier, use a linear classifier instead of 1-layer NN")
 parser.add_argument('--extrap', action='store_true', help="Set extrapolation mode. If this flag is not set, run interpolation mode.")
 
 parser.add_argument('-t', '--timepoints', type=int, default=100, help="Total number of time-points")
@@ -250,7 +253,7 @@ if __name__ == '__main__':
 		print("ODE-type: ", args.ode_type)
 		print("RNN-cell: ", args.rnn_cell)
 		print("Weight-sharing: ", args.weight_sharing)
-		print("Using BN: ", args.BatchNorm)
+		print("Using BN: ", args.batchnorm)
 		print("defaut adapted LR's!!")
 
 		if 'optimizer' in args.hparams:
@@ -273,7 +276,7 @@ if __name__ == '__main__':
 		print("ODE-type: ", args.ode_type)
 		print("RNN-cell: ", args.rnn_cell)
 		print("Weight-sharing: ", args.weight_sharing)
-		print("Using BN: ", args.BatchNorm)
+		print("Using BN: ", args.batchnorm)
 		print("defaut adapted LR's!!")
 
 		if 'optimizer' in args.hparams:
@@ -296,7 +299,7 @@ if __name__ == '__main__':
 	print("ODE-type: ", args.ode_type)
 	print("RNN-cell: ", args.rnn_cell)
 	print("Weight-sharing: ", args.weight_sharing)
-	print("Using BN: ", args.BatchNorm)
+	print("Using BN: ", args.batchnorm)
 	print("defaut adapted LR's!!")
 
 	if 'optimizer' in args.hparams:
