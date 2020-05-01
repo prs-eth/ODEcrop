@@ -10,6 +10,8 @@ from torch.nn.utils.spectral_norm import spectral_norm
 
 import lib.utils as utils
 
+import pdb
+
 #####################################################################################################
 
 class ODEFunc(nn.Module):
@@ -40,6 +42,7 @@ class ODEFunc(nn.Module):
 		return grad
 
 	def get_ode_gradient_nn(self, t_local, y):
+		# Nando's comment, gradient is independent of the variable t_local!!, why do i have to pass it?
 		return self.gradient_net(y)
 
 	def sample_next_point_from_prior(self, t_local, y):

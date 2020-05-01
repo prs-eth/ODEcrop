@@ -96,7 +96,8 @@ class Encoder_z0_ODE_RNN(nn.Module):
 	def __init__(self, latent_dim, input_dim, z0_diffeq_solver = None, 
 		z0_dim = None, RNN_update = None, 
 		n_gru_units = 100, device = torch.device("cpu"),
-		RNNcell = 'gru', use_BN=True):
+		RNNcell = 'gru', use_BN=True,
+		use_ODE = True):
 		
 		super(Encoder_z0_ODE_RNN, self).__init__()
 
@@ -133,6 +134,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		self.ode_bn1 = nn.BatchNorm1d(latent_dim)
 
 		self.use_BN = use_BN
+		self.use_ODE = use_ODE
 		self.z0_diffeq_solver = z0_diffeq_solver
 		self.latent_dim = latent_dim
 		self.input_dim = input_dim
@@ -187,27 +189,27 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		n_traj, n_tp, n_dims = data.size()
 		extra_info = []
 
-		t0 = time_steps[-1]
-		if run_backwards:
-			t0 = time_steps[0]
-
 		device = get_device(data)
 
 		if self.RNNcell=='lstm':
-			prev_h = torch.zeros((1, n_traj, self.latent_dim//2)).to(device)
-			prev_h_std = torch.zeros((1, n_traj, self.latent_dim//2)).to(device)
+			#TODO: make some noise
+			prev_h = torch.zeros((1, n_traj, self.latent_dim//2)).data.normal_(0, 0.0001).to(device)
+			prev_h_std = torch.zeros((1, n_traj, self.latent_dim//2)).data.normal_(0, 0.0001).to(device)
 
-			ci = torch.zeros((1, n_traj, self.latent_dim//2)).to(device)
-			ci_std = torch.zeros((1, n_traj, self.latent_dim//2)).to(device)
+			ci = torch.zeros((1, n_traj, self.latent_dim//2)).data.normal_(0, 0.0001).to(device)
+			ci_std = torch.zeros((1, n_traj, self.latent_dim//2)).data.normal_(0, 0.0001).to(device)
 			
 			#concatinate cell state and hidden state
 			prev_y = torch.cat([prev_h, ci], -1)
 			prev_std = torch.cat([prev_h_std, ci_std], -1)
 		else:
-			prev_y = torch.zeros((1, n_traj, self.latent_dim)).to(device)
-			prev_std = torch.zeros((1, n_traj, self.latent_dim)).to(device)
+			#TODO: make some noise
+			prev_y = torch.zeros((1, n_traj, self.latent_dim)).data.normal_(0, 0.0001).to(device)
+			prev_std = torch.zeros((1, n_traj, self.latent_dim)).data.normal_(0, 0.0001).to(device)
 		
-		prev_t, t_i = time_steps[-1] + 0.01,  time_steps[-1]
+		# Nando' comment: why the last time steps?
+		#prev_t, t_i = time_steps[-1] + 0.01,  time_steps[-1] # original
+		t_i = time_steps[0] - 0.005 # new
 
 		interval_length = time_steps[-1] - time_steps[0]
 		minimum_step = interval_length / 50 # maybe have to modify minimum time step
@@ -227,34 +229,49 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		for i in time_points_iter:
 
 			#TODO: Include inplementationin case of no ODE function
-
-			if (prev_t - t_i) < minimum_step:
-				time_points = torch.stack((prev_t, t_i))
-				inc = self.z0_diffeq_solver.ode_func(prev_t, prev_y) * (t_i - prev_t)
-
-				assert(not torch.isnan(inc).any())
-
-				ode_sol = prev_y + inc
-				ode_sol = torch.stack((prev_y, ode_sol), 2).to(device)
-
-				assert(not torch.isnan(ode_sol).any())
-			else:
-				n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between
-
-				time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
-				ode_sol = self.z0_diffeq_solver(prev_y, time_points)
-
-				assert(not torch.isnan(ode_sol).any())
-
-			if torch.mean(ode_sol[:, :, 0, :]  - prev_y) >= 0.001:
-				print("Error: first point of the ODE is not equal to initial value")
-				print(torch.mean(ode_sol[:, :, 0, :]  - prev_y))
-				exit()
-			#assert(torch.mean(ode_sol[:, :, 0, :]  - prev_y) < 0.001)
-
-			yi_ode = ode_sol[:, :, -1, :]
-			xi = data[:,i,:].unsqueeze(0)
 			
+			prev_t = time_steps[i]							# new
+
+			if self.use_ODE:
+				if (prev_t - t_i) < minimum_step:
+					time_points = torch.stack((prev_t, t_i))
+					inc = self.z0_diffeq_solver.ode_func(prev_t, prev_y) * (t_i - prev_t)
+
+					assert(not torch.isnan(inc).any())
+
+					ode_sol = prev_y + inc
+					ode_sol = torch.stack((prev_y, ode_sol), 2).to(device)
+
+					assert(not torch.isnan(ode_sol).any())
+
+				else:
+					n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between
+
+					time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
+					ode_sol = self.z0_diffeq_solver(prev_y, time_points)
+
+					assert(not torch.isnan(ode_sol).any())
+
+				if torch.mean(ode_sol[:, :, 0, :]  - prev_y) >= 0.001:
+					print("Error: first point of the ODE is not equal to initial value")
+					print(torch.mean(ode_sol[:, :, 0, :]  - prev_y))
+					exit()
+				#assert(torch.mean(ode_sol[:, :, 0, :]  - prev_y) < 0.001)
+
+				yi_ode = ode_sol[:, :, -1, :]
+
+				xi = data[:,i,:].unsqueeze(0)
+
+			else:
+
+				# skipping ODE function and assign directly
+				yi_ode = prev_y
+
+				#TODO: concaninate the delta t for pure RNN
+				delta_t = prev_t - t_i
+				xi = torch.cat([ data[:,i,:self.latent_dim].unsqueeze(0) , delta_t.repeat(1,n_traj,1).float() ], -1)
+
+
 			if self.RNNcell=='lstm':
 				h_i_ode = yi_ode[:,:,:self.latent_dim//2]
 				c_i_ode = yi_ode[:,:,self.latent_dim//2:]
@@ -268,10 +285,11 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			else:
 
 				# GRU-unit: the output is directly the hidden state
-				yi, yi_std = self.RNN_update(yi_ode, prev_std, xi)
+				yi, yi_std = self.RNN_update(yi_ode, prev_std, xi, masked_update=self.use_ODE)
 
 			prev_y, prev_std = yi, yi_std
-			prev_t, t_i = time_steps[i],  time_steps[i-1]
+			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original
+			t_i = time_steps[i] 							# new
 
 			latent_ys.append(yi)
 

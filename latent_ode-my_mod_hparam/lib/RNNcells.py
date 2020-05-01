@@ -65,7 +65,6 @@ class STAR_unit(nn.Module):
 				nn.Linear(n_units, hidden_size))
 			utils.init_network_weights(self.h_K, initype="ortho")
 			
-		
 #		init.kaiming_normal_(self.x_K.weight) 
 #		init.kaiming_normal_(self.x_z.weight)
 #		init.kaiming_normal_(self.h_K.weight)
@@ -74,9 +73,8 @@ class STAR_unit(nn.Module):
 		#bias_f = torch.Tensor(bias_f)  
 		#self.bias_K = Variable(bias_f.cuda(), requires_grad=True)
 
+	def forward(self, hidden, y_std, x, masked_update=True):
 		
-	def forward(self, hidden, y_std, x):
-				
 		gate_x_K = self.x_K(x) 			# return size torch.Size([1, batch_size, latent_dim])
 		gate_x_z = self.x_z(x) 			# return size torch.Size([1, batch_size, latent_dim])
 		gate_h_K = self.h_K(hidden)		# return size torch.Size([1, batch_size, latent_dim])
@@ -91,11 +89,29 @@ class STAR_unit(nn.Module):
 		h_new = hidden + K_gain * ( z - hidden) 
 		h_new = torch.tanh(h_new)
 		
+		# TODO: Implement Masked update
+		if masked_update:
+			# IMPORTANT: assumes that x contains both data and mask
+			# update only the hidden states for hidden state only if at least one feature is present for the current time point
+			n_data_dims = x.size(-1)//2
+			mask = x[:, :, n_data_dims:]
+			utils.check_mask(x[:, :, :n_data_dims], mask)
+			
+			mask = (torch.sum(mask, -1, keepdim = True) > 0).float()
+
+			assert(not torch.isnan(mask).any())
+			#print(mask[0,1:30,0])
+
+			h_new = mask * h_new + (1-mask) * hidden
+
+			if torch.isnan(h_new).any():
+				print("new_y is nan!")
+				print(mask)
+				print(hidden)
+				print(h_new)
+				exit()
+
 		return h_new, y_std
-
-
-
-
 
 
 # GRU description: 
@@ -215,9 +231,9 @@ class GRU_standard_unit(nn.Module):
 
 
 	def forward(self, y_mean, y_std, x, masked_update = True):
-		#pdb.set_trace()
+		
 		y_concat = torch.cat([y_mean, y_std, x], -1)
-
+		
 		update_gate = self.update_gate(y_concat)
 		reset_gate = self.reset_gate(y_concat)
 		concat = torch.cat([y_mean * reset_gate, y_std * reset_gate, x], -1)

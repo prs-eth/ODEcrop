@@ -111,7 +111,7 @@ class ML_ODE_RNN(Baseline):
 		z0_diffeq_solver = None, n_gru_units = 100,  n_units = 100,
 		concat_mask = False, obsrv_std = 0.1, use_binary_classif = False,
 		classif_per_tp = False, n_labels = 1, train_classif_w_reconstr = False,
-		RNNcell = 'gru', stacking = 1, linear_classifier = False,
+		RNNcell = 'gru_small', stacking = None, linear_classifier = False,
 		ODE_sharing = True, RNN_sharing = False,
 		include_topper = False, linear_topper = False,
 		use_BN = True, resnet = False,
@@ -147,77 +147,101 @@ class ML_ODE_RNN(Baseline):
 		first_layer = True
 		rnn_input = latent_dim*2
 
-		if stack_order is None:
-			stack_order = ["ode_rnn"]*stacking
+		if stack_order is None: 
+			stack_order = ["ode_rnn"]*stacking # a list of ode_rnn, star, gru, gru_small, lstm
+		if stacking is None:
+			stacking = len(stack_order)
+
+		if ~(len(stack_order)==stacking): # stack_order argument must be as long as the stacking list
+			print("Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.")
+	
+		# get the default ODE and RNN for the weightsharing
+		# ODE stuff
+		z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
 		
-		if ODE_sharing or RNN_sharing:
-			
-			# get the default ODE and RNN for the weightsharing
-			# ODE stuff
-			z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
-			
-			# RNNcell
-			if RNNcell=='gru':
-				RNN_update = GRU_unit(latent_dim, rnn_input, n_units = n_gru_units, device=device).to(device)
+		# RNNcell
+		if RNNcell=='gru':
+			RNN_update = GRU_unit(latent_dim, rnn_input, n_units = n_gru_units, device=device).to(device)
 
-			elif RNNcell=='gru_small':
-				RNN_update = GRU_standard_unit(latent_dim, rnn_input, device=device).to(device)
+		elif RNNcell=='gru_small':
+			RNN_update = GRU_standard_unit(latent_dim, rnn_input, device=device).to(device)
 
-			elif RNNcell=='lstm':
-				RNN_update = LSTM_unit(latent_dim, rnn_input).to(device)
+		elif RNNcell=='lstm':
+			RNN_update = LSTM_unit(latent_dim, rnn_input).to(device)
 
-			elif RNNcell=="star":
-				RNN_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
+		elif RNNcell=="star":
+			RNN_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
 
+		else:
+			raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
+
+
+		# Put it into the trajectory
+
+		for s in range(stacking):
+
+			use_ODE = (stack_order[s]=="ode_rnn")
+
+			if first_layer:
+				# input and the mask
+				input_dimension = (input_dim_first)*2
+				first_layer = False
+				
 			else:
-				raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
+				# otherwise we just take the latent dimension of the previous layer as the sequence
+				input_dimension = latent_dim*2
 
+			# append the same z0_ODE-RNN for every layer
+			# TODO: check stack_order[s] and choose the right trajectory
 
-			# Put it into the trajectory
-						
-			for s in range(stacking):
-				if first_layer:
-					# input and the mask
-					input_dimension = (input_dim_first)*2
-					first_layer = False
-					
+			
+			if not RNN_sharing:
+				
+				if not use_ODE:
+					this_rnn_input = rnn_input//2 + 1 # +1 for delta t
+					thisRNNcell = stack_order[s]
 				else:
-					# otherwise we just take the latent dimension of the previous layer as the sequence
-					input_dimension = latent_dim*2
+					this_rnn_input = rnn_input
+					thisRNNcell = RNNcell
 
-				# append the same z0_ODE-RNN for every layer
-				# TODO: check stack_order[s] and choose the right trajectory
 
-				if not ODE_sharing:
-					z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
-					
-				if not RNN_sharing:
-					if RNNcell=='gru':
-						RNN_update = GRU_unit(latent_dim, rnn_input, n_units = n_gru_units, device=device).to(device)
+				if thisRNNcell=='gru':
+					RNN_update = GRU_unit(latent_dim, this_rnn_input, n_units = n_gru_units, device=device).to(device)
 
-					elif RNNcell=='gru_small':
-						RNN_update = GRU_standard_unit(latent_dim, rnn_input, device=device).to(device)
+				elif thisRNNcell=='gru_small':
+					RNN_update = GRU_standard_unit(latent_dim, this_rnn_input, device=device).to(device)
 
-					elif RNNcell=='lstm':
-						RNN_update = LSTM_unit(latent_dim, rnn_input).to(device)
+				elif thisRNNcell=='lstm':
+					RNN_update = LSTM_unit(latent_dim, this_rnn_input).to(device)
 
-					elif RNNcell=="star":
-						RNN_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
+				elif thisRNNcell=="star":
+					RNN_update = STAR_unit(latent_dim, this_rnn_input, n_units = n_gru_units).to(device)
 
-					else:
-						raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
+				else:
+					raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
 
-				Encoder0 = Encoder_z0_ODE_RNN( 
-					latent_dim = ode_rnn_encoder_dim, 
-					input_dim = latent_dim*2, 
-					z0_diffeq_solver = z0_diffeq_solver, 
-					n_gru_units = n_gru_units, 
-					device = device,
-					RNN_update = RNN_update,
-					use_BN = use_BN
-				).to(device)
+			if not ODE_sharing:
 
-				self.ode_gru.append( Encoder0 )
+				if RNNcell=='lstm':
+					ode_latents = int(latent_dim)*2
+				else:
+					ode_latents = int(latent_dim)
+
+				z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
+				
+
+			Encoder0 = Encoder_z0_ODE_RNN( 
+				latent_dim = ode_rnn_encoder_dim, 
+				input_dim = latent_dim*2, 
+				z0_diffeq_solver = z0_diffeq_solver, 
+				n_gru_units = n_gru_units, 
+				device = device,
+				RNN_update = RNN_update,
+				use_BN = use_BN,
+				use_ODE = use_ODE
+			).to(device)
+
+			self.ode_gru.append( Encoder0 )
 
 		
 		# construct topper

@@ -17,8 +17,6 @@ def get_diffeq_solver(ode_latents, ode_units, rec_layers,
 		ode_method, ode_type="linear",
 		device = torch.device("cpu")):
 
-
-
 	if ode_type=="linear":
 		ode_func_net = utils.create_net(ode_latents, ode_latents, 
 		n_layers = int(rec_layers), n_units = int(ode_units), nonlinear = nn.Tanh)
@@ -32,8 +30,6 @@ def get_diffeq_solver(ode_latents, ode_units, rec_layers,
 
 	z0_diffeq_solver = DiffeqSolver(0, rec_ode_func, ode_method, ode_latents, 
 		odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
-	
-
 
 	return z0_diffeq_solver
 

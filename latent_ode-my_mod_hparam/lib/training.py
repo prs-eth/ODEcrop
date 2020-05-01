@@ -26,6 +26,8 @@ import pdb
 import numpy as np
 from hyperopt import STATUS_OK
 
+from pytorch_model_summary import summary
+
 
 def construct_and_train_model(config):
 	# Create ODE-GRU model
@@ -109,7 +111,6 @@ def construct_and_train_model(config):
 	if args.classic_rnn:
 		for i in range(num_seeds):
 			Model.append(get_classic_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
-
 
 	##################################################################
 	

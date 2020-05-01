@@ -25,32 +25,7 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 	else:
 		n_ode_gru_dims = int(args.latents)
 
-	"""
-	if args.poisson:
-		print("Poisson process likelihood not implemented for ODE-RNN: ignoring --poisson")
-
-	if args.extrap:
-		raise Exception("Extrapolation for ODE-RNN not implemented")
-
-	if args.ode_type=="linear":
-		ode_func_net = utils.create_net(n_ode_gru_dims, n_ode_gru_dims, 
-		n_layers = int(args.rec_layers), n_units = int(args.units), nonlinear = nn.Tanh)
-	elif args.ode_type=="gru":
-		ode_func_net = FullGRUODECell_Autonomous(n_ode_gru_dims, bias=True)
-
-	else:
-		raise Exception("Invalid ODE-type. Choose linear or gru.")
-
-	rec_ode_func = ODEFunc(
-		input_dim = input_dim, 
-		latent_dim = n_ode_gru_dims,
-		ode_func_net = ode_func_net,
-		device = device).to(device)
-
-	z0_diffeq_solver = DiffeqSolver(input_dim, rec_ode_func, args.ode_method, n_ode_gru_dims, 
-		odeint_rtol = 1e-3, odeint_atol = 1e-4, device = device)
-	"""
-
+	
 	if args.stacking>=1:
 		model = ML_ODE_RNN(input_dim, n_ode_gru_dims, device = device,
 			 n_gru_units = int(args.gru_units),
