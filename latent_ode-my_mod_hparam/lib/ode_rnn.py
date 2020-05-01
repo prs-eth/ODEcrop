@@ -124,7 +124,6 @@ class ML_ODE_RNN(Baseline):
 			n_labels = n_labels,
 			train_classif_w_reconstr = train_classif_w_reconstr)
 
-		self.stacking = stacking
 		self.include_topper = include_topper
 		self.resnet = resnet
 		self.use_BN = use_BN
@@ -149,12 +148,11 @@ class ML_ODE_RNN(Baseline):
 
 		if stack_order is None: 
 			stack_order = ["ode_rnn"]*stacking # a list of ode_rnn, star, gru, gru_small, lstm
-		if stacking is None:
-			stacking = len(stack_order)
-
+		
 		if ~(len(stack_order)==stacking): # stack_order argument must be as long as the stacking list
 			print("Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.")
-	
+			self.stacking = len(stack_order)
+
 		# get the default ODE and RNN for the weightsharing
 		# ODE stuff
 		z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
@@ -178,8 +176,9 @@ class ML_ODE_RNN(Baseline):
 
 		# Put it into the trajectory
 
-		for s in range(stacking):
-
+		for s in range(self.stacking):
+			
+			#TODO: check if this variable works properly
 			use_ODE = (stack_order[s]=="ode_rnn")
 
 			if first_layer:
@@ -192,18 +191,15 @@ class ML_ODE_RNN(Baseline):
 				input_dimension = latent_dim*2
 
 			# append the same z0_ODE-RNN for every layer
-			# TODO: check stack_order[s] and choose the right trajectory
-
 			
 			if not RNN_sharing:
 				
 				if not use_ODE:
-					this_rnn_input = rnn_input//2 + 1 # +1 for delta t
+					this_rnn_input = rnn_input + 2 # +2 for delta t and it's mask
 					thisRNNcell = stack_order[s]
 				else:
 					this_rnn_input = rnn_input
 					thisRNNcell = RNNcell
-
 
 				if thisRNNcell=='gru':
 					RNN_update = GRU_unit(latent_dim, this_rnn_input, n_units = n_gru_units, device=device).to(device)

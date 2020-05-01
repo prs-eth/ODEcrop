@@ -192,7 +192,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		device = get_device(data)
 
 		if self.RNNcell=='lstm':
-			#TODO: make some noise
+			# make some noise
 			prev_h = torch.zeros((1, n_traj, self.latent_dim//2)).data.normal_(0, 0.0001).to(device)
 			prev_h_std = torch.zeros((1, n_traj, self.latent_dim//2)).data.normal_(0, 0.0001).to(device)
 
@@ -203,7 +203,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			prev_y = torch.cat([prev_h, ci], -1)
 			prev_std = torch.cat([prev_h_std, ci_std], -1)
 		else:
-			#TODO: make some noise
+			# make some noise
 			prev_y = torch.zeros((1, n_traj, self.latent_dim)).data.normal_(0, 0.0001).to(device)
 			prev_std = torch.zeros((1, n_traj, self.latent_dim)).data.normal_(0, 0.0001).to(device)
 		
@@ -233,6 +233,8 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			prev_t = time_steps[i]							# new
 
 			if self.use_ODE:
+				#pdb.set_trace()
+				
 				if (prev_t - t_i) < minimum_step:
 					time_points = torch.stack((prev_t, t_i))
 					inc = self.z0_diffeq_solver.ode_func(prev_t, prev_y) * (t_i - prev_t)
@@ -268,9 +270,17 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				yi_ode = prev_y
 
 				#TODO: concaninate the delta t for pure RNN
-				delta_t = prev_t - t_i
-				xi = torch.cat([ data[:,i,:self.latent_dim].unsqueeze(0) , delta_t.repeat(1,n_traj,1).float() ], -1)
+				single_mask = data[:,i,self.latent_dim]
+				
+				delta_ts = (prev_t - t_i).repeat(1,n_traj,1).float()
+				delta_ts[:,~single_mask.bool(),:] = 0
+				
+				features = data[:,i,:self.latent_dim].unsqueeze(0)
+				new_mask = single_mask.unsqueeze(0).unsqueeze(2).repeat(1,1,self.latent_dim+1)
 
+				xi = torch.cat([ features , delta_ts, new_mask], -1)
+
+			# TODO: check if mask is all non, if so: don't do GRU update to save computational costs
 
 			if self.RNNcell=='lstm':
 				h_i_ode = yi_ode[:,:,:self.latent_dim//2]
@@ -279,13 +289,12 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 				# actually this is a LSTM update here:
 				outi, yi_std = self.RNN_update(h_c_lstm, prev_std, xi)
-
 				# the RNN cell is a LSTM and outi:=(yi,ci), we only need h as latent dim
 				yi = torch.cat([outi[0], outi[1]], -1)
 			else:
 
 				# GRU-unit: the output is directly the hidden state
-				yi, yi_std = self.RNN_update(yi_ode, prev_std, xi, masked_update=self.use_ODE)
+				yi, yi_std = self.RNN_update(yi_ode, prev_std, xi)
 
 			prev_y, prev_std = yi, yi_std
 			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original

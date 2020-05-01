@@ -18,7 +18,7 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 	obsrv_std = 0.01
 	obsrv_std = torch.Tensor([obsrv_std]).to(device)
 
-	
+	# TODO: remove this block later
 	if args.rnn_cell=='lstm':
 		# for LSTM the latent dimension is twice as large, because we have the hidden state & cell state 
 		n_ode_gru_dims = int(args.latents)*2

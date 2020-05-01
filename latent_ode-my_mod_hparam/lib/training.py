@@ -130,14 +130,17 @@ def construct_and_train_model(config):
 			RNNws_str = ""
 			ODEws_str = ""
 			bn_str = ""
+			rs_str = ""
 			if args.RNN_sharing:
 				RNNws_str = "_RNNws"
 			if args.ODE_sharing:
 				ODEws_str = "_ODEws"
 			if args.batchnorm:
 				bn_str = "_BN"
+			if args.resnet:
+				rs_str = "_rs"
 
-			comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_ode-units:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-lay:" + str(args.rec_layers) + "_solver:" + str(args.ode_method) + "_seed:" +str(args.random_seed) + "_optim:" + str(args.optimizer) + "_stackin:" + str(args.stacking) + ODEws_str + RNNws_str + bn_str
+			comment = nntype + "_ns:" + str(args.n) + "_ba:" + str(args.batch_size) + "_ode-units:" + str(args.units) + "_gru-uts:" + str(args.gru_units) + "_lats:"+ str(args.latents) + "_rec-lay:" + str(args.rec_layers) + "_solver:" + str(args.ode_method) + "_seed:" +str(args.random_seed) + "_optim:" + str(args.optimizer) + "_stackin:" + str(args.stacking) + str(args.stack_order)+ ODEws_str + RNNws_str + bn_str + rs_str
 
 			validationtensorboard_dir = "runs/expID" + str(ExperimentID[i]) + "_VALID" + comment
 			Validationwriter.append( SummaryWriter(validationtensorboard_dir, comment=comment) )
