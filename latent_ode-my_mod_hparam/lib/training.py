@@ -26,8 +26,6 @@ import pdb
 import numpy as np
 from hyperopt import STATUS_OK
 
-from pytorch_model_summary import summary
-
 
 def construct_and_train_model(config):
 	# Create ODE-GRU model
