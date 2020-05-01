@@ -82,7 +82,9 @@ parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run R
 
 parser.add_argument('-l', '--latents', type=int, default=70, help="Size of the latent state")
 parser.add_argument('--stacking', type=int, default=1, help="Number of hidden layer-trajectories that should be stacked")
-parser.add_argument('-ws', '--weight-sharing', action='store_true', help="Ties the weight together across different RNN-ODE-layers. Only useful if --stacking is larger than 2")
+parser.add_argument('--stack-order', nargs='*', help="a set of (separated by blank spaces): ode_rnn, gru, lstm, small_gru, star")
+parser.add_argument('-ODEws', '--ODE-sharing', action='store_true', help="Ties the weight together across different ODE between RNN-ODE-layers. Only useful if --stacking is larger than 2")
+parser.add_argument('-RNNws', '--RNN-sharing', action='store_true', help="Ties the weight together across different RNN between RNN-ODE-layers. Only useful if --stacking is larger than 2")
 parser.add_argument('-BN', '--batchnorm', action='store_true', help="Applies batchnormalization to the outputs of the RNN-cells")
 parser.add_argument('-RN', '--resnet', action='store_true', help="Turns the trajectories into residual trajectories.")
 
@@ -107,7 +109,7 @@ parser.add_argument('--max-t',  type=float, default=5., help="We subsample point
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
 
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
-parser.add_argument('-v', type=int, default=1, help="Verbosity of training. 0:=silence, 1:= standard progressbar, 2:= progressbar with additional content")
+parser.add_argument('-v', type=int, default=0, help="Verbosity of training. 0:=silence, 1:= standard progressbar, 2:= progressbar with additional content")
 
 parser.add_argument('--ode-method', type=str, default='euler',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
@@ -252,7 +254,8 @@ if __name__ == '__main__':
 		print("Stacked layers: ", args.stacking)
 		print("ODE-type: ", args.ode_type)
 		print("RNN-cell: ", args.rnn_cell)
-		print("Weight-sharing: ", args.weight_sharing)
+		print("Weight-sharing ODE: ", args.ODE_sharing)
+		print("Weight-sharing RNN: ", args.RNN_sharing)
 		print("Using BN: ", args.batchnorm)
 		print("defaut adapted LR's!!")
 
@@ -275,7 +278,8 @@ if __name__ == '__main__':
 		print("Stacked layers: ", args.stacking)
 		print("ODE-type: ", args.ode_type)
 		print("RNN-cell: ", args.rnn_cell)
-		print("Weight-sharing: ", args.weight_sharing)
+		print("Weight-sharing ODE: ", args.ODE_sharing)
+		print("Weight-sharing RNN: ", args.RNN_sharing)
 		print("Using BN: ", args.batchnorm)
 		print("defaut adapted LR's!!")
 
@@ -298,7 +302,8 @@ if __name__ == '__main__':
 	print("Stacked layers: ", args.stacking)
 	print("ODE-type: ", args.ode_type)
 	print("RNN-cell: ", args.rnn_cell)
-	print("Weight-sharing: ", args.weight_sharing)
+	print("Weight-sharing ODE: ", args.ODE_sharing)
+	print("Weight-sharing RNN: ", args.RNN_sharing)
 	print("Using BN: ", args.batchnorm)
 	print("defaut adapted LR's!!")
 

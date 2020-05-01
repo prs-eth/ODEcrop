@@ -906,3 +906,7 @@ def plot_confusion_matrix(correct_labels, predict_labels, labels, title='Confusi
 	fig.set_tight_layout(True)
 	#summary = tfplot.figure.to_summary(fig, tag=tensor_name)
 	return 1, fig
+
+
+
+

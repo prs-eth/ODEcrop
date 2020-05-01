@@ -22,6 +22,8 @@ class DiffeqSolver(nn.Module):
 			odeint_rtol = 1e-4, odeint_atol = 1e-5, device = torch.device("cpu")):
 		super(DiffeqSolver, self).__init__()
 
+		#Comment from Nando: input_dim is unused!
+		
 		self.ode_method = method
 		self.latents = latents		
 		self.device = device
