@@ -228,7 +228,7 @@ if __name__ == '__main__':
 		hyper_config["optimizer"] = hp.choice('optimizer', optimizer_choice)
 	
 	if 'lr' in args.hparams:
-		hyper_config["lr"] = hp.loguniform('lr', np.log(0.0005), np.log(0.05))
+		hyper_config["lr"] = hp.loguniform('lr', np.log(0.0001), np.log(0.0400))
 	
 	if 'batch_size' in args.hparams:
 		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(150), np.log(1000), 10), 

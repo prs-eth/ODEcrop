@@ -1,5 +1,5 @@
 #!/bin/bash
-#BSUB -W 24:00
+#BSUB -W 120:00
 ##BSUB -o /cluster/work/igp_psr/metzgern/Network/outputs/outputtrain_Le${object}.%J.%I.txt
 ##BSUB -e /cluster/work/igp_psr/metzgern/Network/outputs/train_Le${object}.%J.%I.txt
 #BSUB -R "rusage[mem=32000,ngpus_excl_p=1]"
@@ -14,7 +14,7 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 #sh test_cityscapes.sh
 
 # ODE-RNN
-#python run_models.py --niters 20 --lr 0.00762 -n 300000 -validn 60000 -l 70 -u 255 -rec-layers 2 --ode-rnn --ode-type linear --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 1 --num-seeds 1 --hparams 
+python run_models.py --niters 20 --lr 0.00762 -n 300000 -validn 60000 -l 70 -u 255 --gru-units 100 --rec-layers 2 --ode-rnn --ode-type linear --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 1 --num-seeds 1 --hparams
 
 # ODE-GRU-(Bayes)
 #python run_models.py --niters 20 -n 300000 -validn 60000 -b 420 --lr 0.0084761 -l 177 -g 42 --ode-rnn --ode-type gru --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 10 --num-seeds 1 --hparams lr
@@ -25,8 +25,8 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 # Stacking STAR
 # python run_models.py --niters 40 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 15 --num-seeds 1 --hparams latents gru_units
 
-# Stacking of Residual layers
-#python run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell gru_small --ode-method euler --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --resnet --topper -BN
+# Stacking of Residual layers ode_rnn
+python run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN -hparams lr
 
 # Stacking of Residual layers with weightsharing
 #python run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell gru_small --ode-method euler --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN -ODEws
@@ -46,4 +46,4 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 #python run_models.py --niters 60 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell lstm --random-seed 6001 --num-search 1 --num-seeds 1
 
 # 7xstar baseline
-python run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN --stack-order star star star star star
+python run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN --stack-order star star star star star star star

@@ -144,7 +144,7 @@ class ML_ODE_RNN(Baseline):
 		self.ode_gru =[]
 		self.z0_diffeq_solver =[]
 		first_layer = True
-		rnn_input = latent_dim*2
+		rnn_input = input_dim_first*2
 
 		if stack_order is None: 
 			stack_order = ["ode_rnn"]*stacking # a list of ode_rnn, star, gru, gru_small, lstm
@@ -174,44 +174,43 @@ class ML_ODE_RNN(Baseline):
 			raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
 
 
-		# Put it into the trajectory
-
+		# Put the layers it into the model
 		for s in range(self.stacking):
 			
-			#TODO: check if this variable works properly
 			use_ODE = (stack_order[s]=="ode_rnn")
 
 			if first_layer:
 				# input and the mask
-				input_dimension = (input_dim_first)*2
+				layer_input_dimension = (input_dim_first)*2
 				first_layer = False
 				
 			else:
 				# otherwise we just take the latent dimension of the previous layer as the sequence
-				input_dimension = latent_dim*2
+				layer_input_dimension = latent_dim*2
 
 			# append the same z0_ODE-RNN for every layer
 			
 			if not RNN_sharing:
 				
 				if not use_ODE:
-					this_rnn_input = rnn_input + 2 # +2 for delta t and it's mask
+					vertical_rnn_input = layer_input_dimension + 2 # +2 for delta t and it's mask
 					thisRNNcell = stack_order[s]
 				else:
-					this_rnn_input = rnn_input
+					vertical_rnn_input = layer_input_dimension
 					thisRNNcell = RNNcell
 
 				if thisRNNcell=='gru':
-					RNN_update = GRU_unit(latent_dim, this_rnn_input, n_units = n_gru_units, device=device).to(device)
+					#pdb.set_trace()
+					RNN_update = GRU_unit(latent_dim, vertical_rnn_input, n_units = n_gru_units, device=device).to(device)
 
 				elif thisRNNcell=='gru_small':
-					RNN_update = GRU_standard_unit(latent_dim, this_rnn_input, device=device).to(device)
+					RNN_update = GRU_standard_unit(latent_dim, vertical_rnn_input, device=device).to(device)
 
 				elif thisRNNcell=='lstm':
-					RNN_update = LSTM_unit(latent_dim, this_rnn_input).to(device)
+					RNN_update = LSTM_unit(latent_dim, vertical_rnn_input).to(device)
 
 				elif thisRNNcell=="star":
-					RNN_update = STAR_unit(latent_dim, this_rnn_input, n_units = n_gru_units).to(device)
+					RNN_update = STAR_unit(latent_dim, vertical_rnn_input, n_units = n_gru_units).to(device)
 
 				else:
 					raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
@@ -226,9 +225,9 @@ class ML_ODE_RNN(Baseline):
 				z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
 				
 
-			Encoder0 = Encoder_z0_ODE_RNN( 
+			self.Encoder0 = Encoder_z0_ODE_RNN( 
 				latent_dim = ode_rnn_encoder_dim, 
-				input_dim = latent_dim*2, 
+				input_dim = layer_input_dimension, 
 				z0_diffeq_solver = z0_diffeq_solver, 
 				n_gru_units = n_gru_units, 
 				device = device,
@@ -237,8 +236,7 @@ class ML_ODE_RNN(Baseline):
 				use_ODE = use_ODE
 			).to(device)
 
-			self.ode_gru.append( Encoder0 )
-
+			self.ode_gru.append( self.Encoder0 )
 		
 		# construct topper
 		if self.include_topper:
@@ -279,7 +277,8 @@ class ML_ODE_RNN(Baseline):
 				self.classifier = create_classifier(z0_dim, n_labels)
 			utils.init_network_weights(self.classifier)
 
-			self.bn_lasthidden = nn.BatchNorm1d(latent_dim)
+			if self.use_BN:
+				self.bn_lasthidden = nn.BatchNorm1d(latent_dim)
 
 		self.device = device
 
@@ -305,7 +304,7 @@ class ML_ODE_RNN(Baseline):
 
 		# run for every layer
 		for s in range(self.stacking):
-						
+			
 			if first_layer:
 
 				# if it is the first RNN-layer, transform the dimensionality of the input down using the topper NN
@@ -346,6 +345,7 @@ class ML_ODE_RNN(Baseline):
 			latent_ys = latent_ys.permute(0,2,1,3)
 
 			# add the output as a residual, if it is a ResNet
+			#pdb.set_trace()
 			if self.resnet:
 				latent_ys = latent_ys + input_sequence.unsqueeze(0)[:,:,:,:self.latent_dim]
 

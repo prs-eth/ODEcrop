@@ -156,7 +156,7 @@ class GRU_unit(nn.Module):
 
 
 	def forward(self, y_mean, y_std, x, masked_update = True):
-		#pdb.set_trace()
+		
 		y_concat = torch.cat([y_mean, y_std, x], -1)
 
 		update_gate = self.update_gate(y_concat)

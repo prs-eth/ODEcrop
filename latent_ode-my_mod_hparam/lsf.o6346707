@@ -1,0 +1,127 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"pytorch/1.4.0" "cuda/10.0.13"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
+
+
+
+Couldn't import umap
+I'm counting gpu's:  1
+Means I will train  1  models, with different random seeds
+My Devices:  ['cuda:0']
+Sampling dataset of 300000 training examples
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Testing hyperparameters:
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Trainingdataset:
+  0%|          | 0/1 [00:05<?, ?trial/s, best loss=?]                                                     Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/1 [00:05<?, ?trial/s, best loss=?]                                                     Using Evaluationdataset:
+  0%|          | 0/1 [00:05<?, ?trial/s, best loss=?]                                                     Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/1 [00:05<?, ?trial/s, best loss=?]                                                     Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
+  0%|          | 0/1 [00:05<?, ?trial/s, best loss=?]2020-05-01 18:37:45.629005: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/extras/CUPTI/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
+2020-05-01 18:37:45.629982: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/extras/CUPTI/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
+2020-05-01 18:37:45.629999: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+                                                     runs/expID3219000_TRAINode_ns:300000_ba:400_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adaw_stackin:3None_BN
+  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 3 --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN
+
+                                                     0.8637961966271978
+  0%|          | 0/1 [2:11:07<?, ?trial/s, best loss=?]                                                        at step 
+  0%|          | 0/1 [2:11:07<?, ?trial/s, best loss=?]                                                       5736000
+  0%|          | 0/1 [2:11:07<?, ?trial/s, best loss=?]                                                       {'loss': 0.13620380337280225, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8637961966271978, 'best_peak_step': 5736000, 'best_steps': [5736000]}
+  0%|          | 0/1 [2:11:07<?, ?trial/s, best loss=?]100%|██████████| 1/1 [2:11:07<00:00, 7867.79s/trial, best loss: 0.13620380337280225]100%|██████████| 1/1 [2:11:07<00:00, 7867.79s/trial, best loss: 0.13620380337280225]/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:180: RuntimeWarning: invalid value encountered in true_divide
+  var_test_acc = sum((abs(Test_acc - mean_test_acc)**2)/(num_seeds-1))
+
+/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:183: RuntimeWarning: invalid value encountered in true_divide
+  var_best_test_acc = sum((abs(Best_test_acc - mean_best_test_acc)**2)/(num_seeds-1))
+
+/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:188: RuntimeWarning: invalid value encountered in true_divide
+  var_train_acc = sum((abs(Train_acc - mean_train_acc)**2)/(num_seeds-1))
+
+
+ODE-RNN  True
+Classic-RNN:  False
+Stacked layers:  3
+Stacked layers:  None
+ODE-type:  linear
+RNN-cell:  star
+Weight-sharing ODE:  False
+Weight-sharing RNN:  False
+Using BN:  True
+defaut adapted LR's!!
+Used Optimizer: adaw
+Used Ode-Solver euler
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Trial: 0001  |  #runs: 1  |  Mean Acc.: 86.380 %  |  Std: nan %  |  Best Acc.: 86.380 % (Peak: 5736000 samples)  |  Hparams: {}  |
+---------------------------------------------------------------------------------------------------------------------------------------------
+Best configuration mean: 86.380 % (+-nan) (best run: 86.380 %) , with Hyperparmeters: {}
+---------------------------------------------------------------------------------------------------------------------------------------------
+Couldn't import umap
+I'm counting gpu's:  1
+Means I will train  1  models, with different random seeds
+My Devices:  ['cuda:0']
+Sampling dataset of 300000 training examples
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Testing hyperparameters:
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Trainingdataset:
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Dataset Crops
+    Number of datapoints: 287858
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Using Evaluationdataset:
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Dataset Crops
+    Number of datapoints: 55740
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
+  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]2020-05-01 20:48:58.850723: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/extras/CUPTI/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
+2020-05-01 20:48:58.850887: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/extras/CUPTI/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
+2020-05-01 20:48:58.850902: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+                                                     runs/expID937000_TRAINode_ns:300000_ba:400_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adaw_stackin:1['star', 'star', 'star', 'star', 'star', 'star', 'star']_BN
+  0%|          | 0/1 [00:07<?, ?trial/s, best loss=?]run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN --stack-order star star star star star star star
+
+                                                     0.8435593828489415
+  0%|          | 0/1 [3:11:29<?, ?trial/s, best loss=?]                                                        at step 
+  0%|          | 0/1 [3:11:29<?, ?trial/s, best loss=?]                                                       4588800
+  0%|          | 0/1 [3:11:29<?, ?trial/s, best loss=?]                                                       {'loss': 0.1564406171510585, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8435593828489415, 'best_peak_step': 4588800, 'best_steps': [4588800]}
+  0%|          | 0/1 [3:11:29<?, ?trial/s, best loss=?]100%|██████████| 1/1 [3:11:29<00:00, 11489.62s/trial, best loss: 0.1564406171510585]100%|██████████| 1/1 [3:11:29<00:00, 11489.62s/trial, best loss: 0.1564406171510585]/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:180: RuntimeWarning: invalid value encountered in true_divide
+  var_test_acc = sum((abs(Test_acc - mean_test_acc)**2)/(num_seeds-1))
+
+/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:183: RuntimeWarning: invalid value encountered in true_divide
+  var_best_test_acc = sum((abs(Best_test_acc - mean_best_test_acc)**2)/(num_seeds-1))
+
+/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:188: RuntimeWarning: invalid value encountered in true_divide
+  var_train_acc = sum((abs(Train_acc - mean_train_acc)**2)/(num_seeds-1))
+
+
+ODE-RNN  True
+Classic-RNN:  False
+Stacked layers:  1
+Stacked layers:  ['star', 'star', 'star', 'star', 'star', 'star', 'star']
+ODE-type:  linear
+RNN-cell:  gru
+Weight-sharing ODE:  False
+Weight-sharing RNN:  False
+Using BN:  True
+defaut adapted LR's!!
+Used Optimizer: adaw
+Used Ode-Solver euler
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Trial: 0001  |  #runs: 1  |  Mean Acc.: 84.356 %  |  Std: nan %  |  Best Acc.: 84.356 % (Peak: 4588800 samples)  |  Hparams: {}  |
+---------------------------------------------------------------------------------------------------------------------------------------------
+Best configuration mean: 84.356 % (+-nan) (best run: 84.356 %) , with Hyperparmeters: {}
+---------------------------------------------------------------------------------------------------------------------------------------------
