@@ -149,8 +149,11 @@ class ML_ODE_RNN(Baseline):
 		if stack_order is None: 
 			stack_order = ["ode_rnn"]*stacking # a list of ode_rnn, star, gru, gru_small, lstm
 		
-		if ~(len(stack_order)==stacking): # stack_order argument must be as long as the stacking list
+		self.stacking = stacking
+		if not (len(stack_order)==stacking): # stack_order argument must be as long as the stacking list
 			print("Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.")
+			print("Stack-order: ", stack_order)
+			print("Stacking argument: ", stacking)
 			self.stacking = len(stack_order)
 
 		# get the default ODE and RNN for the weightsharing
@@ -255,14 +258,14 @@ class ML_ODE_RNN(Baseline):
 
 			self.topper_bn = nn.BatchNorm1d(latent_dim)
 
-		self.z0_diffeq_solver = z0_diffeq_solver
-
+		"""
 		self.decoder = nn.Sequential(
 			nn.Linear(latent_dim, n_units),
 			nn.Tanh(),
 			nn.Linear(n_units, input_dim),)
 
 		utils.init_network_weights(self.decoder)
+		"""
 
 		z0_dim = latent_dim
 

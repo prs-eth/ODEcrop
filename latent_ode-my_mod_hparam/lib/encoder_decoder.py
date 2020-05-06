@@ -141,12 +141,14 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		self.device = device
 		self.extra_info = None
 
+		"""
 		self.transform_z0 = nn.Sequential(
 			nn.Linear(latent_dim * 2, 100),
 			nn.Tanh(),
 			nn.Linear(100, self.z0_dim * 2),)
 		utils.init_network_weights(self.transform_z0)
-
+		"""
+		
 		self.output_bn = nn.BatchNorm1d(latent_dim)
 
 
@@ -230,13 +232,14 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		for i in time_points_iter:
 
-			#TODO: Include inplementationin case of no ODE function
-			
+			# move time step to the next interval
 			prev_t = time_steps[i]							# new
-
+			#pdb.set_trace()
+			#Include inplementationin case of no ODE function
 			if self.use_ODE:
 				
 				if (prev_t - t_i) < minimum_step:
+					#short integration
 					time_points = torch.stack((prev_t, t_i))
 					inc = self.z0_diffeq_solver.ode_func(prev_t, prev_y) * (t_i - prev_t)
 
@@ -248,6 +251,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					assert(not torch.isnan(ode_sol).any())
 
 				else:
+					#complete Integration
 					n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between
 
 					time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
@@ -262,7 +266,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				#assert(torch.mean(ode_sol[:, :, 0, :]  - prev_y) < 0.001)
 
 				yi_ode = ode_sol[:, :, -1, :]
-
+				
 				xi = data[:,i,:].unsqueeze(0)
 
 			else:
@@ -270,20 +274,20 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				# skipping ODE function and assign directly
 				yi_ode = prev_y
 
-				#TODO: concaninate the delta t for pure RNN
 				single_mask = data[:,i,self.input_dim//2]
-				
 				delta_ts = (prev_t - t_i).repeat(1,n_traj,1).float()
 				delta_ts[:,~single_mask.bool(),:] = 0
 				
 				features = data[:,i,:self.input_dim//2].unsqueeze(0)
 				new_mask = single_mask.unsqueeze(0).unsqueeze(2).repeat(1,1,self.input_dim//2+1)
 
-				#creating new data including delta ts plus mask
+				#creating new data including delta ts plus mask, concaninate the delta t for pure RNN
 				xi = torch.cat([ features , delta_ts, new_mask], -1)
 
-			# TODO: check if mask is all non, if so: don't do GRU update to save computational costs
-			
+			# TODO: check if mask is all non, if so: don't do GRU update to save computational costs=> Conclusion, it is not faster
+			#pdb.set_trace()
+			#xi[:,:,self.]
+			#obs_mask = data[:,i,self.input_dim//2]
 
 			if self.RNNcell=='lstm':
 				h_i_ode = yi_ode[:,:,:self.latent_dim//2]
@@ -295,10 +299,14 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				# the RNN cell is a LSTM and outi:=(yi,ci), we only need h as latent dim
 				yi = torch.cat([outi[0], outi[1]], -1)
 			else:
-
+				
 				# GRU-unit: the output is directly the hidden state
 				#pdb.set_trace()
-				yi, yi_std = self.RNN_update(yi_ode, prev_std, xi)
+				#yi_ode[:,obs_mask.bool()], prev_std[:,obs_mask.bool()] = self.RNN_update(yi_ode[:,obs_mask.bool()], prev_std[:,obs_mask.bool()], xi[:,obs_mask.bool()])
+				yi_ode, prev_std = self.RNN_update(yi_ode, prev_std, xi)
+
+				yi, yi_std = yi_ode, prev_std
+
 
 			prev_y, prev_std = yi, yi_std
 			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original
@@ -316,7 +324,15 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		#BatchNormalization for the outputs
 		if self.use_BN:
-			latent_ys = self.output_bn(latent_ys.squeeze().permute(0,2,1)).permute(0,2,1).unsqueeze(0)
+
+			# only apply BN to the RNN converted outputs, the one that are further used...
+			# Experimental: for selective BN of outputs
+			fancy_BN = False
+			if fancy_BN:
+				obs_mask = data[:,:,self.input_dim//2].permute(1,0)
+				latent_ys[:,obs_mask.bool()] = self.output_bn(latent_ys[:,obs_mask.bool()].permute(0,2,1)).permute(0,2,1)
+			else:
+				latent_ys = self.output_bn(latent_ys.squeeze().permute(0,2,1)).permute(0,2,1).unsqueeze(0) #orig
 
 		assert(not torch.isnan(yi).any())
 		assert(not torch.isnan(yi_std).any())

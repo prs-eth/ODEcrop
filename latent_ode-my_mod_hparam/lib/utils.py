@@ -823,31 +823,31 @@ def hyperopt_summary(trials):
 
 
 
-def get_optimizer(args, params):
+def get_optimizer(optimizer, lr, params):
 
 	
-	if args.optimizer == 'adagrad':
-		optimizer = torch.optim.Adagrad(params, lr=args.lr*5, lr_decay=0, weight_decay=0, initial_accumulator_value=0, eps=1e-10)
-	elif args.optimizer == 'adadelta':
-		optimizer = optim.Adadelta(params, lr=args.lr*100*5, rho=0.9, eps=1e-06, weight_decay=0)
-	elif args.optimizer == 'adam':
-		optimizer = optim.Adam(params, lr=args.lr/10*5, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
-	elif args.optimizer == 'adaw':
-		optimizer = optim.AdamW(params, lr=args.lr/10*5, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.01, amsgrad=False)
-	elif args.optimizer == 'sparseadam':
-		optimizer = optim.SparseAdam(params/10*5, lr=args.lr, betas=(0.9, 0.999), eps=1e-08)
-	elif args.optimizer == 'ASGD':
-		optimizer = optim.ASGD(params, lr=args.lr*5, lambd=0.0001, alpha=0.75, t0=1000000.0, weight_decay=0)
-	elif args.optimizer == 'LBFGS':
-		optimizer = optim.LBFGS(params, lr=args.lr*100*5) 
-	elif args.optimizer == 'RMSprop':
-		optimizer = optim.RMSprop(params, lr=args.lr*5)
-	elif args.optimizer == 'rprop':
-		optimizer = optim.Rprop(params, lr=args.lr*5)
-	elif args.optimizer == 'SGD':
-		optimizer = optim.SGD(params, lr=args.lr*5, momentum=0, dampening=0, weight_decay=0, nesterov=False)
-	elif args.optimizer == 'adamax': #standard: adamax
-		optimizer = optim.Adamax(params, lr=args.lr) # best lr=0.01, standard is lr=0.002, mutiply every other by factor 5 as well
+	if optimizer == 'adagrad':
+		optimizer = torch.optim.Adagrad(params, lr=lr*5, lr_decay=0, weight_decay=0, initial_accumulator_value=0, eps=1e-10)
+	elif optimizer == 'adadelta':
+		optimizer = optim.Adadelta(params, lr=lr*100*5, rho=0.9, eps=1e-06, weight_decay=0)
+	elif optimizer == 'adam':
+		optimizer = optim.Adam(params, lr=lr/10*5, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
+	elif optimizer == 'adaw':
+		optimizer = optim.AdamW(params, lr=lr/10*5, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.01, amsgrad=False)
+	elif optimizer == 'sparseadam':
+		optimizer = optim.SparseAdam(params/10*5, lr=lr, betas=(0.9, 0.999), eps=1e-08)
+	elif optimizer == 'ASGD':
+		optimizer = optim.ASGD(params, lr=lr*5, lambd=0.0001, alpha=0.75, t0=1000000.0, weight_decay=0)
+	elif optimizer == 'LBFGS':
+		optimizer = optim.LBFGS(params, lr=lr*100*5) 
+	elif optimizer == 'RMSprop':
+		optimizer = optim.RMSprop(params, lr=lr*5)
+	elif optimizer == 'rprop':
+		optimizer = optim.Rprop(params, lr=lr*5)
+	elif optimizer == 'SGD':
+		optimizer = optim.SGD(params, lr=lr*5, momentum=0, dampening=0, weight_decay=0, nesterov=False)
+	elif optimizer == 'adamax': #standard: adamax
+		optimizer = optim.Adamax(params, lr=lr) # best lr=0.01, standard is lr=0.002, mutiply every other by factor 5 as well
 	else:
 		raise Exception("Optimizer not supported. Please change it!")
 

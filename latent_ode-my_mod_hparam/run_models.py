@@ -118,7 +118,7 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 					# working: adamax, adagrad, adadelta, adam, adaw, ASGD, rprop, RMSprop
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure)
 
-parser.add_argument('--num-seeds', type=int, default=3, help="Number of runs to average from. Default=3")
+parser.add_argument('--num-seeds', type=int, default=1, help="Number of runs to average from. Default=3")
 parser.add_argument('--num-search', type=int, default=1, help="Number of search steps to be executed")
 parser.add_argument('--hparams', nargs='*', help="a set of (separated by blank spaces): rec_layers, units, latents, gru_units, optimizer, lr, batch_size, ode_method")
 
@@ -228,7 +228,7 @@ if __name__ == '__main__':
 		hyper_config["optimizer"] = hp.choice('optimizer', optimizer_choice)
 	
 	if 'lr' in args.hparams:
-		hyper_config["lr"] = hp.loguniform('lr', np.log(0.0001), np.log(0.0400))
+		hyper_config["lr"] = hp.loguniform('lr', np.log(0.001), np.log(0.015))
 	
 	if 'batch_size' in args.hparams:
 		hyper_config["batch_size"] = hp.qloguniform('batch_size', np.log(150), np.log(1000), 10), 

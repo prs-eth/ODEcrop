@@ -26,7 +26,7 @@ class STAR_unit(nn.Module):
 	"""
 
 	def __init__(self, hidden_size, input_size,
-		n_units=0, bias=True):
+		n_units=0, bias=True, use_BN=False):
 		super(STAR_unit, self).__init__()
 
 		self.input_size = input_size
@@ -64,7 +64,14 @@ class STAR_unit(nn.Module):
 				nn.Tanh(),
 				nn.Linear(n_units, hidden_size))
 			utils.init_network_weights(self.h_K, initype="ortho")
-			
+		
+		self.use_BN = use_BN
+
+		if self.use_BN:
+			self.bn_x_K = nn.BatchNorm1d(hidden_size)
+			self.bn_x_z = nn.BatchNorm1d(hidden_size)
+			self.bn_h_K = nn.BatchNorm1d(hidden_size)
+
 #		init.kaiming_normal_(self.x_K.weight) 
 #		init.kaiming_normal_(self.x_z.weight)
 #		init.kaiming_normal_(self.h_K.weight)
@@ -75,6 +82,13 @@ class STAR_unit(nn.Module):
 
 	def forward(self, hidden, y_std, x, masked_update=True):
 		
+		#getting the mask
+		n_data_dims = x.size(-1)//2
+		mask = x[:, :, n_data_dims:]
+		utils.check_mask(x[:, :, :n_data_dims], mask)
+		mask = (torch.sum(mask, -1, keepdim = True) > 0).float()
+
+
 		gate_x_K = self.x_K(x) 			# return size torch.Size([1, batch_size, latent_dim])
 		gate_x_z = self.x_z(x) 			# return size torch.Size([1, batch_size, latent_dim])
 		gate_h_K = self.h_K(hidden)		# return size torch.Size([1, batch_size, latent_dim])
@@ -82,25 +96,26 @@ class STAR_unit(nn.Module):
 		gate_x_K = gate_x_K.squeeze()
 		gate_x_z = gate_x_z.squeeze()
 		gate_h_K = gate_h_K.squeeze()
-		
+
+		if self.use_BN:
+			if torch.sum(mask.float())>1:
+				gate_x_K[mask.squeeze().bool()] = self.bn_x_K(gate_x_K[mask.squeeze().bool()])
+				gate_x_z[mask.squeeze().bool()] = self.bn_x_z(gate_x_z[mask.squeeze().bool()])
+				gate_h_K[mask.squeeze().bool()] = self.bn_h_K(gate_h_K[mask.squeeze().bool()])
+
 		K_gain = torch.sigmoid(gate_x_K + gate_h_K)
 		z = torch.tanh(gate_x_z)
 		
 		h_new = hidden + K_gain * ( z - hidden) 
 		h_new = torch.tanh(h_new)
 		
-		# TODO: Implement Masked update
+		# Masked update
 		if masked_update:
 			# IMPORTANT: assumes that x contains both data and mask
 			# update only the hidden states for hidden state only if at least one feature is present for the current time point
-			n_data_dims = x.size(-1)//2
-			mask = x[:, :, n_data_dims:]
-			utils.check_mask(x[:, :, :n_data_dims], mask)
 			
-			mask = (torch.sum(mask, -1, keepdim = True) > 0).float()
 
 			assert(not torch.isnan(mask).any())
-			#print(mask[0,1:30,0])
 
 			h_new = mask * h_new + (1-mask) * hidden
 

@@ -234,6 +234,8 @@ def train_it(
 	Best_test_acc_step = []
 	Logger = []
 	Optimizer = []
+	otherOptimizer = []
+	ODEOptimizer = []
 
 	for i, device in enumerate(Devices):
 
@@ -248,7 +250,24 @@ def train_it(
 		Logger.append( utils.get_logger(logpath=log_path, filepath=os.path.abspath(__file__)) )
 		Logger[i].info(input_command)
 		
-		Optimizer.append( get_optimizer(args, Model[i].parameters()))
+		
+		"""
+		Diffeq_param = Model[i].Encoder0.z0_diffeq_solver.parameters()
+
+		other_param = [ list(Model[i].classifier.parameters(),
+						Model[i].Encoder0.RNN_update.parameters(),
+						Model[i].Encoder0.ode_bn0.parameters(),
+						Model[i].Encoder0.ode_bn1.parameters(),
+						Model[i].Encoder0.output_bn.parameters(),
+						Model[i].parameters() ]
+		"""
+
+		Optimizer.append( get_optimizer(args.optimizer, args.lr, Model[i].parameters() ) )
+
+		"""
+		otherOptimizer.append( get_optimizer(args.optimizer, args.lr, Diffeq_param ) )
+		ODEOptimizer.append( get_optimizer(args.optimizer, args.lr, Model[i].parameters() ) )
+		"""
 
 	num_batches = Data_obj[0]["n_train_batches"]
 
