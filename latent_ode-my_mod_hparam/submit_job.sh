@@ -32,7 +32,12 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 
 # Stacking of Residual layers ode_rnn
 #python run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn ode_rnn --ode-type gru --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN --resnet
-python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --resnet --lr 0.0084761 -g 78 --ode-rnn --stack-order ode_rnn ode_rnn ode_rnn --ode-type gru --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax -ODEws --num-search 15 --hparams gru_units
+
+# Stacking of Residual layers with weightsharing 88.04%
+#python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --resnet --lr 0.0084761 -g 78 --ode-rnn --stack-order ode_rnn ode_rnn ode_rnn --ode-type gru --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax -ODEws --num-search 15 --hparams gru_units
+
+# Stacking of Residual layers with weightsharing 88.04%
+python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --resnet --lr 0.0084761 -g 78 --ode-rnn --stack-order ode_rnn ode_rnn gru_small --ode-type gru --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax -ODEws -RNNws --num-search 15 --hparams lr
 
 # Stacking of Residual layers with weightsharing
 #python run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stacking 2 --ode-type linear --rnn-cell gru_small --ode-method euler --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN -ODEws
