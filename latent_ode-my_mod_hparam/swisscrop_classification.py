@@ -93,17 +93,34 @@ gt = {0: '0_unknown',
 35: 'Wheat'}
 
 class Dataset(torch.utils.data.Dataset):
-	def __init__(self, path, t=0.9, mode='all', eval_mode=False, fold=None, gt_path='data/SwissCrops/labels.csv'):
+	def __init__(self, root, t=0.9, mode='all', eval_mode=False, fold=None, gt_path='data/SwissCrops/labels.csv'):
 		
-		self.data = h5py.File(path, "r")
-		self.samples = self.data["data"].shape[0]
-		self.max_obs = self.data["data"].shape[1]
-		self.spatial = self.data["data"].shape[2:-1]
-		#self.n_classes = np.max( self.data["gt"] ) + 1
+		self.root = root
 		self.t = t
 		self.augment_rate = 0.66
 		self.eval_mode = eval_mode
 		self.fold = fold
+
+		self.shuffle = True
+		self.normalization = True
+
+
+
+		if self.check_exists():
+			self.process_data()
+
+
+		if mode=="train":
+			data_file = self.train_file
+		elif mode=="test":
+			data_file = self.test_file
+
+		self.data = h5py.File(data_file, "r")
+		self.samples = self.data["data"].shape[0]
+		self.max_obs = self.data["data"].shape[1]
+		self.spatial = self.data["data"].shape[2:-1]
+		#self.n_classes = np.max( self.data["gt"] ) + 1
+		
 		
 		#Get train/test split
 		if self.fold != None:
@@ -114,13 +131,10 @@ class Dataset(torch.utils.data.Dataset):
 		
 		self.valid_samples = self.valid_list.shape[0]
 		
-		#self.dates = self.chooose_dates()[0].tolist()
-		#self.dates = self.chooose_dates_2().tolist()
-		#self.max_obs = len(self.dates)
 		self.max_obs = 71
 
 		gt_path_ = gt_path		
-		if not os.path.exists(path):
+		if not os.path.exists(gt_path):
 			gt_path_ = './'  + gt_path
 					
 		file=open(gt_path_, "r")
@@ -165,10 +179,6 @@ class Dataset(torch.utils.data.Dataset):
 			tier_2_.append(tier_2_elements.index(tier_2[i]))
 			tier_3_.append(tier_3_elements.index(tier_3[i]))
 			tier_4_.append(tier_4_elements.index(tier_4[i]))		
-		
-		#self.label_list = [0.,2,7,10,15,16,18,21,23,34,58,60,62,63,64]
-		#self.label_list_local_1 = [0.,1,1,1,1,1,1,1,1,1,2,2,2,2,2] #unknown, fieldcrop, grassland 
-		#self.label_list_local_2 = [0.,1,2,1,2,3,3,3,3,4,5,5,6,6,6] #unknown, smallCreal, largeCreal, broadLeaf, veg, meadow, pastures
 
 		self.label_list_local_1 = []
 		self.label_list_local_2 = []
@@ -185,28 +195,7 @@ class Dataset(torch.utils.data.Dataset):
 			self.label_list_local_2_name.append(tier_3[int(gt)])
 			self.label_list_glob_name.append(tier_4[int(gt)])
 
-#		self.tier_2_elements_reduced = list(set(self.label_list_local_1))
-#		self.tier_3_elements_reduced = list(set(self.label_list_local_2))
-#		self.tier_4_elements_reduced = list(set(self.label_list_glob))
-#		self.tier_2_elements_reduced.sort()
-#		self.tier_3_elements_reduced.sort()
-#		self.tier_4_elements_reduced.sort()
-		
 
-#		print(self.label_list)
-#		print('-'*20)
-#		
-#		print(self.label_list_local_1)
-#		print(self.label_list_local_1_name)		
-#		print('-'*20)
-#
-#		print(self.label_list_local_2)
-#		print(self.label_list_local_2_name)				
-#		print('-'*20)
-#		
-#		print(self.label_list_glob)
-#		print(self.label_list_glob_name)
-			
 		"""	
 		for i in range(len(self.label_list_glob_name)):
 			print(i, ' , ' ,self.label_list[i], ' , ' ,self.label_list_local_1[i],  ' , ' ,self.label_list_local_2[i], ' , ' ,self.label_list_glob[i])
@@ -214,14 +203,10 @@ class Dataset(torch.utils.data.Dataset):
 			print('-'*20)
 		"""
 
-		#self.n_classes = len(self.label_list)
 		self.n_classes = max(self.label_list_glob) + 1
 		self.n_classes_local_1 = max(self.label_list_local_1) + 1
 		self.n_classes_local_2 = max(self.label_list_local_2) + 1
-#		self.n_classes = len(self.tier_4_elements_reduced)
-#		self.n_classes_local_1 = len(self.tier_2_elements_reduced)
-#		self.n_classes_local_2 = len(self.tier_3_elements_reduced)
-		
+
 		print('Dataset size: ', self.samples)
 		print('Valid dataset size: ', self.valid_samples)
 		print('Sequence length: ', self.max_obs)
@@ -246,10 +231,67 @@ class Dataset(torch.utils.data.Dataset):
 				self.l1_2_l2[i] = self.label_list_local_1[self.label_list_local_2.index(i)]
 		#for consistency loss---------------------------------------------------------
 		
-	   
+	def process_data(self):
+		"""
+		TODO:
+		 - cutting data into correct samples
+		 - shuffle_data by storing them via random indexing
+		 - Normalize data
+		 - Concatinate mask to data
+		 - get time stamps
+		"""
+
+
+
+			
+		
+		pass
 		
 	def __len__(self):
 		return self.valid_samples
+
+	@property
+	def raw_folder(self):
+		return os.path.join(self.root, 'raw')
+
+	@property
+	def processed_folder(self):
+		return os.path.join(self.root, 'processed')
+
+	@property
+	def raw_file(self):
+		return os.path.join(self.raw_folder, "train_set_24x24_debug.hdf5")
+
+	@property
+	def train_file(self):
+		return os.path.join(self.raw_folder, "train_set_3x3_processed.hdf5")
+
+	@property
+	def test_file(self):
+		return os.path.join(self.raw_folder, "test_set_3x3_processed.hdf5")
+
+	@property
+	def time_file(self):
+		return os.path.join(self.raw_folder, 'time.hdf5')
+
+
+
+	def check_exists(self):
+		exist_train = os.path.exists(
+				os.path.join(self.processed_folder, self.train_file)
+				 )
+		exist_test = os.path.exists(
+				os.path.join(self.processed_folder, self.test_file)
+				 )
+		exist_time = os.path.exists(
+				os.path.join(self.processed_folder, self.time_file)
+				 )
+		
+		if not (exist_train and exist_test and exist_time):
+			return False
+		return True
+
+
 
 	def __getitem__(self, idx):
 					 
@@ -442,13 +484,21 @@ class Dataset(torch.utils.data.Dataset):
 if __name__=="__main__":
 
 	#dataset = Dataset("/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/data/SwissCrops/raw/train_set_24x24_debug.hdf5", 0.,'all')
-	dataset = Dataset("data/SwissCrops/raw/train_set_24x24_debug.hdf5", 0.,'all')
+	#all_dataset = Dataset("data/SwissCrops/raw/train_set_24x24_debug.hdf5", 0.,'all')
+
+
+	train_dataset = Dataset("data/SwissCrops/", 0.,'train')
+	test_dataset = Dataset("data/SwissCrops/", 0.,'test')
+
+
 
 	#traindataset = Dataset("/home/pf/pfstaff/projects/ozgur_data/TG_expYear19.hdf5", 0.5, 'all')
 	
 	#traindataset.data_stat()
-	print(len(dataset))
-	dataset.data_stat()
+	print(len(all_dataset))
+	print(len(train_dataset))
+	print(len(test_dataset))
+	#dataset.data_stat()
 
 	#pdb.set_trace()
-	dataset[0]
+	test_dataset[0]
