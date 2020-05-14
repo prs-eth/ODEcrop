@@ -72,9 +72,9 @@ class Crops(object):
 		print('Downloading data...')
 		
 		# get the dataset from the web
-		#os.system('wget ftp://m1370728:m1370728@138.246.224.34/data.zip')
-		#os.system('unzip data.zip -d ' + self.raw_folder)
-		#os.system('rm data.zip')
+		os.system('wget ftp://m1370728:m1370728@138.246.224.34/data.zip')
+		os.system('unzip data.zip -d ' + self.raw_folder)
+		os.system('rm data.zip')
 		
 		#Processing data
 		print('Scanning data...')
@@ -90,7 +90,7 @@ class Crops(object):
 		unique_times = np.array([0])
 		for filename in (os.listdir(train_localdir)):
 			with open(os.path.join(train_localdir, filename), "rb") as f:
-				u = pickle._Unpickler(f);
+				u = pickle._Unpickler(f)
 				u.encoding = 'latin1'
 				X, Y, _ = u.load()
 				if first:
@@ -102,7 +102,7 @@ class Crops(object):
 		unique_times = np.array([0])
 		for filename in (os.listdir(test_localdir)):
 			with open(os.path.join(test_localdir, filename), "rb") as f:
-				u = pickle._Unpickler(f);
+				u = pickle._Unpickler(f)
 				u.encoding = 'latin1'
 				X, _, _ = u.load()
 				unique_times = np.unique(np.hstack([ X[:,:,0].ravel(), unique_times] ))
@@ -110,7 +110,7 @@ class Crops(object):
 		unique_times = np.array([0])
 		for filename in (os.listdir(eval_localdir)):
 			with open(os.path.join(eval_localdir, filename), "rb") as f:
-				u = pickle._Unpickler(f);
+				u = pickle._Unpickler(f)
 				u.encoding = 'latin1'
 				X, _, _ = u.load()
 				unique_times = np.unique(np.hstack([ X[:,:,timeC].ravel(), unique_times] ))
@@ -135,7 +135,7 @@ class Crops(object):
 			with open(os.path.join(train_localdir, filename), "rb") as f:
 				
 				#Unpacking procedure with pickels
-				u = pickle._Unpickler(f);
+				u = pickle._Unpickler(f)
 				u.encoding = 'latin1'
 				data = u.load()
 				X, Y, obslen = data
@@ -229,7 +229,7 @@ class Crops(object):
 			
 			with open(os.path.join(test_localdir, filename), "rb") as f:
 				#Unpacking procedure with pickels
-				u = pickle._Unpickler(f);
+				u = pickle._Unpickler(f)
 				u.encoding = 'latin1'
 				data = u.load()
 				X, Y, obslen = data
@@ -309,7 +309,7 @@ class Crops(object):
 			
 			with open(os.path.join(eval_localdir, filename), "rb") as f:
 				#Unpacking procedure with pickels
-				u = pickle._Unpickler(f);
+				u = pickle._Unpickler(f)
 				u.encoding = 'latin1'
 				data = u.load()
 				X, Y, obslen = data
@@ -419,7 +419,7 @@ class Crops(object):
 			with open(os.path.join(train_localdir, filename), "rb") as f:
 				
 				#Unpacking procedure with pickels
-				u = pickle._Unpickler(f);
+				u = pickle._Unpickler(f)
 				u.encoding = 'latin1'
 				data = u.load()
 				X, Y, obslen = data
@@ -539,7 +539,7 @@ class Crops(object):
 			with open(os.path.join(test_localdir, filename), "rb") as f:
 				
 				#Unpacking procedure with pickels
-				u = pickle._Unpickler(f);
+				u = pickle._Unpickler(f)
 				u.encoding = 'latin1'
 				data = u.load()
 				X, Y, obslen = data
@@ -656,7 +656,7 @@ class Crops(object):
 			with open(os.path.join(eval_localdir, filename), "rb") as f:
 				
 				#Unpacking procedure with pickels
-				u = pickle._Unpickler(f);
+				u = pickle._Unpickler(f)
 				u.encoding = 'latin1'
 				data = u.load()
 				X, Y, obslen = data

@@ -16,10 +16,12 @@ from generate_timeseries import Periodic_1d
 from torch.distributions import uniform
 
 from torch.utils.data import DataLoader
+
 from mujoco_physics import HopperPhysics
 from physionet import PhysioNet, variable_time_collate_fn, get_data_min_max
 from person_activity import PersonActivity, variable_time_collate_fn_activity
 from crop_classification import Crops, variable_time_collate_fn_crop
+from swisscrop_classification import SwissCrops
 
 from sklearn import model_selection
 import random
@@ -196,7 +198,6 @@ def parse_datasets(args, device):
 	##################################################################
 	# Crop Classification
 		
-	#if dataset_name == "crops":
 	if dataset_name == "crop":
 
 		#Implemented tensorformat
@@ -303,7 +304,25 @@ def parse_datasets(args, device):
 		#pdb.set_trace()
 		return data_objects
 	
+	##################################################################
+	###########     SWISS Crop Classification     ####################
 	
+	if dataset_name == "swisscrop":
+
+		train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", args=args,
+										download=True, device = device)
+		test_dataset_obj = SwissCrops('data/SwissCrops', mode="test", args=args, 
+										download=True, device = device) 
+
+
+
+
+
+		return data_objects
+
+
+
+		
 	########### 1d datasets ###########
 
 	# Sampling args.timepoints time points in the interval [0, args.max_t]
