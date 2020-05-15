@@ -12,15 +12,20 @@ import csv
 import pdb
 
 
-class SwissCropsOutdated(object):
-	def __init__(self, root, args, download=False,
-		reduce='average', mode='train', minseqlength=20,
-		n_samples = None, device = torch.device("cpu")):
+class SwissCrops(object):
+	def __init__(self, root, mode='train', device = torch.device("cpu"),
+		neighbourhood=3):
 
 		self.root = root
 
 		self.normalize = True
 		self.shuffle = True
+		self.neighbourhood = neighbourhood
+
+		if not self.check_exists():
+			self.process_data()
+
+
 
 		data_file = "train_set_24x24_debug.hdf5"
 		pdb.set_trace()
@@ -35,16 +40,50 @@ class SwissCropsOutdated(object):
 		self.timestamps = h5py.File(os.path.join(self.processed_folder, self.time_file), "r")["tt"][:]
 
 	def process_data(self):
-
 		"""
 		TODO:
-		 - create tt file
-		 - remove clouds
-		 - normalize data
-		 - make validation data
-
+		 - cutting data into correct samples
+		 - shuffle_data by storing them via random indexing
+		 - Normalize data
+		 - Concatinate mask to data
+		 - get time stamps
+		 - save data
+		 - save time stamps
+		 - save valid list
 		"""
-		pass
+
+		train_dataset = Dataset("data/SwissCrops/", 0.,'train')
+		raw_train_samples = len(train_dataset)
+
+		test_dataset = Dataset("data/SwissCrops/", 0.,'test')
+		raw_test_samples = len(test_dataset)
+
+		for idx in range(raw_train_samples):
+			X, target, target_local_1, target_local_2, cloud_cover = train_dataset[idx]
+
+			# check if data can be cropped
+
+			seq_length = X.shape[0]
+
+			cloud_mask = cloud_cover>0.95
+			invalid_obs = np.sum(cloud_mask,axis=0)==0
+
+
+			a = np.array([[ 0,  1,  2,  3,  4],
+				[ 5,  6,  7,  8,  9],
+				[10, 11, 12, 13, 14],
+				[15, 16, 17, 18, 19],
+				[20, 21, 22, 23, 24]])
+
+			a = X
+
+			sub_shape = (3,3)
+			view_shape = tuple(np.subtract(a.shape, sub_shape) + 1) + sub_shape
+			strides = a.strides + a.strides
+
+			sub_matrices = np.lib.stride_tricks.as_strided(a,view_shape,strides)
+						
+
 
 	@property
 	def raw_folder(self):
@@ -54,7 +93,36 @@ class SwissCropsOutdated(object):
 	def processed_folder(self):
 		return os.path.join(self.root, 'processed')
 
+	@property
+	def raw_file(self):
+		return os.path.join(self.raw_folder, "train_set_24x24_debug.hdf5")
 
+	@property
+	def train_file(self):
+		return os.path.join(self.raw_folder, "train_set_3x3_processed.hdf5")
+
+	@property
+	def test_file(self):
+		return os.path.join(self.raw_folder, "test_set_3x3_processed.hdf5")
+
+	@property
+	def time_file(self):
+		return os.path.join(self.raw_folder, 'time.hdf5')
+
+	def check_exists(self):
+		exist_train = os.path.exists(
+				os.path.join(self.processed_folder, self.train_file)
+				 )
+		exist_test = os.path.exists(
+				os.path.join(self.processed_folder, self.test_file)
+				 )
+		exist_time = os.path.exists(
+				os.path.join(self.processed_folder, self.time_file)
+				 )
+		
+		if not (exist_train and exist_test and exist_time):
+			return False
+		return True
 
 
 
@@ -97,25 +165,17 @@ class Dataset(torch.utils.data.Dataset):
 		
 		self.root = root
 		self.t = t
-		self.augment_rate = 0.66
+		self.augment_rate = 0
 		self.eval_mode = eval_mode
 		self.fold = fold
+		self.gt_path = gt_path
 
 		self.shuffle = True
 		self.normalization = True
 
+		self.mode = mode
 
-
-		if self.check_exists():
-			self.process_data()
-
-
-		if mode=="train":
-			data_file = self.train_file
-		elif mode=="test":
-			data_file = self.test_file
-
-		self.data = h5py.File(data_file, "r")
+		self.data = h5py.File(self.raw_file, "r")
 		self.samples = self.data["data"].shape[0]
 		self.max_obs = self.data["data"].shape[1]
 		self.spatial = self.data["data"].shape[2:-1]
@@ -231,21 +291,6 @@ class Dataset(torch.utils.data.Dataset):
 				self.l1_2_l2[i] = self.label_list_local_1[self.label_list_local_2.index(i)]
 		#for consistency loss---------------------------------------------------------
 		
-	def process_data(self):
-		"""
-		TODO:
-		 - cutting data into correct samples
-		 - shuffle_data by storing them via random indexing
-		 - Normalize data
-		 - Concatinate mask to data
-		 - get time stamps
-		"""
-
-
-
-			
-		
-		pass
 		
 	def __len__(self):
 		return self.valid_samples
@@ -262,34 +307,7 @@ class Dataset(torch.utils.data.Dataset):
 	def raw_file(self):
 		return os.path.join(self.raw_folder, "train_set_24x24_debug.hdf5")
 
-	@property
-	def train_file(self):
-		return os.path.join(self.raw_folder, "train_set_3x3_processed.hdf5")
 
-	@property
-	def test_file(self):
-		return os.path.join(self.raw_folder, "test_set_3x3_processed.hdf5")
-
-	@property
-	def time_file(self):
-		return os.path.join(self.raw_folder, 'time.hdf5')
-
-
-
-	def check_exists(self):
-		exist_train = os.path.exists(
-				os.path.join(self.processed_folder, self.train_file)
-				 )
-		exist_test = os.path.exists(
-				os.path.join(self.processed_folder, self.test_file)
-				 )
-		exist_time = os.path.exists(
-				os.path.join(self.processed_folder, self.time_file)
-				 )
-		
-		if not (exist_train and exist_test and exist_time):
-			return False
-		return True
 
 
 
@@ -298,13 +316,18 @@ class Dataset(torch.utils.data.Dataset):
 		idx = self.valid_list[idx]
 		X = self.data["data"][idx]
 		target_ = self.data["gt"][idx,...,0]
+		cloud_cover = self.data["cloud_cover"][idx,...]
 		if self.eval_mode:
 			gt_instance = self.data["gt_instance"][idx,...,0]
 
 
 		X = np.transpose(X, (0, 3, 1, 2))
 		
-		X = X[0::2,:4,...]
+		#Use half of the time series
+		step = 2
+		X = X[0::step,:4,...]
+		cloud_cover = cloud_cover[0::step,...]
+		
 		#X = X[self.dates,...] 
 		
 		#Change labels 
@@ -320,19 +343,21 @@ class Dataset(torch.utils.data.Dataset):
 			target_local_1[target_ == self.label_list[i]] = self.label_list_local_1[i]
 			target_local_2[target_ == self.label_list[i]] = self.label_list_local_2[i]
 
-
+		"""
 		X = torch.from_numpy(X)
+		cloud_cover = torch.from_numpy(cloud_cover).float()
 		target = torch.from_numpy(target).float()
 		target_local_1 = torch.from_numpy(target_local_1).float()
 		target_local_2 = torch.from_numpy(target_local_2).float()
 		if self.eval_mode:
 			gt_instance = torch.from_numpy(gt_instance).float()
 
-
+		"""
 		#augmentation
 		if self.eval_mode==False and np.random.rand() < self.augment_rate:
 			flip_dir  = np.random.randint(3)
 			if flip_dir == 0:
+				X = X.flip(2)
 				X = X.flip(2)
 				target = target.flip(0)
 				target_local_1 = target_local_1.flip(0)
@@ -341,6 +366,7 @@ class Dataset(torch.utils.data.Dataset):
 					gt_instance = gt_instance.flip(0)
 			elif flip_dir == 1:
 				X = X.flip(3)
+				cloud_cover = cloud_cover.flip(3)
 				target = target.flip(1)
 				target_local_1 = target_local_1.flip(1)
 				target_local_2 = target_local_2.flip(1)
@@ -348,6 +374,7 @@ class Dataset(torch.utils.data.Dataset):
 					gt_instance = gt_instance.flip(1)	
 			elif flip_dir == 2:
 				X = X.flip(2,3)
+				cloud_cover = cloud_cover.flip(2,3)
 				target = target.flip(0,1)  
 				target_local_1 = target_local_1.flip(0,1)  
 				target_local_2 = target_local_2.flip(0,1)  
@@ -359,9 +386,10 @@ class Dataset(torch.utils.data.Dataset):
 		X = X * 1e-4
 		
 		if self.eval_mode:  
-			return X.float(), target.long(), target_local_1.long(), target_local_2.long(), gt_instance.long()	 
+			return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long(), gt_instance.long()	 
 		else:
-			return X.float(), target.long(), target_local_1.long(), target_local_2.long()
+			return X, target, target_local_1, target_local_2, cloud_cover
+			#return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long()
 
 
 
@@ -483,22 +511,31 @@ class Dataset(torch.utils.data.Dataset):
 
 if __name__=="__main__":
 
+	"""
 	#dataset = Dataset("/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/data/SwissCrops/raw/train_set_24x24_debug.hdf5", 0.,'all')
 	#all_dataset = Dataset("data/SwissCrops/raw/train_set_24x24_debug.hdf5", 0.,'all')
 
-
 	train_dataset = Dataset("data/SwissCrops/", 0.,'train')
-	test_dataset = Dataset("data/SwissCrops/", 0.,'test')
-
-
+	#test_dataset = Dataset("data/SwissCrops/", 0.,'test')
 
 	#traindataset = Dataset("/home/pf/pfstaff/projects/ozgur_data/TG_expYear19.hdf5", 0.5, 'all')
 	
 	#traindataset.data_stat()
-	print(len(all_dataset))
+	#print(len(all_dataset))
 	print(len(train_dataset))
-	print(len(test_dataset))
+	#print(len(test_dataset))
 	#dataset.data_stat()
 
 	#pdb.set_trace()
-	test_dataset[0]
+	X, target, target_local_1, target_local_2 = train_dataset[:12]
+
+	print(len(train_dataset))
+	"""
+
+
+
+
+	#dataset = Dataset("/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/data/SwissCrops/raw/train_set_24x24_debug.hdf5", 0.,'all')
+
+
+	train_dataset_obj = SwissCrops('data/SwissCrops', mode="train")
