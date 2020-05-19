@@ -309,14 +309,34 @@ def parse_datasets(args, device):
 	
 	if dataset_name == "swisscrop":
 
-		train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", args=args,
-										download=True, device = device)
-		test_dataset_obj = SwissCrops('data/SwissCrops', mode="test", args=args, 
-										download=True, device = device) 
+		train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", device=args.device)
+		test_dataset_obj = SwissCrops('data/SwissCrops', mode="test", device=args.device) 
 
 
+		
+		n_samples = min(args.n, len(train_dataset_obj))
+		n_test_samples = min( float("inf"), len(test_dataset_obj))
 
 
+		a_train_dict = train_dataset_obj[0]
+		vals = a_train_dict["observed_data"]
+		tt = a_train_dict["observed_tp"]
+		mask = a_train_dict["observed_mask"]
+		labels = a_train_dict["labels"]
+		
+		train_dataloader = FastTensorDataLoader(train_dataset_obj, batch_size=batch_size, shuffle=False)
+		test_dataloader = FastTensorDataLoader(test_dataset_obj, batch_size=test_batch_size, shuffle=False)
+
+		data_objects = {"dataset_obj": train_dataset_obj, 
+					"train_dataloader": utils.inf_generator(train_dataloader), 
+					"test_dataloader": utils.inf_generator(test_dataloader), #changed to validate on the evalutation set #attention, might be another naming convention...
+					"eval_dataloader": utils.inf_generator(eval_dataloader), #attention, might be another naming convention...
+					"input_dim": vals.size(-1),
+					"n_train_batches": len(train_dataloader),
+					"n_test_batches": len(test_dataloader),
+					"n_eval_batches": len(eval_dataloader),
+					"classif_per_tp": False, # We want to classify the whole sequence!!. Standard: True, #optional
+					"n_labels": labels.size(-1)}
 
 		return data_objects
 

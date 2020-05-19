@@ -768,9 +768,6 @@ class Crops(object):
 			hdf5_file_test["data"][:] = np.divide(  np.subtract(hdf5_file_test["data"], training_mean2, out=np.zeros_like(hdf5_file_test["data"][:]), where=hdf5_file_test["mask"][:])  ,  training_std2  , out=np.zeros_like(hdf5_file_test["data"][:]), where=hdf5_file_test["mask"][:])
 			hdf5_file_eval["data"][:] = np.divide(  np.subtract(hdf5_file_eval["data"], training_mean2, out=np.zeros_like(hdf5_file_eval["data"][:]), where=hdf5_file_eval["mask"][:])  ,  training_std2  , out=np.zeros_like(hdf5_file_eval["data"][:]), where=hdf5_file_eval["mask"][:])
 
-			# hdf5_file_train["data"][:] = (hdf5_file_train["data"] - training_mean2) / training_std2
-			# hdf5_file_test["data"][:] = (hdf5_file_test["data"] - training_mean2) / training_std2
-			# hdf5_file_eval["data"][:] = (hdf5_file_eval["data"] - training_mean2) / training_std2
 
 		print("Preprocessing finished")
 		
