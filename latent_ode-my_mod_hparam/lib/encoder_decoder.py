@@ -212,10 +212,10 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		# Nando' comment: why the last time steps?
 		#prev_t, t_i = time_steps[-1] + 0.01,  time_steps[-1] # original
 		#t_i = time_steps[-1]  # new
-		t_i = time_steps[0] - 0.005 # new
+		t_i = time_steps[0] - 0.00001 # new
 
 		interval_length = time_steps[-1] - time_steps[0]
-		minimum_step = interval_length / 50 # maybe have to modify minimum time step # original
+		minimum_step = interval_length / 100 # maybe have to modify minimum time step # original
 		#minimum_step = interval_length / 100 # maybe have to modify minimum time step # new
 
 		#print("minimum step: {}".format(minimum_step))

@@ -275,8 +275,7 @@ def get_next_batch(dataloader):
 	if ("labels" in data_dict) and (data_dict["labels"] is not None):
 		batch_dict["labels"] = data_dict["labels"]
 		
-		#Nando's Modification below: why don't we cut the labels as well?
-		#TODO: Maybe have to integrate this to the preprocessing step!!
+		#Nando's Modification below: why don't cut the labels as well?
 		#if args.dataset == "crop":
 		batch_dict["labels"] = data_dict["labels"]#[:, non_missing_tp]
 
@@ -825,7 +824,6 @@ def hyperopt_summary(trials):
 
 def get_optimizer(optimizer, lr, params):
 
-	
 	if optimizer == 'adagrad':
 		optimizer = torch.optim.Adagrad(params, lr=lr*5, lr_decay=0, weight_decay=0, initial_accumulator_value=0, eps=1e-10)
 	elif optimizer == 'adadelta':

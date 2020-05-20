@@ -25,6 +25,7 @@ from tqdm import tqdm
 import pdb
 import numpy as np
 from hyperopt import STATUS_OK
+import wandb
 
 
 def construct_and_train_model(config):
@@ -59,10 +60,10 @@ def construct_and_train_model(config):
 	if isinstance(args.batch_size, tuple):
 		args.batch_size = int(args.batch_size[0])
 	args.gru_units = int(args.gru_units)
+
+	
 	##############################################################################
-
-	# set seed
-
+	## set seed
 
 	randID = int(SystemRandom().random()*10000)*1000
 	ExperimentID = []
@@ -71,7 +72,7 @@ def construct_and_train_model(config):
 
 	torch.manual_seed(args.random_seed)
 	np.random.seed(args.random_seed)
-	
+
 	##############################################################################
 	# Dataset
 	Data_obj = []
@@ -105,10 +106,13 @@ def construct_and_train_model(config):
 	if args.ode_rnn:
 		for i in range(num_seeds):
 			Model.append(get_ODE_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
-
+			
 	if args.classic_rnn:
 		for i in range(num_seeds):
 			Model.append(get_classic_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
+
+	# "Magic" wandb model watcher
+	wandb.watch(Model[0], "all")
 
 	##################################################################
 	
@@ -317,7 +321,10 @@ def train_it(
 			Optimizer[i].step()
 
 		n_iters_to_viz = 0.333
-		vizualization_intervall =(round(n_iters_to_viz * num_batches - 0.499999) if round(n_iters_to_viz * num_batches - 0.499999)>0 else 1)
+		if args.dataset=="swisscrop":
+			n_iters_to_viz /= 33
+		
+		vizualization_interval =(round(n_iters_to_viz * num_batches - 0.499999) if round(n_iters_to_viz * num_batches - 0.499999)>0 else 1)
 		if (itr!=1) and (itr % round(n_iters_to_viz * num_batches - 0.499999)== 0) :
 			
 			with torch.no_grad():
@@ -384,6 +391,10 @@ def train_it(
 						#Logger[i].info("CE loss: {}".format(test_res["ce_loss"]))
 						Validationwriter[i].add_scalar('CE_loss/validation', test_res[i]["ce_loss"], itr*args.batch_size)
 		
+					#make confusion matrix
+					_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
+					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
+					
 					#logger.info("-----------------------------------------------------------------------------------")
 
 					torch.save({
@@ -399,10 +410,14 @@ def train_it(
 							'state_dict': Model[i].state_dict(),
 						}, Top_ckpt_path[i])
 
-
-					#make confusion matrix
-					_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
-					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
+					#logging to wandb
+					logdict = {
+						'Classification_accuracy/train': train_res[i]["accuracy"],
+						'Classification_accuracy/validation': test_res[i]["accuracy"],
+						'loss/train': train_res[i]["loss"].detach(),
+						'loss/validation': test_res[i]["loss"].detach()
+					}
+					wandb.log(logdict, step=itr*args.batch_size)
 
 		fine_train_writer = False
 		if fine_train_writer:

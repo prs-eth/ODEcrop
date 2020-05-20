@@ -1,0 +1,62 @@
+Sampling dataset of 8000 training examples
+  0%|                                                                                                                | 0/1 [00:00<?, ?trial/s, best loss=?]                                                                                                                                                           Testing hyperparameters:
+  0%|                                                                                                                | 0/1 [00:00<?, ?trial/s, best loss=?]                                                                                                                                                           Trainingdataset:
+  0%|                                                                                                                | 0/1 [00:03<?, ?trial/s, best loss=?]job exception: list index out of range
+Traceback (most recent call last):
+  File "run_models.py", line 254, in <module>
+    max_evals=args.num_search)
+  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/fmin.py", line 482, in fmin
+    show_progressbar=show_progressbar,
+  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/base.py", line 686, in fmin
+    show_progressbar=show_progressbar,
+  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/fmin.py", line 509, in fmin
+    rval.exhaust()
+  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/fmin.py", line 330, in exhaust
+    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
+  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/fmin.py", line 286, in run
+    self.serial_evaluate()
+  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/fmin.py", line 165, in serial_evaluate
+    result = self.domain.evaluate(spec, ctrl)
+  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/base.py", line 894, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py", line 114, in construct_and_train_model
+    wandb.watch(Model[0])
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_models.py", line 305, in <module>
+    hyperopt_summary(trials)
+  File "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/utils.py", line 816, in hyperopt_summary
+    np.sqrt(best_var)*100,
+UnboundLocalError: local variable 'best_var' referenced before assignment
+                                                                                                                                                           Dataset Crops
+    Number of datapoints: 8000
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|                                                                                                                | 0/1 [00:03<?, ?trial/s, best loss=?]                                                                                                                                                           Using Evaluationdataset:
+  0%|                                                                                                                | 0/1 [00:03<?, ?trial/s, best loss=?]                                                                                                                                                           Dataset Crops
+    Number of datapoints: 4000
+    Root Location: data/Crops
+    Reduce: average
+
+  0%|                                                                                                                | 0/1 [00:03<?, ?trial/s, best loss=?]  0%|                                                                                                                | 0/1 [00:03<?, ?trial/s, best loss=?]
+ODE-RNN  False
+Classic-RNN:  False
+Stacked layers:  1
+Stacked layers:  None
+ODE-type:  linear
+RNN-cell:  gru
+Weight-sharing ODE:  False
+Weight-sharing RNN:  False
+Using BN:  False
+defaut adapted LR's!!
+Used Optimizer: adamax
+Used Ode-Solver euler
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+---------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------

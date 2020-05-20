@@ -1,0 +1,7 @@
+> /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py(159)<module>()
+-> if __name__ == '__main__':
+(Pdb) n
+> /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py(161)<module>()
+-> experimentID = args.load
+(Pdb) --KeyboardInterrupt--
+(Pdb) 

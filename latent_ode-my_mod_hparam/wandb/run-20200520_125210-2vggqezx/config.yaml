@@ -1,0 +1,157 @@
+wandb_version: 1
+
+ODE_sharing:
+  desc: null
+  value: false
+RNN_sharing:
+  desc: null
+  value: false
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.8.36
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.6.9
+batch_size:
+  desc: null
+  value: 700
+batchnorm:
+  desc: null
+  value: false
+classic_rnn:
+  desc: null
+  value: false
+classif:
+  desc: null
+  value: 'True'
+cut_tp:
+  desc: null
+  value: null
+dataset:
+  desc: null
+  value: swisscrop
+extrap:
+  desc: null
+  value: false
+gen_layers:
+  desc: null
+  value: 2
+gru_units:
+  desc: null
+  value: 100
+hparams:
+  desc: null
+  value: null
+input_decay:
+  desc: null
+  value: false
+latent_ode:
+  desc: null
+  value: false
+latents:
+  desc: null
+  value: 70
+linear_classif:
+  desc: null
+  value: false
+linear_topper:
+  desc: null
+  value: false
+load:
+  desc: null
+  value: null
+lr:
+  desc: null
+  value: 0.00762
+max_t:
+  desc: null
+  value: 5.0
+n:
+  desc: null
+  value: 8000
+niters:
+  desc: null
+  value: 1
+noise_weight:
+  desc: null
+  value: 0.01
+num_search:
+  desc: null
+  value: 1
+num_seeds:
+  desc: null
+  value: 1
+ode_method:
+  desc: null
+  value: euler
+ode_rnn:
+  desc: null
+  value: true
+ode_type:
+  desc: null
+  value: linear
+optimizer:
+  desc: null
+  value: adamax
+poisson:
+  desc: null
+  value: false
+quantization:
+  desc: null
+  value: 0.1
+random_seed:
+  desc: null
+  value: 1991
+rec_dims:
+  desc: null
+  value: 100
+rec_layers:
+  desc: null
+  value: 2
+resnet:
+  desc: null
+  value: false
+rnn_cell:
+  desc: null
+  value: gru
+rnn_vae:
+  desc: null
+  value: false
+sample_tp:
+  desc: null
+  value: null
+save:
+  desc: null
+  value: experiments/
+stack_order:
+  desc: null
+  value: null
+stacking:
+  desc: null
+  value: 1
+tensorboard:
+  desc: null
+  value: true
+timepoints:
+  desc: null
+  value: 100
+topper:
+  desc: null
+  value: false
+units:
+  desc: null
+  value: 255
+v:
+  desc: null
+  value: 2
+validn:
+  desc: null
+  value: 4000
+viz:
+  desc: null
+  value: true
+z0_encoder:
+  desc: null
+  value: odernn

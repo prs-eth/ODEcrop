@@ -1,0 +1,13 @@
+> /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py(159)<module>()
+-> if __name__ == '__main__':
+(Pdb) [K(Pdb) q
+Traceback (most recent call last):
+  File "run_models.py", line 159, in <module>
+    if __name__ == '__main__':
+  File "run_models.py", line 159, in <module>
+    if __name__ == '__main__':
+  File "/usr/lib/python3.6/bdb.py", line 51, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/usr/lib/python3.6/bdb.py", line 70, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit

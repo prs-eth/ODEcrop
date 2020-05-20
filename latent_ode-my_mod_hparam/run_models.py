@@ -47,6 +47,8 @@ from hyperopt import fmin, tpe, space_eval, Trials
 from lib.training import construct_and_train_model, train_it
 from lib.utils import hyperopt_summary
 
+import wandb
+
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=8000, help="Size of the dataset")
@@ -145,6 +147,10 @@ else:
 
 file_name = os.path.basename(__file__)[:-3]
 utils.makedirs(args.save)
+
+
+import wandb
+wandb.init(project="odecrop",config=args, entity="nandometzger", group=args.dataset)
 
 #####################################################################################################
 

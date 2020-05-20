@@ -17,9 +17,10 @@ import csv
 from tqdm import tqdm
 from datetime import datetime
 
-import pdb
-
 import lib.utils as utils
+from lib.utils import FastTensorDataLoader
+
+import pdb
 
 class SwissCrops(object):
 
@@ -46,24 +47,23 @@ class SwissCrops(object):
 		self.mode = mode
 
 		if args==None:
-			argsdict = {"dataset": "swisscrop", "sample_tp": None, "cut_tp": None}
+			argsdict = {"dataset": "swisscrop", "sample_tp": None, "cut_tp": None, "extrap": False}
 			self.args = utils.Bunch(argsdict)
 		
-		#TODO: implement these features
+		#TODO: implement these features:
 		self.step = 2
 		self.feature_trunc = 4
 
 		# calculated from 50k samples
-		#self.means = [0.24774854, 0.29837374, 0.3176923, 0.29580569, 0.00475051, 0.00396885, 0.00412216, 0.00274612, 0.00241172]
-		#self.stds = [0.40220731, 0.2304579, 0.21944561, 0.22120122, 0.00414104, 0.00608051, 0.00555058, 0.00306677, 0.00378373]
+		#self.means = [0.40220731, 0.2304579, 0.21944561, 0.22120122, 0.00414104, 0.00608051, 0.00555058, 0.00306677, 0.00378373]
+		#self.stds = [0.24774854, 0.29837374, 0.3176923, 0.29580569, 0.00475051, 0.00396885, 0.00412216, 0.00274612, 0.00241172]
 		
 		# define de previously calculated global training mean and std...
-		self.stds = [0.24994541, 0.30625425, 0.32668449, 0.30204761, 0.00490984, 0.00411067, 0.00426914, 0.0027143 , 0.00221963]
+		
 		self.means = [0.4071655 , 0.2441012 , 0.23429523, 0.23402453, 0.00432794, 0.00615292, 0.00566292, 0.00306609, 0.00367624]
+		self.stds = [0.24994541, 0.30625425, 0.32668449, 0.30204761, 0.00490984, 0.00411067, 0.00426914, 0.0027143 , 0.00221963]
 
-
-		#if not self.check_exists():
-		if not True:
+		if not self.check_exists():
 			self.process_data()
 
 		if mode=="train":
@@ -74,8 +74,12 @@ class SwissCrops(object):
 		self.hdf5dataloader = h5py.File(data_file, "r")
 		#self.nsamples = self.hdf5dataloader["data"].shape[0]
 
-		self.timestamps = self.read_date_file()
-		
+		# get timestamps
+		if not os.path.exists( os.path.join(self.processed_folder, self.time_file)):
+			self.read_date_file()
+
+		self.timestamps =  h5py.File(os.path.join(self.processed_folder, self.time_file), "r")["tt"][:]
+		assert(self.timestamps.size==self.hdf5dataloader["data"].shape[1])
 
 	def process_data(self):
 	
@@ -114,7 +118,6 @@ class SwissCrops(object):
 		ntargetclasses_l2 = train_dataset.n_classes_local_2
 		
 		# Open a hdf5 files and create arrays
-
 		hdf5_file_train = h5py.File(self.train_file , mode='w')
 		hdf5_file_train.create_dataset("data", (ntrainsamples, seq_length, nfeatures), np.float)
 		hdf5_file_train.create_dataset("mask", (ntrainsamples, seq_length, nfeatures), np.bool)
@@ -209,8 +212,11 @@ class SwissCrops(object):
 			OH_target_local_2 = np.zeros((ravel_target_local_2.size, ntargetclasses_l2))
 			OH_target_local_2[np.arange(ravel_target_local_2.size),ravel_target_local_2] = 1
 
+			# if only one pixel in a neighbourhood is corrupted, we don't use it=> set complete mask of this (sample, timestep) as unobserved
+			mask = np.tile( (mask.sum(2)==nfeatures)[:,:,np.newaxis] , (1,1,nfeatures))
+
 			# "destroy" data, that is corrputed by bad weather. We will never use it!
-			ravel_X[mask] = 0
+			ravel_X[~mask] = 0
 
 			#for statistics
 			missing += np.sum(mask == 0.)
@@ -385,8 +391,11 @@ class SwissCrops(object):
 			OH_target_local_2 = np.zeros((ravel_target_local_2.size, ntargetclasses_l2))
 			OH_target_local_2[np.arange(ravel_target_local_2.size),ravel_target_local_2] = 1
 
+			# if only one pixel in a neighbourhood is corrupted, we don't use it=> set complete mask of this (sample, timestep) as unobserved
+			mask = np.tile( (mask.sum(2)==nfeatures)[:,:,np.newaxis] , (1,1,nfeatures))
+
 			# "destroy" data, that is corrputed by bad weather. We will never use it!
-			ravel_X[mask] = 0
+			ravel_X[~mask] = 0
 
 			#for statistics
 			missing += np.sum(mask == 0.)
@@ -489,14 +498,9 @@ class SwissCrops(object):
 
 	def read_date_file(self):
 		
-		self.time_file
-
-		start= 2
-
 		# read file and strip the \n 
-		lines = [line.rstrip('\n') for line in open(self.time_file)]
-		lines = lines[start:]
-			
+		lines = [line.rstrip('\n') for line in open(self.raw_time_file)]
+					
 		# define time formate
 		dates = [datetime(int(line[:4]),int(line[4:6]),int(line[6:8]))  for line in lines ]
 		ref_date = dates[0]
@@ -507,7 +511,10 @@ class SwissCrops(object):
 
 		#normalize it to one
 		tt = times/times[-1]
-		return tt
+		
+		timestamps_hdf5 = h5py.File(os.path.join(self.processed_folder, self.time_file), 'w')
+		timestamps_hdf5.create_dataset('tt', data=tt)
+		timestamps_hdf5.close()
 
 	@property
 	def raw_folder(self):
@@ -530,8 +537,13 @@ class SwissCrops(object):
 		return os.path.join(self.processed_folder, "test_set_3x3_processed.hdf5")
 
 	@property
+	def raw_time_file(self):
+		return os.path.join(self.root, 'raw_dates.txt')
+
+	@property
 	def time_file(self):
-		return os.path.join(self.root, 'dates.txt')
+		#name only without path for consitency with other datasets
+		return 'raw_dates.hdf5'
 	
 	@property
 	def get_label(self, record_id):
@@ -541,7 +553,6 @@ class SwissCrops(object):
 	def label_list(self):
 		return self.label
 	
-
 	def check_exists(self):
 		exist_train = os.path.exists( self.train_file )
 		exist_test = os.path.exists( self.test_file )
@@ -556,11 +567,10 @@ class SwissCrops(object):
 		else:
 			return min(self.validn, self.hdf5dataloader["data"].shape[0])
 
-
 	def __getitem__(self, index):
 		"""
 		Class
-		For slicing and dataloading, it is suggested to use the FastDataLoader class. It makes loading way faster including shuffling and batching.
+		For slicing and dataloading, it is suggested to use the FastDataLoader class. It makes loading way faster and includes shuffling and batching.
 		"""
 		if isinstance(index, slice):
 			print("Warning: Slicing of hdf5 data can be slow")
@@ -958,34 +968,23 @@ class Dataset(torch.utils.data.Dataset):
 
 if __name__=="__main__":
 
-	"""
-	#dataset = Dataset("/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/data/SwissCrops/raw/train_set_24x24_debug.hdf5", 0.,'all')
-	#all_dataset = Dataset("data/SwissCrops/raw/train_set_24x24_debug.hdf5", 0.,'all')
-
-	train_dataset = Dataset("data/SwissCrops/", 0.,'train')
-	#test_dataset = Dataset("data/SwissCrops/", 0.,'test')
-
-	#traindataset = Dataset("/home/pf/pfstaff/projects/ozgur_data/TG_expYear19.hdf5", 0.5, 'all')
-	
-	#traindataset.data_stat()
-	#print(len(all_dataset))
-	print(len(train_dataset))
-	#print(len(test_dataset))
-	#dataset.data_stat()
-
-	#pdb.set_trace()
-	X, target, target_local_1, target_local_2 = train_dataset[:12]
-
-	print(len(train_dataset))
-	"""
-
-
-
-
-	#dataset = Dataset("/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/data/SwissCrops/raw/train_set_24x24_debug.hdf5", 0.,'all')
-
+	bs = 500
 
 	train_dataset_obj = SwissCrops('data/SwissCrops', mode="train")
+	train_generator = utils.inf_generator(FastTensorDataLoader(train_dataset_obj, batch_size=bs, shuffle=False))
 
-	train_dataset_obj[0]
+
+	#train_dataset = Dataset("data/SwissCrops/", 0.,'train')
+	#raw_train_samples = len(train_dataset)
+
+	#test_dataset = Dataset("data/SwissCrops/", 0.,'test')
+	#raw_test_samples = len(test_dataset)
+
+	#train_dataset_obj[0]
 	print("Done")
+
+	"""
+	for t in tqdm(range(len(train_dataset_obj)//bs)):
+
+		batch_dict = utils.get_next_batch(train_generator)
+	"""
