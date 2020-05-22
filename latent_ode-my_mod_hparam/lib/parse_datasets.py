@@ -31,7 +31,6 @@ import pdb
 
 #####################################################################################################
 def parse_datasets(args, device):
-	
 
 	def basic_collate_fn(batch, time_steps, args = args, device = device, data_type = "train"):
 		batch = torch.stack(batch)
@@ -41,7 +40,6 @@ def parse_datasets(args, device):
 
 		data_dict = utils.split_and_subsample_batch(data_dict, args, data_type = data_type)
 		return data_dict
-
 
 	dataset_name = args.dataset
 
@@ -298,7 +296,6 @@ def parse_datasets(args, device):
 			print("Using Testdataset:")
 			print(test_dataset_obj)
 
-		#pdb.set_trace()
 		return data_objects
 	
 	##################################################################
@@ -306,8 +303,10 @@ def parse_datasets(args, device):
 	
 	if dataset_name == "swisscrop":
 
-		train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", device=device)
-		test_dataset_obj = SwissCrops('data/SwissCrops', mode="test", device=device) 
+		train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", device=device,
+										step=args.step, trunc=args.trunc, nsamples=args.n)
+		test_dataset_obj = SwissCrops('data/SwissCrops', mode="test", device=device,
+										step=args.step, trunc=args.trunc, nsamples=args.validn) 
 		
 		n_samples = min(args.n, len(train_dataset_obj))
 		n_test_samples = min( float("inf"), len(test_dataset_obj))
@@ -336,6 +335,15 @@ def parse_datasets(args, device):
 					"classif_per_tp": False, # We want to classify the whole sequence!!. Standard: True, #optional
 					"n_labels": labels.size(-1)}
 
+		"""
+		print("")
+		print("Trainingdataset:")
+		print(data_objects["dataset_obj"])
+
+		print("Using Testdataset:")
+		print(test_dataset_obj)
+		"""
+		
 		return data_objects
 
 	########### 1d datasets ###########

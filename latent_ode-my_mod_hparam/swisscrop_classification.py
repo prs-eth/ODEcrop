@@ -25,15 +25,18 @@ import pdb
 class SwissCrops(object):
 
 
-	label = {'0_unknown', 'Barley', 'Beets', 'Berries', 'Biodiversity', 'Chestnut', 'Fallow', 'Field bean', 'Forest', 'Gardens',
+	label = ['0_unknown', 'Barley', 'Beets', 'Berries', 'Biodiversity', 'Chestnut', 'Fallow', 'Field bean', 'Forest', 'Gardens',
 		 'Grain', 'Hedge', 'Hemp', 'Hops', 'Linen', 'Maize', 'Meadow', 'MixedCrop', 'Multiple', 'Oat', 'Orchards', 'Pasture',
-		 'Potatoes', 'Rapeseed', 'Rye', 'Sorghum', 'Soy', 'Spelt', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat'}
+		 'Potatoes', 'Rapeseed', 'Rye', 'Sorghum', 'Soy', 'Spelt', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat',
+		 'unknownclass1', 'unknownclass2', 'unknownclass3']
 	label_dict = {k: i for i, k in enumerate(label)}
+	reverse_label_dict = {v: k for k, v in label_dict.items()}
 
 
 	def __init__(self, root, mode='train', device = torch.device("cpu"),
 		neighbourhood=3, cloud_thresh=0.95,
-		nsamples=float("inf"), validn=float("inf"), args=None):
+		nsamples=float("inf"),args=None,
+		step=1, trunc=9):
 
 		self.normalize = True
 		self.shuffle = True
@@ -42,7 +45,6 @@ class SwissCrops(object):
 		self.nb = neighbourhood
 		self.cloud_thresh = cloud_thresh
 		self.device = device
-		self.validn = validn
 		self.n = nsamples
 		self.mode = mode
 
@@ -50,16 +52,11 @@ class SwissCrops(object):
 			argsdict = {"dataset": "swisscrop", "sample_tp": None, "cut_tp": None, "extrap": False}
 			self.args = utils.Bunch(argsdict)
 		
-		#TODO: implement these features:
-		self.step = 2
-		self.feature_trunc = 4
-
 		# calculated from 50k samples
 		#self.means = [0.40220731, 0.2304579, 0.21944561, 0.22120122, 0.00414104, 0.00608051, 0.00555058, 0.00306677, 0.00378373]
 		#self.stds = [0.24774854, 0.29837374, 0.3176923, 0.29580569, 0.00475051, 0.00396885, 0.00412216, 0.00274612, 0.00241172]
 		
 		# define de previously calculated global training mean and std...
-		
 		self.means = [0.4071655 , 0.2441012 , 0.23429523, 0.23402453, 0.00432794, 0.00615292, 0.00566292, 0.00306609, 0.00367624]
 		self.stds = [0.24994541, 0.30625425, 0.32668449, 0.30204761, 0.00490984, 0.00411067, 0.00426914, 0.0027143 , 0.00221963]
 
@@ -71,8 +68,9 @@ class SwissCrops(object):
 		elif mode=="test":
 			data_file = self.test_file
 		
-		self.hdf5dataloader = h5py.File(data_file, "r")
-		#self.nsamples = self.hdf5dataloader["data"].shape[0]
+		self.hdf5dataloader = h5py.File(data_file, "r", rdcc_nbytes=1024**2*4000,rdcc_nslots=1e7)
+		self.nsamples = self.hdf5dataloader["data"].shape[0]
+		self.nfeatures = self.hdf5dataloader["data"].shape[2]
 
 		# get timestamps
 		if not os.path.exists( os.path.join(self.processed_folder, self.time_file)):
@@ -80,6 +78,17 @@ class SwissCrops(object):
 
 		self.timestamps =  h5py.File(os.path.join(self.processed_folder, self.time_file), "r")["tt"][:]
 		assert(self.timestamps.size==self.hdf5dataloader["data"].shape[1])
+
+
+		self.features = self.hdf5dataloader["data"].shape[2]
+		
+		#selective features and timestamps
+		self.step = step # skippage of timesteps
+		self.trunc = trunc # feature truncation
+		self.feature_trunc = trunc*self.nb**2
+		#self.mask = np.kron(np.hstack([np.ones(self.trunc),np.zeros(  self.nfeatures//self.nb**2 - self.trunc)]), np.ones(9))
+
+
 
 	def process_data(self):
 	
@@ -103,7 +112,7 @@ class SwissCrops(object):
 		testindices = np.arange(ntestsamples)
 		
 		## TRAIN DATASET ##
-		shuffle_chucks = 35 # 30: limit of 64GB RAM, 60: limit of 32GB RAM
+		shuffle_chucks = 20 # 30: limit of 64GB RAM, 60: limit of 32GB RAM
 		splits = np.array_split(trainindices, shuffle_chucks)
 
 		# get measures
@@ -118,19 +127,19 @@ class SwissCrops(object):
 		ntargetclasses_l2 = train_dataset.n_classes_local_2
 		
 		# Open a hdf5 files and create arrays
-		hdf5_file_train = h5py.File(self.train_file , mode='w')
-		hdf5_file_train.create_dataset("data", (ntrainsamples, seq_length, nfeatures), np.float)
-		hdf5_file_train.create_dataset("mask", (ntrainsamples, seq_length, nfeatures), np.bool)
-		hdf5_file_train.create_dataset("labels", (ntrainsamples,  ntargetclasses), np.float)
-		hdf5_file_train.create_dataset("labels_local1", (ntrainsamples, ntargetclasses_l1), np.float)
-		hdf5_file_train.create_dataset("labels_local2", (ntrainsamples, ntargetclasses_l2), np.float)
+		hdf5_file_train = h5py.File(self.train_file , mode='w', rdcc_nbytes=1024**2*16000, rdcc_nslots=1e7, libver='latest')
+		hdf5_file_train.create_dataset("data", (ntrainsamples, seq_length, nfeatures), np.float16, chunks=(1500, seq_length, nfeatures) )
+		hdf5_file_train.create_dataset("mask", (ntrainsamples, seq_length, nfeatures), np.bool,  chunks=(1500, seq_length, nfeatures) )
+		hdf5_file_train.create_dataset("labels", (ntrainsamples,  ntargetclasses), np.int8,  chunks=(1500, ntargetclasses ))
+		hdf5_file_train.create_dataset("labels_local1", (ntrainsamples, ntargetclasses_l1), np.int8,  chunks=(1500, ntargetclasses_l1) )
+		hdf5_file_train.create_dataset("labels_local2", (ntrainsamples, ntargetclasses_l2), np.int8,  chunks=(1500, ntargetclasses_l1) )
 		
 		#prepare first splitblock
-		X_merge = np.zeros( (len(splits[0]), seq_length, nfeatures) , dtype=float) 
+		X_merge = np.zeros( (len(splits[0]), seq_length, nfeatures) , dtype=np.float16) 
 		mask_merge = np.ones( (len(splits[0]), seq_length, nfeatures) , dtype=bool)
-		target_merge = np.ones( (len(splits[0]),  ntargetclasses) , dtype=float)
-		target_l1_merge = np.ones( (len(splits[0]),  ntargetclasses_l1) , dtype=float)
-		target_l2_merge = np.ones( (len(splits[0]),  ntargetclasses_l2) , dtype=float)
+		target_merge = np.ones( (len(splits[0]),  ntargetclasses) , dtype=np.int8)
+		target_l1_merge = np.ones( (len(splits[0]),  ntargetclasses_l1) , dtype=np.int8)
+		target_l2_merge = np.ones( (len(splits[0]),  ntargetclasses_l2) , dtype=np.int8)
 
 		missing = 0
 		observed = 0
@@ -254,35 +263,42 @@ class SwissCrops(object):
 				target_l2_merge[start_ix:] = OH_target_local_2[:validdose]
 				
 				#shuffle the blocks
+				self.shuffle = True
 				if self.shuffle:
 					merge_ind = np.arange(len(splits[split_counter]))
 					np.random.shuffle(merge_ind)
 
-					X_merge = X_merge[merge_ind]
-					mask_merge = mask_merge[merge_ind]
-					target_merge = target_merge[merge_ind]
-					target_l1_merge = target_l1_merge[merge_ind]
-					target_l2_merge = target_l2_merge[merge_ind]
+					X_merge_write = X_merge[merge_ind]
+					mask_merge_write = mask_merge[merge_ind]
+					target_merge_write = target_merge[merge_ind]
+					target_l1_merge_write = target_l1_merge[merge_ind]
+					target_l2_merge_write = target_l2_merge[merge_ind]
+				else:
+					X_merge_write = X_merge
+					mask_merge_write = mask_merge
+					target_merge_write = target_merge
+					target_l1_merge_write = target_l1_merge
+					target_l2_merge_write = target_l2_merge
 
 				#fill in data to hdf5 file
 				sorted_indices = splits[split_counter]
 				
-				hdf5_file_train["data"][sorted_indices[0]:sorted_indices[-1]+1, ...] = X_merge
-				hdf5_file_train["mask"][sorted_indices[0]:sorted_indices[-1]+1, ...] = mask_merge
-				hdf5_file_train["labels"][sorted_indices[0]:sorted_indices[-1]+1, ...] = target_merge
-				hdf5_file_train["labels_local1"][sorted_indices[0]:sorted_indices[-1]+1, ...] = target_l1_merge
-				hdf5_file_train["labels_local2"][sorted_indices[0]:sorted_indices[-1]+1, ...] = target_l2_merge
+				hdf5_file_train["data"][sorted_indices[0]:sorted_indices[-1]+1, ...] = X_merge_write
+				hdf5_file_train["mask"][sorted_indices[0]:sorted_indices[-1]+1, ...] = mask_merge_write
+				hdf5_file_train["labels"][sorted_indices[0]:sorted_indices[-1]+1, ...] = target_merge_write
+				hdf5_file_train["labels_local1"][sorted_indices[0]:sorted_indices[-1]+1, ...] = target_l1_merge_write
+				hdf5_file_train["labels_local2"][sorted_indices[0]:sorted_indices[-1]+1, ...] = target_l2_merge_write
 				
 				accum_counter = 0
 				split_counter += 1
 
 				#prepare next merge variable
 				if split_counter<len(splits):
-					X_merge = np.zeros( (len(splits[split_counter]), seq_length, nfeatures) , dtype=float) 
+					X_merge = np.zeros( (len(splits[split_counter]), seq_length, nfeatures) , dtype=np.float16) 
 					mask_merge = np.ones( (len(splits[split_counter]), seq_length, nfeatures) , dtype=bool)
-					target_merge = np.ones( (len(splits[split_counter]),  ntargetclasses) , dtype=float)
-					target_l1_merge = np.ones( (len(splits[split_counter]),  ntargetclasses_l1) , dtype=float)
-					target_l2_merge = np.ones( (len(splits[split_counter]),  ntargetclasses_l2) , dtype=float)
+					target_merge = np.ones( (len(splits[split_counter]),  ntargetclasses) , dtype=np.int8)
+					target_l1_merge = np.ones( (len(splits[split_counter]),  ntargetclasses_l1) , dtype=np.int8)
+					target_l2_merge = np.ones( (len(splits[split_counter]),  ntargetclasses_l2) , dtype=np.int8)
 
 					# fill in the overdose from the current split/chunck
 					start_ix = 0
@@ -301,22 +317,22 @@ class SwissCrops(object):
 
 
 		## TEST DATASET ##
-		shuffle_chucks = 50 #15 # 30: limit of 64GB RAM, 60: limit of 32GB RAM
+		shuffle_chucks = 25 #15 # 30: limit of 64GB RAM, 60: limit of 32GB RAM
 		splits = np.array_split(testindices, shuffle_chucks)
 	
-		hdf5_file_test = h5py.File(self.test_file, mode='w')
-		hdf5_file_test.create_dataset("data", (ntestsamples, seq_length, nfeatures), np.float)
-		hdf5_file_test.create_dataset("mask", (ntestsamples, seq_length, nfeatures), np.bool)
-		hdf5_file_test.create_dataset("labels", (ntestsamples, ntargetclasses), np.float)
-		hdf5_file_test.create_dataset("labels_local1", (ntestsamples, ntargetclasses_l1), np.float)
-		hdf5_file_test.create_dataset("labels_local2", (ntestsamples,ntargetclasses_l2), np.float)
+		hdf5_file_test = h5py.File(self.test_file, mode='w', rdcc_nbytes =1024**2*24000, rdcc_nslots=1e7, libver='latest')
+		hdf5_file_test.create_dataset("data", (ntestsamples, seq_length, nfeatures), np.float16, chunks=(10000, seq_length, nfeatures) )
+		hdf5_file_test.create_dataset("mask", (ntestsamples, seq_length, nfeatures), np.bool,  chunks=(10000, seq_length, nfeatures) )
+		hdf5_file_test.create_dataset("labels", (ntestsamples, ntargetclasses), np.int8,  chunks=(10000, ntargetclasses) )
+		hdf5_file_test.create_dataset("labels_local1", (ntestsamples, ntargetclasses_l1), np.int8,  chunks=(10000, ntargetclasses_l1) )
+		hdf5_file_test.create_dataset("labels_local2", (ntestsamples, ntargetclasses_l2), np.int8,  chunks=(10000, ntargetclasses_l2) )
 		
 		#prepare first splitblock
-		X_merge = np.zeros( (len(splits[0]), seq_length, nfeatures) , dtype=float) 
+		X_merge = np.zeros( (len(splits[0]), seq_length, nfeatures) , dtype=np.float16) 
 		mask_merge = np.ones( (len(splits[0]), seq_length, nfeatures) , dtype=bool)
-		target_merge = np.ones( (len(splits[0]),  ntargetclasses) , dtype=float)
-		target_l1_merge = np.ones( (len(splits[0]),  ntargetclasses_l1) , dtype=float)
-		target_l2_merge = np.ones( (len(splits[0]),  ntargetclasses_l2) , dtype=float)
+		target_merge = np.ones( (len(splits[0]),  ntargetclasses) , dtype=np.int8)
+		target_l1_merge = np.ones( (len(splits[0]),  ntargetclasses_l1) , dtype=np.int8)
+		target_l2_merge = np.ones( (len(splits[0]),  ntargetclasses_l2) , dtype=np.int8)
 
 		missing = 0
 		observed = 0
@@ -433,7 +449,7 @@ class SwissCrops(object):
 				target_l2_merge[start_ix:] = OH_target_local_2[:validdose]
 
 				#shuffle the blocks
-				shuffle_test = False
+				shuffle_test = True
 				if shuffle_test:
 					merge_ind = np.arange(len(splits[split_counter]))
 					np.random.shuffle(merge_ind)
@@ -458,11 +474,11 @@ class SwissCrops(object):
 
 				#prepare next merge variable
 				if split_counter<len(splits):
-					X_merge = np.zeros( (len(splits[split_counter]), seq_length, nfeatures) , dtype=float) 
+					X_merge = np.zeros( (len(splits[split_counter]), seq_length, nfeatures) , dtype=np.float16) 
 					mask_merge = np.ones( (len(splits[split_counter]), seq_length, nfeatures) , dtype=bool)
-					target_merge = np.ones( (len(splits[split_counter]),  ntargetclasses) , dtype=float)
-					target_l1_merge = np.ones( (len(splits[split_counter]),  ntargetclasses_l1) , dtype=float)
-					target_l2_merge = np.ones( (len(splits[split_counter]),  ntargetclasses_l2) , dtype=float)
+					target_merge = np.ones( (len(splits[split_counter]),  ntargetclasses) , dtype=np.int8)
+					target_l1_merge = np.ones( (len(splits[split_counter]),  ntargetclasses_l1) , dtype=np.int8)
+					target_l2_merge = np.ones( (len(splits[split_counter]),  ntargetclasses_l2) , dtype=np.int8)
 
 					# fill in the overdose from the current split/chunck
 					start_ix = 0
@@ -489,7 +505,6 @@ class SwissCrops(object):
 
 			print("Means: ", training_mean2)
 			print("Std: ", training_std2)
-
 				
 		hdf5_file_train.close()
 		hdf5_file_test.close()
@@ -550,6 +565,10 @@ class SwissCrops(object):
 		return self.label_dict[record_id]
 	
 	@property
+	def get_label_name(self, record_id):
+		return self.reverse_label_dict[record_id]
+	
+	@property
 	def label_list(self):
 		return self.label
 	
@@ -565,7 +584,7 @@ class SwissCrops(object):
 		if self.mode=="train":
 			return min(self.n, self.hdf5dataloader["data"].shape[0])
 		else:
-			return min(self.validn, self.hdf5dataloader["data"].shape[0])
+			return min(self.n, self.hdf5dataloader["data"].shape[0])
 
 	def __getitem__(self, index):
 		"""
@@ -600,9 +619,9 @@ class SwissCrops(object):
 			labels = torch.from_numpy( self.hdf5dataloader["labels"][index] ).float().to(self.device)
 
 			data_dict = {
-			"data": data, 
-			"time_steps": time_stamps,
-			"mask": mask,
+			"data": data[::self.step,:self.feature_trunc], 
+			"time_steps": time_stamps[::self.step],
+			"mask": mask[::self.step,:self.feature_trunc],
 			"labels": labels}
 
 			data_dict = utils.split_and_subsample_batch(data_dict, self.args, data_type = self.mode)
@@ -971,7 +990,8 @@ if __name__=="__main__":
 	bs = 500
 
 	train_dataset_obj = SwissCrops('data/SwissCrops', mode="train")
-	train_generator = utils.inf_generator(FastTensorDataLoader(train_dataset_obj, batch_size=bs, shuffle=False))
+	trainloader = FastTensorDataLoader(train_dataset_obj, batch_size=bs, shuffle=False)
+	train_generator = utils.inf_generator(trainloader)
 
 
 	#train_dataset = Dataset("data/SwissCrops/", 0.,'train')
@@ -983,8 +1003,8 @@ if __name__=="__main__":
 	#train_dataset_obj[0]
 	print("Done")
 
-	"""
-	for t in tqdm(range(len(train_dataset_obj)//bs)):
+	#pdb.set_trace()
+	for t in tqdm(range(len(trainloader))):
 
 		batch_dict = utils.get_next_batch(train_generator)
-	"""
+	

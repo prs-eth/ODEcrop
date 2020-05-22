@@ -10,6 +10,59 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Python: Crop",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--niters", "20",
+                "-n", "300000",
+                "-validn", "600000",
+                "--dataset", "crop",
+                "-b", "600",
+                "--ode-rnn",
+                "--rnn-cell", "gru",
+                "--random-seed", "6001",
+                "--num-search", "1",
+                "--num-seeds", "1",
+                "--lr", "0.00762",
+                "-g", "100",
+                "-l", "150",
+                "-u", "255",
+                "-v", "2",
+                "--topper", "-BN"
+            ]
+        },
+        {
+            "name": "Python: Swisscrop",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--niters", "1",
+                "-n", "1200000",
+                "-validn", "800000",
+                "--dataset", "swisscrop",
+                "-b", "1000",
+                "--ode-rnn",
+                "--rnn-cell", "gru",
+                "--random-seed", "6001",
+                "--num-search", "1",
+                "--num-seeds", "1",
+                "--lr", "0.00762",
+                "-g", "100",
+                "-l", "150",
+                "-u", "255",
+                "-v", "2",
+                "--topper",
+                "-BN",
+                "--step", "1",
+                "--trunc", "4"
+            ]
         }
     ]
 }

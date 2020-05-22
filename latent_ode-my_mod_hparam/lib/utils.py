@@ -566,7 +566,7 @@ def compute_loss_all_batches(model,
 	hard_test_labels =  torch.Tensor([]).long().to(device)
 	hard_classif_predictions = torch.Tensor([]).long().to(device)
 	
-	for i in (range(n_batches)):
+	for i in tqdm(range(n_batches)):
 		#pdb.set_trace()
 		batch_dict = get_next_batch(test_dataloader)
 
@@ -651,7 +651,7 @@ def compute_loss_all_batches(model,
 					class_labels.cpu().numpy(), 
 					pred_class_id.cpu().numpy())
 			
-		if args.dataset == "crop":
+		if args.dataset in ["crop", "swisscrop"]:
 			hard_test_labels = hard_test_labels.repeat(n_traj_samples,1,1)
 			
 			idx_not_nan = ~torch.isnan(hard_test_labels)[0,0] # Nando's edit: idx_not_nan = 1 - torch.isnan(all_test_labels)
@@ -707,6 +707,20 @@ class FastTensorDataLoader:
 		self.shuffle = shuffle
 		self.batch_shuffle = batch_shuffle
 		self.timestamps = h5py.File(os.path.join(self.dataset.processed_folder, self.dataset.time_file), "r")["tt"][:]
+
+		# prepare skipping of steps and truncation of features
+		
+		if hasattr(self.dataset, 'step'):
+			self.step = self.dataset.step
+		else:
+			self.step = 1
+		
+		if hasattr(self.dataset, 'trunc'):
+			trunc = self.dataset.trunc
+		else:
+			trunc = self.dataset.features//self.dataset.nb**2
+		
+		self.feature_trunc = self.dataset.nb**2*trunc
 		
 		# Calculate # batches
 		n_batches, remainder = divmod(self.dataset_len, self.batch_size)
@@ -763,9 +777,9 @@ class FastTensorDataLoader:
 			labels = torch.from_numpy( self.hdf5dataloader["labels"][start:stop] ).float().to(self.dataset.device)
 
 			data_dict = {
-				"data": data, 
-				"time_steps": time_stamps,
-				"mask": mask,
+				"data": data[:,::self.step,:self.feature_trunc], 
+				"time_steps": time_stamps[::self.step],
+				"mask": mask[:,::self.step,:self.feature_trunc],
 				"labels": labels}
 			
 		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type = self.dataset.mode)
@@ -877,7 +891,7 @@ def plot_confusion_matrix(correct_labels, predict_labels, labels, title='Confusi
 	np.set_printoptions(precision=2)
 	###fig, ax = matplotlib.figure.Figure()
 
-	fig = matplotlib.figure.Figure(figsize=(4, 4), dpi=320, facecolor='w', edgecolor='k')
+	fig = matplotlib.figure.Figure(figsize=(6, 6), dpi=320, facecolor='w', edgecolor='k')
 	ax = fig.add_subplot(1, 1, 1)
 	im = ax.imshow(cm, cmap='Oranges')
 

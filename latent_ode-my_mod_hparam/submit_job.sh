@@ -59,3 +59,9 @@ python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --resnet --l
 
 # 7xstar baseline
 #python run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN --stack-order star star star star star star star
+
+
+
+#### Swiss data
+
+python3 run_models.py --niters 1 -n 300000 -validn 600000 --dataset swisscrop -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1 --lr 0.00762 -g 100 -l 150 -u 255 -v 2 --topper -BN

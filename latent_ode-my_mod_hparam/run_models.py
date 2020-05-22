@@ -52,7 +52,7 @@ import wandb
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
 parser.add_argument('-n',  type=int, default=8000, help="Size of the dataset")
-parser.add_argument('-validn',  type=int, default=4000, help="Size of the validation dataset")
+parser.add_argument('-validn',  type=int, default=21000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=0.00762, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=700)
@@ -65,6 +65,10 @@ parser.add_argument('-r', '--random-seed', type=int, default=1991, help="Random_
 parser.add_argument('--dataset', type=str, default='crop', help="Dataset to load. Available: physionet, activity, hopper, periodic")
 parser.add_argument('-s', '--sample-tp', type=float, default=None, help="Number of time points to sub-sample."
 	"If > 1, subsample exact number of points. If the number is in [0,1], take a percentage of available points per time series. If None, do not subsample")
+
+#only for swissdata:
+parser.add_argument('--step', type=int, default=1, help="intervall used for skipping observations in swissdata")
+parser.add_argument('--trunc', type=int, default=9, help="Feature truncation in swissdata")
 
 parser.add_argument('-c', '--cut-tp', type=int, default=None, help="Cut out the section of the timeline of the specified length (in number of points)."
 	"Used for periodic function demo.")
@@ -112,6 +116,7 @@ parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise ampl
 
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
 parser.add_argument('-v', type=int, default=0, help="Verbosity of training. 0:=silence, 1:= standard progressbar, 2:= progressbar with additional content")
+parser.add_argument('--val_freq', type=int, default=50, help="Validate every ... batches")
 
 parser.add_argument('--ode-method', type=str, default='euler',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
@@ -150,7 +155,7 @@ utils.makedirs(args.save)
 
 
 import wandb
-wandb.init(project="odecrop",config=args, entity="nandometzger", group=args.dataset)
+wandb.init(project="odecrop",config=args, sync_tensorboard=True, entity="nandometzger", group=args.dataset)
 
 #####################################################################################################
 

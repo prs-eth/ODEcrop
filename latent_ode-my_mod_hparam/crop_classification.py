@@ -22,11 +22,13 @@ class Crops(object):
 	label = [ "other", "corn", "meadow", "asparagus", "rape", "hop", "summer oats", "winter spelt", "fallow", "winter wheat",
 		   "winter barley", "winter rye", "beans", "winter triticale", "summer barley", "peas", "potatoe", "soybeans", "sugar beets" ]
 	label_dict = {k: i for i, k in enumerate(label)}
+	reverse_label_dict = {v: k for k, v in label_dict.items()}
 	
 	
 	def __init__(self, root, args, download=False,
 		reduce='average', mode='train', minseqlength=20,
-		n_samples = None, device = torch.device("cpu"), list_form = True):
+		n_samples = None, device = torch.device("cpu"), list_form = True,
+		step=1, trunc=6):
 		
 		self.list_form = list_form
 		self.root = root
@@ -37,6 +39,7 @@ class Crops(object):
 		self.second = False
 		self.normalize = True
 		self.shuffle = True
+		self.nb = 3
 				
 		if download:
 			self.download()
@@ -53,9 +56,15 @@ class Crops(object):
 		
 		self.hdf5dataloader = h5py.File(os.path.join(self.processed_folder, data_file), "r")
 		self.nsamples = self.hdf5dataloader["data"].shape[0]
+		self.features = self.hdf5dataloader["data"].shape[2]
 		
 		self.timestamps = h5py.File(os.path.join(self.processed_folder, self.time_file), "r")["tt"][:]
 		
+		# create mask
+		self.step = step
+		self.trunc = trunc# use all features
+		self.feature_trunc = trunc*self.nb**2
+
 		#for statistics
 		#self.absolute_class_distribution = np.sum(self.hdf5dataloader["labels"], axis=0)
 		#self.relative_class_distribution = self.absolute_class_distribution/np.sum(self.absolute_class_distribution)
@@ -856,9 +865,9 @@ class Crops(object):
 				
 				#make it a dictionary to replace the collate function....
 				data_dict = {
-					"data": data, 
-					"time_steps": time_stamps,
-					"mask": mask,
+					"data": data[:,::self.step,:self.feature_trunc], 
+					"time_steps": time_stamps[::self.step],
+					"mask": mask[:,::self.step,:self.feature_trunc],
 					"labels": labels}
 
 				data_dict = utils.split_and_subsample_batch(data_dict, self.args, data_type = self.mode)
