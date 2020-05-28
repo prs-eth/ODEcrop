@@ -89,18 +89,18 @@ parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run R
 parser.add_argument('-l', '--latents', type=int, default=70, help="Size of the latent state")
 parser.add_argument('--stacking', type=int, default=1, help="Number of hidden layer-trajectories that should be stacked")
 parser.add_argument('--stack-order', nargs='*', help="a set of (separated by blank spaces): ode_rnn, gru, lstm, small_gru, star")
-parser.add_argument('-ODEws', '--ODE-sharing', action='store_true', help="Ties the weight together across different ODE between RNN-ODE-layers. Only useful if --stacking is larger than 2")
-parser.add_argument('-RNNws', '--RNN-sharing', action='store_true', help="Ties the weight together across different RNN between RNN-ODE-layers. Only useful if --stacking is larger than 2")
-parser.add_argument('-BN', '--batchnorm', action='store_true', help="Applies batchnormalization to the outputs of the RNN-cells")
-parser.add_argument('-RN', '--resnet', action='store_true', help="Turns the stacked latent-trajectories into stacked residual trajectories.")
+parser.add_argument('-ODEws', '--ODE-sharing', default=False,  type=bool, help="Ties the weight together across different ODE between RNN-ODE-layers. Only useful if --stacking is larger than 2")
+parser.add_argument('-RNNws', '--RNN-sharing', default=False,  type=bool, help="Ties the weight together across different RNN between RNN-ODE-layers. Only useful if --stacking is larger than 2")
+parser.add_argument('-BN', '--batchnorm', default=False,  type=bool, help="Applies batchnormalization to the outputs of the RNN-cells")
+parser.add_argument('-RN', '--resnet', default=False,  type=bool, help="Turns the stacked latent-trajectories into stacked residual trajectories.")
 
 parser.add_argument('--rec-layers', type=int, default=2, help="Number of layers in ODE func in recognition ODE") 
 parser.add_argument('-u', '--units', type=int, default=255, help="Number of units per layer in ODE func")
 parser.add_argument('-g', '--gru-units', type=int, default=100, help="Number of units per layer in each of GRU update networks")
 
-parser.add_argument('--linear-classif', default=False, action='store_true', help="If using a classifier, use a linear classifier instead of 1-layer NN")
-parser.add_argument('--topper', default=False, action='store_true', help="If a topper to transform the input before the first trajectory should be used")
-parser.add_argument('--linear-topper', default=False, action='store_true', help="If using a topper, use a linear classifier instead of 1-layer NN, else a 2-layer NN is used")
+parser.add_argument('--linear-classif', default=False, type=bool, help="If using a classifier, use a linear classifier instead of 1-layer NN")
+parser.add_argument('--topper', default=False, type=bool, help="If a topper to transform the input before the first trajectory should be used")
+parser.add_argument('--linear-topper', default=False, type=bool, help="If using a topper, use a linear classifier instead of 1-layer NN, else a 2-layer NN is used")
 
 parser.add_argument('--rec-dims', type=int, default=100, help="Dimensionality of the recognition model (RNN).")
 parser.add_argument('--gen-layers', type=int, default=2, help="Number of layers in ODE func in generative ODE")
@@ -115,8 +115,8 @@ parser.add_argument('--max-t',  type=float, default=5., help="We subsample point
 parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise amplitude for generated traejctories")
 
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
-parser.add_argument('-v', type=int, default=0, help="Verbosity of training. 0:=silence, 1:= standard progressbar, 2:= progressbar with additional content")
-parser.add_argument('--val_freq', type=int, default=50, help="Validate every ... batches")
+parser.add_argument('-v', type=int, default=2, help="Verbosity of training. 0:=silence, 1:= standard progressbar, 2:= progressbar with additional content")
+parser.add_argument('--val_freq', type=int, default=25, help="Validate every ... batches")
 
 parser.add_argument('--ode-method', type=str, default='euler',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
@@ -155,7 +155,7 @@ utils.makedirs(args.save)
 
 
 import wandb
-wandb.init(project="odecrop",config=args, sync_tensorboard=True, entity="nandometzger", group=args.dataset)
+wandb.init(project="odecropclassification",config=args, sync_tensorboard=True, entity="cropteam", group=args.dataset)
 
 #####################################################################################################
 

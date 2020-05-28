@@ -16,8 +16,8 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 # ODE-RNN
 #python run_models.py --niters 20 --lr 0.00762 -n 300000 -validn 60000 -l 70 -u 255 --gru-units 100 --rec-layers 2 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1 
 #python run_models.py --niters 20 --lr 0.00762 -n 300000 -validn 60000 -l 70 -u 255 --gru-units 100 --rec-layers 2 --ode-rnn --ode-type linear --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 1 --num-seeds 1 --hparams
-#python3 run_models.py --niters 25 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1 --lr 0.00762 -g 100 -l 70 -u 255 -v 2 --topper -BN
-#python3 run_models.py --niters 25 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell star --random-seed 6001 --num-search 1 --num-seeds 1 --lr 0.00762 -g 100 -l 70 -u 255 -v 2 --topper -BN
+#python3 run_models.py --niters 25 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1 --lr 0.00762 -g 100 -l 70 -u 255 -v 2 --stack-order ode_rnn --topper=true -BN=true
+#python3 run_models.py --niters 25 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell star --random-seed 6001 --num-search 1 --num-seeds 1 --lr 0.00762 -g 100 -l 70 -u 255 -v 2 --topper=true -BN=true
 
 # ODE-GRU-(Bayes)
 #python run_models.py --niters 20 -n 300000 -validn 60000 -b 420 --lr 0.0084761 -l 177 -g 42 --ode-rnn --ode-type gru --rnn-cell gru --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 10 --num-seeds 1 --hparams lr
@@ -34,9 +34,9 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 #python run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn ode_rnn --ode-type gru --rnn-cell star --ode-method dopri5 --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN --resnet
 
 # Stacking of Residual layers with weightsharing 88.04%
-#python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --resnet --lr 0.0084761 -g 78 --ode-rnn --stack-order ode_rnn ode_rnn ode_rnn --ode-type gru --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax -ODEws --num-search 15 --hparams gru_units
+python3 run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN=true --resnet=true --lr 0.0084761 -g 78 --ode-rnn --stack-order ode_rnn ode_rnn ode_rnn --ode-type gru --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax -ODEws=true
 
-# Stacking of Residual layers with weightsharing 88.04%
+# Stacking of Residual layers with weightsharing
 python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --resnet --lr 0.0084761 -g 78 --ode-rnn --stack-order ode_rnn ode_rnn gru_small --ode-type gru --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax -ODEws -RNNws --num-search 15 --hparams lr
 
 # Stacking of Residual layers with weightsharing
@@ -54,7 +54,7 @@ python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --resnet --l
 #python run_models.py --niters 40 -n 300000 -validn 60000 -b 600 --lr 0.0084761 -v 2 -l 18 --gru-units 18 --rec-layers 1 -u 40 --ode-rnn --stacking 5 -ws --ode-type linear --rnn-cell gru_small --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 15 --num-seeds 1 --hparams
 
 # RNN (Baseline)
-#python run_models.py --niters 60 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1 --stack-order gru -BN --topper
+#python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1 --stack-order gru -BN=true --topper=true
 #python run_models.py --niters 60 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell lstm --random-seed 6001 --num-search 1 --num-seeds 1
 
 # 7xstar baseline
@@ -64,4 +64,4 @@ python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --resnet --l
 
 #### Swiss data
 
-python3 run_models.py --niters 1 -n 300000 -validn 600000 --dataset swisscrop -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1 --lr 0.00762 -g 100 -l 150 -u 255 -v 2 --topper -BN
+#python3 run_models.py --niters 1 -n 300000 -validn 600000 --dataset swisscrop -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1 --lr 0.00762 -g 100 -l 150 -u 255 -v 2 --topper -BN

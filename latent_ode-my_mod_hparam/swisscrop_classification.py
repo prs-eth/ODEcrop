@@ -560,11 +560,9 @@ class SwissCrops(object):
 		#name only without path for consitency with other datasets
 		return 'raw_dates.hdf5'
 	
-	@property
 	def get_label(self, record_id):
 		return self.label_dict[record_id]
 	
-	@property
 	def get_label_name(self, record_id):
 		return self.reverse_label_dict[record_id]
 	

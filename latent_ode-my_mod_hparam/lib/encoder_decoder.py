@@ -215,7 +215,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		t_i = time_steps[0] - 0.00001 # new
 
 		interval_length = time_steps[-1] - time_steps[0]
-		minimum_step = interval_length / 100 # maybe have to modify minimum time step # original
+		minimum_step = interval_length / 500 # maybe have to modify minimum time step # original
 		#minimum_step = interval_length / 100 # maybe have to modify minimum time step # new
 
 		#print("minimum step: {}".format(minimum_step))

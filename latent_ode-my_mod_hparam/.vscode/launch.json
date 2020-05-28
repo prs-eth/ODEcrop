@@ -33,7 +33,8 @@
                 "-l", "150",
                 "-u", "255",
                 "-v", "2",
-                "--topper", "-BN"
+                "--topper", "true",
+                "-BN", "true"
             ]
         },
         {
@@ -45,22 +46,22 @@
             "args": [
                 "--niters", "1",
                 "-n", "1200000",
-                "-validn", "800000",
+                "-validn", "60000",
                 "--dataset", "swisscrop",
-                "-b", "1000",
+                "-b", "300",
                 "--ode-rnn",
                 "--rnn-cell", "gru",
                 "--random-seed", "6001",
                 "--num-search", "1",
                 "--num-seeds", "1",
-                "--lr", "0.00762",
+                "--lr", "0.00362",
                 "-g", "100",
                 "-l", "150",
                 "-u", "255",
                 "-v", "2",
-                "--topper",
-                "-BN",
-                "--step", "1",
+                "--topper", "true",
+                "-BN", "true",
+                "--step", "2",
                 "--trunc", "4"
             ]
         }

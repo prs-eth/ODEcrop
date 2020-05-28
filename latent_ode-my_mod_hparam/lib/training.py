@@ -21,6 +21,9 @@ import torch
 from torch.utils.tensorboard import SummaryWriter
 import torch.optim as optim
 
+from sklearn.metrics import confusion_matrix as sklearn_cm
+from sklearn.metrics import precision_score, recall_score, f1_score, cohen_kappa_score
+
 from tqdm import tqdm
 import pdb
 import numpy as np
@@ -274,6 +277,7 @@ def train_it(
 		"""
 
 	num_batches = Data_obj[0]["n_train_batches"]
+	labels = Data_obj[0]["dataset_obj"].label_list
 
 	#create empty lists
 	num_gpus = len(Devices)
@@ -339,10 +343,12 @@ def train_it(
 
 				for i, device in enumerate(Devices):
 					
+					"""
 					message = 'Epoch {:04d} [Test seq (cond on sampled tp)] | Loss {:.6f} | Likelihood {:.6f} | KL fp {:.4f} | FP STD {:.4f}|'.format(
 						itr//num_batches, 
 						test_res[i]["loss"].detach(), test_res[i]["likelihood"].detach(), 
 						test_res[i]["kl_first_p"], test_res[i]["std_first_p"])
+					"""
 
 					#Logger[i].info("Experiment " + str(experimentID[i]))
 					#Logger[i].info(message)
@@ -396,11 +402,11 @@ def train_it(
 					
 					#make confusion matrix
 					_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
-					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
-					
+					#Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
 					
 					#logger.info("-----------------------------------------------------------------------------------")
 
+					#Make checkpoint
 					torch.save({
 						'args': args,
 						'state_dict': Model[i].state_dict(),
@@ -415,22 +421,40 @@ def train_it(
 						}, Top_ckpt_path[i])
 
 					#logging to wandb
+					tag_dict = Data_obj[0]["dataset_obj"].reverse_label_dict
+
+					# for training
+					y_ref_train = [tag_dict[label_id] for label_id in torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().tolist() ] 
+					y_pred_train = [tag_dict[label_id] for label_id in torch.argmax(batch_dict[0]['labels'], dim=1).tolist() ] 
+
+					# for validation
+					y_ref = [tag_dict[label_id] for label_id in label_dict[0]["correct_labels"].tolist() ]
+					y_pred = [tag_dict[label_id] for label_id in label_dict[0]["predict_labels"].tolist() ]
+
 					logdict = {
 						'Classification_accuracy/train': train_res[i]["accuracy"],
 						'Classification_accuracy/validation': test_res[i]["accuracy"],
 						'Classification_accuracy/validation_peak': Best_test_acc[i],
+						'Classification_accuracy/validation_peak_step': Best_test_acc_step[i],
+						
 						'loss/train': train_res[i]["loss"].detach(),
 						'loss/validation': test_res[i]["loss"].detach(),
-						'Confusionmatrix': conf_fig
+						'Confusionmatrix': conf_fig,
+
+						'Other_metrics/train_cm' : sklearn_cm(y_ref_train, y_pred_train, labels=labels),
+						'Other_metrics/train_precision': precision_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
+						'Other_metrics/train_recall': recall_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
+						'Other_metrics/train_f1': f1_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
+						'Other_metrics/train_kappa': cohen_kappa_score(y_ref_train, y_pred_train, labels=labels),
+
+						'Other_metrics/validation_cm' : sklearn_cm(y_ref, y_pred, labels=labels),
+						'Other_metrics/validation_precision': precision_score(y_ref, y_pred, labels=labels, average='macro'),
+						'Other_metrics/validation_recall': recall_score(y_ref, y_pred, labels=labels, average='macro'),
+						'Other_metrics/validation_f1': f1_score(y_ref, y_pred, labels=labels, average='macro'),
+						'Other_metrics/validation_kappa': cohen_kappa_score(y_ref, y_pred, labels=labels),
 					}
 					wandb.log(logdict, step=itr*args.batch_size)
-
-					#pdb.set_trace()
-					tag_dict = Data_obj[0]["dataset_obj"].reverse_label_dict
-					y_ref = [tag_dict[label_id] for label_id in label_dict[0]["correct_labels"].tolist() ]
-					y_pred = [tag_dict[label_id] for label_id in label_dict[0]["predict_labels"].tolist() ]
-
-					#wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, tag_dict)
+					wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)
 
 
 		fine_train_writer = False
