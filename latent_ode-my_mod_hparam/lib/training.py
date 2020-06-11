@@ -349,7 +349,6 @@ def train_it(
 						test_res[i]["loss"].detach(), test_res[i]["likelihood"].detach(), 
 						test_res[i]["kl_first_p"], test_res[i]["std_first_p"])
 					"""
-
 					#Logger[i].info("Experiment " + str(experimentID[i]))
 					#Logger[i].info(message)
 					#Logger[i].info("KL coef: {}".format(kl_coef))
@@ -399,9 +398,8 @@ def train_it(
 						Validationwriter[i].add_scalar('CE_loss/validation', test_res[i]["ce_loss"], itr*args.batch_size)
 					"""
 
-					
 					#make confusion matrix
-					_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
+					#_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
 					#Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
 					
 					#logger.info("-----------------------------------------------------------------------------------")
@@ -421,15 +419,21 @@ def train_it(
 						}, Top_ckpt_path[i])
 
 					#logging to wandb
-					tag_dict = Data_obj[0]["dataset_obj"].reverse_label_dict
+					#tag_dict = Data_obj[0]["dataset_obj"].reverse_label_dict
 
 					# for training
-					y_ref_train = [tag_dict[label_id] for label_id in torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().tolist() ] 
-					y_pred_train = [tag_dict[label_id] for label_id in torch.argmax(batch_dict[0]['labels'], dim=1).tolist() ] 
+					#y_ref_train = [tag_dict[label_id] for label_id in torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().tolist() ] 
+					#y_pred_train = [tag_dict[label_id] for label_id in torch.argmax(batch_dict[0]['labels'], dim=1).tolist() ] 
+
+					y_ref_train = torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().cpu()
+					y_pred_train = torch.argmax(batch_dict[0]['labels'], dim=1).cpu()
 
 					# for validation
-					y_ref = [tag_dict[label_id] for label_id in label_dict[0]["correct_labels"].tolist() ]
-					y_pred = [tag_dict[label_id] for label_id in label_dict[0]["predict_labels"].tolist() ]
+					#y_ref = [tag_dict[label_id] for label_id in label_dict[0]["correct_labels"].tolist() ]
+					#y_pred = [tag_dict[label_id] for label_id in label_dict[0]["predict_labels"].tolist() ]
+
+					y_ref = label_dict[0]["correct_labels"].cpu()
+					y_pred = label_dict[0]["predict_labels"]
 
 					logdict = {
 						'Classification_accuracy/train': train_res[i]["accuracy"],
@@ -439,8 +443,9 @@ def train_it(
 						
 						'loss/train': train_res[i]["loss"].detach(),
 						'loss/validation': test_res[i]["loss"].detach(),
-						'Confusionmatrix': conf_fig,
+						#'Confusionmatrix': conf_fig,
 
+						"""
 						'Other_metrics/train_cm' : sklearn_cm(y_ref_train, y_pred_train, labels=labels),
 						'Other_metrics/train_precision': precision_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
 						'Other_metrics/train_recall': recall_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
@@ -452,6 +457,20 @@ def train_it(
 						'Other_metrics/validation_recall': recall_score(y_ref, y_pred, labels=labels, average='macro'),
 						'Other_metrics/validation_f1': f1_score(y_ref, y_pred, labels=labels, average='macro'),
 						'Other_metrics/validation_kappa': cohen_kappa_score(y_ref, y_pred, labels=labels),
+						"""
+
+						'Other_metrics/train_cm' : sklearn_cm(y_ref_train, y_pred_train),
+						'Other_metrics/train_precision': precision_score(y_ref_train, y_pred_train, average='macro'),
+						'Other_metrics/train_recall': recall_score(y_ref_train, y_pred_train, average='macro'),
+						'Other_metrics/train_f1': f1_score(y_ref_train, y_pred_train, average='macro'),
+						'Other_metrics/train_kappa': cohen_kappa_score(y_ref_train, y_pred_train),
+
+						'Other_metrics/validation_cm' : sklearn_cm(y_ref, y_pred),
+						'Other_metrics/validation_precision': precision_score(y_ref, y_pred, average='macro'),
+						'Other_metrics/validation_recall': recall_score(y_ref, y_pred, average='macro'),
+						'Other_metrics/validation_f1': f1_score(y_ref, y_pred, average='macro'),
+						'Other_metrics/validation_kappa': cohen_kappa_score(y_ref, y_pred),
+
 					}
 					wandb.log(logdict, step=itr*args.batch_size)
 					wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)

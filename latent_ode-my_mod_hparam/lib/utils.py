@@ -694,7 +694,7 @@ class FastTensorDataLoader:
 		:param *dataset: hdf5 dataset. Eg. Crop dataset
 		:param batch_size: batch size to load.
 		:param shuffle: if True, shuffle the data *in-place* whenever an iterator is created out of this object.
-			Recommendation: set shuffle to False, the underlying hd5y is than more efficient,
+			Recommendation: set shuffle to False. Then: the underlying hd5y is than more efficient,
 			because id can make use of the contiguous blocks of data.
 
 		:returns: A FastTensorDataLoader.

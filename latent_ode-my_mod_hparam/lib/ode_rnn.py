@@ -210,7 +210,8 @@ class ML_ODE_RNN(Baseline):
 					RNN_update = GRU_standard_unit(latent_dim, vertical_rnn_input, device=device).to(device)
 
 				elif thisRNNcell=='lstm':
-					RNN_update = LSTM_unit(latent_dim, vertical_rnn_input).to(device)
+					# two times latent dimension because of the cell state!
+					RNN_update = LSTM_unit(latent_dim*2, vertical_rnn_input).to(device)
 
 				elif thisRNNcell=="star":
 					RNN_update = STAR_unit(latent_dim, vertical_rnn_input, n_units = n_gru_units).to(device)
@@ -348,7 +349,6 @@ class ML_ODE_RNN(Baseline):
 			latent_ys = latent_ys.permute(0,2,1,3)
 
 			# add the output as a residual, if it is a ResNet
-			#pdb.set_trace()
 			if self.resnet:
 				latent_ys = latent_ys + input_sequence.unsqueeze(0)[:,:,:,:self.latent_dim]
 

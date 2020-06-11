@@ -69,6 +69,7 @@ parser.add_argument('-s', '--sample-tp', type=float, default=None, help="Number 
 #only for swissdata:
 parser.add_argument('--step', type=int, default=1, help="intervall used for skipping observations in swissdata")
 parser.add_argument('--trunc', type=int, default=9, help="Feature truncation in swissdata")
+parser.add_argument('--swissdatatype', type=str, default="", help="blank (default), 2 (for more selective cloud handling), 2_toplabels for the most frequent labels. (only works if accordingly preprocessed) ")
 
 parser.add_argument('-c', '--cut-tp', type=int, default=None, help="Cut out the section of the timeline of the specified length (in number of points)."
 	"Used for periodic function demo.")
@@ -87,8 +88,8 @@ parser.add_argument('--ode-rnn', action='store_true', help="Run ODE-RNN baseline
 parser.add_argument('--rnn-vae', default=False, action='store_true', help="Run RNN baseline: seq2seq model with sampling of the h0 and ELBO loss.")
 
 parser.add_argument('-l', '--latents', type=int, default=70, help="Size of the latent state")
-parser.add_argument('--stacking', type=int, default=1, help="Number of hidden layer-trajectories that should be stacked")
-parser.add_argument('--stack-order', nargs='*', help="a set of (separated by blank spaces): ode_rnn, gru, lstm, small_gru, star")
+parser.add_argument('--stacking', type=int, default=1, help="Number of hidden layer-trajectories that should be stacked. Only valid, if --stack-order is unused")
+parser.add_argument('--stack-order', nargs='*', help="a set of (separated by blank spaces): ode_rnn, gru, lstm, small_gru, star. Repetitions of same method are possible")
 parser.add_argument('-ODEws', '--ODE-sharing', default=False,  type=bool, help="Ties the weight together across different ODE between RNN-ODE-layers. Only useful if --stacking is larger than 2")
 parser.add_argument('-RNNws', '--RNN-sharing', default=False,  type=bool, help="Ties the weight together across different RNN between RNN-ODE-layers. Only useful if --stacking is larger than 2")
 parser.add_argument('-BN', '--batchnorm', default=False,  type=bool, help="Applies batchnormalization to the outputs of the RNN-cells")
@@ -116,7 +117,7 @@ parser.add_argument('--noise-weight', type=float, default=0.01, help="Noise ampl
 
 parser.add_argument('--tensorboard',  action='store_true', default=True, help="monitor training with the help of tensorboard")
 parser.add_argument('-v', type=int, default=2, help="Verbosity of training. 0:=silence, 1:= standard progressbar, 2:= progressbar with additional content")
-parser.add_argument('--val_freq', type=int, default=25, help="Validate every ... batches")
+parser.add_argument('--val_freq', type=int, default=100, help="Validate every ... batches")
 
 parser.add_argument('--ode-method', type=str, default='euler',
 					help="Method of the ODE-Integrator. One of: 'explicit_adams', fixed_adams', 'adams', 'tsit5', 'dopri5', 'bosh3', 'euler', 'midpoint', 'rk4' , 'adaptive_heun' ")
@@ -158,7 +159,7 @@ import wandb
 wandb.init(project="odecropclassification",config=args, sync_tensorboard=True, entity="cropteam", group=args.dataset)
 
 #####################################################################################################
-
+pdb.set_trace()
 if __name__ == '__main__':
 
 	experimentID = args.load

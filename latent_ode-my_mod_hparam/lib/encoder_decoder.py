@@ -96,7 +96,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 	def __init__(self, latent_dim, input_dim, z0_diffeq_solver = None, 
 		z0_dim = None, RNN_update = None, 
 		n_gru_units = 100, device = torch.device("cpu"),
-		RNNcell = 'gru', use_BN=True,
+		RNNcell = None, use_BN=True,
 		use_ODE = True):
 		
 		super(Encoder_z0_ODE_RNN, self).__init__()
@@ -106,11 +106,13 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		else:
 			self.z0_dim = z0_dim
 
-		self.RNNcell = RNNcell
+		rnn_input = input_dim		
+		self.latent_dim = latent_dim
 
-		rnn_input = input_dim
+		
 
 		if RNN_update is None:
+			self.RNNcell = RNNcell
 
 			if self.RNNcell=='gru':
 				self.RNN_update = GRU_unit(latent_dim, rnn_input, n_units = n_gru_units, device=device).to(device)
@@ -119,7 +121,9 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				self.RNN_update = GRU_standard_unit(latent_dim, rnn_input, device=device).to(device)
 
 			elif self.RNNcell=='lstm':
-				self.RNN_update = LSTM_unit(latent_dim, rnn_input).to(device)
+				self.latent_dim = latent_dim*2
+				self.RNN_update = LSTM_unit(self.latent_dim, rnn_input).to(device)
+				
 
 			elif self.RNNcell=="star":
 				self.RNN_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
@@ -128,6 +132,17 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
 
 		else:
+			RNN_choices = {"gru": GRU_unit, "gru_small": GRU_standard_unit, "lstm": LSTM_unit, "star": STAR_unit}
+			for name,rnn_unit in RNN_choices.items():
+				if isinstance(RNN_update, rnn_unit):
+					self.RNNcell = name
+
+			if self.RNNcell=="lstm":
+				self.latent_dim = latent_dim*2
+
+			if self.RNNcell is None:
+				raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
+
 			self.RNN_update = RNN_update
 
 		self.ode_bn0 = nn.BatchNorm1d(latent_dim)
@@ -136,7 +151,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		self.use_BN = use_BN
 		self.use_ODE = use_ODE
 		self.z0_diffeq_solver = z0_diffeq_solver
-		self.latent_dim = latent_dim
 		self.input_dim = input_dim
 		self.device = device
 		self.extra_info = None
@@ -297,7 +311,9 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				# actually this is a LSTM update here:
 				outi, yi_std = self.RNN_update(h_c_lstm, prev_std, xi)
 				# the RNN cell is a LSTM and outi:=(yi,ci), we only need h as latent dim
-				yi = torch.cat([outi[0], outi[1]], -1)
+				h_i_, c_i_ = outi[0], outi[1]
+				yi = torch.cat([h_i_, c_i_], -1)
+				yi_out = h_i_
 			else:
 				
 				# GRU-unit: the output is directly the hidden state
@@ -306,17 +322,18 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				yi_ode, prev_std = self.RNN_update(yi_ode, prev_std, xi)
 
 				yi, yi_std = yi_ode, prev_std
+				yi_out = yi
 
 
 			prev_y, prev_std = yi, yi_std
 			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original
 			t_i = time_steps[i] 							# new
 
-			latent_ys.append(yi)
+			latent_ys.append(yi_out)
 
 			if save_info:
 				d = {"yi_ode": yi_ode.detach(), #"yi_from_data": yi_from_data,
-					 "yi": yi.detach(), "yi_std": yi_std.detach(), 
+					 "yi": yi_out.detach(), "yi_std": yi_std.detach(), 
 					 "time_points": time_points.detach(), "ode_sol": ode_sol.detach()}
 				extra_info.append(d)
 
@@ -325,10 +342,11 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		#BatchNormalization for the outputs
 		if self.use_BN:
 
-			# only apply BN to the RNN converted outputs, the one that are further used...
+			# only apply BN to the RNN converted outputs (observed times), the one that are further used...
 			# Experimental: for selective BN of outputs
 			fancy_BN = False
 			if fancy_BN:
+				# not faster due to non-contigious data
 				obs_mask = data[:,:,self.input_dim//2].permute(1,0)
 				latent_ys[:,obs_mask.bool()] = self.output_bn(latent_ys[:,obs_mask.bool()].permute(0,2,1)).permute(0,2,1)
 			else:
@@ -338,7 +356,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		assert(not torch.isnan(yi_std).any())
 
 		return yi, yi_std, latent_ys, extra_info
-
 
 
 class Decoder(nn.Module):

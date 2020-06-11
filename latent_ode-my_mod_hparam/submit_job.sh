@@ -55,7 +55,7 @@ python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --resnet --l
 
 # RNN (Baseline)
 #python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1 --stack-order gru -BN=true --topper=true
-#python run_models.py --niters 60 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell lstm --random-seed 6001 --num-search 1 --num-seeds 1
+python3 run_models.py --niters 20 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell lstm --random-seed 6001 --latents 40 -BN=true --topper=true
 
 # 7xstar baseline
 #python run_models.py --niters 20 -n 300000 -validn 60000 -b 400 --lr 0.0084761 --ode-rnn --random-seed 6001 --optimizer adaw --num-search 1 --num-seeds 1 --topper -BN --stack-order star star star star star star star

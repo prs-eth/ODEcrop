@@ -34,9 +34,11 @@ class SwissCrops(object):
 
 
 	def __init__(self, root, mode='train', device = torch.device("cpu"),
-		neighbourhood=3, cloud_thresh=0.95,
+		neighbourhood=3, cloud_thresh=0.05,
 		nsamples=float("inf"),args=None,
-		step=1, trunc=9):
+		step=1, trunc=9, datatype=""):
+		
+		self.datatype = datatype
 
 		self.normalize = True
 		self.shuffle = True
@@ -315,7 +317,6 @@ class SwissCrops(object):
 		print("found ", num_invalid_obs, " invalid Neighbourhood-Observations in training data")
 		assert(num_invalid_obs==0)
 
-
 		## TEST DATASET ##
 		shuffle_chucks = 25 #15 # 30: limit of 64GB RAM, 60: limit of 32GB RAM
 		splits = np.array_split(testindices, shuffle_chucks)
@@ -492,8 +493,10 @@ class SwissCrops(object):
 
 			accum_counter += 1
 
-		print("found ", num_invalid_obs, " invalid Neighbourhood-Observations in training data")
+		print("found ", num_invalid_obs, " invalid Neighbourhood-Observations in validation data")
 		assert(num_invalid_obs==0)
+
+		print("Valid observations: ", (observed/(observed+missing))*100, "%")
 
 		# Calculate mean and std on train
 		showmeanstd=True
@@ -545,11 +548,11 @@ class SwissCrops(object):
 
 	@property
 	def train_file(self):
-		return os.path.join(self.processed_folder, "train_set_3x3_processed.hdf5")
+		return os.path.join(self.processed_folder, "train_set_3x3_processed" + self.datatype + ".hdf5")
 
 	@property
 	def test_file(self):
-		return os.path.join(self.processed_folder, "test_set_3x3_processed.hdf5")
+		return os.path.join(self.processed_folder, "test_set_3x3_processed" + self.datatype + ".hdf5")
 
 	@property
 	def raw_time_file(self):
@@ -699,7 +702,9 @@ class Dataset(torch.utils.data.Dataset):
 			if tier_4[i] == '':
 				tier_4[i] = '0_unknown'
 			
-			if tier_1[i] == 'Vegetation':
+			### Attention: Changed ozgur's code here ###
+			#if tier_1[i] == 'Vegetation':
+			if tier_1[i] == 'Vegetation' and tier_4[i] in ['Meadow','Potatoes', 'Pasture', 'Maize', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat', 'WinterBarley', 'WinterRapeseed', 'WinterWheat']:
 				self.label_list.append(i)
 							
 		tier_2_elements = list(set(tier_2))
@@ -793,13 +798,12 @@ class Dataset(torch.utils.data.Dataset):
 		if self.eval_mode:
 			gt_instance = self.data["gt_instance"][idx,...,0]
 
-
 		X = np.transpose(X, (0, 3, 1, 2))
 		
 		#Use half of the time series
 		step = self.step
 		feature_trunc = self.featrue_trunc
-		if not (step==1 and feature_trunc>=10):
+		if not (step==1 and feature_trunc>=9):
 			X = X[0::step,:feature_trunc,...]
 			cloud_cover = cloud_cover[0::step,...]
 		
@@ -985,9 +989,9 @@ class Dataset(torch.utils.data.Dataset):
 
 if __name__=="__main__":
 
-	bs = 500
+	bs = 600
 
-	train_dataset_obj = SwissCrops('data/SwissCrops', mode="train")
+	train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", datatype="2_toplabels")
 	trainloader = FastTensorDataLoader(train_dataset_obj, batch_size=bs, shuffle=False)
 	train_generator = utils.inf_generator(trainloader)
 
@@ -1002,6 +1006,8 @@ if __name__=="__main__":
 	print("Done")
 
 	#pdb.set_trace()
+
+	#Speed test
 	for t in tqdm(range(len(trainloader))):
 
 		batch_dict = utils.get_next_batch(train_generator)
