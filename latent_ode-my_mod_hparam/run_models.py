@@ -69,7 +69,7 @@ parser.add_argument('-s', '--sample-tp', type=float, default=None, help="Number 
 #only for swissdata:
 parser.add_argument('--step', type=int, default=1, help="intervall used for skipping observations in swissdata")
 parser.add_argument('--trunc', type=int, default=9, help="Feature truncation in swissdata")
-parser.add_argument('--swissdatatype', type=str, default="", help="blank (default), 2 (for more selective cloud handling), 2_toplabels for the most frequent labels. (only works if accordingly preprocessed) ")
+parser.add_argument('--swissdatatype', type=str, default="2_toplabels", help="blank (default), 2 (for more selective cloud handling), 2_toplabels for the most frequent labels. (only works if accordingly preprocessed) ")
 
 parser.add_argument('-c', '--cut-tp', type=int, default=None, help="Cut out the section of the timeline of the specified length (in number of points)."
 	"Used for periodic function demo.")
@@ -159,7 +159,7 @@ import wandb
 wandb.init(project="odecropclassification",config=args, sync_tensorboard=True, entity="cropteam", group=args.dataset)
 
 #####################################################################################################
-pdb.set_trace()
+
 if __name__ == '__main__':
 
 	experimentID = args.load
