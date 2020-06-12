@@ -304,9 +304,11 @@ def parse_datasets(args, device):
 	if dataset_name == "swisscrop":
 
 		train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", device=device,
-										step=args.step, trunc=args.trunc, nsamples=args.n)
+										step=args.step, trunc=args.trunc, nsamples=args.n,
+										datatype=args.swissdatatype)
 		test_dataset_obj = SwissCrops('data/SwissCrops', mode="test", device=device,
-										step=args.step, trunc=args.trunc, nsamples=args.validn) 
+										step=args.step, trunc=args.trunc, nsamples=args.validn,
+										datatype=args.swissdatatype) 
 		
 		n_samples = min(args.n, len(train_dataset_obj))
 		n_test_samples = min( float("inf"), len(test_dataset_obj))

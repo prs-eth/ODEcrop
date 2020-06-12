@@ -303,7 +303,7 @@ def train_it(
 		for i, device in enumerate(Devices):
 			# default decay_rate = 0.999, lowest= args.lr/10 	# original
 			# decay_rate = 0.9995, lowest = args.lr / 50 		# new
-			utils.update_learning_rate(Optimizer[i], decay_rate = 0.9995, lowest = args.lr/50)
+			utils.update_learning_rate(Optimizer[i], decay_rate = args.lrdecay, lowest = args.lr/1000)
 
 		wait_until_kl_inc = 10
 		if itr // num_batches < wait_until_kl_inc:

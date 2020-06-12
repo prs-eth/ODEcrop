@@ -125,6 +125,8 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 					help="Chose from: adamax (default), adagrad, adadelta, adam, adaw, sparseadam, ASGD, RMSprop, rprop, SGD")
 					# working: adamax, adagrad, adadelta, adam, adaw, ASGD, rprop, RMSprop
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure)
+parser.add_argument('--lrdecay',  type=float, default=0.9995, help="For the Learning rate scheduler")
+
 
 parser.add_argument('--num-seeds', type=int, default=1, help="Number of runs to average from. Default=3")
 parser.add_argument('--num-search', type=int, default=1, help="Number of search steps to be executed")

@@ -128,7 +128,7 @@
             "args": [
                 //#python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --stack-order gru -BN=true --topper=true
                 "--niters", "1",
-                "-n", "1200000",
+                "-n", "11000000",
                 "-validn", "100000",
                 "--dataset", "swisscrop",
                 "--swissdatatype", "2_toplabels",
@@ -138,7 +138,8 @@
                 "--optimizer", "adam",
                 "--random-seed", "6001",
                 "--stack-order", "lstm",
-                "--lr", "0.00762",
+                "--lr", "0.006",
+                "--lrdecay", "0.995",
                 "-g", "100",
                 "-l", "30",
                 "-u", "255",
@@ -146,8 +147,8 @@
                 "--topper", "true",
                 "--linear-topper", "true",
                 "-BN", "true",
-                "--step", "2",
-                "--trunc", "4"
+                "--step", "3",
+                "--trunc", "9",
             ]
         }
     ]
