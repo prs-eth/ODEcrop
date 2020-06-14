@@ -175,7 +175,6 @@ def subsample_timepoints(data, time_steps, mask, n_tp_to_sample = None):
 	return data, time_steps, mask
 
 
-
 def cut_out_timepoints(data, time_steps, mask, n_points_to_cut = None):
 	# n_points_to_cut: number of consecutive time points to cut out
 	if n_points_to_cut is None:
@@ -196,9 +195,6 @@ def cut_out_timepoints(data, time_steps, mask, n_points_to_cut = None):
 			mask[i, start : (start + n_points_to_cut)] = 0.
 
 	return data, time_steps, mask
-
-
-
 
 
 def get_device(tensor):
@@ -703,13 +699,13 @@ class FastTensorDataLoader:
 		self.hdf5dataloader = self.dataset.hdf5dataloader
 
 		self.dataset_len = len(dataset)
+		self.dataset_true_len = dataset.true_len__()
 		self.batch_size = batch_size
 		self.shuffle = shuffle
 		self.batch_shuffle = batch_shuffle
 		self.timestamps = h5py.File(os.path.join(self.dataset.processed_folder, self.dataset.time_file), "r")["tt"][:]
 
 		# prepare skipping of steps and truncation of features
-		
 		if hasattr(self.dataset, 'step'):
 			self.step = self.dataset.step
 		else:
@@ -728,16 +724,26 @@ class FastTensorDataLoader:
 			n_batches += 1 # what hapens to the last one => not full right?
 		self.n_batches = n_batches
 
+		n_true_batches, true_remainder = divmod(self.dataset_true_len, self.batch_size)
+		if true_remainder > 0: 
+			n_true_batches += 1 # what hapens to the last one => not full right?
+		self.n_true_batches = n_true_batches
+
+
 	def __iter__(self):
 		if self.shuffle:
 			self.indices = np.random.permutation(self.dataset_len)
 		else:
 			self.indices = None
 		
-		self.batch_indices = np.arange(self.n_batches)
-		
+		self.true_batch_indices = np.arange(self.n_true_batches)
 		if self.batch_shuffle:
-			np.random.shuffle(self.batch_indices)
+			np.random.shuffle(self.true_batch_indices)
+		self.batch_indices = self.true_batch_indices[:self.n_batches]
+		#self.batch_indices = np.arange(self.n_batches)
+		
+		#if self.batch_shuffle:
+		#	np.random.shuffle(self.batch_indices)
 
 		self.bi = 0
 		self.i = 0

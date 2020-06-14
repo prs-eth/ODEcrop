@@ -399,8 +399,8 @@ def train_it(
 					"""
 
 					#make confusion matrix
-					#_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
-					#Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
+					_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
+					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
 					
 					#logger.info("-----------------------------------------------------------------------------------")
 

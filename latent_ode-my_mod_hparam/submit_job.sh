@@ -64,4 +64,4 @@ python3 run_models.py --niters 20 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn
 
 #### Swiss data
 
-#python3 run_models.py --niters 1 -n 300000 -validn 600000 --dataset swisscrop -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 1 --num-seeds 1 --lr 0.00762 -g 100 -l 150 -u 255 -v 2 --topper -BN
+python3 run_models.py --niters 1 -n 3600000 -validn 100000 --dataset swisscrop -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 10 --num-seeds 1 --lr 0.00762 -g 100 -l 150 -u 255 -v 2 -BN=True --hparam latents

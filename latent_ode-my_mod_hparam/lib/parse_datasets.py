@@ -208,13 +208,18 @@ def parse_datasets(args, device):
 		#turn this boolean to true in order to get access to the larger "evaluation" dataset used for validation
 		eval_as_test = True
 
-		train_dataset_obj = Crops('data/Crops', mode="train", args=args,
-										download=True, device = device, list_form = list_form)
-		test_dataset_obj = Crops('data/Crops', mode="test", args=args, 
-										download=True, device = device, list_form = list_form)
+		root = 'data/Crops'
+		scratch_root = '/scratch/Nando/ODEcrop/Crops'
+		if os.path.exists(scratch_root):
+			root = scratch_root
+
+		train_dataset_obj = Crops(root, mode="train", args=args,
+									download=True, device = device, list_form = list_form)
+		test_dataset_obj = Crops(root, mode="test", args=args, 
+									download=True, device = device, list_form = list_form)
 		
-		eval_dataset_obj = Crops('data/Crops', mode="eval", args=args, 
-										download=True, device = device,  list_form = list_form)
+		eval_dataset_obj = Crops(root, mode="eval", args=args, 
+									download=True, device = device,  list_form = list_form)
 		
 		
 		n_samples = min(args.n, len(train_dataset_obj))
@@ -303,7 +308,12 @@ def parse_datasets(args, device):
 	
 	if dataset_name == "swisscrop":
 
-		train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", device=device,
+		root = 'data/SwissCrops'
+		scratch_root = '/scratch/Nando/ODEcrop/SwissCrops'
+		if os.path.exists(scratch_root):
+			root = scratch_root
+
+		train_dataset_obj = SwissCrops(root, mode="train", device=device,
 										step=args.step, trunc=args.trunc, nsamples=args.n,
 										datatype=args.swissdatatype)
 		test_dataset_obj = SwissCrops('data/SwissCrops', mode="test", device=device,
