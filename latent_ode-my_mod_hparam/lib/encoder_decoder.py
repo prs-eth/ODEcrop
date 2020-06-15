@@ -267,6 +267,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				else:
 					#complete Integration
 					n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between
+					#n_intermediate_tp = 2 # get steps in between
 
 					time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
 					ode_sol = self.z0_diffeq_solver(prev_y, time_points)
