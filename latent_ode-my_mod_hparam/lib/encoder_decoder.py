@@ -109,8 +109,10 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		self.RNNcell = RNNcell
 
 		rnn_input = input_dim
+		self.latent_dim = latent_dim
 
 		if RNN_update is None:
+			self.RNNcell = RNNcell
 
 			if self.RNNcell=='gru':
 				self.RNN_update = GRU_unit(latent_dim, rnn_input, n_units = n_gru_units, device=device).to(device)
@@ -119,7 +121,8 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				self.RNN_update = GRU_standard_unit(latent_dim, rnn_input, device=device).to(device)
 
 			elif self.RNNcell=='lstm':
-				self.RNN_update = LSTM_unit(latent_dim, rnn_input).to(device)
+				self.latent_dim = latent_dim*2
+				self.RNN_update = LSTM_unit(self.latent_dim, rnn_input).to(device)
 
 			elif self.RNNcell=="star":
 				self.RNN_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
@@ -128,6 +131,18 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
 
 		else:
+
+			RNN_choices = {"gru": GRU_unit, "gru_small": GRU_standard_unit, "lstm": LSTM_unit, "star": STAR_unit}
+			for name,rnn_unit in RNN_choices.items():
+				if isinstance(RNN_update, rnn_unit):
+					self.RNNcell = name
+
+			if self.RNNcell=="lstm":
+				self.latent_dim = latent_dim*2
+
+			if self.RNNcell is None:
+				raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
+
 			self.RNN_update = RNN_update
 
 		self.ode_bn0 = nn.BatchNorm1d(latent_dim)
@@ -136,7 +151,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		self.use_BN = use_BN
 		self.use_ODE = use_ODE
 		self.z0_diffeq_solver = z0_diffeq_solver
-		self.latent_dim = latent_dim
+		#self.latent_dim = latent_dim
 		self.input_dim = input_dim
 		self.device = device
 		self.extra_info = None
@@ -298,7 +313,9 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				# actually this is a LSTM update here:
 				outi, yi_std = self.RNN_update(h_c_lstm, prev_std, xi)
 				# the RNN cell is a LSTM and outi:=(yi,ci), we only need h as latent dim
-				yi = torch.cat([outi[0], outi[1]], -1)
+				h_i_, c_i_ = outi[0], outi[1]
+				yi = torch.cat([h_i_, c_i_], -1)
+				yi_out = h_i_
 			else:
 				
 				# GRU-unit: the output is directly the hidden state
@@ -307,17 +324,18 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				yi_ode, prev_std = self.RNN_update(yi_ode, prev_std, xi)
 
 				yi, yi_std = yi_ode, prev_std
+				yi_out = yi
 
 
 			prev_y, prev_std = yi, yi_std
 			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original
 			t_i = time_steps[i] 							# new
 
-			latent_ys.append(yi)
+			latent_ys.append(yi_out)
 
 			if save_info:
 				d = {"yi_ode": yi_ode.detach(), #"yi_from_data": yi_from_data,
-					 "yi": yi.detach(), "yi_std": yi_std.detach(), 
+					 "yi": yi_out.detach(), "yi_std": yi_std.detach(), 
 					 "time_points": time_points.detach(), "ode_sol": ode_sol.detach()}
 				extra_info.append(d)
 
