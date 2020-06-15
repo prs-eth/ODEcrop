@@ -909,6 +909,12 @@ class Crops(object):
 			return min(self.args.n, self.hdf5dataloader["data"].shape[0])
 		else:
 			return min(self.args.validn, self.hdf5dataloader["data"].shape[0])
+	
+	def true_len__(self):
+		if self.mode=="train":
+			return self.hdf5dataloader["data"].shape[0]
+		else:
+			return self.hdf5dataloader["data"].shape[0]
 
 	def __repr__(self):
 		fmt_str = 'Dataset ' + self.__class__.__name__ + '\n'

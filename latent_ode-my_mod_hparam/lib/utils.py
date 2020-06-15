@@ -703,6 +703,7 @@ class FastTensorDataLoader:
 		self.hdf5dataloader = self.dataset.hdf5dataloader
 
 		self.dataset_len = len(dataset)
+		self.dataset_true_len = dataset.true_len__()
 		self.batch_size = batch_size
 		self.shuffle = shuffle
 		self.batch_shuffle = batch_shuffle
@@ -727,6 +728,11 @@ class FastTensorDataLoader:
 		if remainder > 0: 
 			n_batches += 1 # what hapens to the last one => not full right?
 		self.n_batches = n_batches
+
+		n_true_batches, true_remainder = divmod(self.dataset_true_len, self.batch_size)
+		if true_remainder > 0: 
+			n_true_batches += 1 # what hapens to the last one => not full right?
+		self.n_true_batches = n_true_batches
 
 	def __iter__(self):
 		if self.shuffle:

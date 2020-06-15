@@ -44,24 +44,25 @@
             "console": "integratedTerminal",
             "args": [
                 "--niters", "1",
-                "-n", "1200000",
-                "-validn", "800000",
+                "-n", "2400000",
+                "-validn", "100000",
                 "--dataset", "swisscrop",
-                "-b", "1000",
+                "-b", "600",
+                "--optimizer", "adam",
                 "--ode-rnn",
-                "--rnn-cell", "gru",
+                "--rnn-cell", "gru_small",
                 "--random-seed", "6001",
-                "--num-search", "1",
-                "--num-seeds", "1",
-                "--lr", "0.00762",
+                "--stack-order", "ode_rnn",
+                "--lr", "0.006",
                 "-g", "100",
-                "-l", "150",
+                "-l", "30",
                 "-u", "255",
                 "-v", "2",
                 "--topper",
+                "--linear-topper",
                 "-BN",
-                "--step", "1",
-                "--trunc", "4"
+                "--step", "2",
+                "--trunc", "9"
             ]
         }
     ]

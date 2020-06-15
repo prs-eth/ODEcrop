@@ -106,6 +106,7 @@ class ODE_RNN(Baseline):
 
 
 # Nando's modified function of a multilayer ODE-RNN
+# Nando's modified function of a multilayer ODE-RNN
 class ML_ODE_RNN(Baseline):
 	def __init__(self, input_dim, latent_dim, device = torch.device("cpu"),
 		z0_diffeq_solver = None, n_gru_units = 100,  n_units = 100,
@@ -210,7 +211,8 @@ class ML_ODE_RNN(Baseline):
 					RNN_update = GRU_standard_unit(latent_dim, vertical_rnn_input, device=device).to(device)
 
 				elif thisRNNcell=='lstm':
-					RNN_update = LSTM_unit(latent_dim, vertical_rnn_input).to(device)
+					# two times latent dimension because of the cell state!
+					RNN_update = LSTM_unit(latent_dim*2, vertical_rnn_input).to(device)
 
 				elif thisRNNcell=="star":
 					RNN_update = STAR_unit(latent_dim, vertical_rnn_input, n_units = n_gru_units).to(device)
@@ -263,7 +265,6 @@ class ML_ODE_RNN(Baseline):
 			nn.Linear(latent_dim, n_units),
 			nn.Tanh(),
 			nn.Linear(n_units, input_dim),)
-
 		utils.init_network_weights(self.decoder)
 		"""
 
@@ -348,7 +349,6 @@ class ML_ODE_RNN(Baseline):
 			latent_ys = latent_ys.permute(0,2,1,3)
 
 			# add the output as a residual, if it is a ResNet
-			#pdb.set_trace()
 			if self.resnet:
 				latent_ys = latent_ys + input_sequence.unsqueeze(0)[:,:,:,:self.latent_dim]
 
