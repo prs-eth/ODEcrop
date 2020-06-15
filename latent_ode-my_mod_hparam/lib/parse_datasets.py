@@ -303,7 +303,15 @@ def parse_datasets(args, device):
 	
 	if dataset_name == "swisscrop":
 
-		train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", device=device,
+		root = 'data/SwissCrops'
+		scratch_root = '/scratch/Nando/ODEcrop/Swisscrop'
+		if os.path.exists(scratch_root):
+			#root = scratch_root
+			pass
+
+		#pdb.set_trace()
+
+		train_dataset_obj = SwissCrops(root, mode="train", device=device,
 										step=args.step, trunc=args.trunc, nsamples=args.n)
 		test_dataset_obj = SwissCrops('data/SwissCrops', mode="test", device=device,
 										step=args.step, trunc=args.trunc, nsamples=args.validn) 
