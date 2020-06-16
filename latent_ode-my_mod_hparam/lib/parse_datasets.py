@@ -309,9 +309,9 @@ def parse_datasets(args, device):
 	if dataset_name == "swisscrop":
 
 		root = 'data/SwissCrops'
-		scratch_root = '/scratch/Nando/ODEcrop/SwissCrops'
+		scratch_root = '/scratch/Nando/ODEcrop/Swisscrop'
 		if os.path.exists(scratch_root):
-			#root = scratch_root
+			root = scratch_root
 			pass
 
 		train_dataset_obj = SwissCrops(root, mode="train", device=device,

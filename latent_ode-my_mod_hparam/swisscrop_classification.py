@@ -62,14 +62,17 @@ class SwissCrops(object):
 		self.means = [0.4071655 , 0.2441012 , 0.23429523, 0.23402453, 0.00432794, 0.00615292, 0.00566292, 0.00306609, 0.00367624]
 		self.stds = [0.24994541, 0.30625425, 0.32668449, 0.30204761, 0.00490984, 0.00411067, 0.00426914, 0.0027143 , 0.00221963]
 
-		if not self.check_exists():
-			self.process_data()
+		#if not self.check_exists():
+		#	self.process_data()
 
 		if mode=="train":
 			data_file = self.train_file
 		elif mode=="test":
 			data_file = self.test_file
 		
+		if not os.path.exists(data_file):
+			self.process_data()
+
 		self.hdf5dataloader = h5py.File(data_file, "r", rdcc_nbytes=1024**2*4000,rdcc_nslots=1e7)
 		self.nsamples = self.hdf5dataloader["data"].shape[0]
 		self.nfeatures = self.hdf5dataloader["data"].shape[2]

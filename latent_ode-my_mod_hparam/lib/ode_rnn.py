@@ -288,7 +288,7 @@ class ML_ODE_RNN(Baseline):
 
 
 	def get_reconstruction(self, time_steps_to_predict, data, truth_time_steps, 
-		mask = None, n_traj_samples = None, mode = None):
+		mask = None, n_traj_samples = None, mode = None, testing=False):
 
 		if (len(truth_time_steps) != len(time_steps_to_predict)) or (torch.sum(time_steps_to_predict - truth_time_steps) != 0):
 			raise Exception("Extrapolation mode not implemented for ODE-RNN")
@@ -302,6 +302,7 @@ class ML_ODE_RNN(Baseline):
 			data_and_mask = torch.cat([data, mask],-1)
 
 		All_latent_ys = []
+		All_latent_extra_info = []
 		first_layer = True
 		
 		n_traj, n_tp, n_dims = data_and_mask.size()
@@ -343,8 +344,8 @@ class ML_ODE_RNN(Baseline):
 				input_sequence = torch.cat([new_latent, latent_mask], -1)
 
 			# run one trajectory of ODE-RNN for every stacking-layer "s"
-			_, _, latent_ys, _ = self.ode_gru[s].run_odernn(
-				input_sequence, truth_time_steps, run_backwards = False)
+			_, _, latent_ys, latent_extra_info = self.ode_gru[s].run_odernn(
+				input_sequence, truth_time_steps, run_backwards = False, testing=testing)
 
 			latent_ys = latent_ys.permute(0,2,1,3)
 
@@ -353,6 +354,7 @@ class ML_ODE_RNN(Baseline):
 				latent_ys = latent_ys + input_sequence.unsqueeze(0)[:,:,:,:self.latent_dim]
 
 			All_latent_ys.append(latent_ys)
+			All_latent_extra_info.append(latent_extra_info)
 
 		# get the last hidden state of the last latent ode-rnn trajectory
 		last_hidden = All_latent_ys[-1][:,:,-1,:]
@@ -376,4 +378,4 @@ class ML_ODE_RNN(Baseline):
 				extra_info["label_predictions"] = self.classifier(last_hidden).squeeze(-1)
 
 		# outputs shape: [n_traj_samples, n_traj, n_tp, n_dims]
-		return outputs, extra_info
+		return outputs, extra_info, All_latent_extra_info

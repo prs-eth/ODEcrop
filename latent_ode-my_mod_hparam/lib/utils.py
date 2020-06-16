@@ -30,6 +30,9 @@ import itertools
 #import tfplot
 import matplotlib
 from sklearn.metrics import confusion_matrix
+from lib.latent_vis import get_pca_traj
+
+import matplotlib.pyplot as plt 
 
 
 def makedirs(dirname):
@@ -562,12 +565,18 @@ def compute_loss_all_batches(model,
 	hard_test_labels =  torch.Tensor([]).long().to(device)
 	hard_classif_predictions = torch.Tensor([]).long().to(device)
 	
+	plot_latent = False
+	if plot_latent:
+		first, testing = True, True
+	else:
+		first, testing = False, False
+
 	for i in tqdm(range(n_batches)):
 		#pdb.set_trace()
 		batch_dict = get_next_batch(test_dataloader)
 
 		results  = model.compute_all_losses(batch_dict,
-			n_traj_samples = n_traj_samples, kl_coef = kl_coef)
+			n_traj_samples = n_traj_samples, kl_coef = kl_coef, testing=testing)
 
 		if args.classif:
 			n_labels = model.n_labels #batch_dict["labels"].size(-1)
@@ -582,7 +591,7 @@ def compute_loss_all_batches(model,
 				results["label_predictions"].max(-1)[1]  ), 1)
 			hard_test_labels = torch.cat((hard_test_labels, 
 				batch_dict["labels"].max(-1)[1]  ), 0)
-			
+		
 		for key in total.keys(): 
 			if key in results:
 				var = results[key]
@@ -590,6 +599,12 @@ def compute_loss_all_batches(model,
 					var = var.detach()
 				total[key] += var
 
+		# extract latent trajetories
+		if first and plot_latent:
+			PCA_traj = get_pca_traj(results["latent_info"][0], num_PCA=5, num_train_PCA=10, PCA_dim=1)
+			first, testing = False, False
+
+		
 		n_test_batches += 1
 
 		# for speed
@@ -597,6 +612,7 @@ def compute_loss_all_batches(model,
 			if n_batches * batch_size >= max_samples_for_eval:
 				break
 
+	
 	if n_test_batches > 0:
 		for key, value in total.items():
 			total[key] = total[key] / n_test_batches
@@ -660,7 +676,10 @@ def compute_loss_all_batches(model,
 			total["accuracy"] = sk.metrics.accuracy_score(
 					correct_labels, 
 					predict_labels)
-			
+	
+	if plot_latent:
+		total["PCA_traj"] = PCA_traj
+
 	return total, {"correct_labels": correct_labels, "predict_labels": predict_labels}
 
 def check_mask(data, mask):

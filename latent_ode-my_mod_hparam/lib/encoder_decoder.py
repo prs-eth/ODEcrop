@@ -199,7 +199,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 
 	def run_odernn(self, data, time_steps, 
-		run_backwards = True, save_info = False):
+		run_backwards = True, save_info = False, testing=False):
 		# IMPORTANT: assumes that 'data' already has mask concatenated to it 
 
 		n_traj, n_tp, n_dims = data.size()
@@ -266,8 +266,9 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 				else:
 					#complete Integration
-					n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between
-					#n_intermediate_tp = 2 # get steps in between
+					n_intermediate_tp = 2 # get steps in between
+					if testing:
+						n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get more steps in between for testing
 
 					time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
 					ode_sol = self.z0_diffeq_solver(prev_y, time_points)
@@ -332,10 +333,12 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 			latent_ys.append(yi_out)
 
-			if save_info:
-				d = {"yi_ode": yi_ode.detach(), #"yi_from_data": yi_from_data,
-					 "yi": yi_out.detach(), "yi_std": yi_std.detach(), 
-					 "time_points": time_points.detach(), "ode_sol": ode_sol.detach()}
+			if save_info or testing:
+				d = {"yi_ode": yi_ode.detach()[:,:20], #"yi_from_data": yi_from_data,
+					 "yi": yi_out.detach()[:,:20], "yi_std": yi_std.detach()[:,:20], 
+					 "time_points": time_points.detach(),
+					 "ode_sol": ode_sol.detach()[:,:20]
+				}
 				extra_info.append(d)
 
 		latent_ys = torch.stack(latent_ys, 1)

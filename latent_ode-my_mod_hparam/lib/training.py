@@ -13,6 +13,8 @@ from lib.construct import get_ODE_RNN_model, get_classic_RNN_model
 from lib.ode_rnn import *
 from lib.parse_datasets import parse_datasets
 
+from lib.latent_vis import get_pca_fig
+
 from lib.ode_func import ODEFunc, ODEFunc_w_Poisson
 from lib.diffeq_solver import DiffeqSolver
 
@@ -29,6 +31,7 @@ import pdb
 import numpy as np
 from hyperopt import STATUS_OK
 import wandb
+
 
 
 def construct_and_train_model(config):
@@ -75,6 +78,11 @@ def construct_and_train_model(config):
 
 	torch.manual_seed(args.random_seed)
 	np.random.seed(args.random_seed)
+
+	##############################################################################
+	## Weights & Biases
+
+	wandb.init(project="odecropclassification",config=args, sync_tensorboard=True, entity="cropteam", group=args.dataset)
 
 	##############################################################################
 	# Dataset
@@ -435,6 +443,12 @@ def train_it(
 					y_ref = label_dict[0]["correct_labels"].cpu()
 					y_pred = label_dict[0]["predict_labels"]
 
+					# make PCA visualization
+					if "PCA_traj" in test_res[0]:
+						PCA_fig = get_pca_fig(test_res[0]["PCA_traj"])
+					else:
+						PCA_fig = None
+
 					logdict = {
 						'Classification_accuracy/train': train_res[i]["accuracy"],
 						'Classification_accuracy/validation': test_res[i]["accuracy"],
@@ -444,6 +458,7 @@ def train_it(
 						'loss/train': train_res[i]["loss"].detach(),
 						'loss/validation': test_res[i]["loss"].detach(),
 						#'Confusionmatrix': conf_fig,
+						
 
 						"""
 						'Other_metrics/train_cm' : sklearn_cm(y_ref_train, y_pred_train, labels=labels),
@@ -472,6 +487,10 @@ def train_it(
 						'Other_metrics/validation_kappa': cohen_kappa_score(y_ref, y_pred),
 
 					}
+
+					if "PCA_traj" in test_res[0]:
+						logdict['Visualization/latent_trajectory'] = wandb.Image( get_pca_fig(test_res[0]["PCA_traj"]) )
+					
 					wandb.log(logdict, step=itr*args.batch_size)
 					wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)
 
