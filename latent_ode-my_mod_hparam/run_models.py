@@ -51,7 +51,7 @@ import wandb
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n',  type=int, default=8000, help="Size of the dataset")
+parser.add_argument('-n', type=int, default=8000, help="Size of the dataset")
 parser.add_argument('-validn',  type=int, default=21000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=0.00762, help="Starting learning rate.")

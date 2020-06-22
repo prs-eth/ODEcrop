@@ -564,7 +564,7 @@ def compute_loss_all_batches(model,
 	all_test_labels =  torch.Tensor([]).to(device)
 	hard_test_labels =  torch.Tensor([]).long().to(device)
 	hard_classif_predictions = torch.Tensor([]).long().to(device)
-	
+
 	plot_latent = False
 	if plot_latent:
 		first, testing = True, True
@@ -749,17 +749,21 @@ class FastTensorDataLoader:
 		self.n_true_batches = n_true_batches
 
 
+		# initialize iterator state
+		self.true_batch_indices = np.arange(self.n_true_batches)
+		if self.batch_shuffle:
+			np.random.shuffle(self.true_batch_indices)
+		self.batch_indices = self.true_batch_indices[:self.n_batches]
+
 	def __iter__(self):
+		# reset iterator state
 		if self.shuffle:
 			self.indices = np.random.permutation(self.dataset_len)
 		else:
 			self.indices = None
 		
-		self.true_batch_indices = np.arange(self.n_true_batches)
 		if self.batch_shuffle:
-			np.random.shuffle(self.true_batch_indices)
-		self.batch_indices = self.true_batch_indices[:self.n_batches]
-		#self.batch_indices = np.arange(self.n_batches)
+			np.random.shuffle(self.batch_indices)
 		
 		#if self.batch_shuffle:
 		#	np.random.shuffle(self.batch_indices)
@@ -796,16 +800,16 @@ class FastTensorDataLoader:
 			start = self.batch_indices[self.bi]*self.batch_size
 			stop = start + self.batch_size
 			
-			data = torch.from_numpy( self.hdf5dataloader["data"][start:stop] ).float().to(self.dataset.device)
-			time_stamps = torch.from_numpy( self.timestamps ).to(self.dataset.device)
-			mask = torch.from_numpy(self.hdf5dataloader["mask"][start:stop] ).float().to(self.dataset.device)
-			labels = torch.from_numpy( self.hdf5dataloader["labels"][start:stop] ).float().to(self.dataset.device)
+			data = torch.from_numpy( self.hdf5dataloader["data"][start:stop] ).float()
+			time_stamps = torch.from_numpy( self.timestamps )#.to(self.dataset.device)
+			mask = torch.from_numpy(self.hdf5dataloader["mask"][start:stop] ).float()#.to(self.dataset.device)
+			labels = torch.from_numpy( self.hdf5dataloader["labels"][start:stop] ).float()#.to(self.dataset.device)
 
 			data_dict = {
-				"data": data[:,::self.step,:self.feature_trunc], 
-				"time_steps": time_stamps[::self.step],
-				"mask": mask[:,::self.step,:self.feature_trunc],
-				"labels": labels}
+				"data": data[:,::self.step,:self.feature_trunc].to(self.dataset.device), 
+				"time_steps": time_stamps[::self.step].to(self.dataset.device),
+				"mask": mask[:,::self.step,:self.feature_trunc].to(self.dataset.device),
+				"labels": labels.to(self.dataset.device)}
 			
 		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type = self.dataset.mode)
 				

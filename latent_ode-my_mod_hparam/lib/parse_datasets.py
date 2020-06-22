@@ -325,7 +325,7 @@ def parse_datasets(args, device):
 		n_test_samples = min( float("inf"), len(test_dataset_obj))
 		
 		#evaluation batch sizes. #Must be tuned to increase efficency of evaluation
-		validation_batch_size = 10000 # size 30000 is 10s per batch, also depending on server connection
+		validation_batch_size = 7000 # size 30000 is 10s per batch, also depending on server connection
 		train_batch_size = min(args.batch_size, args.n)
 		test_batch_size = min(n_test_samples, validation_batch_size)
 
