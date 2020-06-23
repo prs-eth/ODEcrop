@@ -13,7 +13,9 @@ import lib.utils as utils
 from torch.distributions.multivariate_normal import MultivariateNormal
 
 # git clone https://github.com/rtqichen/torchdiffeq.git
+# Nando replaced it with adjoint method...
 from torchdiffeq import odeint as odeint
+#from torchdiffeq import odeint_adjoint as odeint 
 
 #####################################################################################################
 

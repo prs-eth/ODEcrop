@@ -109,8 +109,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		rnn_input = input_dim		
 		self.latent_dim = latent_dim
 
-		
-
 		if RNN_update is None:
 			self.RNNcell = RNNcell
 
@@ -123,7 +121,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			elif self.RNNcell=='lstm':
 				self.latent_dim = latent_dim*2
 				self.RNN_update = LSTM_unit(self.latent_dim, rnn_input).to(device)
-				
 
 			elif self.RNNcell=="star":
 				self.RNN_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
@@ -199,7 +196,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 
 	def run_odernn(self, data, time_steps, 
-		run_backwards = True, save_info = False):
+		run_backwards = True, save_info = False, save_latents=0):
 		# IMPORTANT: assumes that 'data' already has mask concatenated to it 
 
 		n_traj, n_tp, n_dims = data.size()
@@ -226,10 +223,10 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		# Nando' comment: why the last time steps?
 		#prev_t, t_i = time_steps[-1] + 0.01,  time_steps[-1] # original
 		#t_i = time_steps[-1]  # new
-		t_i = time_steps[0] - 0.00001 # new
+		prev_t = time_steps[0] - 0.00001 # new
 
 		interval_length = time_steps[-1] - time_steps[0]
-		minimum_step = interval_length / 500 # maybe have to modify minimum time step # original
+		minimum_step = interval_length / 100 # maybe have to modify minimum time step # original
 		#minimum_step = interval_length / 100 # maybe have to modify minimum time step # new
 
 		#print("minimum step: {}".format(minimum_step))
@@ -247,13 +244,19 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		for i in time_points_iter:
 
 			# move time step to the next interval
-			prev_t = time_steps[i]							# new
-			#pdb.set_trace()
+			t_i = time_steps[i]							# new
+
+			# Determine How many timesteps in between
+			n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between, modify later!!
+			if save_latents!=0:
+				n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between
+			time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
+				
 			#Include inplementationin case of no ODE function
 			if self.use_ODE:
 				
 				if (prev_t - t_i) < minimum_step:
-					#short integration
+					#short integration, linear approximation...
 					time_points = torch.stack((prev_t, t_i))
 					inc = self.z0_diffeq_solver.ode_func(prev_t, prev_y) * (t_i - prev_t)
 
@@ -266,9 +269,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 				else:
 					#complete Integration
-					n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between
-
-					time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
 					ode_sol = self.z0_diffeq_solver(prev_y, time_points)
 
 					assert(not torch.isnan(ode_sol).any())
@@ -280,13 +280,14 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				#assert(torch.mean(ode_sol[:, :, 0, :]  - prev_y) < 0.001)
 
 				yi_ode = ode_sol[:, :, -1, :]
-				
+
 				xi = data[:,i,:].unsqueeze(0)
 
 			else:
 				
 				# skipping ODE function and assign directly
 				yi_ode = prev_y
+				time_points = time_points[-1]
 
 				single_mask = data[:,i,self.input_dim//2]
 				delta_ts = (prev_t - t_i).repeat(1,n_traj,1).float()
@@ -304,6 +305,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			#obs_mask = data[:,i,self.input_dim//2]
 
 			if self.RNNcell=='lstm':
+
 				h_i_ode = yi_ode[:,:,:self.latent_dim//2]
 				c_i_ode = yi_ode[:,:,self.latent_dim//2:]
 				h_c_lstm = (h_i_ode, c_i_ode)
@@ -314,27 +316,30 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				h_i_, c_i_ = outi[0], outi[1]
 				yi = torch.cat([h_i_, c_i_], -1)
 				yi_out = h_i_
+
 			else:
 				
-				# GRU-unit: the output is directly the hidden state
-				#pdb.set_trace()
-				#yi_ode[:,obs_mask.bool()], prev_std[:,obs_mask.bool()] = self.RNN_update(yi_ode[:,obs_mask.bool()], prev_std[:,obs_mask.bool()], xi[:,obs_mask.bool()])
+				# GRU-unit/Star-unit: the output is directly the hidden state
 				yi_ode, prev_std = self.RNN_update(yi_ode, prev_std, xi)
 
 				yi, yi_std = yi_ode, prev_std
 				yi_out = yi
 
+				if not self.use_ODE:
+					ode_sol = yi_ode.unsqueeze(2)
+					time_points = time_points.unsqueeze(0)
 
 			prev_y, prev_std = yi, yi_std
 			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original
-			t_i = time_steps[i] 							# new
+			prev_t = time_steps[i] 							# new
 
 			latent_ys.append(yi_out)
 
-			if save_info:
-				d = {"yi_ode": yi_ode.detach(), #"yi_from_data": yi_from_data,
-					 "yi": yi_out.detach(), "yi_std": yi_std.detach(), 
-					 "time_points": time_points.detach(), "ode_sol": ode_sol.detach()}
+			if save_info or save_latents:
+				d = {"yi_ode": yi_ode[:,:save_latents].cpu().detach(), #"yi_from_data": yi_from_data,
+					 "yi": yi_out[:,:save_latents].cpu().detach()[:,:save_latents], "yi_std": yi_std[:,:save_latents].cpu().detach(), 
+					 "time_points": time_points.cpu().detach().double(),
+					 "ode_sol": ode_sol[:,:save_latents].cpu().detach().double()}
 				extra_info.append(d)
 
 		latent_ys = torch.stack(latent_ys, 1)

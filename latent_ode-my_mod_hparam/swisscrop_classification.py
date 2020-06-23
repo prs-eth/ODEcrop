@@ -36,12 +36,13 @@ class SwissCrops(object):
 	def __init__(self, root, mode='train', device = torch.device("cpu"),
 		neighbourhood=3, cloud_thresh=0.05,
 		nsamples=float("inf"),args=None,
-		step=1, trunc=9, datatype=""):
+		step=1, trunc=9, datatype="", singlepix=False):
 		
 		self.datatype = datatype
 
 		self.normalize = True
 		self.shuffle = True
+		self.singlepix = singlepix
 
 		self.root = root
 		self.nb = neighbourhood
@@ -62,13 +63,16 @@ class SwissCrops(object):
 		self.means = [0.4071655 , 0.2441012 , 0.23429523, 0.23402453, 0.00432794, 0.00615292, 0.00566292, 0.00306609, 0.00367624]
 		self.stds = [0.24994541, 0.30625425, 0.32668449, 0.30204761, 0.00490984, 0.00411067, 0.00426914, 0.0027143 , 0.00221963]
 
-		if not self.check_exists():
-			self.process_data()
+		#if not self.check_exists():
+		#	self.process_data()
 
 		if mode=="train":
 			data_file = self.train_file
 		elif mode=="test":
 			data_file = self.test_file
+
+		if not os.path.exists(data_file):
+			self.process_data()
 		
 		self.hdf5dataloader = h5py.File(data_file, "r", rdcc_nbytes=1024**2*4000,rdcc_nslots=1e7)
 		self.nsamples = self.hdf5dataloader["data"].shape[0]
@@ -81,7 +85,6 @@ class SwissCrops(object):
 		self.timestamps =  h5py.File(os.path.join(self.processed_folder, self.time_file), "r")["tt"][:]
 		assert(self.timestamps.size==self.hdf5dataloader["data"].shape[1])
 
-
 		self.features = self.hdf5dataloader["data"].shape[2]
 		
 		#selective features and timestamps
@@ -89,7 +92,6 @@ class SwissCrops(object):
 		self.trunc = trunc # feature truncation
 		self.feature_trunc = trunc*self.nb**2
 		#self.mask = np.kron(np.hstack([np.ones(self.trunc),np.zeros(  self.nfeatures//self.nb**2 - self.trunc)]), np.ones(9))
-
 
 
 	def process_data(self):
@@ -582,10 +584,18 @@ class SwissCrops(object):
 		return True
 
 	def __len__(self):
+		# returns the number of samples that are actually used
 		if self.mode=="train":
 			return min(self.n, self.hdf5dataloader["data"].shape[0])
 		else:
 			return min(self.n, self.hdf5dataloader["data"].shape[0])
+	
+	def true_len__(self):
+		# returns the number of samples of the entire dataset
+		if self.mode=="train":
+			return self.hdf5dataloader["data"].shape[0]
+		else:
+			return self.hdf5dataloader["data"].shape[0]
 
 	def __getitem__(self, index):
 		"""
@@ -619,11 +629,25 @@ class SwissCrops(object):
 			mask = torch.from_numpy(self.hdf5dataloader["mask"][index] ).float().to(self.device)
 			labels = torch.from_numpy( self.hdf5dataloader["labels"][index] ).float().to(self.device)
 
-			data_dict = {
-			"data": data[::self.step,:self.feature_trunc], 
-			"time_steps": time_stamps[::self.step],
-			"mask": mask[::self.step,:self.feature_trunc],
-			"labels": labels}
+			if self.singlepix:
+				# create mask
+				a = np.zeros(9, dtype=bool)
+				a[4] = 1
+				kronmask = np.kron(np.ones(9,dtype=bool),a)
+				self.kronmask = kronmask[:self.feature_trunc]
+				
+				#load masked data
+				data_dict = {
+					"data": data[::self.step,self.kronmask], 
+					"time_steps": time_stamps[::self.step],
+					"mask": mask[::self.step,self.kronmask],
+					"labels": labels}
+			else:
+				data_dict = {
+				"data": data[::self.step,:self.feature_trunc], 
+				"time_steps": time_stamps[::self.step],
+				"mask": mask[::self.step,:self.feature_trunc],
+				"labels": labels}
 
 			data_dict = utils.split_and_subsample_batch(data_dict, self.args, data_type = self.mode)
 

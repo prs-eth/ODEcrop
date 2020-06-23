@@ -30,6 +30,8 @@ import numpy as np
 from hyperopt import STATUS_OK
 import wandb
 
+import pickle
+
 
 def construct_and_train_model(config):
 	# Create ODE-GRU model
@@ -73,6 +75,7 @@ def construct_and_train_model(config):
 	for i in range(num_seeds):
 		ExperimentID.append(randID + i)
 
+	print("ExperimentID", ExperimentID)
 	torch.manual_seed(args.random_seed)
 	np.random.seed(args.random_seed)
 
@@ -297,7 +300,7 @@ def train_it(
 		pbar = range(1, num_batches * (args.niters) + 1)
 	
 	for itr in pbar:
-		
+	
 		for i, device in enumerate(Devices):
 			Optimizer[i].zero_grad()
 		for i, device in enumerate(Devices):
@@ -418,6 +421,11 @@ def train_it(
 							'state_dict': Model[i].state_dict(),
 						}, Top_ckpt_path[i])
 
+						# Save trajectory here
+						if not test_res[i]["PCA_traj"] is None:
+							with open( os.path.join('vis', 'traj_dict' + str(ExperimentID[i]) + '.pickle' ), 'wb') as handle:
+								pickle.dump(test_res[i]["PCA_traj"], handle, protocol=pickle.HIGHEST_PROTOCOL)
+
 					#logging to wandb
 					#tag_dict = Data_obj[0]["dataset_obj"].reverse_label_dict
 
@@ -475,6 +483,10 @@ def train_it(
 					wandb.log(logdict, step=itr*args.batch_size)
 					wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)
 
+			# empty result placeholder
+			#somedict = {}
+			#test_res = [somedict]
+			#test_res[0]["accuracy"] = float(0)
 
 		fine_train_writer = False
 		if fine_train_writer:
@@ -493,6 +505,12 @@ def train_it(
 					Best_test_acc[i]*100,
 					Best_test_acc_step[0]//args.batch_size)
 			)
+
+		#empty all training variables
+		train_res = [None] * num_gpus
+		batch_dict = [None] * num_gpus
+		#test_res = [None] * num_gpus
+		label_dict = [None]* num_gpus
 
 	print(Best_test_acc[0], " at step ", Best_test_acc_step[0])
 

@@ -17,7 +17,7 @@ import pdb
 class ODEFunc(nn.Module):
 	def __init__(self, input_dim, latent_dim, ode_func_net, device = torch.device("cpu")):
 		"""
-		input_dim: dimensionality of the input
+		input_dim: dimensionality of the input, will not be used...???
 		latent_dim: dimensionality used for ODE. Analog of a continous latent state
 		"""
 		super(ODEFunc, self).__init__()

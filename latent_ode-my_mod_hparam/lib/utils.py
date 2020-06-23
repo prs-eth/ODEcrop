@@ -31,6 +31,8 @@ import itertools
 import matplotlib
 from sklearn.metrics import confusion_matrix
 
+from lib.latent_vis import get_pca_traj
+
 
 def makedirs(dirname):
 	if not os.path.exists(dirname):
@@ -565,13 +567,16 @@ def compute_loss_all_batches(model,
 	all_test_labels =  torch.Tensor([]).to(device)
 	hard_test_labels =  torch.Tensor([]).long().to(device)
 	hard_classif_predictions = torch.Tensor([]).long().to(device)
-	
+
+	save_latents = 10
+
+
 	for i in tqdm(range(n_batches)):
 		#pdb.set_trace()
 		batch_dict = get_next_batch(test_dataloader)
 
 		results  = model.compute_all_losses(batch_dict,
-			n_traj_samples = n_traj_samples, kl_coef = kl_coef)
+			n_traj_samples = n_traj_samples, kl_coef = kl_coef, save_latents=save_latents)
 
 		if args.classif:
 			n_labels = model.n_labels #batch_dict["labels"].size(-1)
@@ -596,7 +601,17 @@ def compute_loss_all_batches(model,
 
 		n_test_batches += 1
 
+		if save_latents>0:
+
+			PCA_traj = {"PCA_trajs1": get_pca_traj(results["latent_info"][0], PCA_dim=1),
+						"PCA_trajs2": get_pca_traj(results["latent_info"][0], PCA_dim=2),
+						"PCA_trajs3": get_pca_traj(results["latent_info"][0], PCA_dim=3) }
+
+			save_latents = 0
+			stored_latents = True
+
 		# for speed
+		results = []
 		if max_samples_for_eval is not None:
 			if n_batches * batch_size >= max_samples_for_eval:
 				break
@@ -664,7 +679,15 @@ def compute_loss_all_batches(model,
 			total["accuracy"] = sk.metrics.accuracy_score(
 					correct_labels, 
 					predict_labels)
-			
+	
+	classif_predictions = []
+	all_test_labels =  []
+	hard_test_labels =  []
+	hard_classif_predictions = []
+	
+	if stored_latents:
+		total["PCA_traj"] = PCA_traj
+
 	return total, {"correct_labels": correct_labels, "predict_labels": predict_labels}
 
 def check_mask(data, mask):
@@ -677,7 +700,6 @@ def check_mask(data, mask):
 
 	# all masked out elements should be zeros
 	assert(torch.sum(data[mask == 0.] != 0.) == 0)
-
 
 
 # Experimental of Nando:
@@ -703,6 +725,7 @@ class FastTensorDataLoader:
 		self.hdf5dataloader = self.dataset.hdf5dataloader
 
 		self.dataset_len = len(dataset)
+		self.dataset_true_len = dataset.true_len__()
 		self.batch_size = batch_size
 		self.shuffle = shuffle
 		self.batch_shuffle = batch_shuffle
@@ -728,15 +751,36 @@ class FastTensorDataLoader:
 			n_batches += 1 # what hapens to the last one => not full right?
 		self.n_batches = n_batches
 
+		# Calculate batches for full dataset
+		n_true_batches, true_remainder = divmod(self.dataset_true_len, self.batch_size)
+		if true_remainder > 0: 
+			n_true_batches += 1 # what hapens to the last one => not full right?
+		self.n_true_batches = n_true_batches
+
+		# initialize iterator state
+		self.true_batch_indices = np.arange(self.n_true_batches)
+		if self.batch_shuffle:
+			np.random.shuffle(self.true_batch_indices)
+		self.subsampled_batch_indices = self.true_batch_indices[:self.n_batches]
+
+		self.singlepix = self.dataset.singlepix
+		if self.singlepix:
+			a = np.zeros(9, dtype=bool)
+			a[4] = 1
+			kronmask = np.kron(np.ones(9,dtype=bool),a)
+			self.kronmask = kronmask[:self.feature_trunc]
+
+
 	def __iter__(self):
 		if self.shuffle:
 			self.indices = np.random.permutation(self.dataset_len)
 		else:
 			self.indices = None
 		
-		self.batch_indices = np.arange(self.n_batches)
+		#self.batch_indices = np.arange(self.n_batches)
+		self.batch_indices = self.subsampled_batch_indices
 		
-		if self.batch_shuffle:
+		if self.batch_shuffle and self.dataset.mode=="train":
 			np.random.shuffle(self.batch_indices)
 
 		self.bi = 0
@@ -771,16 +815,23 @@ class FastTensorDataLoader:
 			start = self.batch_indices[self.bi]*self.batch_size
 			stop = start + self.batch_size
 			
-			data = torch.from_numpy( self.hdf5dataloader["data"][start:stop] ).float().to(self.dataset.device)
-			time_stamps = torch.from_numpy( self.timestamps ).to(self.dataset.device)
-			mask = torch.from_numpy(self.hdf5dataloader["mask"][start:stop] ).float().to(self.dataset.device)
-			labels = torch.from_numpy( self.hdf5dataloader["labels"][start:stop] ).float().to(self.dataset.device)
+			data = torch.from_numpy( self.hdf5dataloader["data"][start:stop] ).float()#.to(self.dataset.device)
+			time_stamps = torch.from_numpy( self.timestamps )#.to(self.dataset.device)
+			mask = torch.from_numpy(self.hdf5dataloader["mask"][start:stop] ).float()#.to(self.dataset.device)
+			labels = torch.from_numpy( self.hdf5dataloader["labels"][start:stop] ).float()#.to(self.dataset.device)
 
-			data_dict = {
-				"data": data[:,::self.step,:self.feature_trunc], 
-				"time_steps": time_stamps[::self.step],
-				"mask": mask[:,::self.step,:self.feature_trunc],
-				"labels": labels}
+			if self.singlepix:
+				data_dict = {
+					"data": data[:,::self.step,self.kronmask].to(self.dataset.device), 
+					"time_steps": time_stamps[::self.step].to(self.dataset.device),
+					"mask": mask[:,::self.step,self.kronmask].to(self.dataset.device),
+					"labels": labels.to(self.dataset.device)}
+			else:
+				data_dict = {
+					"data": data[:,::self.step,:self.feature_trunc].to(self.dataset.device), 
+					"time_steps": time_stamps[::self.step].to(self.dataset.device),
+					"mask": mask[:,::self.step,:self.feature_trunc].to(self.dataset.device),
+					"labels": labels.to(self.dataset.device)}
 			
 		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type = self.dataset.mode)
 				
