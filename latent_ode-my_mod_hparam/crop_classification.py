@@ -40,6 +40,7 @@ class Crops(object):
 		self.normalize = True
 		self.shuffle = True
 		self.nb = 3
+		self.singlepix = False
 				
 		if download:
 			self.download()

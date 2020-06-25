@@ -223,10 +223,11 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		# Nando' comment: why the last time steps?
 		#prev_t, t_i = time_steps[-1] + 0.01,  time_steps[-1] # original
 		#t_i = time_steps[-1]  # new
-		prev_t = time_steps[0] - 0.00001 # new
+		prev_t = time_steps[0] - 0.00001 # new2
+		#t_i = time_steps[0] - 0.00001 # new
 
 		interval_length = time_steps[-1] - time_steps[0]
-		minimum_step = interval_length / 100 # maybe have to modify minimum time step # original
+		minimum_step = interval_length / 200 # maybe have to modify minimum time step # original
 		#minimum_step = interval_length / 100 # maybe have to modify minimum time step # new
 
 		#print("minimum step: {}".format(minimum_step))
@@ -244,18 +245,19 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		for i in time_points_iter:
 
 			# move time step to the next interval
-			t_i = time_steps[i]							# new
+			t_i = time_steps[i]							# new2
+			#prev_t = time_steps[i]							# new
 
 			# Determine How many timesteps in between
-			n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between, modify later!!
+			n_intermediate_tp = 2#max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between, modify later!!
 			if save_latents!=0:
-				n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between
+				n_intermediate_tp = max(2, (abs(prev_t - t_i) / minimum_step).int()) # get steps in between
 			time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
 				
 			#Include inplementationin case of no ODE function
 			if self.use_ODE:
 				
-				if (prev_t - t_i) < minimum_step:
+				if abs(prev_t - t_i) < minimum_step:
 					#short integration, linear approximation...
 					time_points = torch.stack((prev_t, t_i))
 					inc = self.z0_diffeq_solver.ode_func(prev_t, prev_y) * (t_i - prev_t)
@@ -299,10 +301,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				#creating new data including delta ts plus mask, concaninate the delta t for pure RNN
 				xi = torch.cat([ features , delta_ts, new_mask], -1)
 
-			# TODO: check if mask is all non, if so: don't do GRU update to save computational costs=> Conclusion, it is not faster
-			#pdb.set_trace()
-			#xi[:,:,self.]
-			#obs_mask = data[:,i,self.input_dim//2]
+			# check if mask is all non, if so: don't do GRU update to save computational costs=> Conclusion, it is not faster
 
 			if self.RNNcell=='lstm':
 
@@ -331,7 +330,8 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 			prev_y, prev_std = yi, yi_std
 			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original
-			prev_t = time_steps[i] 							# new
+			#t_i = time_steps[i] 								# new
+			prev_t = time_steps[i]								# new2
 
 			latent_ys.append(yi_out)
 

@@ -34,7 +34,7 @@ def get_pca_traj(latent_info, PCA_dim=1):
 
 	PCA_traj = np.transpose( np.concatenate(PCA_traj, 2) , (2,0,1))
 
-	return PCA_traj, tps
+	return PCA_traj, tps.numpy()
 
 
 def get_pca_fig(Trajectories):
