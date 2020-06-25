@@ -10,12 +10,12 @@ from scipy import signal
 
 from sklearn.linear_model import LinearRegression
 
-def traj_plot(traj1, times1, traj2, times2, dim):
+def traj_plot(traj1, times1, marker1, traj2, times2, marker1, dim):
 
 	fig = plt.figure()
 	ax = fig.add_subplot(1, 1, 1)
 
-	#First Model
+	#First Model (ODE-GRU)
 	colors = ['mediumslateblue' ,'blue', 'mediumblue', 'midnightblue']
 	num_traj = traj1.shape[0]
 	num_traj = 1
@@ -33,7 +33,6 @@ def traj_plot(traj1, times1, traj2, times2, dim):
 			ax.plot(times1, tr[:,0] , c=colors[t%num_traj], marker='1', label="ODE-GRU")
 			plt.ylabel("PCAaxis")
 			plt.xlabel("Time")
-			#legend.append("ODE-RNN 1")
 
 		elif dim==2:
 			ax.plot(tr[:,0], tr[:,1], c='r', marker='1')
@@ -42,7 +41,7 @@ def traj_plot(traj1, times1, traj2, times2, dim):
 			ax.plot(tr[:,0], tr[1], tr[:,2], c='r', marker='1')
 
 
-	#Second Model
+	#Second Model (RNN)
 	colors = ['tomato' ,'orangered', 'red', 'darkred']
 	num_traj = traj2.shape[0]
 	num_traj = 1
@@ -89,18 +88,18 @@ if __name__ == '__main__':
 		print(2)
 
 	#1D
-	traj1, times1 = traj_dict1["PCA_trajs1"]
-	traj2, times2 = traj_dict2["PCA_trajs1"]
+	traj1, times1, marker1 = traj_dict1["PCA_trajs1"]
+	traj2, times2, marker2 = traj_dict2["PCA_trajs1"]
 	
 	#2D
-	#traj1, times1 = traj_dict1["PCA_trajs2"]
-	#traj2, times2 = traj_dict2["PCA_trajs2"]
+	#traj1, times1, marker1 = traj_dict1["PCA_trajs2"]
+	#traj2, times2, marker2 = traj_dict2["PCA_trajs2"]
 	
 	#3D
-	#traj1, times1 = traj_dict1["PCA_trajs3"]
-	#traj2, times2 = traj_dict2["PCA_trajs3"]
+	#traj1, times1, marker1 = traj_dict1["PCA_trajs3"]
+	#traj2, times2, marker2 = traj_dict2["PCA_trajs3"]
 	
-	traj_plot(traj1, times1, traj2, times2, dim=1)
+	traj_plot(traj1, times1, marker1, traj2, times2, marker2, dim=1)
 	
 	plt.show()
 	#samples, dim = Trajectories[0].shape

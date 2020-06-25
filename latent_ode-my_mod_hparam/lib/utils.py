@@ -760,6 +760,7 @@ class FastTensorDataLoader:
 		# initialize iterator state
 		self.true_batch_indices = np.arange(self.n_true_batches)
 		if self.batch_shuffle:
+			np.random.seed(1996)
 			np.random.shuffle(self.true_batch_indices)
 		self.subsampled_batch_indices = self.true_batch_indices[:self.n_batches]
 
@@ -915,6 +916,25 @@ def get_optimizer(optimizer, lr, params):
 		raise Exception("Optimizer not supported. Please change it!")
 
 	return optimizer
+
+def plot_confusion_matrix2(target_test, pred_test, valid_labels_names, ExperimentID):
+
+	from sklearn.metrics import confusion_matrix
+	#from sklearn.metrics import ConfusionMatrixDisplay
+	import seaborn as sn
+	import pandas as pd
+	import matplotlib.pyplot as plt
+
+	cm = confusion_matrix(target_test, pred_test, normalize='true')
+
+	df_cm = pd.DataFrame(cm, index = [i for i in valid_labels_names],
+					columns = [i for i in valid_labels_names])
+	plt.figure(figsize = (15,10))
+	sn.heatmap(df_cm, annot=False,  vmin=0, vmax=1, cmap='Blues')
+	#plt.xlabel('True label')
+	#plt.ylabel('Predicted label')
+	#plt.title('Confusion matrix')
+	plt.savefig('vis/cm' + str(ExperimentID) + '.pdf', bbox_inches='tight')
 
 
 def plot_confusion_matrix(correct_labels, predict_labels, labels, title='Confusion matrix', tensor_name = 'MyFigure/image', normalize=False):

@@ -19,6 +19,8 @@ from lib.RNNcells import STAR_unit, GRU_unit, GRU_standard_unit, LSTM_unit
 
 import pdb
 
+import numpy as np
+
 
 class Encoder_z0_RNN(nn.Module):
 	def __init__(self, latent_dim, input_dim, lstm_output_size = 20, 
@@ -204,6 +206,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		device = get_device(data)
 
+		# Initialize the hidden state
 		if self.RNNcell=='lstm':
 			# make some noise
 			prev_h = torch.zeros((1, n_traj, self.latent_dim//2)).data.normal_(0, 0.0001).to(device)
@@ -236,6 +239,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		assert(not torch.isnan(time_steps).any())
 
 		latent_ys = []
+		firststep = True
 
 		# Run ODE backwards and combine the y(t) estimates using gating
 		time_points_iter = range(0, len(time_steps))
@@ -327,6 +331,8 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				if not self.use_ODE:
 					ode_sol = yi_ode.unsqueeze(2)
 					time_points = time_points.unsqueeze(0)
+			
+			
 
 			prev_y, prev_std = yi, yi_std
 			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original
@@ -336,10 +342,28 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			latent_ys.append(yi_out)
 
 			if save_info or save_latents:
+				if self.use_ODE:
+					#ODE-RNN case
+					ODE_flags = (xi[:,:,self.latent_dim:].sum((0,2))==0).cpu().detach().int().numpy() # zero: RNN-update, one: ODE-update
+					marker = np.ones((n_traj,n_intermediate_tp))
+					marker[:,-1] = ODE_flags
+					
+					if not firststep:
+						#marker[:,0] = old_ODE_flags
+						pass
+					else:
+						firststep = False
+					old_ODE_flags = ODE_flags
+				else:
+					#RNN case
+					#marker = np.ones((n_traj,len(time_points)))
+					marker = ((xi[:,:,(self.latent_dim+1):].sum((0,2))==0).cpu().detach().int().numpy()*2)[:,np.newaxis]  # zero: RNN-update, two: No update at all
+
 				d = {"yi_ode": yi_ode[:,:save_latents].cpu().detach(), #"yi_from_data": yi_from_data,
 					 "yi": yi_out[:,:save_latents].cpu().detach()[:,:save_latents], "yi_std": yi_std[:,:save_latents].cpu().detach(), 
 					 "time_points": time_points.cpu().detach().double(),
-					 "ode_sol": ode_sol[:,:save_latents].cpu().detach().double()}
+					 "ode_sol": ode_sol[:,:save_latents].cpu().detach().double(),
+					 "marker": marker[:save_latents]}
 				extra_info.append(d)
 
 		latent_ys = torch.stack(latent_ys, 1)

@@ -407,6 +407,12 @@ def train_it(
 					
 					#logger.info("-----------------------------------------------------------------------------------")
 
+					# prepare GT labels and predictions
+					y_ref_train = torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().cpu()
+					y_pred_train = torch.argmax(batch_dict[0]['labels'], dim=1).cpu()
+					y_ref = label_dict[0]["correct_labels"].cpu()
+					y_pred = label_dict[0]["predict_labels"]
+
 					#Make checkpoint
 					torch.save({
 						'args': args,
@@ -425,6 +431,10 @@ def train_it(
 						if not test_res[i]["PCA_traj"] is None:
 							with open( os.path.join('vis', 'traj_dict' + str(ExperimentID[i]) + '.pickle' ), 'wb') as handle:
 								pickle.dump(test_res[i]["PCA_traj"], handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+						# Save Heatmap-Confusionmatrix
+						utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
 
 					#logging to wandb
 					#tag_dict = Data_obj[0]["dataset_obj"].reverse_label_dict

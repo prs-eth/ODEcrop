@@ -14,11 +14,18 @@ def get_pca_traj(latent_info, PCA_dim=1):
 	# Prepare data
 	traj = []
 	tps = []
+	Marker = []
 	for latent_step in latent_info:
 		traj.append(latent_step["ode_sol"].detach())
-		tps.append(latent_step["time_points"])
+
+		time_points = latent_step["time_points"]
+		tps.append(time_points)
+
+		Marker.append(latent_step["marker"])
+		
 	tps = torch.cat(tps, dim=0).unsqueeze(1)
 	traj = torch.cat(traj, dim=2)
+	Marker = np.hstack(Marker)#[:,:]
 	
 	latent_dim = traj.shape[3]
 
@@ -34,10 +41,11 @@ def get_pca_traj(latent_info, PCA_dim=1):
 
 	PCA_traj = np.transpose( np.concatenate(PCA_traj, 2) , (2,0,1))
 
-	return PCA_traj, tps.numpy()
+	return PCA_traj, tps.numpy(), Marker
 
 
 def get_pca_fig(Trajectories):
+	"""Not used anymore..."""
 
 	samples, dim = Trajectories[0].shape
 
