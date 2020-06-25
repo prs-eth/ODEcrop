@@ -296,6 +296,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				time_points = time_points[-1]
 
 				single_mask = data[:,i,self.input_dim//2]
+				#TODO: check the imputation here....
 				delta_ts = (prev_t - t_i).repeat(1,n_traj,1).float()
 				delta_ts[:,~single_mask.bool(),:] = 0
 				

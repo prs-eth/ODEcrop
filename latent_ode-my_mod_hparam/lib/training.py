@@ -433,8 +433,9 @@ def train_it(
 								pickle.dump(test_res[i]["PCA_traj"], handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-						# Save Heatmap-Confusionmatrix
-						utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
+						# Save Heatmap-Confusionmatrix, if validationset contains all samples...
+						if len(np.unique(y_ref))==len(Data_obj[0]["dataset_obj"].label_list):
+							utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
 
 					#logging to wandb
 					#tag_dict = Data_obj[0]["dataset_obj"].reverse_label_dict

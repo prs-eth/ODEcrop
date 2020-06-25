@@ -24,14 +24,16 @@ import pdb
 
 class SwissCrops(object):
 
-
+	# Complete list
 	label = ['0_unknown', 'Barley', 'Beets', 'Berries', 'Biodiversity', 'Chestnut', 'Fallow', 'Field bean', 'Forest', 'Gardens',
 		 'Grain', 'Hedge', 'Hemp', 'Hops', 'Linen', 'Maize', 'Meadow', 'MixedCrop', 'Multiple', 'Oat', 'Orchards', 'Pasture',
 		 'Potatoes', 'Rapeseed', 'Rye', 'Sorghum', 'Soy', 'Spelt', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat',
 		 'unknownclass1', 'unknownclass2', 'unknownclass3']
+
+	#Updated list after selection of most frequent ones....
+	label = ['Meadow','Potatoes', 'Pasture', 'Maize', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat', 'WinterBarley', 'WinterRapeseed', 'WinterWheat']
 	label_dict = {k: i for i, k in enumerate(label)}
 	reverse_label_dict = {v: k for k, v in label_dict.items()}
-
 
 	def __init__(self, root, mode='train', device = torch.device("cpu"),
 		neighbourhood=3, cloud_thresh=0.05,

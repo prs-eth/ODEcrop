@@ -10,7 +10,7 @@ from scipy import signal
 
 from sklearn.linear_model import LinearRegression
 
-def traj_plot(traj1, times1, marker1, traj2, times2, marker1, dim):
+def traj_plot(traj1, times1, marker1, traj2, times2, marker2, dim):
 
 	fig = plt.figure()
 	ax = fig.add_subplot(1, 1, 1)
@@ -29,6 +29,7 @@ def traj_plot(traj1, times1, marker1, traj2, times2, marker1, dim):
 		tr = tr - LinearRegression().fit(times1, tr).predict(times1)
 
 		if dim==1:
+			
 			#ax.plot(times1, tr[:,0] , c=colors[t%num_traj], marker='1', label="ODE-RNN: Sample "+str(t+1) )
 			ax.plot(times1, tr[:,0] , c=colors[t%num_traj], marker='1', label="ODE-GRU")
 			plt.ylabel("PCAaxis")
@@ -53,6 +54,8 @@ def traj_plot(traj1, times1, marker1, traj2, times2, marker1, dim):
 		tr = tr - LinearRegression().fit(times2, tr).predict(times2)
 
 		if dim==1:
+			#TODO: delete points where marker==2, not observation for RNN
+
 			#ax.plot(times2, tr[:,0] , c=colors[t%num_traj], marker='1', label="RNN: Sample "+str(t+1))
 			ax.plot(times2, tr[:,0] , c=colors[t%num_traj], marker='1', label="RNN")
 			plt.ylabel("PCAaxis")
@@ -75,8 +78,8 @@ def traj_plot(traj1, times1, marker1, traj2, times2, marker1, dim):
 
 if __name__ == '__main__':
 
-	ExperimentID1 = 9284000 #ODERNN
-	ExperimentID2 = 3100000 #RNN
+	ExperimentID1 = 1022000 #ODERNN
+	ExperimentID2 = 5773000 #RNN
 
 	root = "vis"
 	with open( os.path.join(root, "traj_dict" + str(ExperimentID1) + ".pickle"),'rb' ) as file:

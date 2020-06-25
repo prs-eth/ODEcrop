@@ -936,6 +936,8 @@ def plot_confusion_matrix2(target_test, pred_test, valid_labels_names, Experimen
 	#plt.title('Confusion matrix')
 	plt.savefig('vis/cm' + str(ExperimentID) + '.pdf', bbox_inches='tight')
 
+	#plt.close()
+
 
 def plot_confusion_matrix(correct_labels, predict_labels, labels, title='Confusion matrix', tensor_name = 'MyFigure/image', normalize=False):
 	''' 
