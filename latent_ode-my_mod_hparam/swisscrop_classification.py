@@ -53,6 +53,7 @@ class SwissCrops(object):
 		self.device = device
 		self.n = nsamples
 		self.mode = mode
+		self.noskip = noskip
 		if noskip:
 			raise Exception("--noskip option not supported for swissdata.")			
 

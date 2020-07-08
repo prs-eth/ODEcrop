@@ -1,5 +1,5 @@
 #!/bin/bash
-#BSUB -W 24:00
+#BSUB -W 120:00
 #BSUB -o outputs/lsf.0.%J.%I.txt
 ##BSUB -e /cluster/work/igp_psr/metzgern/Network/outputs/train_Le${object}.%J.%I.txt
 #BSUB -R "rusage[mem=16000,ngpus_excl_p=1]"
@@ -9,6 +9,7 @@
 #BSUB -B
 #### BEGIN #####
 
+module load eth_proxy
 module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.14 #numpy/1.16.3 matplotlib/2.1.1 Keras/2.2.4
 
 
@@ -69,8 +70,10 @@ module load python_gpu/3.6.1 cudnn/7.5 cuda/10.0.13  pytorch/1.4.0 #.10.1 #2.7.1
 ############################ Swiss data ############################
 
 #python run_models.py --niters 1 -n 30000 -validn 50000 --hparams latents --dataset swisscrop --swissdatatype 2_toplabels -b 600 --ode-rnn --rnn-cell gru --stack-order ode_rnn --random-seed 6001 --num-search 3 --lr 0.00762 -g 100 -l 80 -u 255 -v 2 --topper=True -BN=True --step 2 --trunc 9
-python run_models.py --niters 1 -n 11000000 -validn 500000 --val_freq 200 --lrdecay 0.99999 --dataset swisscrop --swissdatatype 2_toplabels -b 400 --ode-rnn --rnn-cell gru --stack-order gru --random-seed 6001 --num-search 1 --lr 0.00762 -g 100 -l 50 -u 255 --rec-layers 2 -v 2 --topper=True -BN=True --step 2 --trunc 9
-
+#python run_models.py --niters 1 -n 11000000 -validn 500000 --val_freq 200 --lrdecay 0.99999 --dataset swisscrop --swissdatatype 2_toplabels -b 500 --ode-rnn --rnn-cell gru --stack-order gru --random-seed 6001 --num-search 1 --lr 0.00762 -g 100 -l 20 -u 255 --rec-layers 2 -v 2 --topper=True -BN=True --step 2 --trunc 9
 
 #Stacking swisscrop data
 #python run_models.py --niters 1 -n 11000000 -validn 500000 --val_freq 200 --lrdecay 0.99999 --dataset swisscrop --swissdatatype 2_toplabels -b 400 --ode-rnn --rnn-cell star --stack-order ode_rnn ode_rnn gru -ODEws=True -RNNws=True -RN=True --random-seed 6001 --num-search 1 --lr 0.00762 -g 100 -l 100 -u 255 --rec-layers 2 -v 2 --topper=True -BN=True --step 2 --trunc 9
+
+
+wandb agent cropteam/odecropclassification/3z6dqqnp

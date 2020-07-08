@@ -1,0 +1,13 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"cuda/10.0.13" "pytorch/1.4.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "cuda/10.0.13" "pytorch/1.4.0"
+
+
+
+wandb: Starting wandb agent 🕵️
+wandb: Network error (ConnectionError), entering retry loop. See /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/debug.log for full traceback.
+
+Aborted!
