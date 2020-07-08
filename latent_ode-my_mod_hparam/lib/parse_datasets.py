@@ -211,19 +211,18 @@ def parse_datasets(args, device):
 		root = r'data/Crops'
 		scratch_root1 = r'/scratch/Nando/ODEcrop/Crops'
 		scratch_root2 = r'/cluster/scratch/metzgern/ODEcrop/'
-		if os.path.exists(scratch_root):
+		if os.path.exists(scratch_root1):
 			root = scratch_root1
-		elif os.path.exists(scratch_root):
+		elif os.path.exists(scratch_root2):
 			root = scratch_root2
 		print("dataroot: " + root)
 
-		train_dataset_obj = Crops(root, mode="train", args=args,
-										download=True, device = device, list_form = list_form)
-		test_dataset_obj = Crops(root, mode="test", args=args, 
-										download=True, device = device, list_form = list_form)
-		
-		eval_dataset_obj = Crops(root, mode="eval", args=args, 
-										download=True, device = device,  list_form = list_form)
+		train_dataset_obj = Crops(root, mode="train", args=args, noskip=args.noskip,
+								download=True, device = device, list_form = list_form)
+		test_dataset_obj = Crops(root, mode="test", args=args, noskip=args.noskip,
+								download=True, device = device, list_form = list_form)
+		eval_dataset_obj = Crops(root, mode="eval", args=args, noskip=args.noskip,
+								download=True, device = device,  list_form = list_form,)
 		
 		
 		n_samples = min(args.n, len(train_dataset_obj))
@@ -327,10 +326,10 @@ def parse_datasets(args, device):
 
 		
 		#pdb.set_trace()
-		train_dataset_obj = SwissCrops(scratch_root1, mode="train", device=device,
+		train_dataset_obj = SwissCrops(scratch_root1, mode="train", device=device, noskip=args.noskip,
 										step=args.step, trunc=args.trunc, nsamples=args.n,
 										datatype=args.swissdatatype, singlepix=args.singlepix)
-		test_dataset_obj = SwissCrops(scratch_root1, mode="test", device=device,
+		test_dataset_obj = SwissCrops(scratch_root1, mode="test", device=device, noskip=args.noskip,
 										step=args.step, trunc=args.trunc, nsamples=args.validn,
 										datatype=args.swissdatatype, singlepix=args.singlepix) 
 		

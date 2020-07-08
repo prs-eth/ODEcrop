@@ -730,6 +730,7 @@ class FastTensorDataLoader:
 		self.shuffle = shuffle
 		self.batch_shuffle = batch_shuffle
 		self.timestamps = h5py.File(os.path.join(self.dataset.processed_folder, self.dataset.time_file), "r")["tt"][:]
+		self.noskip = dataset.noskip
 
 		# prepare skipping of steps and truncation of features
 		
@@ -833,6 +834,10 @@ class FastTensorDataLoader:
 					"time_steps": time_stamps[::self.step].to(self.dataset.device),
 					"mask": mask[:,::self.step,:self.feature_trunc].to(self.dataset.device),
 					"labels": labels.to(self.dataset.device)}
+
+			#if self.noskip:
+				# Mark every frame as observed (needed for some experiments)
+				#data_dict["mask"] = torch.ones_like(data_dict["mask"])
 			
 		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type = self.dataset.mode)
 				

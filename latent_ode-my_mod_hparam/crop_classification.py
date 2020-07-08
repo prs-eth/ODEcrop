@@ -28,7 +28,7 @@ class Crops(object):
 	def __init__(self, root, args, download=False,
 		reduce='average', mode='train', minseqlength=20,
 		n_samples = None, device = torch.device("cpu"), list_form = True,
-		step=1, trunc=6):
+		step=1, trunc=6, noskip=False):
 		
 		self.list_form = list_form
 		self.root = root
@@ -41,7 +41,12 @@ class Crops(object):
 		self.shuffle = True
 		self.nb = 3
 		self.singlepix = False
-				
+
+		self.nameadd = ""
+		self.noskip = noskip
+		if self.noskip:
+			self.nameadd = "noskip"
+
 		if download:
 			self.download()
 
@@ -63,7 +68,7 @@ class Crops(object):
 		
 		# create mask
 		self.step = step
-		self.trunc = trunc# use all features
+		self.trunc = trunc # use all features?
 		self.feature_trunc = trunc*self.nb**2
 
 		#for statistics
@@ -82,9 +87,9 @@ class Crops(object):
 		print('Downloading data...')
 		
 		# get the dataset from the web
-		os.system('wget ftp://m1370728:m1370728@138.246.224.34/data.zip')
-		os.system('unzip data.zip -d ' + self.raw_folder)
-		os.system('rm data.zip')
+		#os.system('wget ftp://m1370728:m1370728@138.246.224.34/data.zip')
+		#os.system('unzip data.zip -d ' + self.raw_folder)
+		#os.system('rm data.zip')
 		
 		#Processing data
 		print('Scanning data...')
@@ -480,11 +485,16 @@ class Crops(object):
 				mask[badweather_obs[0], badweather_obs[1], :] = 0
 				
 				#"destroy" data, that is corrputed by bad weather. We will never use it!
-				X_mod[~mask] = 0
-				
+				if self.noskip:
+					mask_2 = (X_mod != 0)
+					X_mod[~mask_2] = 0
+				else:
+					X_mod[~mask] = 0
+									
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)
 				X_mask_mod = np.delete(mask, (timeC), axis=2)
+				#X_mask_2_mod = np.delete(mask_2, (timeC), axis=2)
 				
 				#truncate and renormalize the labels
 				Y_mod = np.delete(Y_mod, badweather_labels, axis=2)
@@ -501,6 +511,8 @@ class Crops(object):
 				
 				X_mod = np.delete(X_mod, (samples_to_delete), axis=0)
 				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
+				if self.noskip:
+					X_mask_mod = (X_mod != 0)
 				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
 				
 				#make assumptions about the label, harden
@@ -601,7 +613,11 @@ class Crops(object):
 				
 				#"destroy" data, that is corrputed by bad weather. We will never use it!
 				# "all masked out elements should be zeros"
-				X_mod[~mask] = 0
+				if self.noskip:
+					mask_2 = (X_mod != 0)
+					X_mod[~mask_2] = 0
+				else:
+					X_mod[~mask] = 0
 				
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)
@@ -622,6 +638,8 @@ class Crops(object):
 				
 				X_mod = np.delete(X_mod, (samples_to_delete), axis=0)
 				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
+				if self.noskip:
+					X_mask_mod = (X_mod != 0)
 				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
 				
 				#make assumptions about the label
@@ -718,7 +736,11 @@ class Crops(object):
 				
 				#"destroy" data, that is corrputed by bad weather. We will never use it!
 				# "all masked out elements should be zeros"
-				X_mod[~mask] = 0
+				if self.noskip:
+					mask_2 = (X_mod != 0)
+					X_mod[~mask_2] = 0
+				else:
+					X_mod[~mask] = 0
 				
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)
@@ -739,6 +761,8 @@ class Crops(object):
 				
 				X_mod = np.delete(X_mod, (samples_to_delete), axis=0)
 				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
+				if self.noskip:
+					X_mask_mod = (X_mod != 0)
 				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
 				
 				#make assumptions about the label
@@ -786,7 +810,7 @@ class Crops(object):
 		hdf5_file_eval.close()
 		
 		missing_rate = missing/(observed+missing)
-		print(missing_rate)
+		print("Missingness rate:", str(missing_rate*100), " %")
 	
 	def _check_exists(self):
 		exist_train = os.path.exists(
@@ -820,15 +844,15 @@ class Crops(object):
 	
 	@property
 	def train_file(self):
-		return 'train.hdf5'
+		return 'train' + self.nameadd + '.hdf5'
 
 	@property
 	def test_file(self):
-		return 'test.hdf5'
+		return 'test' + self.nameadd + '.hdf5'
 	
 	@property
 	def eval_file(self):
-		return 'eval.hdf5'
+		return 'eval' + self.nameadd + '.hdf5'
 	
 	@property
 	def get_label(self, record_id):
