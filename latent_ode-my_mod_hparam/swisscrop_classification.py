@@ -38,7 +38,8 @@ class SwissCrops(object):
 	def __init__(self, root, mode='train', device = torch.device("cpu"),
 		neighbourhood=3, cloud_thresh=0.05,
 		nsamples=float("inf"),args=None,
-		step=1, trunc=9, datatype="2_toplabels", singlepix=False):
+		step=1, trunc=9, datatype="2_toplabels",
+		singlepix=False, noskip=False):
 		
 		self.datatype = datatype
 
@@ -52,6 +53,8 @@ class SwissCrops(object):
 		self.device = device
 		self.n = nsamples
 		self.mode = mode
+		if noskip:
+			raise Exception("--noskip option not supported for swissdata.")			
 
 		if args==None:
 			argsdict = {"dataset": "swisscrop", "sample_tp": None, "cut_tp": None, "extrap": False}

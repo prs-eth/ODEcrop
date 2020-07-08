@@ -71,6 +71,7 @@ parser.add_argument('--step', type=int, default=1, help="intervall used for skip
 parser.add_argument('--trunc', type=int, default=9, help="Feature truncation in swissdata")
 parser.add_argument('--swissdatatype', type=str, default="2_toplabels", help="blank (default), 2 (for more selective cloud handling), 2_toplabels for the most frequent labels. (only works if accordingly preprocessed) ")
 parser.add_argument('--singlepix', default=False,  type=bool, help="Applies batchnormalization to the outputs of the RNN-cells")
+parser.add_argument('--noskip', action='store_true', help="If the flag is step, the dataloader will not sort out cloudy frames, and all the frames will be taken for the training.")
 
 parser.add_argument('-c', '--cut-tp', type=int, default=None, help="Cut out the section of the timeline of the specified length (in number of points)."
 	"Used for periodic function demo.")
@@ -158,8 +159,8 @@ file_name = os.path.basename(__file__)[:-3]
 utils.makedirs(args.save)
 
 
-#import wandb
-#wandb.init(project="odecropclassification",config=args, sync_tensorboard=True, entity="cropteam", group=args.dataset)
+import wandb
+wandb.init(project="odecropclassification",config=args, sync_tensorboard=True, entity="cropteam", group=args.dataset)
 
 #####################################################################################################
 

@@ -118,7 +118,7 @@ def construct_and_train_model(config):
 			Model.append(get_classic_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
 
 	# "Magic" wandb model watcher
-	#wandb.watch(Model[0], "all")
+	wandb.watch(Model[0], "all")
 
 	##################################################################
 	
@@ -459,10 +459,10 @@ def train_it(
 						'Other_metrics/validation_recall': recall_score(y_ref, y_pred, average='macro'),
 						'Other_metrics/validation_f1': f1_score(y_ref, y_pred, average='macro'),
 						'Other_metrics/validation_kappa': cohen_kappa_score(y_ref, y_pred),
-
 					}
-					#wandb.log(logdict, step=itr*args.batch_size)
-					#wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)
+					wandb.log(logdict, step=itr*args.batch_size)
+					
+					# wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)
 
 			# empty result placeholder
 			#somedict = {}

@@ -37,7 +37,7 @@
             ]
         },
         {
-            "name": "Python: new simple RNN Crop",
+            "name": "new simple RNN Crop",
             "type": "python",
             "request": "launch",
             "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
@@ -63,8 +63,36 @@
                 "-BN", "true"
             ]
         },
+        {
+            "name": "new simple RNN Crop, noskip",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
+            "console": "integratedTerminal",
+            "args": [
+                //#python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --stack-order gru -BN=true --topper=true
+                "--niters", "30",
+                "-n", "300000",
+                "-validn", "60000",
+                "--val_freq", "100",
+                "--dataset", "crop",
+                "-b", "600",
+                "--ode-rnn",
+                //"--rnn-cell", "gru",
+                "--random-seed", "6001",
+                "--stack-order", "gru",
+                "--lr", "0.00762",
+                "-g", "100",
+                "-l", "70", //150
+                "-u", "255",
+                "-v", "2",
+                "--topper", "true",
+                "-BN", "true",
+                "--noskip"
+            ]
+        },
                 {
-            "name": "Python: Crop",
+            "name": "Crop, ODE-GRU",
             "type": "python",
             "request": "launch",
             "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
