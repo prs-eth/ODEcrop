@@ -321,6 +321,10 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				yi = torch.cat([h_i_, c_i_], -1)
 				yi_out = h_i_
 
+				if not self.use_ODE:
+					ode_sol = yi_out.unsqueeze(2)
+					time_points = time_points.unsqueeze(0)
+
 			else:
 				
 				# GRU-unit/Star-unit: the output is directly the hidden state

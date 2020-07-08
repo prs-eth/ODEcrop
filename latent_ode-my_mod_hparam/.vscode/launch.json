@@ -91,7 +91,7 @@
                 "--noskip"
             ]
         },
-                {
+        {
             "name": "Crop, ODE-GRU",
             "type": "python",
             "request": "launch",
@@ -120,7 +120,37 @@
                 "-BN", "true"
             ]
         },
-                {
+        {
+            "name": "Crop, ODE-GRU, noskip",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--niters", "30",
+                "-n", "300000",
+                "-validn", "60000",
+                "--val_freq", "100",
+                "--dataset", "crop",
+                "--noskip"
+                "-b", "600",
+                "--ode-rnn",
+                "--rnn-cell", "gru",
+                "--random-seed", "6002",
+                "--num-search", "1",
+                "--num-seeds", "1",
+                "--lr", "0.00762",
+                //"--lr", "0.01",
+                //"--lrdecay", "0.9993",
+                "-g", "100",
+                "-l", "80",
+                "-u", "255",
+                "-v", "2",
+                "--topper", "true",
+                "-BN", "true"
+            ]
+        },
+        {
             "name": "Crop: Large ODE",
             "type": "python",
             "request": "launch",
@@ -134,6 +164,7 @@
                 "-b", "600",
                 "--ode-rnn",
                 "--rnn-cell", "gru",
+                "--stack-order", "lstm", "ode_rnn", "gru",
                 "--random-seed", "6002",
                 "--num-search", "1",
                 "--num-seeds", "1",
