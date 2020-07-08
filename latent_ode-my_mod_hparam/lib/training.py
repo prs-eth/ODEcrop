@@ -118,7 +118,7 @@ def construct_and_train_model(config):
 			Model.append(get_classic_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
 
 	# "Magic" wandb model watcher
-	wandb.watch(Model[0], "all")
+	#wandb.watch(Model[0], "all")
 
 	##################################################################
 	
@@ -182,6 +182,7 @@ def construct_and_train_model(config):
 	Test_acc = []
 	Train_acc = []
 	for i in range(num_seeds):
+		#pdb.set_trace()
 		Test_acc.append(Test_res[i][0]["accuracy"])
 		Train_acc.append(Train_res[i][0]["accuracy"])
 
@@ -437,23 +438,6 @@ def train_it(
 						if len(np.unique(y_ref))==len(Data_obj[0]["dataset_obj"].label_list):
 							utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
 
-					#logging to wandb
-					#tag_dict = Data_obj[0]["dataset_obj"].reverse_label_dict
-
-					# for training
-					#y_ref_train = [tag_dict[label_id] for label_id in torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().tolist() ] 
-					#y_pred_train = [tag_dict[label_id] for label_id in torch.argmax(batch_dict[0]['labels'], dim=1).tolist() ] 
-
-					y_ref_train = torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().cpu()
-					y_pred_train = torch.argmax(batch_dict[0]['labels'], dim=1).cpu()
-
-					# for validation
-					#y_ref = [tag_dict[label_id] for label_id in label_dict[0]["correct_labels"].tolist() ]
-					#y_pred = [tag_dict[label_id] for label_id in label_dict[0]["predict_labels"].tolist() ]
-
-					y_ref = label_dict[0]["correct_labels"].cpu()
-					y_pred = label_dict[0]["predict_labels"]
-
 					logdict = {
 						'Classification_accuracy/train': train_res[i]["accuracy"],
 						'Classification_accuracy/validation': test_res[i]["accuracy"],
@@ -463,20 +447,6 @@ def train_it(
 						'loss/train': train_res[i]["loss"].detach(),
 						'loss/validation': test_res[i]["loss"].detach(),
 						#'Confusionmatrix': conf_fig,
-
-						"""
-						'Other_metrics/train_cm' : sklearn_cm(y_ref_train, y_pred_train, labels=labels),
-						'Other_metrics/train_precision': precision_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
-						'Other_metrics/train_recall': recall_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
-						'Other_metrics/train_f1': f1_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
-						'Other_metrics/train_kappa': cohen_kappa_score(y_ref_train, y_pred_train, labels=labels),
-
-						'Other_metrics/validation_cm' : sklearn_cm(y_ref, y_pred, labels=labels),
-						'Other_metrics/validation_precision': precision_score(y_ref, y_pred, labels=labels, average='macro'),
-						'Other_metrics/validation_recall': recall_score(y_ref, y_pred, labels=labels, average='macro'),
-						'Other_metrics/validation_f1': f1_score(y_ref, y_pred, labels=labels, average='macro'),
-						'Other_metrics/validation_kappa': cohen_kappa_score(y_ref, y_pred, labels=labels),
-						"""
 
 						'Other_metrics/train_cm' : sklearn_cm(y_ref_train, y_pred_train),
 						'Other_metrics/train_precision': precision_score(y_ref_train, y_pred_train, average='macro'),
@@ -491,8 +461,8 @@ def train_it(
 						'Other_metrics/validation_kappa': cohen_kappa_score(y_ref, y_pred),
 
 					}
-					wandb.log(logdict, step=itr*args.batch_size)
-					wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)
+					#wandb.log(logdict, step=itr*args.batch_size)
+					#wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)
 
 			# empty result placeholder
 			#somedict = {}
@@ -518,7 +488,7 @@ def train_it(
 			)
 
 		#empty all training variables
-		train_res = [None] * num_gpus
+		#train_res = [None] * num_gpus
 		batch_dict = [None] * num_gpus
 		#test_res = [None] * num_gpus
 		label_dict = [None]* num_gpus

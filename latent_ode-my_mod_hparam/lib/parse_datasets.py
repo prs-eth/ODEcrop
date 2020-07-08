@@ -208,10 +208,14 @@ def parse_datasets(args, device):
 		#turn this boolean to true in order to get access to the larger "evaluation" dataset used for validation
 		eval_as_test = True
 
-		root = 'data/Crops'
-		scratch_root = '/scratch/Nando/ODEcrop/Crops'
+		root = r'data/Crops'
+		scratch_root1 = r'/scratch/Nando/ODEcrop/Crops'
+		scratch_root2 = r'/cluster/scratch/metzgern/ODEcrop/'
 		if os.path.exists(scratch_root):
-			root = scratch_root
+			root = scratch_root1
+		elif os.path.exists(scratch_root):
+			root = scratch_root2
+		print("dataroot: " + root)
 
 		train_dataset_obj = Crops(root, mode="train", args=args,
 										download=True, device = device, list_form = list_form)
@@ -307,17 +311,26 @@ def parse_datasets(args, device):
 	###########     SWISS Crop Classification     ####################
 	
 	if dataset_name == "swisscrop":
-
-		root = 'data/SwissCrops'
-		scratch_root = '/scratch/Nando/ODEcrop/Swisscrop'
-		if os.path.exists(scratch_root):
-			root = scratch_root
-			pass
 		
-		train_dataset_obj = SwissCrops(root, mode="train", device=device,
+		# Search for a dataroot
+		root = r'data/SwissCrops'
+		scratch_root1 = r'/cluster/scratch/metzgern/ODEcrop/Swisscrop'
+		scratch_root2 = r'/scratch/Nando/ODEcrop/Swisscrop'
+		if os.path.exists(scratch_root1):
+			root = scratch_root1
+			print(scratch_root1)
+		elif os.path.exists(scratch_root2):
+			# Leonhard cluster case
+			root = scratch_root2
+			print(scratch_root2)
+		print("dataroot: " + root)
+
+		
+		#pdb.set_trace()
+		train_dataset_obj = SwissCrops(scratch_root1, mode="train", device=device,
 										step=args.step, trunc=args.trunc, nsamples=args.n,
 										datatype=args.swissdatatype, singlepix=args.singlepix)
-		test_dataset_obj = SwissCrops(root, mode="test", device=device,
+		test_dataset_obj = SwissCrops(scratch_root1, mode="test", device=device,
 										step=args.step, trunc=args.trunc, nsamples=args.validn,
 										datatype=args.swissdatatype, singlepix=args.singlepix) 
 		
@@ -325,7 +338,7 @@ def parse_datasets(args, device):
 		n_test_samples = min( float("inf"), len(test_dataset_obj))
 		
 		#evaluation batch sizes. #Must be tuned to increase efficency of evaluation
-		validation_batch_size = 10000 # size 30000 is 10s per batch, also depending on server connection
+		validation_batch_size = 5000 # size 30000 is 10s per batch, also depending on server connection
 		train_batch_size = min(args.batch_size, args.n)
 		test_batch_size = min(n_test_samples, validation_batch_size)
 

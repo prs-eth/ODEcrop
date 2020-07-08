@@ -158,8 +158,8 @@ file_name = os.path.basename(__file__)[:-3]
 utils.makedirs(args.save)
 
 
-import wandb
-wandb.init(project="odecropclassification",config=args, sync_tensorboard=True, entity="cropteam", group=args.dataset)
+#import wandb
+#wandb.init(project="odecropclassification",config=args, sync_tensorboard=True, entity="cropteam", group=args.dataset)
 
 #####################################################################################################
 
@@ -233,7 +233,7 @@ if __name__ == '__main__':
 		hyper_config["units"] = hp.quniform('ode_units', 10, 350, 5) # default: 500?
 	
 	if 'latents' in args.hparams:
-		hyper_config["latents"] = hp.quniform('latents', 20, 230, 3) # default: 100?
+		hyper_config["latents"] = hp.quniform('latents', 20, 300, 5) # default: 100?
 
 	if 'gru_units' in args.hparams:
 		hyper_config["gru_units"] = hp.quniform('gru_units', 10, 300, 3) # default: 50?

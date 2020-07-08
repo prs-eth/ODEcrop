@@ -38,7 +38,7 @@ class SwissCrops(object):
 	def __init__(self, root, mode='train', device = torch.device("cpu"),
 		neighbourhood=3, cloud_thresh=0.05,
 		nsamples=float("inf"),args=None,
-		step=1, trunc=9, datatype="", singlepix=False):
+		step=1, trunc=9, datatype="2_toplabels", singlepix=False):
 		
 		self.datatype = datatype
 
@@ -74,7 +74,8 @@ class SwissCrops(object):
 			data_file = self.test_file
 
 		if not os.path.exists(data_file):
-			self.process_data()
+			print("haven't found " + data_file + " . Starting to preprocess the whole dataset...")
+			#self.process_data()
 		
 		self.hdf5dataloader = h5py.File(data_file, "r", rdcc_nbytes=1024**2*4000,rdcc_nslots=1e7)
 		self.nsamples = self.hdf5dataloader["data"].shape[0]
