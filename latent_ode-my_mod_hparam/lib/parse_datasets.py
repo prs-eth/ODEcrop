@@ -326,10 +326,10 @@ def parse_datasets(args, device):
 
 		
 		#pdb.set_trace()
-		train_dataset_obj = SwissCrops(scratch_root1, mode="train", device=device, noskip=args.noskip,
+		train_dataset_obj = SwissCrops(root, mode="train", device=device, noskip=args.noskip,
 										step=args.step, trunc=args.trunc, nsamples=args.n,
 										datatype=args.swissdatatype, singlepix=args.singlepix)
-		test_dataset_obj = SwissCrops(scratch_root1, mode="test", device=device, noskip=args.noskip,
+		test_dataset_obj = SwissCrops(root, mode="test", device=device, noskip=args.noskip,
 										step=args.step, trunc=args.trunc, nsamples=args.validn,
 										datatype=args.swissdatatype, singlepix=args.singlepix) 
 		
