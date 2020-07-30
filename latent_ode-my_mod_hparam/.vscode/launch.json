@@ -121,7 +121,7 @@
             ]
         },
         {
-            "name": "Crop, ODE-GRU, noskip",
+            "name": "Crop, ODE-GRU, noskip", // doesn't skip cloudy frames
             "type": "python",
             "request": "launch",
             "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
