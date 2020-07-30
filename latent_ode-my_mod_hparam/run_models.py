@@ -183,10 +183,10 @@ if __name__ == '__main__':
 	##################################################################
 
 	#Load checkpoint and evaluate the model
-	if args.load is not None:
+	#if args.load is not None:
 		#utils.get_ckpt_model(ckpt_path, model, device)
-		utils.get_ckpt_model(top_ckpt_path, model, Devices[0])
-		exit()
+		#utils.get_ckpt_model(top_ckpt_path, model, Devices[0])
+		#exit()
 
 	#################################################################
 	# Hyperparameter Optimization
