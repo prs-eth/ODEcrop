@@ -53,7 +53,7 @@
                 "--ode-rnn",
                 //"--rnn-cell", "gru",
                 "--random-seed", "6001",
-                "--stack-order", "gru",
+                "--stack-order", "lstm",
                 "--lr", "0.00762",
                 "-g", "100",
                 "-l", "70", //150
