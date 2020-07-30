@@ -1039,7 +1039,7 @@ if __name__=="__main__":
 	#pdb.set_trace()
 
 	#Speed test
-	for t in tqdm(range(len(trainloader))):
+	#for t in tqdm(range(len(trainloader))):
 
-		batch_dict = utils.get_next_batch(train_generator)
+	#	batch_dict = utils.get_next_batch(train_generator)
 	
