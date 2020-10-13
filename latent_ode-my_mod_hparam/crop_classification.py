@@ -87,9 +87,9 @@ class Crops(object):
 		print('Downloading data...')
 		
 		# get the dataset from the web
-		#os.system('wget ftp://m1370728:m1370728@138.246.224.34/data.zip')
-		#os.system('unzip data.zip -d ' + self.raw_folder)
-		#os.system('rm data.zip')
+		os.system('wget ftp://m1370728:m1370728@138.246.224.34/data.zip')
+		os.system('unzip data.zip -d ' + self.raw_folder)
+		os.system('rm data.zip')
 		
 		#Processing data
 		print('Scanning data...')

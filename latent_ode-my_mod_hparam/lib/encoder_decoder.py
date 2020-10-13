@@ -99,7 +99,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		z0_dim = None, RNN_update = None, 
 		n_gru_units = 100, device = torch.device("cpu"),
 		RNNcell = None, use_BN=True,
-		use_ODE = True):
+		use_ODE = True, nornnimputation=True):
 		
 		super(Encoder_z0_ODE_RNN, self).__init__()
 
@@ -149,6 +149,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		self.use_BN = use_BN
 		self.use_ODE = use_ODE
+		self.nornnimputation = nornnimputation
 		self.z0_diffeq_solver = z0_diffeq_solver
 		self.input_dim = input_dim
 		self.device = device
@@ -206,7 +207,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		device = get_device(data)
 
-		# Initialize the hidden state
+		# Initialize the hidden state with noise
 		if self.RNNcell=='lstm':
 			# make some noise
 			prev_h = torch.zeros((1, n_traj, self.latent_dim//2)).data.normal_(0, 0.0001).to(device)
@@ -223,7 +224,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			prev_y = torch.zeros((1, n_traj, self.latent_dim)).data.normal_(0, 0.0001).to(device)
 			prev_std = torch.zeros((1, n_traj, self.latent_dim)).data.normal_(0, 0.0001).to(device)
 		
-		# Nando' comment: why the last time steps?
+		# Nando' comment: why start the last time steps? I better change it, it doesn't make sense in the original code
 		#prev_t, t_i = time_steps[-1] + 0.01,  time_steps[-1] # original
 		#t_i = time_steps[-1]  # new
 		prev_t = time_steps[0] - 0.00001 # new2
@@ -262,7 +263,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			if self.use_ODE:
 				
 				if abs(prev_t - t_i) < minimum_step:
-					#short integration, linear approximation...
+					#short integration, linear approximation with the gradient
 					time_points = torch.stack((prev_t, t_i))
 					inc = self.z0_diffeq_solver.ode_func(prev_t, prev_y) * (t_i - prev_t)
 
@@ -274,7 +275,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					assert(not torch.isnan(ode_sol).any())
 
 				else:
-					#complete Integration
+					#complete Integration using differential equation solver
 					ode_sol = self.z0_diffeq_solver(prev_y, time_points)
 
 					assert(not torch.isnan(ode_sol).any())
@@ -283,7 +284,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					print("Error: first point of the ODE is not equal to initial value")
 					print(torch.mean(ode_sol[:, :, 0, :]  - prev_y))
 					exit()
-				#assert(torch.mean(ode_sol[:, :, 0, :]  - prev_y) < 0.001)
 
 				yi_ode = ode_sol[:, :, -1, :]
 
@@ -294,19 +294,25 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				# skipping ODE function and assign directly
 				yi_ode = prev_y
 				time_points = time_points[-1]
-
+				
+				# extract the mask for the current (single) time step
 				single_mask = data[:,i,self.input_dim//2]
 				#TODO: check the imputation here....
 				delta_ts = (prev_t - t_i).repeat(1,n_traj,1).float()
 				delta_ts[:,~single_mask.bool(),:] = 0
 				
+				if self.nornnimputation:
+					delta_ts[:,:,:] = 0
+
 				features = data[:,i,:self.input_dim//2].unsqueeze(0)
 				new_mask = single_mask.unsqueeze(0).unsqueeze(2).repeat(1,1,self.input_dim//2+1)
 
 				#creating new data including delta ts plus mask, concaninate the delta t for pure RNN
 				xi = torch.cat([ features , delta_ts, new_mask], -1)
 
-			# check if mask is all non, if so: don't do GRU update to save computational costs=> Conclusion, it is not faster
+			# Already tried and deleted at this point:
+			# check if mask is all non, if so: don't do GRU update to save computational costs
+			# => Conclusion, it is not faster
 
 			if self.RNNcell=='lstm':
 

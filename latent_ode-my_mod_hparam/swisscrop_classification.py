@@ -69,8 +69,8 @@ class SwissCrops(object):
 		self.means = [0.4071655 , 0.2441012 , 0.23429523, 0.23402453, 0.00432794, 0.00615292, 0.00566292, 0.00306609, 0.00367624]
 		self.stds = [0.24994541, 0.30625425, 0.32668449, 0.30204761, 0.00490984, 0.00411067, 0.00426914, 0.0027143 , 0.00221963]
 
-		#if not self.check_exists():
-		#	self.process_data()
+		if not self.check_exists():
+			self.process_data()
 
 		if mode=="train":
 			data_file = self.train_file
@@ -557,11 +557,11 @@ class SwissCrops(object):
 
 	@property
 	def train_file(self):
-		return os.path.join(self.processed_folder, "train_set_3x3_processed" + self.datatype + ".hdf5")
+		return os.path.join(self.processed_folder, "train_set_3x3_processed_13" + self.datatype + ".hdf5")
 
 	@property
 	def test_file(self):
-		return os.path.join(self.processed_folder, "test_set_3x3_processed" + self.datatype + ".hdf5")
+		return os.path.join(self.processed_folder, "test_set_3x3_processed_13" + self.datatype + ".hdf5")
 
 	@property
 	def raw_time_file(self):
@@ -735,9 +735,9 @@ class Dataset(torch.utils.data.Dataset):
 			
 			### Attention: Changed ozgur's code here ###
 			#if tier_1[i] == 'Vegetation':
-			if tier_1[i] == 'Vegetation' and tier_4[i] in ['Meadow','Potatoes', 'Pasture', 'Maize', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat', 'WinterBarley', 'WinterRapeseed', 'WinterWheat']:
+			if tier_1[i] == 'Vegetation' and tier_4[i] in ['Meadow','Potatoes', 'Pasture', 'Maize', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat', 'WinterBarley', 'WinterRapeseed', 'WinterWheat', 'Spelt']:
 				self.label_list.append(i)
-							
+
 		tier_2_elements = list(set(tier_2))
 		tier_3_elements = list(set(tier_3))
 		tier_4_elements = list(set(tier_4))
@@ -1039,7 +1039,7 @@ if __name__=="__main__":
 	#pdb.set_trace()
 
 	#Speed test
-	for t in tqdm(range(len(trainloader))):
+	#for t in tqdm(range(len(trainloader))):
 
-		batch_dict = utils.get_next_batch(train_generator)
+	#	batch_dict = utils.get_next_batch(train_generator)
 	

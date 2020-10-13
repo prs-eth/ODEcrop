@@ -312,6 +312,7 @@ def parse_datasets(args, device):
 	if dataset_name == "swisscrop":
 		
 		# Search for a dataroot
+		
 		root = r'data/SwissCrops'
 		scratch_root1 = r'/cluster/scratch/metzgern/ODEcrop/Swisscrop'
 		scratch_root2 = r'/scratch/Nando/ODEcrop/Swisscrop'

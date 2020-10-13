@@ -62,7 +62,7 @@ parser.add_argument('--save', type=str, default='experiments/', help="Path for s
 parser.add_argument('--load', type=str, default=None, help="ID of the experiment to load for evaluation. If None, run a new experiment.")
 parser.add_argument('-r', '--random-seed', type=int, default=1991, help="Random_seed")
 
-parser.add_argument('--dataset', type=str, default='crop', help="Dataset to load. Available: physionet, activity, hopper, periodic")
+parser.add_argument('--dataset', type=str, default='crop', help="Dataset to load. Available: physionet, activity, hopper, periodic, crop, swisscrop")
 parser.add_argument('-s', '--sample-tp', type=float, default=None, help="Number of time points to sub-sample."
 	"If > 1, subsample exact number of points. If the number is in [0,1], take a percentage of available points per time series. If None, do not subsample")
 
@@ -100,6 +100,7 @@ parser.add_argument('-RN', '--resnet', default=False,  type=bool, help="Turns th
 parser.add_argument('--rec-layers', type=int, default=2, help="Number of layers in ODE func in recognition ODE") 
 parser.add_argument('-u', '--units', type=int, default=255, help="Number of units per layer in ODE func")
 parser.add_argument('-g', '--gru-units', type=int, default=100, help="Number of units per layer in each of GRU update networks")
+parser.add_argument('-RI', '--nornnimputation', default=False,  type=bool, help="If false, for the baseline models (vanilla RNNs), the models additionally imputes delta t, which is the time since the last observation.")
 
 parser.add_argument('--linear-classif', default=False, type=bool, help="If using a classifier, use a linear classifier instead of 1-layer NN")
 parser.add_argument('--topper', default=False, type=bool, help="If a topper to transform the input before the first trajectory should be used")
@@ -183,10 +184,10 @@ if __name__ == '__main__':
 	##################################################################
 
 	#Load checkpoint and evaluate the model
-	if args.load is not None:
+	#if args.load is not None:
 		#utils.get_ckpt_model(ckpt_path, model, device)
-		utils.get_ckpt_model(top_ckpt_path, model, Devices[0])
-		exit()
+		#utils.get_ckpt_model(top_ckpt_path, model, Devices[0])
+		#exit()
 
 	#################################################################
 	# Hyperparameter Optimization

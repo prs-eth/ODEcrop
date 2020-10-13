@@ -347,61 +347,6 @@ def train_it(
 
 				for i, device in enumerate(Devices):
 					
-					"""
-					message = 'Epoch {:04d} [Test seq (cond on sampled tp)] | Loss {:.6f} | Likelihood {:.6f} | KL fp {:.4f} | FP STD {:.4f}|'.format(
-						itr//num_batches, 
-						test_res[i]["loss"].detach(), test_res[i]["likelihood"].detach(), 
-						test_res[i]["kl_first_p"], test_res[i]["std_first_p"])
-					"""
-					#Logger[i].info("Experiment " + str(experimentID[i]))
-					#Logger[i].info(message)
-					#Logger[i].info("KL coef: {}".format(kl_coef))
-					#Logger[i].info("Train loss (one batch): {}".format(train_res[i]["loss"].detach()))
-					#Logger[i].info("Train CE loss (one batch): {}".format(train_res[i]["ce_loss"].detach()))
-					
-					# write training numbers
-					"""
-					if "accuracy" in train_res[i]:
-						#Logger[i].info("Classification accuracy (TRAIN): {:.4f}".format(train_res["accuracy"]))
-						Validationwriter[i].add_scalar('Classification_accuracy/train', train_res[i]["accuracy"], itr*args.batch_size)
-					
-					if "loss" in train_res[i]:
-						Validationwriter[i].add_scalar('loss/train', train_res[i]["loss"].detach(), itr*args.batch_size)
-					
-					if "ce_loss" in train_res[i]:
-						Validationwriter[i].add_scalar('CE_loss/train', train_res[i]["ce_loss"].detach(), itr*args.batch_size)
-					
-					if "mse" in train_res[i]:
-						Validationwriter[i].add_scalar('MSE/train', train_res[i]["mse"], itr*args.batch_size)
-					
-					if "pois_likelihood" in train_res[i]:
-						Validationwriter[i].add_scalar('Poisson_likelihood/train', train_res[i]["pois_likelihood"], itr*args.batch_size)
-					
-					#write test numbers
-					if "auc" in test_res[i]:
-						#Logger[i].info("Classification AUC (TEST): {:.4f}".format(test_res["auc"]))
-						Validationwriter[i].add_scalar('Classification_AUC/validation', test_res[i]["auc"], itr*args.batch_size)
-						
-					if "mse" in test_res[i]:
-						#Logger[i].info("Test MSE: {:.4f}".format(test_res["mse"]))
-						Validationwriter[i].add_scalar('MSE/validation', test_res[i]["mse"], itr*args.batch_size)
-						
-					if "accuracy" in test_res[i]:
-						#Logger[i].info("Classification accuracy (TEST): {:.4f}".format(test_res["accuracy"]))
-						Validationwriter[i].add_scalar('Classification_accuracy/validation', test_res[i]["accuracy"], itr*args.batch_size)
-
-					if "pois_likelihood" in test_res[i]:
-						#Logger[i].info("Poisson likelihood: {}".format(test_res["pois_likelihood"]))
-						Validationwriter[i].add_scalar('Poisson_likelihood/validation', test_res[i]["pois_likelihood"], itr*args.batch_size)
-					
-					if "loss" in train_res[i]:
-						Validationwriter[i].add_scalar('loss/validation', test_res[i]["loss"].detach(), itr*args.batch_size)
-					
-					if "ce_loss" in test_res[i]:
-						#Logger[i].info("CE loss: {}".format(test_res["ce_loss"]))
-						Validationwriter[i].add_scalar('CE_loss/validation', test_res[i]["ce_loss"], itr*args.batch_size)
-					"""
-
 					#make confusion matrix
 					#_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
 					#Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
