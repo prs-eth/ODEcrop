@@ -557,11 +557,11 @@ class SwissCrops(object):
 
 	@property
 	def train_file(self):
-		return os.path.join(self.processed_folder, "train_set_3x3_processed_13" + self.datatype + ".hdf5")
+		return os.path.join(self.processed_folder, "train_set_3x3_processed_13_" + self.datatype + ".hdf5")
 
 	@property
 	def test_file(self):
-		return os.path.join(self.processed_folder, "test_set_3x3_processed_13" + self.datatype + ".hdf5")
+		return os.path.join(self.processed_folder, "test_set_3x3_processed_13_" + self.datatype + ".hdf5")
 
 	@property
 	def raw_time_file(self):
@@ -735,7 +735,8 @@ class Dataset(torch.utils.data.Dataset):
 			
 			### Attention: Changed ozgur's code here ###
 			#if tier_1[i] == 'Vegetation':
-			if tier_1[i] == 'Vegetation' and tier_4[i] in ['Meadow','Potatoes', 'Pasture', 'Maize', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat', 'WinterBarley', 'WinterRapeseed', 'WinterWheat', 'Spelt']:
+			if tier_1[i] == 'Vegetation' and tier_4[i] in ['Meadow','Potatoes', 'Pasture', 'Maize', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat', 'WinterBarley', 'WinterRapeseed', 'WinterWheat', 'Spelt',
+															'Hedge', 'Apples', 'Soy', 'Fallow', 'Peas', 'Berries', 'Oat', 'Field bean', 'Einkorn wheat', 'Rye', 'Tree Crop', 'Summer wheat']:
 				self.label_list.append(i)
 
 		tier_2_elements = list(set(tier_2))
