@@ -1,43 +1,35 @@
-2020-10-13 10:50:16,688 DEBUG   MainThread:140043 [wandb_config.py:_load_defaults():133] no defaults not found in config-defaults.yaml
-2020-10-13 10:50:16,911 DEBUG   MainThread:140043 [meta.py:_setup_code_git():49] probe for git information
-2020-10-13 10:50:16,994 DEBUG   MainThread:140043 [run_manager.py:__init__():547] Initialized sync for odecropclassification/maxi8xll
-2020-10-13 10:50:17,005 INFO    MainThread:140043 [run_manager.py:wrap_existing_process():1147] wrapping existing process 139960
-2020-10-13 10:50:17,118 INFO    MainThread:140043 [run_manager.py:init_run():926] system metrics and metadata threads started
-2020-10-13 10:50:17,119 INFO    MainThread:140043 [run_manager.py:init_run():965] upserting run before process can begin, waiting at most 10 seconds
-2020-10-13 10:50:17,343 INFO    Thread-15 :140043 [run_manager.py:_upsert_run():1054] saving pip packages
-2020-10-13 10:50:17,347 INFO    Thread-15 :140043 [run_manager.py:_upsert_run():1056] initializing streaming files api
-2020-10-13 10:50:17,348 INFO    Thread-15 :140043 [run_manager.py:_upsert_run():1063] unblocking file change observer, beginning sync with W&B servers
-2020-10-13 10:50:17,348 INFO    MainThread:140043 [run_manager.py:wrap_existing_process():1164] informing user process we are ready to proceed
-2020-10-13 10:50:17,360 INFO    MainThread:140043 [run_manager.py:_sync_etc():1296] entering loop for messages from user process
-2020-10-13 10:50:17,905 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/config.yaml
-2020-10-13 10:50:18,138 INFO    Thread-4  :140043 [run_manager.py:_on_file_created():681] file/dir created: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/requirements.txt
-2020-10-13 10:50:18,139 INFO    Thread-4  :140043 [run_manager.py:_on_file_created():681] file/dir created: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:18,140 INFO    Thread-4  :140043 [run_manager.py:_on_file_created():681] file/dir created: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/wandb-metadata.json
-2020-10-13 10:50:24,912 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:31,920 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:33,924 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/wandb-metadata.json
-2020-10-13 10:50:34,925 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:35,927 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:36,928 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:37,929 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:38,931 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:39,933 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:40,935 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:41,936 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:42,937 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:43,939 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:44,940 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:45,942 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:45,943 INFO    Thread-4  :140043 [run_manager.py:_on_file_created():681] file/dir created: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/wandb-events.jsonl
-2020-10-13 10:50:46,945 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:47,946 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:48,948 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:49,951 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:49,951 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/wandb-metadata.json
-2020-10-13 10:50:50,953 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:51,954 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:52,956 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:53,957 INFO    Thread-4  :140043 [run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-015-maxi8xll/output.log
-2020-10-13 10:50:52,956 INFO    Thread-4  :140043 [maxi8xll:run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
-2020-10-13 10:50:53,957 INFO    Thread-4  :140043 [maxi8xll:run_manager.py:_on_file_modified():692] file/dir modified: /cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/wandb/run-20201013_085015-maxi8xll/output.log
+2020-10-15 15:02:22,400 DEBUG   MainThread:22471 [wandb_config.py:_load_defaults():132] no defaults not found in config-defaults.yaml
+2020-10-15 15:02:22,651 DEBUG   MainThread:22471 [meta.py:_setup_code_git():49] probe for git information
+2020-10-15 15:02:22,720 DEBUG   MainThread:22471 [run_manager.py:__init__():546] Initialized sync for odecropclassification/2xn7s2my
+2020-10-15 15:02:22,757 INFO    MainThread:22471 [run_manager.py:wrap_existing_process():1148] wrapping existing process 22389
+2020-10-15 15:02:22,763 WARNING MainThread:22471 [io_wrap.py:register():104] SIGWINCH handler was not None: <Handlers.SIG_DFL: 0>
+2020-10-15 15:02:22,889 INFO    MainThread:22471 [run_manager.py:init_run():927] system metrics and metadata threads started
+2020-10-15 15:02:22,894 INFO    MainThread:22471 [run_manager.py:init_run():966] upserting run before process can begin, waiting at most 10 seconds
+2020-10-15 15:02:23,384 INFO    Thread-21 :22471 [run_manager.py:_upsert_run():1055] saving pip packages
+2020-10-15 15:02:23,412 INFO    Thread-21 :22471 [run_manager.py:_upsert_run():1057] initializing streaming files api
+2020-10-15 15:02:23,421 INFO    Thread-21 :22471 [run_manager.py:_upsert_run():1064] unblocking file change observer, beginning sync with W&B servers
+2020-10-15 15:02:23,426 INFO    MainThread:22471 [run_manager.py:wrap_existing_process():1165] informing user process we are ready to proceed
+2020-10-15 15:02:23,442 INFO    MainThread:22471 [run_manager.py:_sync_etc():1272] entering loop for messages from user process
+2020-10-15 15:02:23,661 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/config.yaml
+2020-10-15 15:02:24,014 INFO    Thread-10 :22471 [run_manager.py:_on_file_created():680] file/dir created: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/requirements.txt
+2020-10-15 15:02:24,019 INFO    Thread-10 :22471 [run_manager.py:_on_file_created():680] file/dir created: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/wandb-metadata.json
+2020-10-15 15:02:24,024 INFO    Thread-10 :22471 [run_manager.py:_on_file_created():680] file/dir created: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
+2020-10-15 15:02:24,652 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
+2020-10-15 15:02:39,718 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/wandb-metadata.json
+2020-10-15 15:02:51,748 INFO    Thread-10 :22471 [run_manager.py:_on_file_created():680] file/dir created: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/wandb-events.jsonl
+2020-10-15 15:02:55,755 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/wandb-metadata.json
+2020-10-15 15:03:11,781 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/wandb-metadata.json
+2020-10-15 15:03:22,798 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/wandb-events.jsonl
+2020-10-15 15:03:27,811 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/wandb-metadata.json
+2020-10-15 15:03:42,843 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
+2020-10-15 15:03:43,844 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/wandb-metadata.json
+2020-10-15 15:03:52,859 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/wandb-events.jsonl
+2020-10-15 15:03:59,867 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/wandb-metadata.json
+2020-10-15 15:04:02,015 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
+2020-10-15 15:04:05,041 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
+2020-10-15 15:04:06,042 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
+2020-10-15 15:04:07,043 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
+2020-10-15 15:04:08,070 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
+2020-10-15 15:04:09,072 INFO    Thread-10 :22471 [run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
+manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
+2020-10-15 15:04:09,072 INFO    Thread-10 :22471 [2xn7s2my:run_manager.py:_on_file_modified():691] file/dir modified: /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/wandb/run-20201015_130219-2xn7s2my/output.log
