@@ -732,8 +732,16 @@ class FastTensorDataLoader:
 		self.timestamps = h5py.File(os.path.join(self.dataset.processed_folder, self.dataset.time_file), "r")["tt"][:]
 		self.noskip = dataset.noskip
 
+		#
+		if type(dataset).__name__=='SwissCrops':
+			self.remapping = True
+			self.reflistglob = self.dataset.labellistglob13
+			self.nclasses = 13
+		else:
+			self.remapping = False
+
+
 		# prepare skipping of steps and truncation of features
-		
 		if hasattr(self.dataset, 'step'):
 			self.step = self.dataset.step
 		else:
@@ -827,18 +835,42 @@ class FastTensorDataLoader:
 					"data": data[:,::self.step,self.kronmask].to(self.dataset.device), 
 					"time_steps": time_stamps[::self.step].to(self.dataset.device),
 					"mask": mask[:,::self.step,self.kronmask].to(self.dataset.device),
-					"labels": labels.to(self.dataset.device)}
+					"labels": labels}
 			else:
 				data_dict = {
 					"data": data[:,::self.step,:self.feature_trunc].to(self.dataset.device), 
 					"time_steps": time_stamps[::self.step].to(self.dataset.device),
 					"mask": mask[:,::self.step,:self.feature_trunc].to(self.dataset.device),
-					"labels": labels.to(self.dataset.device)}
+					"labels": labels}
 
 			#if self.noskip:
 				# Mark every frame as observed (needed for some experiments)
 				#data_dict["mask"] = torch.ones_like(data_dict["mask"])
+		
+		#perform remapping for Swisscrops
+		if self.remapping:
+			targetind = torch.argmax(data_dict["labels"],1)#.numpy()
+			#target = torch.zeros_like(targetind)
+
+			for i in range(len(self.dataset.labellistglob)):
+				#delete the label if it is not within the k most frequent classes k={13,23}
+				if not (self.dataset.labellist[i] in self.dataset.labellist13):
+					targetind[targetind == self.dataset.labellistglob[i]] = 0
 			
+			# Reduce range of labels
+			uniquelabels = np.unique(self.reflistglob)
+			for i in range(self.nclasses):
+				targetind[targetind == uniquelabels[i]] = i+1
+
+			#Convert back to one hot
+			labels = torch.zeros((self.batch_size, self.nclasses+1))
+			labels[np.arange(self.batch_size),targetind] = 1
+
+			data_dict["labels"] = labels.to(self.dataset.device)
+
+		else:
+			data_dict["labels"] = data_dict["labels"].to(self.dataset.device)
+
 		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type = self.dataset.mode)
 				
 		self.i += self.batch_size

@@ -358,7 +358,7 @@ def parse_datasets(args, device):
 					"n_train_batches": len(train_dataloader),
 					"n_test_batches": len(test_dataloader),
 					"classif_per_tp": False, # We want to classify the whole sequence!!. Standard: True, #optional
-					"n_labels": labels.size(-1)}
+					"n_labels": train_dataloader.nclasses+1} #plus one, because there is one class that summerizes all the other classes--> "other" is "0"
 
 		"""
 		print("")
