@@ -228,7 +228,6 @@ class ML_ODE_RNN(Baseline):
 
 				z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
 				
-
 			self.Encoder0 = Encoder_z0_ODE_RNN( 
 				latent_dim = ode_rnn_encoder_dim, 
 				input_dim = layer_input_dimension, 
