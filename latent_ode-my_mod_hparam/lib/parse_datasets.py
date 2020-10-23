@@ -294,7 +294,8 @@ def parse_datasets(args, device):
 		print("Trainingdataset:")
 		print(data_objects["dataset_obj"])
 
-		if eval_as_test:
+		if eval_as_test:oot, mode="eval", args=args, noskip=args.noskip,
+								download=True, device = device,  list_form = list_form,)
 			data_objects["test_dataloader"] = utils.inf_generator(eval_dataloader)
 			data_objects["n_test_batches"] = len(eval_dataloader)
 			print("Using Evaluationdataset:")
