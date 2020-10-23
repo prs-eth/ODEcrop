@@ -28,7 +28,11 @@ def test(model, dataloader):
 
     for iteration, data in tqdm(enumerate(dataloader)):
 
-        inputs, targets = data
+        #inputs, targets = data
+        input, _, _, target = data
+          
+        targets = torch.argmax(target,1)
+        inputs = input.float()
 
         if torch.cuda.is_available():
             inputs = inputs.cuda()
@@ -37,7 +41,7 @@ def test(model, dataloader):
         
         x = inputs.cpu().detach().numpy()
         y = targets.cpu().detach().numpy()
-        z = model.forward(inputs)[0]
+        z = model.forward(inputs)
         z = z.cpu().detach().numpy()
         
         inputs_list.append(x)
@@ -144,9 +148,11 @@ def print_report(overall_accuracy, kappa, precision, recall, f1, cl_acc):
     #print('Per-class acc:', cl_acc)
     
 def evaluate(model, dataset, batchsize=1, workers=0):
+    label_list_local = range(19) #unknown, fieldcrop, grassland 
     label_list_local_1 = [0.,1,1,1,1,1,1,1,1,1,2,2,2,2,2] #unknown, fieldcrop, grassland 
     label_list_local_2 = [0.,1,2,1,2,3,3,3,3,4,5,5,6,6,6] #unknown, smallCreal, largeCreal, broadLeaf, veg, meadow, pastures
     
+    #TODO: need fast tensordataloader? maybe not?
     dataloader = torch.utils.data.DataLoader(dataset=dataset, batch_size=batchsize, num_workers=workers)
 
     logprobabilites, inputs, targets = test(model, dataloader)
@@ -158,20 +164,26 @@ def evaluate(model, dataset, batchsize=1, workers=0):
     
     #Ignore unknown class class_id=0
     valid_crop_samples = targets != 0
-    targets_wo_unknown = targets[valid_crop_samples]
-    predictions_wo_unknown = predictions[valid_crop_samples]
+    targets_wo_unknown = targets#[valid_crop_samples]
+    predictions_wo_unknown = predictions#[valid_crop_samples]
     
+    predictions_local_wo_unknown = np.ones_like(predictions_wo_unknown)*888
     predictions_local_1_wo_unknown = np.ones_like(predictions_wo_unknown)*888
     predictions_local_2_wo_unknown = np.ones_like(predictions_wo_unknown)*888
+    targets_local_wo_unknown = np.ones_like(targets_wo_unknown)*999
     targets_local_1_wo_unknown = np.ones_like(targets_wo_unknown)*999
     targets_local_2_wo_unknown = np.ones_like(targets_wo_unknown)*999
     
     for i in range(1,len(label_list_local_1)):
-        predictions_local_1_wo_unknown[predictions_wo_unknown==i] = label_list_local_1[i]
-        targets_local_1_wo_unknown[targets_wo_unknown==i] = label_list_local_1[i]
 
-        predictions_local_2_wo_unknown[predictions_wo_unknown==i] = label_list_local_2[i]
-        targets_local_2_wo_unknown[targets_wo_unknown==i] = label_list_local_2[i]
+        predictions_local_wo_unknown[predictions_wo_unknown==i] = label_list_local[i]
+        targets_local_wo_unknown[targets_wo_unknown==i] = label_list_local[i]
+
+        #predictions_local_1_wo_unknown[predictions_wo_unknown==i] = label_list_local_1[i]
+        #targets_local_1_wo_unknown[targets_wo_unknown==i] = label_list_local_1[i]
+
+        #predictions_local_2_wo_unknown[predictions_wo_unknown==i] = label_list_local_2[i]
+        #targets_local_2_wo_unknown[targets_wo_unknown==i] = label_list_local_2[i]
     
     pix_acc = np.sum( predictions_wo_unknown==targets_wo_unknown ) / predictions_wo_unknown.shape[0]
     pix_acc_local_1 = np.sum( predictions_local_1_wo_unknown==targets_local_1_wo_unknown ) / predictions_local_1_wo_unknown.shape[0]
@@ -184,8 +196,10 @@ def evaluate(model, dataset, batchsize=1, workers=0):
     
     confusion_matrix = build_confusion_matrix(targets_wo_unknown, predictions_wo_unknown)
     print_report(*confusion_matrix_to_accuraccies(confusion_matrix))
+
+    overall_accuracy, kappa, precision, recall, f1, class_acc = confusion_matrix_to_accuraccies(confusion_matrix)
     
-    return confusion_matrix
+    return overall_accuracy
 
 
 def evaluate_fieldwise(model, dataset, batchsize=1, workers=0, viz=False, fold_num=5, name='tr'):

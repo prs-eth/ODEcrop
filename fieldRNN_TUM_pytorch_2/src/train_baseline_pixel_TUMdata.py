@@ -1,12 +1,12 @@
 import numpy as np
 import torch.nn
-from utils.dataset_multistage_2 import Dataset
+from crop_classification_tcn import Crops
 #from utils.dataset_eval import Dataset_eval
 from utils.logger import Logger, Printer, VisdomLogger
 import argparse
 from utils.snapshot import save, resume
 import os
-from eval_baseline_pixel import  evaluate_fieldwise
+from eval_baseline_pixel import  evaluate
 from tqdm import tqdm
 #from utils.data_sampler import ImbalancedDatasetSampler
 
@@ -62,24 +62,19 @@ def main(
     if not os.path.exists(checkpoint_dir):
         os.makedirs(checkpoint_dir)
         
-    data_file  = "/scratch/tmehmet/train_set_24X24_debug.hdf5"        
-    if not os.path.isfile(data_file):
-        data_file  = "/cluster/scratch/tmehmet/train_set_24X24_debug.hdf5"
+    root = r'data/CropsFull'
+    scratch_root1 = r'/scratch/Nando/ODEcrop/CropsFull'
+    scratch_root2 = r'/cluster/scratch/metzgern/ODEcrop/CropsFull'
+    if os.path.exists(scratch_root1):
+        root = scratch_root1
+    elif os.path.exists(scratch_root2):
+        root = scratch_root2
+    print("dataroot: " + root)
 
-    if not os.path.isfile(data_file):
-        data_file  = "/home/pf/pfstaff/projects/ozgur_deep_filed/data_crop_CH/train_set_24x24_debug.hdf5"
+    traindataset = Crops(root, mode="train")
+    testdataset = Crops(root, mode="eval")
     
-    if not os.path.isfile(data_file):
-        data_file  = "/scratch/Nando/ODEcrop/Swisscrop/raw/train_set_24x24_debug.hdf5"
-    
-    if not os.path.isfile(data_file):
-        data_file  = "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/data/SwissCrops/raw/train_set_24x24_debug.hdf5"
-        
-
-    traindataset = Dataset(data_file, 0., 'train', False, fold_num, gt_path)
-    testdataset =  Dataset(data_file ,0., 'test' , True , fold_num, gt_path)   
     """
-
     train_dataset_obj = SwissCrops(root, mode="train", device=device, noskip=args.noskip,
                                     step=args.step, trunc=args.trunc, nsamples=args.n,
                                     datatype=args.swissdatatype, singlepix=args.singlepix)
@@ -103,7 +98,7 @@ def main(
     if model_type == 'lstm':
         from models.LongShortTermMemory import LSTM    
 
-        network = LSTM(input_dim=4, hidden_dims=220, nclasses=nclasses, num_rnn_layers=, 
+        network = LSTM(input_dim=4, hidden_dims=220, nclasses=nclasses, num_rnn_layers=4, 
                      dropout=0., bidirectional=False,use_batchnorm=False, use_layernorm=False)
     elif model_type == 'tr':
         from models.TransformerModel import TransformerModel    
@@ -115,7 +110,7 @@ def main(
     elif model_type == 'tcn':
         from models.tempCNN import TempCNN    
 
-        network = TempCNN(input_dim=4, num_classes=nclasses, sequencelength=71, kernel_size=5, hidden_dims=64, dropout=0.5)
+        network = TempCNN(input_dim=54, num_classes=nclasses, sequencelength=26, kernel_size=5, hidden_dims=64, dropout=0.5)
 
     
     
@@ -172,7 +167,7 @@ def main(
         # evaluate model
         if epoch>0 and epoch%1 == 0:
             print("\n Eval on test set")
-            test_acc = evaluate_fieldwise(network, testdataset, batchsize=batchsize) 
+            test_acc = evaluate(network, testdataset, batchsize=batchsize) 
             
             if checkpoint_dir is not None:
                 checkpoint_name = os.path.join(checkpoint_dir, name + "_model.pth")
@@ -194,12 +189,14 @@ def train_epoch(dataloader, network, optimizer, loss, loggers):
     for iteration, data in (enumerate(dataloader)):
         optimizer.zero_grad()
 
-        input, target, _, _ = data
+        input, _, _, target = data
           
         #Reshape the data
-        input = input.permute(0,3,4,1,2)
-        input = input.contiguous().view(-1, input.shape[3], input.shape[4])
-        target = target.contiguous().view(-1)  
+        #input = input.permute(0,3,4,1,2)
+        #input = input.contiguous().view(-1, input.shape[3], input.shape[4])
+        #target = target.contiguous().view(-1)
+        target = torch.argmax(target,1)
+        input = input.float()
         
         if torch.cuda.is_available():
             input = input.cuda()

@@ -25,7 +25,7 @@ class Crops(object):
 	reverse_label_dict = {v: k for k, v in label_dict.items()}
 	
 	
-	def __init__(self, root, args, download=False,
+	def __init__(self, root, download=False,
 		reduce='average', mode='train', minseqlength=20,
 		n_samples = None, device = torch.device("cpu"), list_form = True,
 		step=1, trunc=6, noskip=False):
@@ -35,7 +35,6 @@ class Crops(object):
 		self.reduce = reduce
 		self.mode = mode
 		self.device = device
-		self.args = args
 		self.second = False
 		self.normalize = True
 		self.shuffle = True
@@ -63,6 +62,8 @@ class Crops(object):
 		self.hdf5dataloader = h5py.File(os.path.join(self.processed_folder, data_file), "r")
 		self.nsamples = self.hdf5dataloader["data"].shape[0]
 		self.features = self.hdf5dataloader["data"].shape[2]
+		self.n_classes = self.hdf5dataloader["labels"].shape[1]
+
 		
 		self.timestamps = h5py.File(os.path.join(self.processed_folder, self.time_file), "r")["tt"][:]
 		
@@ -70,6 +71,7 @@ class Crops(object):
 		self.step = step
 		self.trunc = trunc # use all features?
 		self.feature_trunc = trunc*self.nb**2
+
 
 		#for statistics
 		#self.absolute_class_distribution = np.sum(self.hdf5dataloader["labels"], axis=0)
@@ -895,7 +897,7 @@ class Crops(object):
 					"mask": mask[:,::self.step,:self.feature_trunc],
 					"labels": labels}
 
-				data_dict = utils.split_and_subsample_batch(data_dict, self.args, data_type = self.mode)
+				data_dict = utils.split_and_subsample_batch(data_dict, data_type = self.mode)
 				
 				return data_dict
 				#return (data, time_stamps, mask, labels)
@@ -913,10 +915,10 @@ class Crops(object):
 				labels = torch.from_numpy( self.hdf5dataloader["labels"][index] )
 				return (data, time_stamps, mask, labels)
 			else:
-				data = torch.from_numpy( self.hdf5dataloader["data"][index] ).float().to(self.device)
-				time_stamps = torch.from_numpy( self.timestamps ).to(self.device)
-				mask = torch.from_numpy(self.hdf5dataloader["mask"][index] ).float().to(self.device)
-				labels = torch.from_numpy( self.hdf5dataloader["labels"][index] ).float().to(self.device)
+				data = torch.from_numpy( self.hdf5dataloader["data"][index] ).float()
+				time_stamps = torch.from_numpy( self.timestamps )
+				mask = torch.from_numpy(self.hdf5dataloader["mask"][index] ).float()
+				labels = torch.from_numpy( self.hdf5dataloader["labels"][index] ).float()
 
 				data_dict = {
 					"data": data, 
@@ -924,16 +926,18 @@ class Crops(object):
 					"mask": mask,
 					"labels": labels}
 
-				data_dict = utils.split_and_subsample_batch(data_dict, self.args, data_type = self.mode)
+				data_dict = utils.split_and_subsample_batch(data_dict, data_type = self.mode)
 				
 				return data_dict
 				#return (data, time_stamps, mask, labels)
 
 	def __len__(self):
 		if self.mode=="train":
-			return min(self.args.n, self.hdf5dataloader["data"].shape[0])
+			#return 1500 # TODO, remove aft
+			return  self.hdf5dataloader["data"].shape[0]
 		else:
-			return min(self.args.validn, self.hdf5dataloader["data"].shape[0])
+			#return 900
+			return self.hdf5dataloader["data"].shape[0]
 
 	def true_len__(self):
 		if self.mode=="train":

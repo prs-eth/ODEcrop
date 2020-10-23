@@ -78,16 +78,8 @@ def main(
 
     traindataset = Dataset(data_file, 0., 'train', False, fold_num, gt_path)
     testdataset =  Dataset(data_file ,0., 'test' , True , fold_num, gt_path)   
-    """
-
-    train_dataset_obj = SwissCrops(root, mode="train", device=device, noskip=args.noskip,
-                                    step=args.step, trunc=args.trunc, nsamples=args.n,
-                                    datatype=args.swissdatatype, singlepix=args.singlepix)
-    test_dataset_obj = SwissCrops(root, mode="test", device=device, noskip=args.noskip,
-                                    step=args.step, trunc=args.trunc, nsamples=args.validn,
-                                    datatype=args.swissdatatype, singlepix=args.singlepix) 
-    """
     
+
     nclasses = traindataset.n_classes
     #nclasses = 125
     print('Num classes:' , nclasses)
@@ -103,7 +95,7 @@ def main(
     if model_type == 'lstm':
         from models.LongShortTermMemory import LSTM    
 
-        network = LSTM(input_dim=4, hidden_dims=220, nclasses=nclasses, num_rnn_layers=, 
+        network = LSTM(input_dim=4, hidden_dims=220, nclasses=nclasses, num_rnn_layers=4, 
                      dropout=0., bidirectional=False,use_batchnorm=False, use_layernorm=False)
     elif model_type == 'tr':
         from models.TransformerModel import TransformerModel    

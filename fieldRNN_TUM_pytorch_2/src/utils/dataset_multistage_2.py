@@ -162,7 +162,7 @@ class Dataset(torch.utils.data.Dataset):
        
         
     def __len__(self):
-        #return 128
+        return 128
         return self.valid_samples
 
     def __getitem__(self, idx):
