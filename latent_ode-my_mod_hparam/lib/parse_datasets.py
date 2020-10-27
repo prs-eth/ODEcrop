@@ -275,10 +275,11 @@ def parse_datasets(args, device):
 			else: #else manual batching is used
 				#recommendation: set shuffle to False, the underlying hd5y structure is than more efficient
 				# because it can make use of the countagious blocks of data.
-				early_prediction = int(26*0.25)
+				perc = 0
+				early_prediction = int(26*perc)
 				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False)
-				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False, early_prediction=early_prediction)
-				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False, early_prediction=early_prediction)
+				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False,early_prediction=early_prediction, subsamp=args.trainsub)
+				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False, early_prediction=early_prediction, subsamp=args.testsub)
 			
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
@@ -349,8 +350,8 @@ def parse_datasets(args, device):
 		mask = a_train_dict["observed_mask"]
 		labels = a_train_dict["labels"]
 		
-		train_dataloader = FastTensorDataLoader(train_dataset_obj, batch_size=train_batch_size)
-		test_dataloader = FastTensorDataLoader(test_dataset_obj, batch_size=test_batch_size)
+		train_dataloader = FastTensorDataLoader(train_dataset_obj, batch_size=train_batch_size, subsamp=args.trainsub)
+		test_dataloader = FastTensorDataLoader(test_dataset_obj, batch_size=test_batch_size, subsamp=args.testsub)
 
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 

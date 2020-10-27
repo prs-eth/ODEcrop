@@ -129,6 +129,8 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 					# working: adamax, adagrad, adadelta, adam, adaw, ASGD, rprop, RMSprop
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure)
 parser.add_argument('--lrdecay',  type=float, default=0.9995, help="For the Learning rate scheduler")
+parser.add_argument('--trainsub',  type=float, default=1., help="Downsampling of the Training dataset. How many data points should be left. [0,1]")
+parser.add_argument('--testsub',  type=float, default=1., help="Downsampling of the Testing dataset. How many data points should be left. [0,1]")
 
 
 parser.add_argument('--num-seeds', type=int, default=1, help="Number of runs to average from. Default=3")
