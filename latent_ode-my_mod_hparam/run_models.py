@@ -100,7 +100,7 @@ parser.add_argument('-RN', '--resnet', default=False,  type=bool, help="Turns th
 parser.add_argument('--rec-layers', type=int, default=2, help="Number of layers in ODE func in recognition ODE") 
 parser.add_argument('-u', '--units', type=int, default=255, help="Number of units per layer in ODE func")
 parser.add_argument('-g', '--gru-units', type=int, default=100, help="Number of units per layer in each of GRU update networks")
-parser.add_argument('-RI', '--nornnimputation', default=False,  type=bool, help="If false, for the baseline models (vanilla RNNs), the models additionally imputes delta t, which is the time since the last observation.")
+parser.add_argument('-RI', '--nornnimputation', default=False,  type=bool, help="If false (default), for the baseline models (vanilla RNNs), the models additionally imputes delta t, which is the time since the last observation.")
 
 parser.add_argument('--linear-classif', default=False, type=bool, help="If using a classifier, use a linear classifier instead of 1-layer NN")
 parser.add_argument('--topper', default=False, type=bool, help="If a topper to transform the input before the first trajectory should be used")
@@ -129,6 +129,8 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 					# working: adamax, adagrad, adadelta, adam, adaw, ASGD, rprop, RMSprop
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure)
 parser.add_argument('--lrdecay',  type=float, default=0.9995, help="For the Learning rate scheduler")
+parser.add_argument('--trainsub',  type=float, default=1., help="Downsampling of the Training dataset. How many data points should be left. [0,1]")
+parser.add_argument('--testsub',  type=float, default=1., help="Downsampling of the Testing dataset. How many data points should be left. [0,1]")
 
 
 parser.add_argument('--num-seeds', type=int, default=1, help="Number of runs to average from. Default=3")
