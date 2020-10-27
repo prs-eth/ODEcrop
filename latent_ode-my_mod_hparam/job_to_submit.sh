@@ -13,4 +13,6 @@ module load eth_proxy
 module load python_gpu/3.7.4 cudnn/7.5 cuda/10.0.130 #hdf5/2.10.0 #2.7.14 #numpy/1.16.3 matplotlib/2.1.1 Keras/2.2.4
 
 # run wandb command
-wandb agent cropteam/odecropclassification/cki5owrb
+#wandb agent cropteam/odecropclassification/idqkj5ta #TUM
+wandb agent cropteam/odecropclassification/zjufporp #swissdata
+

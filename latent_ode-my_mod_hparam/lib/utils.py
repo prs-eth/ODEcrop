@@ -851,10 +851,9 @@ class FastTensorDataLoader:
 			features = data_dict["mask"].shape[2]
 			validinds = [torch.nonzero(torch.sum(seq,1)) for seq in data_dict["mask"]] 
 			newinds = [ inds[torch.multinomial(torch.ones(len(inds)), max(int(len(inds)*self.subsamp), 1), replacement=False )] for inds in validinds]
-			data_dict["mask"] = torch.stack([ torch.zeros(max_len, dtype=bool, device=self.dataset.device).scatter_(0, torch.squeeze(inds), 1) for inds in newinds]).repeat(1,1,features)
+			data_dict["mask"] = torch.stack([ torch.zeros(max_len, dtype=torch.float32, device=self.dataset.device).scatter_(0, torch.squeeze(inds), 1) for inds in newinds]).unsqueeze(2).repeat(1,1,features)
 			
 			
-		
 		if self.early_prediction > 0:
 			filter_rest =  torch.zeros_like(data_dict["mask"]) 
 			filter_rest[:,:self.early_prediction,:] = 1

@@ -277,8 +277,8 @@ def parse_datasets(args, device):
 				# because it can make use of the countagious blocks of data.
 				perc = 0
 				early_prediction = int(26*perc)
-				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False)
-				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False,early_prediction=early_prediction, subsamp=args.trainsub)
+				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False, subsamp=args.trainsub)
+				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False,early_prediction=early_prediction)
 				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False, early_prediction=early_prediction, subsamp=args.testsub)
 			
 		data_objects = {"dataset_obj": train_dataset_obj, 
