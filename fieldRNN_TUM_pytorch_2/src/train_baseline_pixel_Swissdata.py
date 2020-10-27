@@ -84,7 +84,7 @@ def main(
     #nclasses = 125
     print('Num classes:' , nclasses)
     LOSS_WEIGHT  = torch.ones(nclasses)
-    LOSS_WEIGHT[0] = 0
+    LOSS_WEIGHT[0] = 1
 
     traindataloader = torch.utils.data.DataLoader(traindataset,batch_size=batchsize, shuffle=True, num_workers=workers)
 
@@ -107,7 +107,7 @@ def main(
     elif model_type == 'tcn':
         from models.tempCNN import TempCNN    
 
-        network = TempCNN(input_dim=4, num_classes=nclasses, sequencelength=71, kernel_size=5, hidden_dims=64, dropout=0.5)
+        network = TempCNN(input_dim=4, num_classes=nclasses, sequencelength=71, kernel_size=3, hidden_dims=64, dropout=0.5)
 
     
     
@@ -162,9 +162,10 @@ def main(
         vizlogger.update(data)
 
         # evaluate model
-        if epoch>0 and epoch%1 == 0:
+        if epoch>=0 and epoch%1 == 0:
             print("\n Eval on test set")
             test_acc = evaluate_fieldwise(network, testdataset, batchsize=batchsize) 
+            #test_acc = evaluate(network, testdataset, batchsize=batchsize) 
             
             if checkpoint_dir is not None:
                 checkpoint_name = os.path.join(checkpoint_dir, name + "_model.pth")
@@ -172,7 +173,6 @@ def main(
                     print('Model saved! Best val acc:', test_acc)
                     best_test_acc = test_acc
                     #save(checkpoint_name, network, optimizer, epoch=epoch, data=data)
-                
 
 
 def train_epoch(dataloader, network, optimizer, loss, loggers):

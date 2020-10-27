@@ -31,17 +31,18 @@ def test(model, dataloader):
         #inputs, targets = data
         input, _, _, target = data
           
-        targets = torch.argmax(target,1)
-        inputs = input.float()
+        target = torch.argmax(target,1)
+        input = input.float()
+        
+        input = input[:,:20,:]
 
         if torch.cuda.is_available():
-            inputs = inputs.cuda()
-            targets = targets.cuda()
+            input = input.cuda()
+            target = target.cuda()
 
-        
-        x = inputs.cpu().detach().numpy()
-        y = targets.cpu().detach().numpy()
-        z = model.forward(inputs)
+        x = input.cpu().detach().numpy()
+        y = target.cpu().detach().numpy()
+        z = model.forward(input)
         z = z.cpu().detach().numpy()
         
         inputs_list.append(x)
@@ -167,17 +168,17 @@ def evaluate(model, dataset, batchsize=1, workers=0):
     targets_wo_unknown = targets#[valid_crop_samples]
     predictions_wo_unknown = predictions#[valid_crop_samples]
     
-    predictions_local_wo_unknown = np.ones_like(predictions_wo_unknown)*888
+    predictions_local_wo_unknown = np.ones_like(predictions)*888
     predictions_local_1_wo_unknown = np.ones_like(predictions_wo_unknown)*888
     predictions_local_2_wo_unknown = np.ones_like(predictions_wo_unknown)*888
-    targets_local_wo_unknown = np.ones_like(targets_wo_unknown)*999
+    targets_local_wo_unknown = np.ones_like(predictions)*999
     targets_local_1_wo_unknown = np.ones_like(targets_wo_unknown)*999
     targets_local_2_wo_unknown = np.ones_like(targets_wo_unknown)*999
     
-    for i in range(1,len(label_list_local_1)):
+    for i in range(1,len(label_list_local)):
 
-        predictions_local_wo_unknown[predictions_wo_unknown==i] = label_list_local[i]
-        targets_local_wo_unknown[targets_wo_unknown==i] = label_list_local[i]
+        predictions_local_wo_unknown[predictions==i] = label_list_local[i]
+        targets_local_wo_unknown[targets==i] = label_list_local[i]
 
         #predictions_local_1_wo_unknown[predictions_wo_unknown==i] = label_list_local_1[i]
         #targets_local_1_wo_unknown[targets_wo_unknown==i] = label_list_local_1[i]
@@ -220,12 +221,13 @@ def evaluate_fieldwise(model, dataset, batchsize=1, workers=0, viz=False, fold_n
         valid_crop_samples = targets != 0
     
     
-    targets_wo_unknown = targets[valid_crop_samples]
-    predictions_wo_unknown = predictions[valid_crop_samples]
-    gt_instance_wo_unknown = gt_instance[valid_crop_samples]
+    targets_wo_unknown = targets#[valid_crop_samples]
+    predictions_wo_unknown = predictions#[valid_crop_samples]
+    gt_instance_wo_unknown = gt_instance#[valid_crop_samples]
 
     class_acc = confusion_matrix = build_confusion_matrix(targets_wo_unknown, predictions_wo_unknown)
     print_report(*confusion_matrix_to_accuraccies(confusion_matrix))
+    overall_accuracy, kappa, precision, recall, f1, class_acc = confusion_matrix_to_accuraccies(confusion_matrix)
     
     pix_acc = np.sum( predictions_wo_unknown==targets_wo_unknown ) / predictions_wo_unknown.shape[0]
     print('Pix acc = %.4f'%pix_acc)
@@ -261,7 +263,7 @@ def evaluate_fieldwise(model, dataset, batchsize=1, workers=0, viz=False, fold_n
     #print_report(*confusion_matrix_to_accuraccies(confusion_matrix))    
     #np.save('./cm.npy', confusion_matrix)
 
-    overall_accuracy, kappa, precision, recall, f1, class_acc = confusion_matrix_to_accuraccies(confusion_matrix)
+    #overall_accuracy, kappa, precision, recall, f1, class_acc = confusion_matrix_to_accuraccies(confusion_matrix)
 
     #Save for the visulization 
     if viz:
@@ -274,14 +276,14 @@ def evaluate_fieldwise(model, dataset, batchsize=1, workers=0, viz=False, fold_n
     else:
         class_labels = dataset.label_list_glob
         class_names = dataset.label_list_glob_name
-        existing_class_labels = np.unique(targets)[1:]
+        existing_class_labels = np.unique(targets)[0:]
     
         for i in range(1,len(class_acc)):
             cur_ind = class_labels.index(existing_class_labels[i])
-            name = class_names[int(cur_ind)]
-            print(name,' %.4f'%class_acc[i])
+            #name = class_names[int(cur_ind)]
+            #print(name,' %.4f'%class_acc[i])
     
     
-    return fieldwise_pix_accuracy
-
+    #return fieldwise_pix_accuracy
+    return overall_accuracy
 

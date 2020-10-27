@@ -62,17 +62,17 @@ def main(
     if not os.path.exists(checkpoint_dir):
         os.makedirs(checkpoint_dir)
         
-    root = r'data/CropsFull'
-    scratch_root1 = r'/scratch/Nando/ODEcrop/CropsFull'
-    scratch_root2 = r'/cluster/scratch/metzgern/ODEcrop/CropsFull'
+    root = r'data/Crops'
+    scratch_root1 = r'/scratch/Nando/ODEcrop/Crops'
+    scratch_root2 = r'/cluster/scratch/metzgern/ODEcrop/Crops'
     if os.path.exists(scratch_root1):
         root = scratch_root1
     elif os.path.exists(scratch_root2):
         root = scratch_root2
     print("dataroot: " + root)
 
-    traindataset = Crops(root, mode="train")
-    testdataset = Crops(root, mode="eval")
+    traindataset = Crops(root, mode="train", noskip=True)
+    testdataset = Crops(root, mode="eval", noskip=True)
     
     """
     train_dataset_obj = SwissCrops(root, mode="train", device=device, noskip=args.noskip,
@@ -87,7 +87,7 @@ def main(
     #nclasses = 125
     print('Num classes:' , nclasses)
     LOSS_WEIGHT  = torch.ones(nclasses)
-    LOSS_WEIGHT[0] = 0
+    LOSS_WEIGHT[0] = 1 #changed!!
 
     traindataloader = torch.utils.data.DataLoader(traindataset,batch_size=batchsize, shuffle=True, num_workers=workers)
 
@@ -98,19 +98,22 @@ def main(
     if model_type == 'lstm':
         from models.LongShortTermMemory import LSTM    
 
-        network = LSTM(input_dim=4, hidden_dims=220, nclasses=nclasses, num_rnn_layers=4, 
+        network = LSTM(input_dim=54, hidden_dims=440, nclasses=nclasses, num_rnn_layers=1, 
                      dropout=0., bidirectional=False,use_batchnorm=False, use_layernorm=False)
     elif model_type == 'tr':
         from models.TransformerModel import TransformerModel    
         
-        network = TransformerModel(input_dim=4, sequencelength=71,
-                                   d_model=64, d_inner=256,
-                                   n_layers=3, n_head=1,
+        network = TransformerModel(input_dim=54, sequencelength=20,
+                                   d_model=64, d_inner=128,
+                                   n_layers=3, n_head=2,
                                    dropout=0., num_classes=nclasses)
     elif model_type == 'tcn':
         from models.tempCNN import TempCNN    
 
-        network = TempCNN(input_dim=54, num_classes=nclasses, sequencelength=26, kernel_size=5, hidden_dims=64, dropout=0.5)
+
+        print("hidden_size: ", hidden)
+
+        network = TempCNN(input_dim=54, num_classes=nclasses, sequencelength=20, kernel_size=3, hidden_dims=hidden, dropout=0.5)
 
     
     
@@ -165,7 +168,7 @@ def main(
         vizlogger.update(data)
 
         # evaluate model
-        if epoch>0 and epoch%1 == 0:
+        if epoch>=0 and epoch%1 == 0:
             print("\n Eval on test set")
             test_acc = evaluate(network, testdataset, batchsize=batchsize) 
             
@@ -189,7 +192,7 @@ def train_epoch(dataloader, network, optimizer, loss, loggers):
     for iteration, data in (enumerate(dataloader)):
         optimizer.zero_grad()
 
-        input, _, _, target = data
+        input, a, b, target = data
           
         #Reshape the data
         #input = input.permute(0,3,4,1,2)
@@ -198,11 +201,22 @@ def train_epoch(dataloader, network, optimizer, loss, loggers):
         target = torch.argmax(target,1)
         input = input.float()
         
+        #lstm_input = nn.utils.rnn.pack_padded_sequence(embeds, [x - context_size + 1 for x in seq_lengths], batch_first=False)
+        # pack padded sequece
+        
+        #lengths = torch.FloatTensor( [torch.max(torch.nonzero(torch.sum(seq,1))) for seq in input] )
+        #usedlength = int(torch.min(lengths))
+
+        #input = input[:,:usedlength,:]
+        input = input[:,:20,:]
+        #x_padded = torch.nn.utils.rnn.pack_padded_sequence(input, lengths=lengths, batch_first=True, enforce_sorted=False)
+
         if torch.cuda.is_available():
-            input = input.cuda()
+            x_padded = input.cuda()
             target = target.cuda()
 
         output = network.forward(input)
+        #output = network(input)
         l = loss(output, target)
         stats = {"loss":l.data.cpu().numpy()}
         mean_loss += l.data.cpu().numpy()
@@ -281,5 +295,5 @@ if __name__ == "__main__":
         clip = args.clip,
         fold_num = args.fold,
         gt_path = args.gt_path,
-        model_type = args.model
+        model_type = args.model,
     )

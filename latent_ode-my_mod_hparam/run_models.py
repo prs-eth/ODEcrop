@@ -133,7 +133,7 @@ parser.add_argument('--trainsub',  type=float, default=1., help="Downsampling of
 parser.add_argument('--testsub',  type=float, default=1., help="Downsampling of the Testing dataset. How many data points should be left. [0,1]")
 
 
-parser.add_argument('--num-seeds', type=int, default=1, help="Number of runs to average from. Default=3")
+parser.add_argument('--num-seeds', type=int, default=1, help="Number of runs to average from. Default=1")
 parser.add_argument('--num-search', type=int, default=1, help="Number of search steps to be executed")
 parser.add_argument('--hparams', nargs='*', help="a set of (separated by blank spaces): rec_layers, units, latents, gru_units, optimizer, lr, batch_size, ode_method")
 
