@@ -1,0 +1,3 @@
+wandb: Starting wandb agent 🕵️
+wandb: ERROR Error while calling W&B API: Sweep cropteam/odecropclassification/cki5owrb is not running (<Response [400]>)
+Error: Sweep cropteam/odecropclassification/cki5owrb is not running
