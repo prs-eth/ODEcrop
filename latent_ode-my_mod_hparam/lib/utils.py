@@ -709,7 +709,7 @@ class FastTensorDataLoader:
 	TensorDataset + DataLoader because dataloader grabs individual indices of
 	the dataset and calls cat (slow).
 	"""
-	def __init__(self, dataset, batch_size=32, shuffle=False, batch_shuffle=True):
+	def __init__(self, dataset, batch_size=32, shuffle=False, batch_shuffle=True, early_prediction=0):
 		"""
 		Initialize a FastTensorDataLoader.
 
@@ -742,6 +742,9 @@ class FastTensorDataLoader:
 
 
 		# prepare skipping of steps and truncation of features
+		self.early_prediction = early_prediction
+
+
 		if hasattr(self.dataset, 'step'):
 			self.step = self.dataset.step
 		else:
@@ -843,9 +846,14 @@ class FastTensorDataLoader:
 					"mask": mask[:,::self.step,:self.feature_trunc].to(self.dataset.device),
 					"labels": labels}
 
-			#if self.noskip:
-				# Mark every frame as observed (needed for some experiments)
-				#data_dict["mask"] = torch.ones_like(data_dict["mask"])
+		if self.early_prediction > 0:
+			filter_rest =  torch.zeros_like(data_dict["mask"]) 
+			filter_rest[:,:self.early_prediction,:] = 1
+			data_dict["mask"] = data_dict["mask"] * filter_rest
+
+		#if self.noskip:
+			# Mark every frame as observed (needed for some experiments)
+			#data_dict["mask"] = torch.ones_like(data_dict["mask"])
 		
 		#perform remapping for Swisscrops
 		if self.remapping:

@@ -275,9 +275,10 @@ def parse_datasets(args, device):
 			else: #else manual batching is used
 				#recommendation: set shuffle to False, the underlying hd5y structure is than more efficient
 				# because it can make use of the countagious blocks of data.
+				early_prediction = int(26*0.25)
 				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False)
-				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False)
-				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False)
+				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False, early_prediction=early_prediction)
+				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False, early_prediction=early_prediction)
 			
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
@@ -294,8 +295,7 @@ def parse_datasets(args, device):
 		print("Trainingdataset:")
 		print(data_objects["dataset_obj"])
 
-		if eval_as_test:oot, mode="eval", args=args, noskip=args.noskip,
-								download=True, device = device,  list_form = list_form,)
+		if eval_as_test:
 			data_objects["test_dataloader"] = utils.inf_generator(eval_dataloader)
 			data_objects["n_test_batches"] = len(eval_dataloader)
 			print("Using Evaluationdataset:")
@@ -308,7 +308,7 @@ def parse_datasets(args, device):
 		return data_objects
 	
 	##################################################################
-	###########     SWISS Crop Classification     ####################
+	###########	 SWISS Crop Classification	 ####################
 	
 	if dataset_name == "swisscrop":
 		
