@@ -1,1 +1,0 @@
-run_models.py --ode-rnn -n 10000

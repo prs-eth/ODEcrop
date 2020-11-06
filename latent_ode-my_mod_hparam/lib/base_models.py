@@ -119,12 +119,8 @@ class Baseline(nn.Module):
 
 
 	def compute_all_losses(self, batch_dict,
-<<<<<<< HEAD
-		n_tp_to_sample = None, n_traj_samples = 1, kl_coef = 1., testing=False):
-=======
 		n_tp_to_sample = None, n_traj_samples = 1, kl_coef = 1.,
 		save_latents=0):
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 
 		#pdb.set_trace()
 		loss = 0
@@ -133,11 +129,7 @@ class Baseline(nn.Module):
 		pred_x, info, latent_info = self.get_reconstruction(batch_dict["tp_to_predict"], 
 			batch_dict["observed_data"], batch_dict["observed_tp"], 
 			mask = batch_dict["observed_mask"], n_traj_samples = n_traj_samples,
-<<<<<<< HEAD
-			mode = batch_dict["mode"], testing=testing)
-=======
 			mode = batch_dict["mode"], save_latents=save_latents)
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 
 		# Compute likelihood of all the points
 		if self.train_classif_w_reconstr:

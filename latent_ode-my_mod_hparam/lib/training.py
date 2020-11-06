@@ -393,7 +393,8 @@ def train_it(
 
 					# make PCA visualization
 					if "PCA_traj" in test_res[0]:
-						PCA_fig = get_pca_fig(test_res[0]["PCA_traj"])
+						#PCA_fig = get_pca_fig(test_res[0]["PCA_traj"]["PCA_trajs1"])
+						PCA_fig = None
 					else:
 						PCA_fig = None
 
@@ -422,7 +423,8 @@ def train_it(
 					}
 
 					if "PCA_traj" in test_res[0]:
-						logdict['Visualization/latent_trajectory'] = wandb.Image( get_pca_fig(test_res[0]["PCA_traj"]) )
+						pass
+						#logdict['Visualization/latent_trajectory'] = wandb.Image( get_pca_fig(test_res[0]["PCA_traj"]) )
 					
 					wandb.log(logdict, step=itr*args.batch_size)
 					

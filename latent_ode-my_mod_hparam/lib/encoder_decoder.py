@@ -198,12 +198,8 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		return mean_z0, std_z0
 
 
-	def run_odernn(self, data, time_steps, 
-<<<<<<< HEAD
-		run_backwards = True, save_info = False, testing=False):
-=======
+	def run_odernn(self, data, time_steps,
 		run_backwards = True, save_info = False, save_latents=0):
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 		# IMPORTANT: assumes that 'data' already has mask concatenated to it 
 
 		n_traj, n_tp, n_dims = data.size()
@@ -235,11 +231,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		#t_i = time_steps[0] - 0.00001 # new
 
 		interval_length = time_steps[-1] - time_steps[0]
-<<<<<<< HEAD
-		minimum_step = interval_length / 100 # maybe have to modify minimum time step # original
-=======
 		minimum_step = interval_length / 200 # maybe have to modify minimum time step # original
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 		#minimum_step = interval_length / 100 # maybe have to modify minimum time step # new
 
 		#print("minimum step: {}".format(minimum_step))
@@ -283,16 +275,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					assert(not torch.isnan(ode_sol).any())
 
 				else:
-<<<<<<< HEAD
-					#complete Integration
-					n_intermediate_tp = 2 # get steps in between
-					if testing:
-						n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get more steps in between for testing
-
-					time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
-=======
 					#complete Integration using differential equation solver
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 					ode_sol = self.z0_diffeq_solver(prev_y, time_points)
 
 					assert(not torch.isnan(ode_sol).any())
@@ -361,22 +344,12 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					time_points = time_points.unsqueeze(0)
 			
 			
-
 			prev_y, prev_std = yi, yi_std
 			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original
 			#t_i = time_steps[i] 								# new
 			prev_t = time_steps[i]								# new2
 
 			latent_ys.append(yi_out)
-
-<<<<<<< HEAD
-			if save_info or testing:
-				d = {"yi_ode": yi_ode.detach()[:,:20], #"yi_from_data": yi_from_data,
-					 "yi": yi_out.detach()[:,:20], "yi_std": yi_std.detach()[:,:20], 
-					 "time_points": time_points.detach(),
-					 "ode_sol": ode_sol.detach()[:,:20]
-				}
-=======
 			if save_info or save_latents:
 				if self.use_ODE:
 					#ODE-RNN case
@@ -400,7 +373,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					 "time_points": time_points.cpu().detach().double(),
 					 "ode_sol": ode_sol[:,:save_latents].cpu().detach().double(),
 					 "marker": marker[:save_latents]}
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 				extra_info.append(d)
 
 		latent_ys = torch.stack(latent_ys, 1)

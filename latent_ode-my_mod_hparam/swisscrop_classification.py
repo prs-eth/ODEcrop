@@ -24,11 +24,7 @@ import pdb
 
 class SwissCrops(object):
 
-<<<<<<< HEAD
-	
-=======
 	# Complete list
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 	label = ['0_unknown', 'Barley', 'Beets', 'Berries', 'Biodiversity', 'Chestnut', 'Fallow', 'Field bean', 'Forest', 'Gardens',
 		 'Grain', 'Hedge', 'Hemp', 'Hops', 'Linen', 'Maize', 'Meadow', 'MixedCrop', 'Multiple', 'Oat', 'Orchards', 'Pasture',
 		 'Potatoes', 'Rapeseed', 'Rye', 'Sorghum', 'Soy', 'Spelt', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat',
@@ -38,10 +34,6 @@ class SwissCrops(object):
 	label = ['Meadow','Potatoes', 'Pasture', 'Maize', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat', 'WinterBarley', 'WinterRapeseed', 'WinterWheat']
 	label_dict = {k: i for i, k in enumerate(label)}
 	reverse_label_dict = {v: k for k, v in label_dict.items()}
-<<<<<<< HEAD
-	
-=======
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 
 	def __init__(self, root, mode='train', device = torch.device("cpu"),
 		neighbourhood=3, cloud_thresh=0.05,
@@ -76,8 +68,7 @@ class SwissCrops(object):
 		# define de previously calculated global training mean and std...
 		self.means = [0.4071655 , 0.2441012 , 0.23429523, 0.23402453, 0.00432794, 0.00615292, 0.00566292, 0.00306609, 0.00367624]
 		self.stds = [0.24994541, 0.30625425, 0.32668449, 0.30204761, 0.00490984, 0.00411067, 0.00426914, 0.0027143 , 0.00221963]
-<<<<<<< HEAD
-=======
+
 		
 		# Define some mapping to sort out the labels for fewer cases
 		# All Labels
@@ -109,8 +100,6 @@ class SwissCrops(object):
 		self.labellistglob23 = np.array([49, 26, 48, 48, 20,  8, 41, 51, 32, 36, 20, 20, 38, 30, 30, 50, 34,
 											42, 10, 29, 45, 45,  9,  9, 50, 42, 21, 21, 21, 21, 21, 27, 27, 27,
 											21, 21, 27, 21, 46, 44, 44, 46, 46, 46, 14, 14, 14, 27])
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
-
 		#if not self.check_exists():
 		#	self.process_data()
 
@@ -644,10 +633,7 @@ class SwissCrops(object):
 			return min(self.n, self.hdf5dataloader["data"].shape[0])
 	
 	def true_len__(self):
-<<<<<<< HEAD
-=======
 		# returns the number of samples of the entire dataset
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 		if self.mode=="train":
 			return self.hdf5dataloader["data"].shape[0]
 		else:

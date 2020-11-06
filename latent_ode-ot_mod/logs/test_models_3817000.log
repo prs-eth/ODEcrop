@@ -1,2 +1,0 @@
-test_models.py --niters 30 -n 300000 -validn 10000 --val_freq 100 --dataset crop -b 600 --ode-rnn --random-seed 6001 --stack-order lstm --lr 0.00762 -g 100 -l 70 -u 255 -v 2 --topper true -BN true
-job exception: 'NoneType' object is not subscriptable

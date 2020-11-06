@@ -568,6 +568,7 @@ def compute_loss_all_batches(model,
 	hard_classif_predictions = torch.Tensor([]).long().to(device)
 
 	save_latents = 10
+	stored_latents = False
 
 	for i in tqdm(range(n_batches)):
 		#pdb.set_trace()
@@ -598,9 +599,9 @@ def compute_loss_all_batches(model,
 				total[key] += var
 
 		# extract latent trajetories
-		if first and plot_latent:
-			PCA_traj = get_pca_traj(results["latent_info"][0], num_PCA=5, num_train_PCA=10, PCA_dim=1)
-			first, testing = False, False
+		#if first and plot_latent:
+		#	PCA_traj = get_pca_traj(results["latent_info"][0], num_PCA=5, num_train_PCA=10, PCA_dim=1)
+		#	first, testing = False, False
 
 		
 		n_test_batches += 1

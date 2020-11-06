@@ -55,8 +55,4 @@ module load python_gpu/3.7.4 cudnn/7.5 cuda/10.0.130
 #Stacking swisscrop data
 python run_models.py --niters 1 -n 11000 -validn 5000 --val_freq 200 --lrdecay 0.99999 --dataset swisscrop --swissdatatype 2_toplabels -b 400 --ode-rnn --rnn-cell star --stack-order ode_rnn ode_rnn gru -ODEws=True -RNNws=True -RN=True --random-seed 6001 --num-search 1 --lr 0.00762 -g 100 -l 100 -u 255 --rec-layers 2 -v 2 --topper=True -BN=True --step 2 --trunc 9
 
-<<<<<<< HEAD
-python3 run_models.py --niters 1 -n 3600000 -validn 100000 --dataset swisscrop -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --num-search 10 --num-seeds 1 --lr 0.00762 -g 100 -l 150 -u 255 -v 2 -BN=True --hparam latents
-=======
 #wandb agent cropteam/odecropclassification/8qqab07j
->>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
