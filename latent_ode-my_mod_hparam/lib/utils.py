@@ -702,16 +702,15 @@ class FastTensorDataLoader:
 	TensorDataset + DataLoader because dataloader grabs individual indices of
 	the dataset and calls cat (slow).
 	"""
-	def __init__(self, dataset, batch_size=32, shuffle=False, batch_shuffle=True):
+	def __init__(self, dataset, batch_size=32, shuffle=False, batch_shuffle=True, early_prediction=0,
+		subsamp=1.):
 		"""
 		Initialize a FastTensorDataLoader.
-
 		:param *dataset: hdf5 dataset. Eg. Crop dataset
 		:param batch_size: batch size to load.
 		:param shuffle: if True, shuffle the data *in-place* whenever an iterator is created out of this object.
 			Recommendation: set shuffle to False. Then: the underlying hd5y is than more efficient,
 			because id can make use of the contiguous blocks of data.
-
 		:returns: A FastTensorDataLoader.
 		"""
 		self.dataset = dataset
@@ -723,8 +722,20 @@ class FastTensorDataLoader:
 		self.shuffle = shuffle
 		self.batch_shuffle = batch_shuffle
 		self.timestamps = h5py.File(os.path.join(self.dataset.processed_folder, self.dataset.time_file), "r")["tt"][:]
+		#self.noskip = dataset.noskip
+		self.subsamp = subsamp
+
+		#
+		if type(dataset).__name__=='SwissCrops':
+			self.remapping = True
+			self.reflistglob = self.dataset.labellistglob13
+			self.nclasses = 13
+		else:
+			self.remapping = False
 
 		# prepare skipping of steps and truncation of features
+		self.early_prediction = early_prediction
+
 		if hasattr(self.dataset, 'step'):
 			self.step = self.dataset.step
 		else:
@@ -743,11 +754,27 @@ class FastTensorDataLoader:
 			n_batches += 1 # what hapens to the last one => not full right?
 		self.n_batches = n_batches
 
+		# Calculate batches for full dataset
 		n_true_batches, true_remainder = divmod(self.dataset_true_len, self.batch_size)
 		if true_remainder > 0: 
 			n_true_batches += 1 # what hapens to the last one => not full right?
 		self.n_true_batches = n_true_batches
 
+		# initialize iterator state
+		self.true_batch_indices = np.arange(self.n_true_batches)
+		if self.batch_shuffle:
+			np.random.seed(1996)
+			np.random.shuffle(self.true_batch_indices)
+		self.subsampled_batch_indices = self.true_batch_indices[:self.n_batches]
+
+		"""
+		self.singlepix = self.dataset.singlepix
+		if self.singlepix:
+			a = np.zeros(9, dtype=bool)
+			a[4] = 1
+			kronmask = np.kron(np.ones(9,dtype=bool),a)
+			self.kronmask = kronmask[:self.feature_trunc]
+		"""
 
 	def __iter__(self):
 		if self.shuffle:
@@ -755,14 +782,11 @@ class FastTensorDataLoader:
 		else:
 			self.indices = None
 		
-		self.true_batch_indices = np.arange(self.n_true_batches)
-		if self.batch_shuffle:
-			np.random.shuffle(self.true_batch_indices)
-		self.batch_indices = self.true_batch_indices[:self.n_batches]
 		#self.batch_indices = np.arange(self.n_batches)
+		self.batch_indices = self.subsampled_batch_indices
 		
-		#if self.batch_shuffle:
-		#	np.random.shuffle(self.batch_indices)
+		if self.batch_shuffle and self.dataset.mode=="train":
+			np.random.shuffle(self.batch_indices)
 
 		self.bi = 0
 		self.i = 0
@@ -796,17 +820,60 @@ class FastTensorDataLoader:
 			start = self.batch_indices[self.bi]*self.batch_size
 			stop = start + self.batch_size
 			
-			data = torch.from_numpy( self.hdf5dataloader["data"][start:stop] ).float().to(self.dataset.device)
-			time_stamps = torch.from_numpy( self.timestamps ).to(self.dataset.device)
-			mask = torch.from_numpy(self.hdf5dataloader["mask"][start:stop] ).float().to(self.dataset.device)
-			labels = torch.from_numpy( self.hdf5dataloader["labels"][start:stop] ).float().to(self.dataset.device)
+			data = torch.from_numpy( self.hdf5dataloader["data"][start:stop] ).float()#.to(self.dataset.device)
+			time_stamps = torch.from_numpy( self.timestamps )#.to(self.dataset.device)
+			mask = torch.from_numpy(self.hdf5dataloader["mask"][start:stop] ).float()#.to(self.dataset.device)
+			labels = torch.from_numpy( self.hdf5dataloader["labels"][start:stop] ).float()#.to(self.dataset.device)
 
+		
 			data_dict = {
-				"data": data[:,::self.step,:self.feature_trunc], 
-				"time_steps": time_stamps[::self.step],
-				"mask": mask[:,::self.step,:self.feature_trunc],
+				"data": data[:,::self.step,:self.feature_trunc].to(self.dataset.device), 
+				"time_steps": time_stamps[::self.step].to(self.dataset.device),
+				"mask": mask[:,::self.step,:self.feature_trunc].to(self.dataset.device),
 				"labels": labels}
+
+		if self.subsamp>0 and self.subsamp<1:
+			max_len = data_dict["mask"].shape[1]
+			features = data_dict["mask"].shape[2]
+			validinds = [torch.nonzero(torch.sum(seq,1)) for seq in data_dict["mask"]] 
+			newinds = [ inds[torch.multinomial(torch.ones(len(inds)), max(int(len(inds)*self.subsamp), 1), replacement=False )] for inds in validinds]
+			data_dict["mask"] = torch.stack([ torch.zeros(max_len, dtype=torch.float32, device=self.dataset.device).scatter_(0, torch.squeeze(inds), 1) for inds in newinds]).unsqueeze(2).repeat(1,1,features)
 			
+			
+		
+		if self.early_prediction > 0:
+			filter_rest =  torch.zeros_like(data_dict["mask"]) 
+			filter_rest[:,:self.early_prediction,:] = 1
+			data_dict["mask"] = data_dict["mask"] * filter_rest
+
+		#if self.noskip:
+			# Mark every frame as observed (needed for some experiments)
+			#data_dict["mask"] = torch.ones_like(data_dict["mask"])
+		
+		#perform remapping for Swisscrops
+		if self.remapping:
+			targetind = torch.argmax(data_dict["labels"],1)#.numpy()
+			#target = torch.zeros_like(targetind)
+
+			for i in range(len(self.dataset.labellistglob)):
+				#delete the label if it is not within the k most frequent classes k={13,23}
+				if not (self.dataset.labellist[i] in self.dataset.labellist13):
+					targetind[targetind == self.dataset.labellistglob[i]] = 0
+			
+			# Reduce range of labels
+			uniquelabels = np.unique(self.reflistglob)
+			for i in range(self.nclasses):
+				targetind[targetind == uniquelabels[i]] = i+1
+
+			#Convert back to one hot
+			labels = torch.zeros((self.batch_size, self.nclasses+1))
+			labels[np.arange(self.batch_size),targetind] = 1
+
+			data_dict["labels"] = labels.to(self.dataset.device)
+
+		else:
+			data_dict["labels"] = data_dict["labels"].to(self.dataset.device)
+
 		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type = self.dataset.mode)
 				
 		self.i += self.batch_size
@@ -815,7 +882,6 @@ class FastTensorDataLoader:
 
 	def __len__(self):
 		return self.n_batches
-
 
 class Bunch(object):
   def __init__(self, adict):

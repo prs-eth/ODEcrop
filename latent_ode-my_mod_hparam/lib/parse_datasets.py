@@ -272,9 +272,9 @@ def parse_datasets(args, device):
 			else: #else manual batching is used
 				#recommendation: set shuffle to False, the underlying hd5y structure is than more efficient
 				# because it can make use of the countagious blocks of data.
-				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False)
+				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False, subsamp=args.trainsub)
 				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False)
-				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False)
+				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False, subsamp=args.testsub)
 			
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
