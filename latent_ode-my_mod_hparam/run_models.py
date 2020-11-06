@@ -62,7 +62,7 @@ parser.add_argument('--save', type=str, default='experiments/', help="Path for s
 parser.add_argument('--load', type=str, default=None, help="ID of the experiment to load for evaluation. If None, run a new experiment.")
 parser.add_argument('-r', '--random-seed', type=int, default=1991, help="Random_seed")
 
-parser.add_argument('--dataset', type=str, default='crop', help="Dataset to load. Available: physionet, activity, hopper, periodic")
+parser.add_argument('--dataset', type=str, default='crop', help="Dataset to load. Available: physionet, activity, hopper, periodic, crop, swisscrop")
 parser.add_argument('-s', '--sample-tp', type=float, default=None, help="Number of time points to sub-sample."
 	"If > 1, subsample exact number of points. If the number is in [0,1], take a percentage of available points per time series. If None, do not subsample")
 
@@ -70,6 +70,8 @@ parser.add_argument('-s', '--sample-tp', type=float, default=None, help="Number 
 parser.add_argument('--step', type=int, default=1, help="intervall used for skipping observations in swissdata")
 parser.add_argument('--trunc', type=int, default=9, help="Feature truncation in swissdata")
 parser.add_argument('--swissdatatype', type=str, default="2_toplabels", help="blank (default), 2 (for more selective cloud handling), 2_toplabels for the most frequent labels. (only works if accordingly preprocessed) ")
+parser.add_argument('--singlepix', default=False,  type=bool, help="Applies batchnormalization to the outputs of the RNN-cells")
+parser.add_argument('--noskip', action='store_true', help="If the flag is step, the dataloader will not sort out cloudy frames, and all the frames will be taken for the training.")
 
 parser.add_argument('-c', '--cut-tp', type=int, default=None, help="Cut out the section of the timeline of the specified length (in number of points)."
 	"Used for periodic function demo.")
@@ -98,6 +100,7 @@ parser.add_argument('-RN', '--resnet', default=False,  type=bool, help="Turns th
 parser.add_argument('--rec-layers', type=int, default=2, help="Number of layers in ODE func in recognition ODE") 
 parser.add_argument('-u', '--units', type=int, default=255, help="Number of units per layer in ODE func")
 parser.add_argument('-g', '--gru-units', type=int, default=100, help="Number of units per layer in each of GRU update networks")
+parser.add_argument('-RI', '--nornnimputation', default=False,  type=bool, help="If false (default), for the baseline models (vanilla RNNs), the models additionally imputes delta t, which is the time since the last observation.")
 
 parser.add_argument('--linear-classif', default=False, type=bool, help="If using a classifier, use a linear classifier instead of 1-layer NN")
 parser.add_argument('--topper', default=False, type=bool, help="If a topper to transform the input before the first trajectory should be used")
@@ -126,8 +129,11 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 					# working: adamax, adagrad, adadelta, adam, adaw, ASGD, rprop, RMSprop
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure)
 parser.add_argument('--lrdecay',  type=float, default=0.9995, help="For the Learning rate scheduler")
+parser.add_argument('--trainsub',  type=float, default=1., help="Downsampling of the Training dataset. How many data points should be left. [0,1]")
+parser.add_argument('--testsub',  type=float, default=1., help="Downsampling of the Testing dataset. How many data points should be left. [0,1]")
 
-parser.add_argument('--num-seeds', type=int, default=1, help="Number of runs to average from. Default=3")
+
+parser.add_argument('--num-seeds', type=int, default=1, help="Number of runs to average from. Default=1")
 parser.add_argument('--num-search', type=int, default=1, help="Number of search steps to be executed")
 parser.add_argument('--hparams', nargs='*', help="a set of (separated by blank spaces): rec_layers, units, latents, gru_units, optimizer, lr, batch_size, ode_method")
 
@@ -175,14 +181,15 @@ if __name__ == '__main__':
 	input_command = " ".join(input_command)
 
 	utils.makedirs("results/")
+	utils.makedirs("vis/")
 
 	##################################################################
 
 	#Load checkpoint and evaluate the model
-	if args.load is not None:
+	#if args.load is not None:
 		#utils.get_ckpt_model(ckpt_path, model, device)
-		utils.get_ckpt_model(top_ckpt_path, model, Devices[0])
-		exit()
+		#utils.get_ckpt_model(top_ckpt_path, model, Devices[0])
+		#exit()
 
 	#################################################################
 	# Hyperparameter Optimization
@@ -230,7 +237,7 @@ if __name__ == '__main__':
 		hyper_config["units"] = hp.quniform('ode_units', 10, 350, 5) # default: 500?
 	
 	if 'latents' in args.hparams:
-		hyper_config["latents"] = hp.quniform('latents', 20, 230, 3) # default: 100?
+		hyper_config["latents"] = hp.quniform('latents', 20, 300, 5) # default: 100?
 
 	if 'gru_units' in args.hparams:
 		hyper_config["gru_units"] = hp.quniform('gru_units', 10, 300, 3) # default: 50?

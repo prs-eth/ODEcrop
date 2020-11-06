@@ -24,24 +24,36 @@ import pdb
 
 class SwissCrops(object):
 
+<<<<<<< HEAD
 	
+=======
+	# Complete list
+>>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 	label = ['0_unknown', 'Barley', 'Beets', 'Berries', 'Biodiversity', 'Chestnut', 'Fallow', 'Field bean', 'Forest', 'Gardens',
 		 'Grain', 'Hedge', 'Hemp', 'Hops', 'Linen', 'Maize', 'Meadow', 'MixedCrop', 'Multiple', 'Oat', 'Orchards', 'Pasture',
 		 'Potatoes', 'Rapeseed', 'Rye', 'Sorghum', 'Soy', 'Spelt', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat',
 		 'unknownclass1', 'unknownclass2', 'unknownclass3']
+
+	#Updated list after selection of most frequent ones....
+	label = ['Meadow','Potatoes', 'Pasture', 'Maize', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat', 'WinterBarley', 'WinterRapeseed', 'WinterWheat']
 	label_dict = {k: i for i, k in enumerate(label)}
 	reverse_label_dict = {v: k for k, v in label_dict.items()}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 
 	def __init__(self, root, mode='train', device = torch.device("cpu"),
 		neighbourhood=3, cloud_thresh=0.05,
 		nsamples=float("inf"),args=None,
-		step=1, trunc=9, datatype=""):
+		step=1, trunc=9, datatype="2",
+		singlepix=False, noskip=False):
 		
 		self.datatype = datatype
 
 		self.normalize = True
 		self.shuffle = True
+		self.singlepix = singlepix
 
 		self.root = root
 		self.nb = neighbourhood
@@ -49,6 +61,9 @@ class SwissCrops(object):
 		self.device = device
 		self.n = nsamples
 		self.mode = mode
+		self.noskip = noskip
+		if noskip:
+			raise Exception("--noskip option not supported for swissdata.")			
 
 		if args==None:
 			argsdict = {"dataset": "swisscrop", "sample_tp": None, "cut_tp": None, "extrap": False}
@@ -61,6 +76,40 @@ class SwissCrops(object):
 		# define de previously calculated global training mean and std...
 		self.means = [0.4071655 , 0.2441012 , 0.23429523, 0.23402453, 0.00432794, 0.00615292, 0.00566292, 0.00306609, 0.00367624]
 		self.stds = [0.24994541, 0.30625425, 0.32668449, 0.30204761, 0.00490984, 0.00411067, 0.00426914, 0.0027143 , 0.00221963]
+<<<<<<< HEAD
+=======
+		
+		# Define some mapping to sort out the labels for fewer cases
+		# All Labels
+		self.labellist = np.array([ 1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,
+									14,  15,  16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,
+									27,  28,  29,  30,  31,  32,  33,  34,  35,  36,  37,  38,  39,
+									43,  44,  45,  50,  51,  52,  53,  54,  58,  59,  60,  61,  62,
+									63,  64,  65,  66,  67,  68,  69,  71,  74,  75,  76,  77,  78,
+									81,  84,  85,  88,  91,  93,  95, 108, 109, 110, 113, 114, 120,
+									121, 123])
+		self.labellistglob = np.array([   39, 49, 26, 48, 13, 48, 20,  8, 41, 51, 32, 13, 36, 20, 20, 38,  2,
+											30, 30, 40, 50, 34, 42, 18, 15, 10, 29, 19, 31, 43, 33, 13, 18, 45,
+											45,  7,  5, 33,  3,  4,  9,  9, 22,  4, 24, 50, 42, 21, 21, 21, 21,
+											21, 27, 27, 27, 21, 21, 27, 17, 21, 46,  1, 28, 37,  3, 16, 44, 44,
+											46,  6, 46, 46, 14, 14, 14, 11, 23,  4, 12, 27])
+
+		# 13 Labels
+		self.labellist13 = np.array([   2,   4,   6,   7,  10,  13,  14,  15,  16,  18,  19,  21,  23,
+										34,  35,  53,  54,  58,  59,  60,  61,  62,  63,  64,  65,  66,
+										67,  68,  71,  74,  88,  93,  95, 123])
+		self.labellistglob13 = np.array([ 49, 48, 48, 20, 51, 36, 20, 20, 38, 30, 30, 50, 42, 45, 45, 50, 42,
+       									    21, 21, 21, 21, 21, 27, 27, 27, 21, 21, 27, 21, 46, 46, 46, 46, 27])
+
+		# 23 Labels
+		self.labellist23 = np.array([  2,   3,   4,   6,   7,   8,   9,  10,  11,  13,  14,  15,  16,
+										18,  19,  21,  22,  23,  26,  27,  34,  35,  44,  45,  53,  54,
+										58,  59,  60,  61,  62,  63,  64,  65,  66,  67,  68,  71,  74,
+										84,  85,  88,  93,  95, 108, 109, 110, 123])
+		self.labellistglob23 = np.array([49, 26, 48, 48, 20,  8, 41, 51, 32, 36, 20, 20, 38, 30, 30, 50, 34,
+											42, 10, 29, 45, 45,  9,  9, 50, 42, 21, 21, 21, 21, 21, 27, 27, 27,
+											21, 21, 27, 21, 46, 44, 44, 46, 46, 46, 14, 14, 14, 27])
+>>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 
 		#if not self.check_exists():
 		#	self.process_data()
@@ -69,6 +118,10 @@ class SwissCrops(object):
 			data_file = self.train_file
 		elif mode=="test":
 			data_file = self.test_file
+
+		if not os.path.exists(data_file):
+			print("haven't found " + data_file + " . Starting to preprocess the whole dataset...")
+			#self.process_data()
 		
 		if not os.path.exists(data_file):
 			self.process_data()
@@ -84,7 +137,6 @@ class SwissCrops(object):
 		self.timestamps =  h5py.File(os.path.join(self.processed_folder, self.time_file), "r")["tt"][:]
 		assert(self.timestamps.size==self.hdf5dataloader["data"].shape[1])
 
-
 		self.features = self.hdf5dataloader["data"].shape[2]
 		
 		#selective features and timestamps
@@ -94,15 +146,14 @@ class SwissCrops(object):
 		#self.mask = np.kron(np.hstack([np.ones(self.trunc),np.zeros(  self.nfeatures//self.nb**2 - self.trunc)]), np.ones(9))
 
 
-
 	def process_data(self):
 	
 		os.makedirs(self.processed_folder, exist_ok=True)
 
-		train_dataset = Dataset("data/SwissCrops/", 0.,'train')
+		train_dataset = Dataset("data/SwissCrops/raw/train_set_24x24_debug.hdf5", mode='train', eval_mode=False)
 		raw_train_samples = len(train_dataset)
 
-		test_dataset = Dataset("data/SwissCrops/", 0.,'test')
+		test_dataset = Dataset("data/SwissCrops/raw/train_set_24x24_debug.hdf5", mode='test', eval_mode=False)
 		raw_test_samples = len(test_dataset)
 
 		num_invalid_obs = 0
@@ -132,6 +183,7 @@ class SwissCrops(object):
 		ntargetclasses_l2 = train_dataset.n_classes_local_2
 		
 		# Open a hdf5 files and create arrays
+
 		hdf5_file_train = h5py.File(self.train_file , mode='w', rdcc_nbytes=1024**2*16000, rdcc_nslots=1e7, libver='latest')
 		hdf5_file_train.create_dataset("data", (ntrainsamples, seq_length, nfeatures), np.float16, chunks=(1500, seq_length, nfeatures) )
 		hdf5_file_train.create_dataset("mask", (ntrainsamples, seq_length, nfeatures), np.bool,  chunks=(1500, seq_length, nfeatures) )
@@ -585,12 +637,17 @@ class SwissCrops(object):
 		return True
 
 	def __len__(self):
+		# returns the number of samples that are actually used
 		if self.mode=="train":
 			return min(self.n, self.hdf5dataloader["data"].shape[0])
 		else:
 			return min(self.n, self.hdf5dataloader["data"].shape[0])
 	
 	def true_len__(self):
+<<<<<<< HEAD
+=======
+		# returns the number of samples of the entire dataset
+>>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 		if self.mode=="train":
 			return self.hdf5dataloader["data"].shape[0]
 		else:
@@ -628,11 +685,25 @@ class SwissCrops(object):
 			mask = torch.from_numpy(self.hdf5dataloader["mask"][index] ).float().to(self.device)
 			labels = torch.from_numpy( self.hdf5dataloader["labels"][index] ).float().to(self.device)
 
-			data_dict = {
-			"data": data[::self.step,:self.feature_trunc], 
-			"time_steps": time_stamps[::self.step],
-			"mask": mask[::self.step,:self.feature_trunc],
-			"labels": labels}
+			if self.singlepix:
+				# create mask
+				a = np.zeros(9, dtype=bool)
+				a[4] = 1
+				kronmask = np.kron(np.ones(9,dtype=bool),a)
+				self.kronmask = kronmask[:self.feature_trunc]
+				
+				#load masked data
+				data_dict = {
+					"data": data[::self.step,self.kronmask], 
+					"time_steps": time_stamps[::self.step],
+					"mask": mask[::self.step,self.kronmask],
+					"labels": labels}
+			else:
+				data_dict = {
+				"data": data[::self.step,:self.feature_trunc], 
+				"time_steps": time_stamps[::self.step],
+				"mask": mask[::self.step,:self.feature_trunc],
+				"labels": labels}
 
 			data_dict = utils.split_and_subsample_batch(data_dict, self.args, data_type = self.mode)
 
@@ -640,36 +711,25 @@ class SwissCrops(object):
 
 	def __repr__(self):
 		fmt_str = 'Dataset ' + self.__class__.__name__ + '\n'
-		fmt_str += '    Number of datapoints: {}\n'.format(self.__len__())
-		fmt_str += '    Root Location: {}\n'.format(self.root)
-
+		fmt_str += '	Number of datapoints: {}\n'.format(self.__len__())
+		fmt_str += '	Root Location: {}\n'.format(self.root)
 
 
 class Dataset(torch.utils.data.Dataset):
-	def __init__(self, root, t=0.9, mode='all', eval_mode=False, fold=None, gt_path='data/SwissCrops/labels.csv',
-		step=1, feature_trunc=10):
+	def __init__(self, path, t=0.0, mode='all', eval_mode=False, fold=None, gt_path='data/SwissCrops/labelsC.csv',
+	step=1, feature_trunc=10):
 		
-		self.root = root
-		self.t = t
-		self.augment_rate = 0
-		self.step = step
-		self.featrue_trunc = feature_trunc
-
-		self.eval_mode = eval_mode
-		self.fold = fold
-		self.gt_path = gt_path
-
-		self.shuffle = True
-		self.normalization = True
-
-		self.mode = mode
-
-		self.data = h5py.File(self.raw_file, "r")
+		self.data = h5py.File(path, "r")
 		self.samples = self.data["data"].shape[0]
 		self.max_obs = self.data["data"].shape[1]
 		self.spatial = self.data["data"].shape[2:-1]
 		#self.n_classes = np.max( self.data["gt"] ) + 1
-		
+		self.t = t
+		self.augment_rate = 0
+		self.eval_mode = eval_mode
+		self.fold = fold
+		self.step = step
+		self.featrue_trunc = feature_trunc
 		
 		#Get train/test split
 		if self.fold != None:
@@ -680,12 +740,15 @@ class Dataset(torch.utils.data.Dataset):
 		
 		self.valid_samples = self.valid_list.shape[0]
 		
-		#self.max_obs = 71
+		#self.dates = self.chooose_dates()[0].tolist()
+		#self.dates = self.chooose_dates_2().tolist()
+		#self.max_obs = len(self.dates)
+		self.max_obs = 71
 
-		gt_path_ = gt_path		
-		if not os.path.exists(gt_path):
-			gt_path_ = './'  + gt_path
-					
+		gt_path_ = './utils/' + gt_path		
+		if not os.path.exists(gt_path_):
+			gt_path_ = './'  + gt_path		
+			
 		file=open(gt_path_, "r")
 		tier_1 = []
 		tier_2 = []
@@ -703,7 +766,22 @@ class Dataset(torch.utils.data.Dataset):
 		tier_4[0] = '0_unknown'
 	
 		self.label_list = []
+		self.label_list13 = []
+		self.label_list23 = []
 		for i in range(len(tier_2)):
+			if tier_1[i] == 'Vegetation' and tier_4[i] != '':
+				self.label_list.append(i)
+
+			if tier_1[i] == 'Vegetation' and tier_4[i] in ["Meadow", "WinterWheat", "Maize", "Pasture", "Sugar_beets", "WinterBarley", "WinterRapeseed",
+															"Vegetables", "Potatoes", "Wheat", "Sunflowers", "Vines", "Spelt"]:
+				self.label_list13.append(i)
+
+			if tier_1[i] == 'Vegetation' and tier_4[i] in ["Meadow", "WinterWheat", "Maize", "Pasture", "Sugar_beets", "WinterBarley", "WinterRapeseed",
+															"Vegetables", "Potatoes", "Wheat", "Sunflowers", "Vines", "Spelt",
+															"Hedge", "Soy", "Fallow", "Peas", "Oat", "Field bean", "EinkornWheat",
+															"Rye", "TreeCrop", "SummerWheat"]:
+				self.label_list23.append(i)
+				
 			if tier_2[i] == '':
 				tier_2[i] = '0_unknown'
 			if tier_3[i] == '':
@@ -711,10 +789,6 @@ class Dataset(torch.utils.data.Dataset):
 			if tier_4[i] == '':
 				tier_4[i] = '0_unknown'
 			
-			### Attention: Changed ozgur's code here ###
-			#if tier_1[i] == 'Vegetation':
-			if tier_1[i] == 'Vegetation' and tier_4[i] in ['Meadow','Potatoes', 'Pasture', 'Maize', 'Sugar_beets', 'Sunflowers', 'Vegetables', 'Vines', 'Wheat', 'WinterBarley', 'WinterRapeseed', 'WinterWheat']:
-				self.label_list.append(i)
 							
 		tier_2_elements = list(set(tier_2))
 		tier_3_elements = list(set(tier_3))
@@ -730,13 +804,18 @@ class Dataset(torch.utils.data.Dataset):
 			tier_2_.append(tier_2_elements.index(tier_2[i]))
 			tier_3_.append(tier_3_elements.index(tier_3[i]))
 			tier_4_.append(tier_4_elements.index(tier_4[i]))		
+		
 
 		self.label_list_local_1 = []
 		self.label_list_local_2 = []
 		self.label_list_glob = []
+		self.label_list_glob13 = []
+		self.label_list_glob23 = []
 		self.label_list_local_1_name = []
 		self.label_list_local_2_name = []
 		self.label_list_glob_name = []
+		self.label_list_glob_name13 = []
+		self.label_list_glob_name23 = []
 		for gt in self.label_list:
 			self.label_list_local_1.append(tier_2_[int(gt)])
 			self.label_list_local_2.append(tier_3_[int(gt)])
@@ -746,18 +825,43 @@ class Dataset(torch.utils.data.Dataset):
 			self.label_list_local_2_name.append(tier_3[int(gt)])
 			self.label_list_glob_name.append(tier_4[int(gt)])
 
-
-		"""	
-		for i in range(len(self.label_list_glob_name)):
-			print(i, ' , ' ,self.label_list[i], ' , ' ,self.label_list_local_1[i],  ' , ' ,self.label_list_local_2[i], ' , ' ,self.label_list_glob[i])
-			print(i, ' , ' ,self.label_list[i], ' , ' ,self.label_list_local_1_name[i],  ' , ' ,self.label_list_local_2_name[i], ' , ' ,self.label_list_glob_name[i])
-			print('-'*20)
-		"""
-
+		for gt in self.label_list13:
+			self.label_list_glob13.append(tier_4_[int(gt)])
+			self.label_list_glob_name13.append(tier_4[int(gt)])
+		
+		for gt in self.label_list23:
+			self.label_list_glob23.append(tier_4_[int(gt)])
+			self.label_list_glob_name23.append(tier_4[int(gt)])
+			
+#		self.tier_2_elements_reduced = list(set(self.label_list_local_1))
+#		self.tier_3_elements_reduced = list(set(self.label_list_local_2))
+#		self.tier_4_elements_reduced = list(set(self.label_list_glob))
+#		self.tier_2_elements_reduced.sort()
+#		self.tier_3_elements_reduced.sort()
+#		self.tier_4_elements_reduced.sort()
+		
+#		print(self.label_list)
+#		print('-'*20)
+#		
+#		print(self.label_list_local_1)
+#		print(self.label_list_local_1_name)		
+#		print('-'*20)
+#
+#		print(self.label_list_local_2)
+#		print(self.label_list_local_2_name)				
+#		print('-'*20)
+#		
+#		print(self.label_list_glob)
+#		print(self.label_list_glob_name)
+			
+		#self.n_classes = len(self.label_list)
 		self.n_classes = max(self.label_list_glob) + 1
 		self.n_classes_local_1 = max(self.label_list_local_1) + 1
 		self.n_classes_local_2 = max(self.label_list_local_2) + 1
-
+#		self.n_classes = len(self.tier_4_elements_reduced)
+#		self.n_classes_local_1 = len(self.tier_2_elements_reduced)
+#		self.n_classes_local_2 = len(self.tier_3_elements_reduced)
+		
 		print('Dataset size: ', self.samples)
 		print('Valid dataset size: ', self.valid_samples)
 		print('Sequence length: ', self.max_obs)
@@ -782,21 +886,11 @@ class Dataset(torch.utils.data.Dataset):
 				self.l1_2_l2[i] = self.label_list_local_1[self.label_list_local_2.index(i)]
 		#for consistency loss---------------------------------------------------------
 		
+		print('Number of filed instance: ', np.unique(self.data["gt_instance"][...,0]).shape[0])
+	   
 		
 	def __len__(self):
 		return self.valid_samples
-
-	@property
-	def raw_folder(self):
-		return os.path.join(self.root, 'raw')
-
-	@property
-	def processed_folder(self):
-		return os.path.join(self.root, 'processed')
-
-	@property
-	def raw_file(self):
-		return os.path.join(self.raw_folder, "train_set_24x24_debug.hdf5")
 
 	def __getitem__(self, idx):
 					 
@@ -807,15 +901,17 @@ class Dataset(torch.utils.data.Dataset):
 		if self.eval_mode:
 			gt_instance = self.data["gt_instance"][idx,...,0]
 
+
 		X = np.transpose(X, (0, 3, 1, 2))
 		
+		#X = X[0::2,:4,...]
 		#Use half of the time series
 		step = self.step
 		feature_trunc = self.featrue_trunc
 		if not (step==1 and feature_trunc>=9):
 			X = X[0::step,:feature_trunc,...]
 			cloud_cover = cloud_cover[0::step,...]
-		
+
 		#X = X[self.dates,...] 
 		
 		#Change labels 
@@ -830,8 +926,8 @@ class Dataset(torch.utils.data.Dataset):
 			target[target_ == self.label_list[i]] = self.label_list_glob[i]
 			target_local_1[target_ == self.label_list[i]] = self.label_list_local_1[i]
 			target_local_2[target_ == self.label_list[i]] = self.label_list_local_2[i]
-
-		"""
+			
+		
 		X = torch.from_numpy(X)
 		cloud_cover = torch.from_numpy(cloud_cover).float()
 		target = torch.from_numpy(target).float()
@@ -839,13 +935,12 @@ class Dataset(torch.utils.data.Dataset):
 		target_local_2 = torch.from_numpy(target_local_2).float()
 		if self.eval_mode:
 			gt_instance = torch.from_numpy(gt_instance).float()
+		
 
-		"""
 		#augmentation
 		if self.eval_mode==False and np.random.rand() < self.augment_rate:
 			flip_dir  = np.random.randint(3)
 			if flip_dir == 0:
-				X = X.flip(2)
 				X = X.flip(2)
 				target = target.flip(0)
 				target_local_1 = target_local_1.flip(0)
@@ -858,7 +953,7 @@ class Dataset(torch.utils.data.Dataset):
 				target = target.flip(1)
 				target_local_1 = target_local_1.flip(1)
 				target_local_2 = target_local_2.flip(1)
-				if self.eval_mode:					
+				if self.eval_mode:	
 					gt_instance = gt_instance.flip(1)	
 			elif flip_dir == 2:
 				X = X.flip(2,3)
@@ -867,16 +962,17 @@ class Dataset(torch.utils.data.Dataset):
 				target_local_1 = target_local_1.flip(0,1)  
 				target_local_2 = target_local_2.flip(0,1)  
 				if self.eval_mode:					
-					gt_instance = gt_instance.flip(0,1)
+					gt_instance = gt_instancetarget_ == self.label_list[i].fdata_statlip(0,1)
 
+		
 		#keep values between 0-1
 		X = X * 1e-4
 		
 		if self.eval_mode:  
 			return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long(), gt_instance.long()	 
 		else:
-			return X, target, target_local_1, target_local_2, cloud_cover
-			#return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long()
+			#return X, target, target_local_1, target_local_2, cloud_cover
+			return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long(),
 
 
 
@@ -886,7 +982,6 @@ class Dataset(torch.utils.data.Dataset):
 		for i in range(self.samples):
 			if np.sum( self.data["gt"][i,...,0] != 0 )/(w*h) < self.t:
 				valid[i] = 0
-		
 		return np.nonzero(valid)[0]
 		
 	def split(self, mode):
@@ -969,40 +1064,66 @@ class Dataset(torch.utils.data.Dataset):
 			specific_date_indexes[i] = date_list.index(specific_dates[i][:-1])
 			
 		return specific_date_indexes.astype(int)
-	
 
 	def data_stat(self):
-		gt_set = self.data["gt"][self.valid_list,...,0]
-		bins = np.arange(125+1)
-		hist = np.histogram(gt_set, bins=bins)[0]
+		class_labels = np.unique(self.label_list_glob)
+		class_names = np.unique(self.label_list_glob_name)
+		class_fq = np.zeros_like(class_labels)
+		
+		for i in range(self.__len__()): 
+			temp = self.__getitem__(i)[1].flatten()
+	
+			for j in range(class_labels.shape[0]):
+			   class_fq[j] += torch.sum(temp==class_labels[j]) 
 
-		#Normalize 
-		#hist = hist/np.sum(hist)
-		#sort histogram 
-		#sorted_classes = np.argsort(hist)
-		#hist_sorted = hist[sorted_classes.astype(int)]
-		print('Histograms')
-		print(hist)
-		#plt.bar(bins[:-1],hist)
-		#plt.plot(hist,'r')
-#		plt.title("density") 
-#		plt.savefig('train_gt_density_TG19.png')
-#		plt.close()
-		
-		import csv
-		
-		with open('hist.csv', 'w', newline='') as myfile:
-			 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-			 wr.writerow(hist)
+		for x in class_names:
+			print(x)
+			
+		for x in class_fq:
+			print(x)
+
+
+
 
 
 if __name__=="__main__":
 
 	bs = 600
 
-	train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", datatype="2_toplabels")
-	trainloader = FastTensorDataLoader(train_dataset_obj, batch_size=bs, shuffle=False)
-	train_generator = utils.inf_generator(trainloader)
+	#train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", datatype="2_14toplabels_asdf")
+	#trainloader = FastTensorDataLoader(train_dataset_obj, batch_size=bs, shuffle=False)
+	#train_generator = utils.inf_generator(trainloader)
+
+	data_path = "data/SwissCrops/raw/train_set_24x24_debug.hdf5"
+	traindataset = Dataset(data_path, 0.,'all')
+	#traindataset =  Dataset(data_path , 0., 'test', True, 5)
+	 
+	
+	#traindataset.data_stat()
+
+	nclasses = traindataset.n_classes
+	nclasses_local_1 = traindataset.n_classes_local_1
+	nclasses_local_2 = traindataset.n_classes_local_2
+
+	traindataset[0]
+	traindataset[1]
+	traindataset[2]
+	traindataset[3]
+	traindataset[4]
+	traindataset[5]
+
+	dumbtarget = np.array(traindataset.label_list)
+	dumbtarget13 = np.zeros_like(traindataset.label_list)
+	dumbtarget23 = np.zeros_like(traindataset.label_list)
+	dumbtarget_ref = np.zeros_like(traindataset.label_list)
+	for i in range(len(traindataset.label_list)):
+		dumbtarget_ref[dumbtarget == traindataset.label_list[i]] = traindataset.label_list_glob[i]
+
+	for i in range(len(traindataset.label_list13)):
+		dumbtarget13[dumbtarget == traindataset.label_list13[i]] = traindataset.label_list_glob13[i]
+
+	for i in range(len(traindataset.label_list23)):
+		dumbtarget23[dumbtarget == traindataset.label_list23[i]] = traindataset.label_list_glob23[i]
 
 
 	#train_dataset = Dataset("data/SwissCrops/", 0.,'train')
@@ -1017,7 +1138,7 @@ if __name__=="__main__":
 	#pdb.set_trace()
 
 	#Speed test
-	for t in tqdm(range(len(trainloader))):
+	#for t in tqdm(range(len(trainloader))):
 
-		batch_dict = utils.get_next_batch(train_generator)
+	#	batch_dict = utils.get_next_batch(train_generator)
 	

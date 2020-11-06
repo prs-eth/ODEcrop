@@ -65,7 +65,7 @@ class ODE_RNN(Baseline):
 
 
 	def get_reconstruction(self, time_steps_to_predict, data, truth_time_steps, 
-		mask = None, n_traj_samples = None, mode = None):
+		mask = None, n_traj_samples = None, mode = None, save_latents=0):
 
 		if (len(truth_time_steps) != len(time_steps_to_predict)) or (torch.sum(time_steps_to_predict - truth_time_steps) != 0):
 			raise Exception("Extrapolation mode not implemented for ODE-RNN")
@@ -116,7 +116,7 @@ class ML_ODE_RNN(Baseline):
 		include_topper = False, linear_topper = False,
 		use_BN = True, resnet = False,
 		ode_type="linear", ode_units=200, rec_layers=1, ode_method="dopri5",
-		stack_order = None):
+		stack_order = None, nornnimputation=True):
 
 		Baseline.__init__(self, input_dim, latent_dim, device = device, 
 			obsrv_std = obsrv_std, use_binary_classif = use_binary_classif,
@@ -228,7 +228,6 @@ class ML_ODE_RNN(Baseline):
 
 				z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
 				
-
 			self.Encoder0 = Encoder_z0_ODE_RNN( 
 				latent_dim = ode_rnn_encoder_dim, 
 				input_dim = layer_input_dimension, 
@@ -237,7 +236,8 @@ class ML_ODE_RNN(Baseline):
 				device = device,
 				RNN_update = RNN_update,
 				use_BN = use_BN,
-				use_ODE = use_ODE
+				use_ODE = use_ODE,
+				nornnimputation=nornnimputation
 			).to(device)
 
 			self.ode_gru.append( self.Encoder0 )
@@ -288,7 +288,11 @@ class ML_ODE_RNN(Baseline):
 
 
 	def get_reconstruction(self, time_steps_to_predict, data, truth_time_steps, 
+<<<<<<< HEAD
 		mask = None, n_traj_samples = None, mode = None, testing=False):
+=======
+		mask = None, n_traj_samples = None, mode = None, save_latents=0):
+>>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 
 		if (len(truth_time_steps) != len(time_steps_to_predict)) or (torch.sum(time_steps_to_predict - truth_time_steps) != 0):
 			raise Exception("Extrapolation mode not implemented for ODE-RNN")
@@ -345,7 +349,11 @@ class ML_ODE_RNN(Baseline):
 
 			# run one trajectory of ODE-RNN for every stacking-layer "s"
 			_, _, latent_ys, latent_extra_info = self.ode_gru[s].run_odernn(
+<<<<<<< HEAD
 				input_sequence, truth_time_steps, run_backwards = False, testing=testing)
+=======
+				input_sequence, truth_time_steps, run_backwards = False, save_latents=save_latents)
+>>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 
 			latent_ys = latent_ys.permute(0,2,1,3)
 

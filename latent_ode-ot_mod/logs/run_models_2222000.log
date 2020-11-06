@@ -1,0 +1,2 @@
+run_models.py --niters 30 -n 300000 -validn 60000 --val_freq 100 --dataset crop -b 600 --ode-rnn --rnn-cell gru --random-seed 6002 --num-search 1 --num-seeds 1 --lr 0.00762 -g 100 -l 80 -u 255 -v 2 --topper true -BN true
+job exception: 'NoneType' object is not subscriptable

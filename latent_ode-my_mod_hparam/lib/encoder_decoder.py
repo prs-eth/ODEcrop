@@ -19,6 +19,8 @@ from lib.RNNcells import STAR_unit, GRU_unit, GRU_standard_unit, LSTM_unit
 
 import pdb
 
+import numpy as np
+
 
 class Encoder_z0_RNN(nn.Module):
 	def __init__(self, latent_dim, input_dim, lstm_output_size = 20, 
@@ -97,7 +99,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		z0_dim = None, RNN_update = None, 
 		n_gru_units = 100, device = torch.device("cpu"),
 		RNNcell = None, use_BN=True,
-		use_ODE = True):
+		use_ODE = True, nornnimputation=True):
 		
 		super(Encoder_z0_ODE_RNN, self).__init__()
 
@@ -108,8 +110,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		rnn_input = input_dim		
 		self.latent_dim = latent_dim
-
-		
 
 		if RNN_update is None:
 			self.RNNcell = RNNcell
@@ -123,7 +123,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			elif self.RNNcell=='lstm':
 				self.latent_dim = latent_dim*2
 				self.RNN_update = LSTM_unit(self.latent_dim, rnn_input).to(device)
-				
 
 			elif self.RNNcell=="star":
 				self.RNN_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
@@ -150,6 +149,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		self.use_BN = use_BN
 		self.use_ODE = use_ODE
+		self.nornnimputation = nornnimputation
 		self.z0_diffeq_solver = z0_diffeq_solver
 		self.input_dim = input_dim
 		self.device = device
@@ -199,7 +199,11 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 
 	def run_odernn(self, data, time_steps, 
+<<<<<<< HEAD
 		run_backwards = True, save_info = False, testing=False):
+=======
+		run_backwards = True, save_info = False, save_latents=0):
+>>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 		# IMPORTANT: assumes that 'data' already has mask concatenated to it 
 
 		n_traj, n_tp, n_dims = data.size()
@@ -207,6 +211,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		device = get_device(data)
 
+		# Initialize the hidden state with noise
 		if self.RNNcell=='lstm':
 			# make some noise
 			prev_h = torch.zeros((1, n_traj, self.latent_dim//2)).data.normal_(0, 0.0001).to(device)
@@ -223,13 +228,18 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			prev_y = torch.zeros((1, n_traj, self.latent_dim)).data.normal_(0, 0.0001).to(device)
 			prev_std = torch.zeros((1, n_traj, self.latent_dim)).data.normal_(0, 0.0001).to(device)
 		
-		# Nando' comment: why the last time steps?
+		# Nando' comment: why start the last time steps? I better change it, it doesn't make sense in the original code
 		#prev_t, t_i = time_steps[-1] + 0.01,  time_steps[-1] # original
 		#t_i = time_steps[-1]  # new
-		t_i = time_steps[0] - 0.00001 # new
+		prev_t = time_steps[0] - 0.00001 # new2
+		#t_i = time_steps[0] - 0.00001 # new
 
 		interval_length = time_steps[-1] - time_steps[0]
+<<<<<<< HEAD
 		minimum_step = interval_length / 100 # maybe have to modify minimum time step # original
+=======
+		minimum_step = interval_length / 200 # maybe have to modify minimum time step # original
+>>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 		#minimum_step = interval_length / 100 # maybe have to modify minimum time step # new
 
 		#print("minimum step: {}".format(minimum_step))
@@ -238,6 +248,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		assert(not torch.isnan(time_steps).any())
 
 		latent_ys = []
+		firststep = True
 
 		# Run ODE backwards and combine the y(t) estimates using gating
 		time_points_iter = range(0, len(time_steps))
@@ -247,13 +258,20 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		for i in time_points_iter:
 
 			# move time step to the next interval
-			prev_t = time_steps[i]							# new
-			#pdb.set_trace()
+			t_i = time_steps[i]							# new2
+			#prev_t = time_steps[i]							# new
+
+			# Determine How many timesteps in between
+			n_intermediate_tp = 2#max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between, modify later!!
+			if save_latents!=0:
+				n_intermediate_tp = max(2, (abs(prev_t - t_i) / minimum_step).int()) # get steps in between
+			time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
+				
 			#Include inplementationin case of no ODE function
 			if self.use_ODE:
 				
-				if (prev_t - t_i) < minimum_step:
-					#short integration
+				if abs(prev_t - t_i) < minimum_step:
+					#short integration, linear approximation with the gradient
 					time_points = torch.stack((prev_t, t_i))
 					inc = self.z0_diffeq_solver.ode_func(prev_t, prev_y) * (t_i - prev_t)
 
@@ -265,12 +283,16 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					assert(not torch.isnan(ode_sol).any())
 
 				else:
+<<<<<<< HEAD
 					#complete Integration
 					n_intermediate_tp = 2 # get steps in between
 					if testing:
 						n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get more steps in between for testing
 
 					time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
+=======
+					#complete Integration using differential equation solver
+>>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 					ode_sol = self.z0_diffeq_solver(prev_y, time_points)
 
 					assert(not torch.isnan(ode_sol).any())
@@ -279,33 +301,38 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					print("Error: first point of the ODE is not equal to initial value")
 					print(torch.mean(ode_sol[:, :, 0, :]  - prev_y))
 					exit()
-				#assert(torch.mean(ode_sol[:, :, 0, :]  - prev_y) < 0.001)
 
 				yi_ode = ode_sol[:, :, -1, :]
-				
+
 				xi = data[:,i,:].unsqueeze(0)
 
 			else:
 				
 				# skipping ODE function and assign directly
 				yi_ode = prev_y
-
+				time_points = time_points[-1]
+				
+				# extract the mask for the current (single) time step
 				single_mask = data[:,i,self.input_dim//2]
+				#TODO: check the imputation here....
 				delta_ts = (prev_t - t_i).repeat(1,n_traj,1).float()
 				delta_ts[:,~single_mask.bool(),:] = 0
 				
+				if self.nornnimputation:
+					delta_ts[:,:,:] = 0
+
 				features = data[:,i,:self.input_dim//2].unsqueeze(0)
 				new_mask = single_mask.unsqueeze(0).unsqueeze(2).repeat(1,1,self.input_dim//2+1)
 
 				#creating new data including delta ts plus mask, concaninate the delta t for pure RNN
 				xi = torch.cat([ features , delta_ts, new_mask], -1)
 
-			# TODO: check if mask is all non, if so: don't do GRU update to save computational costs=> Conclusion, it is not faster
-			#pdb.set_trace()
-			#xi[:,:,self.]
-			#obs_mask = data[:,i,self.input_dim//2]
+			# Already tried and deleted at this point:
+			# check if mask is all non, if so: don't do GRU update to save computational costs
+			# => Conclusion, it is not faster
 
 			if self.RNNcell=='lstm':
+
 				h_i_ode = yi_ode[:,:,:self.latent_dim//2]
 				c_i_ode = yi_ode[:,:,self.latent_dim//2:]
 				h_c_lstm = (h_i_ode, c_i_ode)
@@ -316,29 +343,64 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				h_i_, c_i_ = outi[0], outi[1]
 				yi = torch.cat([h_i_, c_i_], -1)
 				yi_out = h_i_
+
+				if not self.use_ODE:
+					ode_sol = yi_out.unsqueeze(2)
+					time_points = time_points.unsqueeze(0)
+
 			else:
 				
-				# GRU-unit: the output is directly the hidden state
-				#pdb.set_trace()
-				#yi_ode[:,obs_mask.bool()], prev_std[:,obs_mask.bool()] = self.RNN_update(yi_ode[:,obs_mask.bool()], prev_std[:,obs_mask.bool()], xi[:,obs_mask.bool()])
+				# GRU-unit/Star-unit: the output is directly the hidden state
 				yi_ode, prev_std = self.RNN_update(yi_ode, prev_std, xi)
 
 				yi, yi_std = yi_ode, prev_std
 				yi_out = yi
 
+				if not self.use_ODE:
+					ode_sol = yi_ode.unsqueeze(2)
+					time_points = time_points.unsqueeze(0)
+			
+			
 
 			prev_y, prev_std = yi, yi_std
 			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original
-			t_i = time_steps[i] 							# new
+			#t_i = time_steps[i] 								# new
+			prev_t = time_steps[i]								# new2
 
 			latent_ys.append(yi_out)
 
+<<<<<<< HEAD
 			if save_info or testing:
 				d = {"yi_ode": yi_ode.detach()[:,:20], #"yi_from_data": yi_from_data,
 					 "yi": yi_out.detach()[:,:20], "yi_std": yi_std.detach()[:,:20], 
 					 "time_points": time_points.detach(),
 					 "ode_sol": ode_sol.detach()[:,:20]
 				}
+=======
+			if save_info or save_latents:
+				if self.use_ODE:
+					#ODE-RNN case
+					ODE_flags = (xi[:,:,self.latent_dim:].sum((0,2))==0).cpu().detach().int().numpy() # zero: RNN-update, one: ODE-update
+					marker = np.ones((n_traj,n_intermediate_tp))
+					marker[:,-1] = ODE_flags
+					
+					if not firststep:
+						#marker[:,0] = old_ODE_flags
+						pass
+					else:
+						firststep = False
+					old_ODE_flags = ODE_flags
+				else:
+					#RNN case
+					#marker = np.ones((n_traj,len(time_points)))
+					marker = ((xi[:,:,(self.latent_dim+1):].sum((0,2))==0).cpu().detach().int().numpy()*2)[:,np.newaxis]  # zero: RNN-update, two: No update at all
+
+				d = {"yi_ode": yi_ode[:,:save_latents].cpu().detach(), #"yi_from_data": yi_from_data,
+					 "yi": yi_out[:,:save_latents].cpu().detach()[:,:save_latents], "yi_std": yi_std[:,:save_latents].cpu().detach(), 
+					 "time_points": time_points.cpu().detach().double(),
+					 "ode_sol": ode_sol[:,:save_latents].cpu().detach().double(),
+					 "marker": marker[:save_latents]}
+>>>>>>> fab8395ce21cb1139d04c7b66348fa4e9db98fe3
 				extra_info.append(d)
 
 		latent_ys = torch.stack(latent_ys, 1)
