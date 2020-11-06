@@ -373,7 +373,7 @@
                 "--trunc", "9",
                 //"-RI", "true"
             ]
-        }
+        },
         {
             "name": "Python: new simple RNN swisscrop,LSTM",
             "type": "python",
