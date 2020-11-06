@@ -131,7 +131,7 @@
                 "--niters", "30",
                 "-n", "300000",
                 "-validn", "60000",
-                "--val_freq", "200",
+                "--val_freq", "50",
                 "--dataset", "crop",
                 "-b", "600",
                 "--ode-rnn",
