@@ -25,7 +25,7 @@ class Crops(object):
 	reverse_label_dict = {v: k for k, v in label_dict.items()}
 	
 	
-	def __init__(self, root, download=False,
+	def __init__(self, root, download=True,
 		reduce='average', mode='train', minseqlength=20,
 		n_samples = None, device = torch.device("cpu"), list_form = True,
 		step=1, trunc=6, noskip=False):
@@ -933,10 +933,10 @@ class Crops(object):
 
 	def __len__(self):
 		if self.mode=="train":
-			#return 1500 # TODO, remove aft
+			#return 5000 # TODO, remove aft
 			return  self.hdf5dataloader["data"].shape[0]
 		else:
-			#return 900
+			#return 2000
 			return self.hdf5dataloader["data"].shape[0]
 
 	def true_len__(self):

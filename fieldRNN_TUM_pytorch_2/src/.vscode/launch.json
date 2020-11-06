@@ -60,8 +60,28 @@
                 "-l2", "0",
                 "--weight_decay", "1e-6",
                 "--model", "tcn",
+                "--batchsize", "32",
+                "--epochs", "20",
+                "--hidden", "64"
+            ],
+            "console": "integratedTerminal"
+        },{
+            "name": "Run TCN, TUM data2",
+            "type": "python",
+            //"env": "python3",
+            "request": "launch",
+            "program": "train_baseline_pixel_TUMdata.py",
+            "args": [
+                //"-data", "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/data/SwissCrops/raw/train_set_24x24_debug.hdf5",
+                "--checkpoint_dir", "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/fieldRNN_TUM_pytorch/src/checkpoints",
+                "-gt", "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/data/SwissCrops/labelsC.csv",
+                "-l1", "0",
+                "-l2", "1e-6",
+                "--weight_decay", "0",
+                "--model", "tcn",
                 "--batchsize", "300",
-                "--epochs", "20"
+                "--epochs", "20",
+                "--hidden", "64"
             ],
             "console": "integratedTerminal"
         }
