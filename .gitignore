@@ -8,4 +8,4 @@ latent_ode-my_mod_hparam/logs/
 latent_ode-my_mod_hparam/experiments/
 latent_ode-my_mod_hparam/data/
 latent_ode-my_mod_hparam/runs/
-latent_ode-my_mod_hparam/wandb/
+latent_ode-my_mod_hparam/wandb
