@@ -1,0 +1,84 @@
+wandb: Tracking run with wandb version 0.9.2
+wandb: Wandb version 0.10.8 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Run data is saved locally in wandb/run-20201027_203937-oue2kdud
+wandb: Syncing run sunny-breeze-1104
+wandb: ⭐️ View project at https://app.wandb.ai/cropteam/odecropclassification
+wandb: 🚀 View run at https://app.wandb.ai/cropteam/odecropclassification/runs/oue2kdud
+wandb: Run `wandb off` to turn off syncing.
+Couldn't import umap
+I'm counting gpu's:  1
+Means I will train  1  models, with different random seeds
+My Devices:  ['cuda:0']
+
+Sampling dataset of 11000 training examples
+  0% 0/1 [00:00<?, ?trial/s, best loss=?]                                         Testing hyperparameters:
+  0% 0/1 [00:00<?, ?trial/s, best loss=?]                                         ExperimentID
+  0% 0/1 [00:00<?, ?trial/s, best loss=?]                                         [8585000]
+  0% 0/1 [00:00<?, ?trial/s, best loss=?]                                         /cluster/scratch/metzgern/ODEcrop/Swisscrop
+  0% 0/1 [00:00<?, ?trial/s, best loss=?]                                         dataroot: /cluster/scratch/metzgern/ODEcrop/Swisscrop
+  0% 0/1 [00:00<?, ?trial/s, best loss=?]                                         haven't found /cluster/scratch/metzgern/ODEcrop/Swisscrop/processed/train_set_3x3_processed2_toplabels.hdf5 . Starting to preprocess the whole dataset...
+  0% 0/1 [00:00<?, ?trial/s, best loss=?]job exception: Unable to open file (unable to open file: name = '/cluster/scratch/metzgern/ODEcrop/Swisscrop/processed/train_set_3x3_processed2_toplabels.hdf5', errno = 2, error message = 'No such file or directory', flags = 0, o_flags = 0)
+
+  0% 0/1 [00:00<?, ?trial/s, best loss=?]
+ODE-RNN  True
+Classic-RNN:  False
+Stacked layers:  1
+Stacked layers:  ['ode_rnn', 'ode_rnn', 'gru']
+ODE-type:  linear
+RNN-cell:  star
+Weight-sharing ODE:  True
+Weight-sharing RNN:  True
+Using BN:  True
+defaut adapted LR's!!
+Used Optimizer: adamax
+Used Ode-Solver euler
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+TRIAL PROTOCOL:
+---------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Traceback (most recent call last):
+  File "run_models.py", line 267, in <module>
+    max_evals=args.num_search)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 482, in fmin
+    show_progressbar=show_progressbar,
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/base.py", line 686, in fmin
+    show_progressbar=show_progressbar,
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 509, in fmin
+    rval.exhaust()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 330, in exhaust
+    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 286, in run
+    self.serial_evaluate()
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/hyperopt/fmin.py", line 165, in serial_evaluate
+    result = self.domain.evaluate(spec, ctrl)
+  File "/cluster/home/metzgern/.localwandb: Waiting for W&B process to finish, PID 38653
+/lib/python3.7/site-packages/hyperopt/base.py", line 894, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py", line 86, in construct_and_train_model
+    Data_obj.append(parse_datasets(args, device))
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/parse_datasets.py", line 334, in parse_datasets
+    datatype=args.swissdatatype, singlepix=args.singlepix)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/swisscrop_classification.py", line 115, in __init__
+    self.hdf5dataloader = h5py.File(data_file, "r", rdcc_nbytes=1024**2*4000,rdcc_nslots=1e7)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/h5py/_hl/files.py", line 408, in __init__
+    swmr=swmr)
+  File "/cluster/home/metzgern/.local/lib/python3.7/site-packages/h5py/_hl/files.py", line 173, in make_fid
+    fid = h5f.open(name, flags, fapl=fapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 88, in h5py.h5f.open
+OSError: Unable to open file (unable to open file: name = '/cluster/scratch/metzgern/ODEcrop/Swisscrop/processed/train_set_3x3_processed2_toplabels.hdf5', errno = 2, error message = 'No such file or directory', flags = 0, o_flags = 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run_models.py", line 318, in <module>
+    hyperopt_summary(trials)
+  File "/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/utils.py", line 935, in hyperopt_summary
+    np.sqrt(best_var)*100,
+UnboundLocalError: local variable 'best_var' referenced before assignment
+wandb: Program failed with code 1. Press ctrl-c to abort syncing.
+wandb: Process crashed early, not syncing files
