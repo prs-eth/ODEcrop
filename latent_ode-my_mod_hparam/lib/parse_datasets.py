@@ -210,7 +210,7 @@ def parse_datasets(args, device):
 
 		root = r'data/Crops'
 		scratch_root1 = r'/scratch/Nando/ODEcrop/Crops'
-		scratch_root2 = r'/cluster/scratch/metzgern/ODEcrop/'
+		scratch_root2 = r'/cluster/scratch/metzgern/ODEcrop/Crops'
 		if os.path.exists(scratch_root1):
 			root = scratch_root1
 		elif os.path.exists(scratch_root2):

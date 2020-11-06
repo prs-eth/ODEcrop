@@ -380,8 +380,8 @@ def train_it(
 
 
 						# Save Heatmap-Confusionmatrix, if validationset contains all samples...
-						if len(np.unique(y_ref))==len(Data_obj[0]["dataset_obj"].label_list):
-							utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
+						#if len(np.unique(y_ref))==len(Data_obj[0]["dataset_obj"].label_list):
+						#	utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
 
 					logdict = {
 						'Classification_accuracy/train': train_res[i]["accuracy"],
