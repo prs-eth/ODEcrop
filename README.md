@@ -4,11 +4,8 @@
 
 - Main script can be found in 'latent_ode-my_mod_hparam/run_modely.py'
 
-## What are the requirements
 
-- to do...
-
-## How to run one experiment
+## How to run ODE-RNN
 
 - to do...
 
