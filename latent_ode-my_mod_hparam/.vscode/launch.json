@@ -136,10 +136,10 @@
                 "-b", "600",
                 "--ode-rnn",
                 "--rnn-cell", "gru",
-                "--random-seed", "6002",
+                "--random-seed", "6001",
                 "--num-search", "1",
                 "--num-seeds", "1",
-                "--lr", "0.00762",
+                "--lr", "0.012",
                 //"--lr", "0.01",
                 //"--lrdecay", "0.9993",
                 "-g", "100",
@@ -165,7 +165,7 @@
                 "-b", "600",
                 "--ode-rnn",
                 "--rnn-cell", "gru",
-                "--random-seed", "6002",
+                "--random-seed", "6001",
                 "--num-search", "1",
                 "--num-seeds", "1",
                 "--lr", "0.00762",
@@ -249,7 +249,7 @@
             "console": "integratedTerminal",
             "args": [
                 "--niters", "1",
-                "-n", "1200000",
+                "-n", "11000000",
                 "-validn", "500000",
                 "--val_freq", "100",
                 "--dataset", "swisscrop",
@@ -281,7 +281,7 @@
             "console": "integratedTerminal",
             "args": [
                 "--niters", "1",
-                "-n", "1200000",
+                "-n", "11000000",
                 "-validn", "500000",
                 "--val_freq", "100",
                 "--dataset", "swisscrop",
@@ -303,7 +303,7 @@
                 "-BN", "true",
                 "--step", "2",
                 "--trunc", "9",
-                "--trainsub", "1.0",
+                "--trainsub", "0.6666",
                 "--testsub", "1.0"
             ]
         },
