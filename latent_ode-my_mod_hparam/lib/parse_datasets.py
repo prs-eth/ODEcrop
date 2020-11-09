@@ -208,18 +208,21 @@ def parse_datasets(args, device):
 		#turn this boolean to true in order to get access to the larger "evaluation" dataset used for validation
 		eval_as_test = True
 
-		root = 'data/Crops'
-		scratch_root = '/scratch/Nando/ODEcrop/Crops'
-		if os.path.exists(scratch_root):
-			root = scratch_root
+		root = r'data/Crops'
+		scratch_root1 = r'/scratch/Nando/ODEcrop/Crops'
+		scratch_root2 = r'/cluster/scratch/metzgern/ODEcrop/Crops'
+		if os.path.exists(scratch_root1):
+			root = scratch_root1
+		elif os.path.exists(scratch_root2):
+			root = scratch_root2
+		print("dataroot: " + root)
 
-		train_dataset_obj = Crops(root, mode="train", args=args,
-									download=True, device = device, list_form = list_form)
-		test_dataset_obj = Crops(root, mode="test", args=args, 
-									download=True, device = device, list_form = list_form)
-		
-		eval_dataset_obj = Crops(root, mode="eval", args=args, 
-									download=True, device = device,  list_form = list_form)
+		train_dataset_obj = Crops(root, mode="train", args=args, noskip=args.noskip,
+								download=True, device = device, list_form = list_form)
+		test_dataset_obj = Crops(root, mode="test", args=args, noskip=args.noskip,
+								download=True, device = device, list_form = list_form)
+		eval_dataset_obj = Crops(root, mode="eval", args=args, noskip=args.noskip,
+								download=True, device = device,  list_form = list_form)
 		
 		
 		n_samples = min(args.n, len(train_dataset_obj))
@@ -272,9 +275,11 @@ def parse_datasets(args, device):
 			else: #else manual batching is used
 				#recommendation: set shuffle to False, the underlying hd5y structure is than more efficient
 				# because it can make use of the countagious blocks of data.
-				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False)
-				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False)
-				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False)
+				perc = 0
+				early_prediction = int(26*perc)
+				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False, subsamp=args.trainsub)
+				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False,early_prediction=early_prediction)
+				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False, early_prediction=early_prediction, subsamp=args.testsub)
 			
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
@@ -304,28 +309,38 @@ def parse_datasets(args, device):
 		return data_objects
 	
 	##################################################################
-	###########     SWISS Crop Classification     ####################
+	###########	 SWISS Crop Classification	 ####################
 	
 	if dataset_name == "swisscrop":
+		
+		# Search for a dataroot
+		
+		root = r'data/SwissCrops'
+		scratch_root1 = r'/cluster/scratch/metzgern/ODEcrop/Swisscrop'
+		scratch_root2 = r'/scratch/Nando/ODEcrop/Swisscrop'
+		if os.path.exists(scratch_root1):
+			root = scratch_root1
+			print(scratch_root1)
+		elif os.path.exists(scratch_root2):
+			# Leonhard cluster case
+			root = scratch_root2
+			print(scratch_root2)
+		print("dataroot: " + root)
 
-		root = 'data/SwissCrops'
-		scratch_root = '/scratch/Nando/ODEcrop/Swisscrop'
-		if os.path.exists(scratch_root):
-			root = scratch_root
-			pass
-
-		train_dataset_obj = SwissCrops(root, mode="train", device=device,
+		
+		#pdb.set_trace()
+		train_dataset_obj = SwissCrops(root, mode="train", device=device, noskip=args.noskip,
 										step=args.step, trunc=args.trunc, nsamples=args.n,
-										datatype=args.swissdatatype)
-		test_dataset_obj = SwissCrops('data/SwissCrops', mode="test", device=device,
+										datatype=args.swissdatatype, singlepix=args.singlepix)
+		test_dataset_obj = SwissCrops(root, mode="test", device=device, noskip=args.noskip,
 										step=args.step, trunc=args.trunc, nsamples=args.validn,
-										datatype=args.swissdatatype) 
+										datatype=args.swissdatatype, singlepix=args.singlepix) 
 		
 		n_samples = min(args.n, len(train_dataset_obj))
 		n_test_samples = min( float("inf"), len(test_dataset_obj))
 		
 		#evaluation batch sizes. #Must be tuned to increase efficency of evaluation
-		validation_batch_size = 7000 # size 30000 is 10s per batch, also depending on server connection
+		validation_batch_size = 5000 # size 30000 is 10s per batch, also depending on server connection
 		train_batch_size = min(args.batch_size, args.n)
 		test_batch_size = min(n_test_samples, validation_batch_size)
 
@@ -335,8 +350,8 @@ def parse_datasets(args, device):
 		mask = a_train_dict["observed_mask"]
 		labels = a_train_dict["labels"]
 		
-		train_dataloader = FastTensorDataLoader(train_dataset_obj, batch_size=train_batch_size)
-		test_dataloader = FastTensorDataLoader(test_dataset_obj, batch_size=test_batch_size)
+		train_dataloader = FastTensorDataLoader(train_dataset_obj, batch_size=train_batch_size, subsamp=args.trainsub)
+		test_dataloader = FastTensorDataLoader(test_dataset_obj, batch_size=test_batch_size, subsamp=args.testsub)
 
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
@@ -345,7 +360,7 @@ def parse_datasets(args, device):
 					"n_train_batches": len(train_dataloader),
 					"n_test_batches": len(test_dataloader),
 					"classif_per_tp": False, # We want to classify the whole sequence!!. Standard: True, #optional
-					"n_labels": labels.size(-1)}
+					"n_labels": train_dataloader.nclasses+1} #plus one, because there is one class that summerizes all the other classes--> "other" is "0"
 
 		"""
 		print("")

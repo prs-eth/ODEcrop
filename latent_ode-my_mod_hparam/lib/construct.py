@@ -71,7 +71,8 @@ def  get_classic_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 		input_space_decay = args.input_decay,
 		cell = args.rnn_cell,
 		n_labels = n_labels,
-		train_classif_w_reconstr = (args.dataset == "physionet")
+		train_classif_w_reconstr = (args.dataset == "physionet"),
+		nornnimputation=args.nornnimputation
 		).to(device)
 
 		
