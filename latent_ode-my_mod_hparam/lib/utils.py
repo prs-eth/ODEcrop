@@ -1,6 +1,7 @@
 ###########################
-# Latent ODEs for Irregularly-Sampled Time Series
-# Author: Yulia Rubanova
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+# Code adapted from Yulia Rubanova, Latent ordinary differential equations for irregularly-sampled time series
 ###########################
 
 import os
@@ -843,10 +844,8 @@ class FastTensorDataLoader:
 			newinds = [ inds[torch.multinomial(torch.ones(len(inds)), max(int(len(inds)*self.subsamp), 1), replacement=False )] for inds in validinds]
 			data_dict["mask"] = torch.stack([ torch.zeros(max_len, dtype=torch.float32, device=self.dataset.device).scatter_(0, torch.squeeze(inds), 1) for inds in newinds]).unsqueeze(2).repeat(1,1,features)
 			
-			
-		
 		if self.early_prediction > 0:
-			zero_input_propagation = False
+			zero_input_propagation = True
 			if zero_input_propagation:
 				#Used to test test propagation behaviour of vanilla RNNs
 				data_dict["mask"][:,self.early_prediction:,:] = 1

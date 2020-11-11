@@ -19,14 +19,13 @@
             "console": "integratedTerminal",
             "args": [
                 //#python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --stack-order gru -BN=true --topper=true
-                "--niters", "15",
+                "--niters", "20",
                 "-n", "300000",
                 "-validn", "600000",
                 "--dataset", "crop",
                 "-b", "600",
                 "--ode-rnn",
-                //"--rnn-cell", "gru",
-                "--random-seed", "6001",
+                "--random-seed", "6002",
                 "--stack-order", "gru",
                 "--lr", "0.00762",
                 "-g", "100",

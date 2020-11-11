@@ -1,6 +1,7 @@
 ###########################
-# Latent ODEs for Irregularly-Sampled Time Series
-# Author: Yulia Rubanova
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+# Code adapted from Yulia Rubanova, Latent ordinary differential equations for irregularly-sampled time series
 ###########################
 
 import os
@@ -12,14 +13,10 @@ import torch.nn as nn
 import lib.utils as utils
 from lib.utils import FastTensorDataLoader
 from lib.diffeq_solver import DiffeqSolver
-from generate_timeseries import Periodic_1d
 from torch.distributions import uniform
 
 from torch.utils.data import DataLoader
 
-from mujoco_physics import HopperPhysics
-from physionet import PhysioNet, variable_time_collate_fn, get_data_min_max
-from person_activity import PersonActivity, variable_time_collate_fn_activity
 from crop_classification import Crops, variable_time_collate_fn_crop
 from swisscrop_classification import SwissCrops
 
@@ -129,7 +126,7 @@ def parse_datasets(args, device):
 			else: #else manual batching is used
 				#recommendation: set shuffle to False, the underlying hd5y structure is than more efficient
 				# because it can make use of the countagious blocks of data.
-				perc = 0
+				perc = 0.5
 				early_prediction = int(26*perc)
 				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False, early_prediction=early_prediction, subsamp=args.trainsub)
 				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False)

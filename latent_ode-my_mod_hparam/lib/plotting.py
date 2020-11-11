@@ -1,6 +1,7 @@
 ###########################
-# Latent ODEs for Irregularly-Sampled Time Series
-# Author: Yulia Rubanova
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+# Code adapted from Yulia Rubanova, Latent ordinary differential equations for irregularly-sampled time series
 ###########################
 
 import matplotlib
@@ -21,11 +22,10 @@ import matplotlib.gridspec as gridspec
 from lib.utils import get_device
 
 from lib.encoder_decoder import *
-from lib.rnn_baselines import *
 from lib.ode_rnn import *
 import torch.nn.functional as functional
 from torch.distributions.normal import Normal
-from lib.latent_ode import LatentODE
+#from lib.latent_ode import LatentODE
 
 from lib.likelihood_eval import masked_gaussian_log_density
 try:
@@ -33,8 +33,8 @@ try:
 except:
 	print("Couldn't import umap")
 
-from generate_timeseries import Periodic_1d
-from person_activity import PersonActivity
+#from generate_timeseries import Periodic_1d
+#from person_activity import PersonActivity
 
 from lib.utils import compute_loss_all_batches
 
