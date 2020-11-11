@@ -33,6 +33,7 @@ from sklearn.metrics import confusion_matrix
 from lib.latent_vis import get_pca_traj
 
 import matplotlib.pyplot as plt 
+from lib.latent_vis import get_pca_traj
 
 
 def makedirs(dirname):
@@ -566,6 +567,7 @@ def compute_loss_all_batches(model,
 	hard_classif_predictions = torch.Tensor([]).long().to(device)
 	
 	plot_latent = False
+	save_latents = 10
 	if plot_latent:
 		first, testing = True, True
 	else:
@@ -706,11 +708,13 @@ class FastTensorDataLoader:
 		subsamp=1.):
 		"""
 		Initialize a FastTensorDataLoader.
+
 		:param *dataset: hdf5 dataset. Eg. Crop dataset
 		:param batch_size: batch size to load.
 		:param shuffle: if True, shuffle the data *in-place* whenever an iterator is created out of this object.
 			Recommendation: set shuffle to False. Then: the underlying hd5y is than more efficient,
 			because id can make use of the contiguous blocks of data.
+
 		:returns: A FastTensorDataLoader.
 		"""
 		self.dataset = dataset
@@ -842,9 +846,16 @@ class FastTensorDataLoader:
 			
 		
 		if self.early_prediction > 0:
-			filter_rest =  torch.zeros_like(data_dict["mask"]) 
-			filter_rest[:,:self.early_prediction,:] = 1
-			data_dict["mask"] = data_dict["mask"] * filter_rest
+			zero_input_propagation = False
+			if zero_input_propagation:
+				#Used to test test propagation behaviour of vanilla RNNs
+				data_dict["mask"][:,self.early_prediction:,:] = 1
+				data_dict["data"][:,self.early_prediction:,:] = 0
+			else:
+				# RNNs will not propagate after last observation, but ODE-RNN will
+				filter_rest =  torch.zeros_like(data_dict["mask"]) 
+				filter_rest[:,:self.early_prediction,:] = 1
+				data_dict["mask"] = data_dict["mask"] * filter_rest
 
 		#if self.noskip:
 			# Mark every frame as observed (needed for some experiments)
@@ -973,7 +984,8 @@ def plot_confusion_matrix(correct_labels, predict_labels, labels, title='Confusi
 		- Depending on the number of category and the data , you may have to modify the figzie, font sizes etc. 
 		- Currently, some of the ticks dont line up due to rotations.
 	'''
-	cm = confusion_matrix(correct_labels, predict_labels)#, labels=labels)
+	cmnorm = confusion_matrix(correct_labels, predict_labels, normalize='true')#, labels=labels)
+	cm = confusion_matrix(correct_labels, predict_labels)#, normalize='true')#, labels=labels)
 	if normalize:
 		cm = cm.astype('float')*10 / cm.sum(axis=1)[:, np.newaxis]
 		cm = np.nan_to_num(cm, copy=True)
@@ -1008,8 +1020,40 @@ def plot_confusion_matrix(correct_labels, predict_labels, labels, title='Confusi
 		ax.text(j, i, format(cm[i, j], 'd') if cm[i,j]!=0 else '.', horizontalalignment="center", fontsize=3.5, verticalalignment='center', color= "black")
 	fig.set_tight_layout(True)
 	#summary = tfplot.figure.to_summary(fig, tag=tensor_name)
-	return 1, fig
+	return cmnorm, fig
 
+
+
+def plot_confusion_matrix2(target_test, pred_test, valid_labels_names, ExperimentID):
+
+	from sklearn.metrics import confusion_matrix
+	#from sklearn.metrics import ConfusionMatrixDisplay
+	import seaborn as sn
+	import pandas as pd
+	import matplotlib.pyplot as plt
+	sn.set(font_scale=1.3)
+
+	#cm = confusion_matrix(target_test, pred_test, normalize=None)
+	cm = confusion_matrix(target_test, pred_test, normalize='true')
+	
+	#Baseline CM: A saved top-run from GRU-dt
+	refcm = torch.load('experiments/experiment_2702000_topscore.ckpt')["cm"]
+	diffcm = cm-refcm
+
+	vmax = np.max([ -np.min(diffcm) , np.max(diffcm) ])
+
+	df_cm = pd.DataFrame(diffcm, index = [i for i in valid_labels_names],
+					columns = [i for i in valid_labels_names])
+	plt.figure(figsize = (15,10))
+	#sn.heatmap(df_cm, annot=False, cmap='Blues')#vmin=0, vmax=100
+	#sn.heatmap(df_cm, annot=False, cmap='RdBu', vmin=-0.10, vmax=0.10)
+	sn.heatmap(df_cm, annot=False, cmap='BrBG', vmin=-vmax, vmax=vmax)
+	#plt.xlabel('True label')
+	#plt.ylabel('Predicted label')
+	#plt.title('Confusion matrix')
+	plt.savefig('vis/cm' + str(ExperimentID) + '.pdf', bbox_inches='tight')
+
+	plt.close()
 
 
 

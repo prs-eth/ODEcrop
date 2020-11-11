@@ -116,7 +116,7 @@ class ML_ODE_RNN(Baseline):
 		include_topper = False, linear_topper = False,
 		use_BN = True, resnet = False,
 		ode_type="linear", ode_units=200, rec_layers=1, ode_method="dopri5",
-		stack_order = None):
+		stack_order = None, nornnimputation=False):
 
 		Baseline.__init__(self, input_dim, latent_dim, device = device, 
 			obsrv_std = obsrv_std, use_binary_classif = use_binary_classif,
@@ -228,7 +228,6 @@ class ML_ODE_RNN(Baseline):
 
 				z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
 				
-
 			self.Encoder0 = Encoder_z0_ODE_RNN( 
 				latent_dim = ode_rnn_encoder_dim, 
 				input_dim = layer_input_dimension, 
@@ -237,7 +236,8 @@ class ML_ODE_RNN(Baseline):
 				device = device,
 				RNN_update = RNN_update,
 				use_BN = use_BN,
-				use_ODE = use_ODE
+				use_ODE = use_ODE,
+				nornnimputation=nornnimputation
 			).to(device)
 
 			self.ode_gru.append( self.Encoder0 )

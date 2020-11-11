@@ -32,6 +32,8 @@ import numpy as np
 from hyperopt import STATUS_OK
 import wandb
 
+import pickle
+
 
 
 def construct_and_train_model(config):
@@ -76,6 +78,7 @@ def construct_and_train_model(config):
 	for i in range(num_seeds):
 		ExperimentID.append(randID + i)
 
+	print("ExperimentID", ExperimentID)
 	torch.manual_seed(args.random_seed)
 	np.random.seed(args.random_seed)
 
@@ -110,10 +113,8 @@ def construct_and_train_model(config):
 
 	##############################################################################
 	# Create Model
-	#pdb.set_trace()
 
 	Model = []
-
 	if args.ode_rnn:
 		for i in range(num_seeds):
 			Model.append(get_ODE_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
@@ -127,6 +128,7 @@ def construct_and_train_model(config):
 
 	##################################################################
 	
+	# Tensorboard not used anymore.
 	if args.tensorboard:
 		Validationwriter = []
 		#Trainwriter = []
@@ -324,7 +326,6 @@ def train_it(
 		
 		for i, device in enumerate(Devices):
 			train_res[i] = Model[i].compute_all_losses(batch_dict[i], n_traj_samples = 3, kl_coef = kl_coef)
-		#train_res= compute_all_losses_mod(Models, batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
 		
 		for i, device in enumerate(Devices):
 			train_res[i]["loss"].backward()
@@ -351,66 +352,15 @@ def train_it(
 
 				for i, device in enumerate(Devices):
 					
-					"""
-					message = 'Epoch {:04d} [Test seq (cond on sampled tp)] | Loss {:.6f} | Likelihood {:.6f} | KL fp {:.4f} | FP STD {:.4f}|'.format(
-						itr//num_batches, 
-						test_res[i]["loss"].detach(), test_res[i]["likelihood"].detach(), 
-						test_res[i]["kl_first_p"], test_res[i]["std_first_p"])
-					"""
-					#Logger[i].info("Experiment " + str(experimentID[i]))
-					#Logger[i].info(message)
-					#Logger[i].info("KL coef: {}".format(kl_coef))
-					#Logger[i].info("Train loss (one batch): {}".format(train_res[i]["loss"].detach()))
-					#Logger[i].info("Train CE loss (one batch): {}".format(train_res[i]["ce_loss"].detach()))
-					
-					# write training numbers
-					"""
-					if "accuracy" in train_res[i]:
-						#Logger[i].info("Classification accuracy (TRAIN): {:.4f}".format(train_res["accuracy"]))
-						Validationwriter[i].add_scalar('Classification_accuracy/train', train_res[i]["accuracy"], itr*args.batch_size)
-					
-					if "loss" in train_res[i]:
-						Validationwriter[i].add_scalar('loss/train', train_res[i]["loss"].detach(), itr*args.batch_size)
-					
-					if "ce_loss" in train_res[i]:
-						Validationwriter[i].add_scalar('CE_loss/train', train_res[i]["ce_loss"].detach(), itr*args.batch_size)
-					
-					if "mse" in train_res[i]:
-						Validationwriter[i].add_scalar('MSE/train', train_res[i]["mse"], itr*args.batch_size)
-					
-					if "pois_likelihood" in train_res[i]:
-						Validationwriter[i].add_scalar('Poisson_likelihood/train', train_res[i]["pois_likelihood"], itr*args.batch_size)
-					
-					#write test numbers
-					if "auc" in test_res[i]:
-						#Logger[i].info("Classification AUC (TEST): {:.4f}".format(test_res["auc"]))
-						Validationwriter[i].add_scalar('Classification_AUC/validation', test_res[i]["auc"], itr*args.batch_size)
-						
-					if "mse" in test_res[i]:
-						#Logger[i].info("Test MSE: {:.4f}".format(test_res["mse"]))
-						Validationwriter[i].add_scalar('MSE/validation', test_res[i]["mse"], itr*args.batch_size)
-						
-					if "accuracy" in test_res[i]:
-						#Logger[i].info("Classification accuracy (TEST): {:.4f}".format(test_res["accuracy"]))
-						Validationwriter[i].add_scalar('Classification_accuracy/validation', test_res[i]["accuracy"], itr*args.batch_size)
-
-					if "pois_likelihood" in test_res[i]:
-						#Logger[i].info("Poisson likelihood: {}".format(test_res["pois_likelihood"]))
-						Validationwriter[i].add_scalar('Poisson_likelihood/validation', test_res[i]["pois_likelihood"], itr*args.batch_size)
-					
-					if "loss" in train_res[i]:
-						Validationwriter[i].add_scalar('loss/validation', test_res[i]["loss"].detach(), itr*args.batch_size)
-					
-					if "ce_loss" in test_res[i]:
-						#Logger[i].info("CE loss: {}".format(test_res["ce_loss"]))
-						Validationwriter[i].add_scalar('CE_loss/validation', test_res[i]["ce_loss"], itr*args.batch_size)
-					"""
-
 					#make confusion matrix
-					_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
+					cm, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
 					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
 					
-					#logger.info("-----------------------------------------------------------------------------------")
+					# prepare GT labels and predictions
+					y_ref_train = torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().cpu()
+					y_pred_train = torch.argmax(batch_dict[0]['labels'], dim=1).cpu()
+					y_ref = label_dict[0]["correct_labels"].cpu()
+					y_pred = label_dict[0]["predict_labels"]
 
 					#Make checkpoint
 					torch.save({
@@ -424,24 +374,14 @@ def train_it(
 						torch.save({
 							'args': args,
 							'state_dict': Model[i].state_dict(),
+							'cm': cm
 						}, Top_ckpt_path[i])
 
-					#logging to wandb
-					#tag_dict = Data_obj[0]["dataset_obj"].reverse_label_dict
-
-					# for training
-					#y_ref_train = [tag_dict[label_id] for label_id in torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().tolist() ] 
-					#y_pred_train = [tag_dict[label_id] for label_id in torch.argmax(batch_dict[0]['labels'], dim=1).tolist() ] 
-
-					y_ref_train = torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().cpu()
-					y_pred_train = torch.argmax(batch_dict[0]['labels'], dim=1).cpu()
-
-					# for validation
-					#y_ref = [tag_dict[label_id] for label_id in label_dict[0]["correct_labels"].tolist() ]
-					#y_pred = [tag_dict[label_id] for label_id in label_dict[0]["predict_labels"].tolist() ]
-
-					y_ref = label_dict[0]["correct_labels"].cpu()
-					y_pred = label_dict[0]["predict_labels"]
+						utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
+						# Save trajectory here
+						#if not test_res[i]["PCA_traj"] is None:
+						#	with open( os.path.join('vis', 'traj_dict' + str(ExperimentID[i]) + '.pickle' ), 'wb') as handle:
+						#		pickle.dump(test_res[i]["PCA_traj"], handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 					# make PCA visualization
 					if "PCA_traj" in test_res[0]:
@@ -458,21 +398,6 @@ def train_it(
 						'loss/train': train_res[i]["loss"].detach(),
 						'loss/validation': test_res[i]["loss"].detach(),
 						#'Confusionmatrix': conf_fig,
-						
-
-						"""
-						'Other_metrics/train_cm' : sklearn_cm(y_ref_train, y_pred_train, labels=labels),
-						'Other_metrics/train_precision': precision_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
-						'Other_metrics/train_recall': recall_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
-						'Other_metrics/train_f1': f1_score(y_ref_train, y_pred_train, labels=labels, average='macro'),
-						'Other_metrics/train_kappa': cohen_kappa_score(y_ref_train, y_pred_train, labels=labels),
-
-						'Other_metrics/validation_cm' : sklearn_cm(y_ref, y_pred, labels=labels),
-						'Other_metrics/validation_precision': precision_score(y_ref, y_pred, labels=labels, average='macro'),
-						'Other_metrics/validation_recall': recall_score(y_ref, y_pred, labels=labels, average='macro'),
-						'Other_metrics/validation_f1': f1_score(y_ref, y_pred, labels=labels, average='macro'),
-						'Other_metrics/validation_kappa': cohen_kappa_score(y_ref, y_pred, labels=labels),
-						"""
 
 						'Other_metrics/train_cm' : sklearn_cm(y_ref_train, y_pred_train),
 						'Other_metrics/train_precision': precision_score(y_ref_train, y_pred_train, average='macro'),
@@ -485,7 +410,6 @@ def train_it(
 						'Other_metrics/validation_recall': recall_score(y_ref, y_pred, average='macro'),
 						'Other_metrics/validation_f1': f1_score(y_ref, y_pred, average='macro'),
 						'Other_metrics/validation_kappa': cohen_kappa_score(y_ref, y_pred),
-
 					}
 
 					if "PCA_traj" in test_res[0]:
@@ -493,7 +417,6 @@ def train_it(
 					
 					wandb.log(logdict, step=itr*args.batch_size)
 					wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)
-
 
 		fine_train_writer = False
 		if fine_train_writer:
@@ -513,6 +436,12 @@ def train_it(
 					Best_test_acc_step[0]//args.batch_size)
 			)
 
+		#empty all training variables
+		#train_res = [None] * num_gpus
+		batch_dict = [None] * num_gpus
+		#test_res = [None] * num_gpus
+		label_dict = [None]* num_gpus
+		
 	print(Best_test_acc[0], " at step ", Best_test_acc_step[0])
 
 
