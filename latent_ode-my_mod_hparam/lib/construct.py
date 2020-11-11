@@ -1,31 +1,21 @@
-"""
-author: Nando Metzger
-metzgern@ethz.ch
-"""
+###########################
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+###########################
 
 import lib.utils as utils 
 from lib.ode_rnn import *
-from lib.rnn_baselines import *
 
 from lib.ode_func import ODEFunc
-from lib.gru_ode import FullGRUODECell_Autonomous
 from lib.diffeq_solver import DiffeqSolver
 
 import pdb
 
-def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
+def get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 
 	obsrv_std = 0.01
 	obsrv_std = torch.Tensor([obsrv_std]).to(device)
 
-	"""
-	# TODO: remove this block later, this case is already handeled inside the function
-	if args.rnn_cell=='lstm':
-		# for LSTM the latent dimension is twice as large, because we have the hidden state & cell state 
-		n_ode_gru_dims = int(args.latents)*2
-	else:
-		n_ode_gru_dims = int(args.latents)
-	"""
 	n_ode_gru_dims = int(args.latents)
 
 	
@@ -44,6 +34,7 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 			use_BN = args.batchnorm,
 			resnet = args.resnet,
 			ode_type=args.ode_type, ode_units = args.units, rec_layers = args.rec_layers, ode_method = args.ode_method,
+			nornnimputation=args.nornnimputation
 		).to(device)
 	else:
 		raise Exception("Number of stacked layers must be greater or equal to 1.")
@@ -51,7 +42,7 @@ def  get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 	return model
 
 
-def  get_classic_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
+def get_classic_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 	
 	obsrv_std = 0.01
 	obsrv_std = torch.Tensor([obsrv_std]).to(device)
@@ -75,5 +66,4 @@ def  get_classic_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 		nornnimputation=args.nornnimputation
 		).to(device)
 
-		
 	return model

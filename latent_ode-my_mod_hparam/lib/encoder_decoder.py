@@ -1,6 +1,7 @@
 ###########################
-# Latent ODEs for Irregularly-Sampled Time Series
-# Author: Yulia Rubanova
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+# Code adapted from Yulia Rubanova, Latent ordinary differential equations for irregularly-sampled time series
 ###########################
 
 import numpy as np
@@ -18,6 +19,8 @@ from lib.utils import get_device
 from lib.RNNcells import STAR_unit, GRU_unit, GRU_standard_unit, LSTM_unit
 
 import pdb
+import numpy as np
+
 
 import numpy as np
 
@@ -99,7 +102,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		z0_dim = None, RNN_update = None, 
 		n_gru_units = 100, device = torch.device("cpu"),
 		RNNcell = None, use_BN=True,
-		use_ODE = True, nornnimputation=True):
+		use_ODE = True, nornnimputation=False):
 		
 		super(Encoder_z0_ODE_RNN, self).__init__()
 
@@ -123,7 +126,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			elif self.RNNcell=='lstm':
 				self.latent_dim = latent_dim*2
 				self.RNN_update = LSTM_unit(self.latent_dim, rnn_input).to(device)
-
 			elif self.RNNcell=="star":
 				self.RNN_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
 
@@ -154,14 +156,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		self.input_dim = input_dim
 		self.device = device
 		self.extra_info = None
-
-		"""
-		self.transform_z0 = nn.Sequential(
-			nn.Linear(latent_dim * 2, 100),
-			nn.Tanh(),
-			nn.Linear(100, self.z0_dim * 2),)
-		utils.init_network_weights(self.transform_z0)
-		"""
 		
 		self.output_bn = nn.BatchNorm1d(latent_dim)
 
@@ -204,6 +198,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		n_traj, n_tp, n_dims = data.size()
 		extra_info = []
+		save_latents = 10 if testing else 0
 
 		device = get_device(data)
 
@@ -223,12 +218,10 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			# make some noise
 			prev_y = torch.zeros((1, n_traj, self.latent_dim)).data.normal_(0, 0.0001).to(device)
 			prev_std = torch.zeros((1, n_traj, self.latent_dim)).data.normal_(0, 0.0001).to(device)
-		
-		# Nando' comment: why start the last time steps? I better change it, it doesn't make sense in the original code
+
 		#prev_t, t_i = time_steps[-1] + 0.01,  time_steps[-1] # original
-		#t_i = time_steps[-1]  # new
-		prev_t = time_steps[0] - 0.00001 # new2
-		#t_i = time_steps[0] - 0.00001 # new
+		#prev_t = time_steps[0] - 0.00001 # new2
+		t_i = time_steps[0] - 0.00001 # new
 
 		interval_length = time_steps[-1] - time_steps[0]
 		minimum_step = interval_length / 200 # maybe have to modify minimum time step # original
@@ -250,15 +243,16 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		for i in time_points_iter:
 
 			# move time step to the next interval
-			t_i = time_steps[i]							# new2
-			#prev_t = time_steps[i]							# new
 
-			# Determine How many timesteps in between
-			n_intermediate_tp = 2#max(2, ((prev_t - t_i) / minimum_step).int()) # get steps in between, modify later!!
+			#t_i = time_steps[i]							# new2
+			prev_t = time_steps[i]							# new
+
+			n_intermediate_tp = 2 # get steps in between
 			if save_latents!=0:
-				n_intermediate_tp = max(2, (abs(prev_t - t_i) / minimum_step).int()) # get steps in between
+				n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get more steps in between for testing
+
 			time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
-				
+
 			#Include inplementationin case of no ODE function
 			if self.use_ODE:
 				
@@ -309,12 +303,9 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				#creating new data including delta ts plus mask, concaninate the delta t for pure RNN
 				xi = torch.cat([ features , delta_ts, new_mask], -1)
 
-			# Already tried and deleted at this point:
-			# check if mask is all non, if so: don't do GRU update to save computational costs
-			# => Conclusion, it is not faster
 
 			if self.RNNcell=='lstm':
-
+				# In case of LSTM update, we have to take special care of the variables for the hidden and cell state
 				h_i_ode = yi_ode[:,:,:self.latent_dim//2]
 				c_i_ode = yi_ode[:,:,self.latent_dim//2:]
 				h_c_lstm = (h_i_ode, c_i_ode)
@@ -329,25 +320,23 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				if not self.use_ODE:
 					ode_sol = yi_out.unsqueeze(2)
 					time_points = time_points.unsqueeze(0)
-
 			else:
-				
-				# GRU-unit/Star-unit: the output is directly the hidden state
+				# GRU-unit or any other RNN cell: the output is directly the hidden state
 				yi_ode, prev_std = self.RNN_update(yi_ode, prev_std, xi)
-
 				yi, yi_std = yi_ode, prev_std
 				yi_out = yi
 
 				if not self.use_ODE:
 					ode_sol = yi_ode.unsqueeze(2)
 					time_points = time_points.unsqueeze(0)
-			
-			
+
+
 			prev_y, prev_std = yi, yi_std
 			#prev_t, t_i = time_steps[i],  time_steps[i-1]	# original
-			#t_i = time_steps[i] 								# new
-			prev_t = time_steps[i]								# new2
+			#prev_t = time_steps[i]								# new2
+			t_i = time_steps[i] 							# new
 
+			
 			latent_ys.append(yi_out)
 			if save_info or save_latents:
 				if self.use_ODE:
@@ -364,7 +353,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					old_ODE_flags = ODE_flags
 				else:
 					#RNN case
-					#marker = np.ones((n_traj,len(time_points)))
 					marker = ((xi[:,:,(self.latent_dim+1):].sum((0,2))==0).cpu().detach().int().numpy()*2)[:,np.newaxis]  # zero: RNN-update, two: No update at all
 
 				d = {"yi_ode": yi_ode[:,:save_latents].cpu().detach(), #"yi_from_data": yi_from_data,
@@ -372,7 +360,18 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					 "time_points": time_points.cpu().detach().double(),
 					 "ode_sol": ode_sol[:,:save_latents].cpu().detach().double(),
 					 "marker": marker[:save_latents]}
+
+			"""
+			if save_info or testing:
+				d = {"yi_ode": yi_ode.detach()[:,:20], #"yi_from_data": yi_from_data,
+					 "yi": yi_out.detach()[:,:20], "yi_std": yi_std.detach()[:,:20], 
+					 "time_points": time_points.detach(),
+					 "ode_sol": ode_sol.detach()[:,:20]
+				}
 				extra_info.append(d)
+			"""
+			
+			
 
 		latent_ys = torch.stack(latent_ys, 1)
 
@@ -393,20 +392,4 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		assert(not torch.isnan(yi_std).any())
 
 		return yi, yi_std, latent_ys, extra_info
-
-
-class Decoder(nn.Module):
-	def __init__(self, latent_dim, input_dim):
-		super(Decoder, self).__init__()
-		# decode data from latent space where we are solving an ODE back to the data space
-
-		decoder = nn.Sequential(
-		   nn.Linear(latent_dim, input_dim),)
-
-		utils.init_network_weights(decoder)	
-		self.decoder = decoder
-
-	def forward(self, data):
-		return self.decoder(data)
-
 

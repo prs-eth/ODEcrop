@@ -1,8 +1,7 @@
-"""
-author: Nando Metzger
-metzgern@ethz.ch
-
-"""
+###########################
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+###########################
 
 import lib.utils as utils
 

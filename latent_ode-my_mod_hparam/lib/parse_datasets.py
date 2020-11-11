@@ -1,6 +1,7 @@
 ###########################
-# Latent ODEs for Irregularly-Sampled Time Series
-# Author: Yulia Rubanova
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+# Code adapted from Yulia Rubanova, Latent ordinary differential equations for irregularly-sampled time series
 ###########################
 
 import os
@@ -12,14 +13,10 @@ import torch.nn as nn
 import lib.utils as utils
 from lib.utils import FastTensorDataLoader
 from lib.diffeq_solver import DiffeqSolver
-from generate_timeseries import Periodic_1d
 from torch.distributions import uniform
 
 from torch.utils.data import DataLoader
 
-from mujoco_physics import HopperPhysics
-from physionet import PhysioNet, variable_time_collate_fn, get_data_min_max
-from person_activity import PersonActivity, variable_time_collate_fn_activity
 from crop_classification import Crops, variable_time_collate_fn_crop
 from swisscrop_classification import SwissCrops
 
@@ -47,154 +44,7 @@ def parse_datasets(args, device):
 	max_t_extrap = args.max_t / args.timepoints * n_total_tp
 
 	##################################################################
-	# MuJoCo dataset
-	if dataset_name == "hopper":
-		dataset_obj = HopperPhysics(root='data', download=True, generate=False, device = device)
-		dataset = dataset_obj.get_dataset()[:args.n]
-		dataset = dataset.to(device)
-
-		n_tp_data = dataset[:].shape[1]
-
-		# Time steps that are used later on for exrapolation
-		time_steps = torch.arange(start=0, end = n_tp_data, step=1).float().to(device)
-		time_steps = time_steps / len(time_steps)
-
-		dataset = dataset.to(device)
-		time_steps = time_steps.to(device)
-
-		if not args.extrap:
-			# Creating dataset for interpolation
-			# sample time points from different parts of the timeline, 
-			# so that the model learns from different parts of hopper trajectory
-			n_traj = len(dataset)
-			n_tp_data = dataset.shape[1]
-			n_reduced_tp = args.timepoints
-
-			# sample time points from different parts of the timeline, 
-			# so that the model learns from different parts of hopper trajectory
-			start_ind = np.random.randint(0, high=n_tp_data - n_reduced_tp +1, size=n_traj)
-			end_ind = start_ind + n_reduced_tp
-			sliced = []
-			for i in range(n_traj):
-				  sliced.append(dataset[i, start_ind[i] : end_ind[i], :])
-			dataset = torch.stack(sliced).to(device)
-			time_steps = time_steps[:n_reduced_tp]
-
-		# Split into train and test by the time sequences
-		train_y, test_y = utils.split_train_test(dataset, train_fraq = 0.8)
-
-		n_samples = len(dataset)
-		input_dim = dataset.size(-1)
-
-		batch_size = min(args.batch_size, args.n)
-		train_dataloader = DataLoader(train_y, batch_size = batch_size, shuffle=False,
-			collate_fn= lambda batch: basic_collate_fn(batch, time_steps, data_type = "train"))
-		test_dataloader = DataLoader(test_y, batch_size = n_samples, shuffle=False,
-			collate_fn= lambda batch: basic_collate_fn(batch, time_steps, data_type = "test"))
-		
-		data_objects = {"dataset_obj": dataset_obj, 
-					"train_dataloader": utils.inf_generator(train_dataloader), 
-					"test_dataloader": utils.inf_generator(test_dataloader),
-					"input_dim": input_dim,
-					"n_train_batches": len(train_dataloader),
-					"n_test_batches": len(test_dataloader)}
-		return data_objects
-
-	##################################################################
-	# Physionet dataset
-
-	if dataset_name == "physionet":
-		train_dataset_obj = PhysioNet('data/physionet', train=True, 
-										quantization = args.quantization,
-										download=True, n_samples = min(10000, args.n), 
-										device = device)
-		# Use custom collate_fn to combine samples with arbitrary time observations.
-		# Returns the dataset along with mask and time steps
-		test_dataset_obj = PhysioNet('data/physionet', train=False, 
-										quantization = args.quantization,
-										download=True, n_samples = min(10000, args.n), 
-										device = device)
-
-		# Combine and shuffle samples from physionet Train and physionet Test
-		total_dataset = train_dataset_obj[:len(train_dataset_obj)]
-		
-		
-		if not args.classif:
-			# Concatenate samples from original Train and Test sets
-			# Only 'training' physionet samples are have labels. Therefore, if we do classifiction task, we don't need physionet 'test' samples.
-			total_dataset = total_dataset + test_dataset_obj[:len(test_dataset_obj)]
-
-		# Shuffle and split
-		train_data, test_data = model_selection.train_test_split(total_dataset, train_size= 0.8, 
-			random_state = 42, shuffle = True)
-
-		record_id, tt, vals, mask, labels = train_data[0]
-
-		n_samples = len(total_dataset)
-		input_dim = vals.size(-1)
-
-		batch_size = min(min(len(train_dataset_obj), args.batch_size), args.n)
-		data_min, data_max = get_data_min_max(total_dataset)
-
-		train_dataloader = DataLoader(train_data, batch_size= batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn(batch, args, device, data_type = "train",
-				data_min = data_min, data_max = data_max))
-		test_dataloader = DataLoader(test_data, batch_size = n_samples, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn(batch, args, device, data_type = "test",
-				data_min = data_min, data_max = data_max))
-
-		attr_names = train_dataset_obj.params
-		data_objects = {"dataset_obj": train_dataset_obj, 
-					"train_dataloader": utils.inf_generator(train_dataloader), 
-					"test_dataloader": utils.inf_generator(test_dataloader),
-					"input_dim": input_dim,
-					"n_train_batches": len(train_dataloader),
-					"n_test_batches": len(test_dataloader),
-					"attr": attr_names, #optional
-					"classif_per_tp": False, #optional
-					"n_labels": 1} #optional
-		return data_objects
-
-	##################################################################
-	# Human activity dataset
-
-	if dataset_name == "activity":
-		n_samples =  min(10000, args.n)
-		dataset_obj = PersonActivity('data/PersonActivity', 
-							download=True, n_samples =  n_samples, device = device)
-		print(dataset_obj)
-		# Use custom collate_fn to combine samples with arbitrary time observations.
-		# Returns the dataset along with mask and time steps
-
-		# Shuffle and split
-		train_data, test_data = model_selection.train_test_split(dataset_obj, train_size= 0.8, 
-			random_state = 42, shuffle = True)
-
-		train_data = [train_data[i] for i in np.random.choice(len(train_data), len(train_data))]
-		test_data = [test_data[i] for i in np.random.choice(len(test_data), len(test_data))]
-
-		record_id, tt, vals, mask, labels = train_data[0]
-		input_dim = vals.size(-1)
-
-		batch_size = min(min(len(dataset_obj), args.batch_size), args.n)
-		train_dataloader = DataLoader(train_data, batch_size= batch_size, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn_activity(batch, args, device, data_type = "train"))
-		test_dataloader = DataLoader(test_data, batch_size=n_samples, shuffle=False, 
-			collate_fn= lambda batch: variable_time_collate_fn_activity(batch, args, device, data_type = "test"))
-
-		data_objects = {"dataset_obj": dataset_obj, 
-					"train_dataloader": utils.inf_generator(train_dataloader), 
-					"test_dataloader": utils.inf_generator(test_dataloader),
-					"input_dim": input_dim,
-					"n_train_batches": len(train_dataloader),
-					"n_test_batches": len(test_dataloader),
-					"classif_per_tp": True, #optional
-					"n_labels": labels.size(-1)}
-
-		return data_objects
-		
-	##################################################################
-	# Crop Classification
+	# Crop Classification TUM
 		
 	if dataset_name == "crop":
 
@@ -217,13 +67,13 @@ def parse_datasets(args, device):
 			root = scratch_root2
 		print("dataroot: " + root)
 
-		train_dataset_obj = Crops(root, mode="train", args=args, noskip=args.noskip,
-								download=True, device = device, list_form = list_form)
-		test_dataset_obj = Crops(root, mode="test", args=args, noskip=args.noskip,
-								download=True, device = device, list_form = list_form)
-		eval_dataset_obj = Crops(root, mode="eval", args=args, noskip=args.noskip,
-								download=True, device = device,  list_form = list_form)
+		train_dataset_obj = Crops(root, mode="train", args=args, noskip=False,
+									download=True, device = device, list_form = list_form)
+		test_dataset_obj = Crops(root, mode="test", args=args, noskip=False,
+									download=True, device = device, list_form = list_form)
 		
+		eval_dataset_obj = Crops(root, mode="eval", args=args, noskip=False, 
+									download=True, device = device,  list_form = list_form)
 		
 		n_samples = min(args.n, len(train_dataset_obj))
 		n_eval_samples = min( float("inf"), len(eval_dataset_obj)) #TODO set it back to inf
@@ -275,10 +125,10 @@ def parse_datasets(args, device):
 			else: #else manual batching is used
 				#recommendation: set shuffle to False, the underlying hd5y structure is than more efficient
 				# because it can make use of the countagious blocks of data.
-				perc = 0
+				perc = 1.0
 				early_prediction = int(26*perc)
-				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False, subsamp=args.trainsub)
-				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False,early_prediction=early_prediction)
+				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False, early_prediction=early_prediction, subsamp=args.trainsub)
+				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False)
 				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False, early_prediction=early_prediction, subsamp=args.testsub)
 			
 		data_objects = {"dataset_obj": train_dataset_obj, 
@@ -327,12 +177,23 @@ def parse_datasets(args, device):
 			print(scratch_root2)
 		print("dataroot: " + root)
 
-		
-		#pdb.set_trace()
-		train_dataset_obj = SwissCrops(root, mode="train", device=device, noskip=args.noskip,
+		# Search for a dataroot
+		root = r'data/SwissCrops'
+		scratch_root1 = r'/cluster/scratch/metzgern/ODEcrop/Swisscrop'
+		scratch_root2 = r'/scratch/Nando/ODEcrop/Swisscrop'
+		if os.path.exists(scratch_root1):
+			root = scratch_root1
+			print(scratch_root1)
+		elif os.path.exists(scratch_root2):
+			# Leonhard cluster case
+			root = scratch_root2
+			print(scratch_root2)
+		print("dataroot: " + root)
+
+		train_dataset_obj = SwissCrops(root, mode="train", device=device,  noskip=args.noskip,
 										step=args.step, trunc=args.trunc, nsamples=args.n,
 										datatype=args.swissdatatype, singlepix=args.singlepix)
-		test_dataset_obj = SwissCrops(root, mode="test", device=device, noskip=args.noskip,
+		test_dataset_obj = SwissCrops(root, mode="test", device=device,  noskip=args.noskip,
 										step=args.step, trunc=args.trunc, nsamples=args.validn,
 										datatype=args.swissdatatype, singlepix=args.singlepix) 
 		
@@ -361,15 +222,6 @@ def parse_datasets(args, device):
 					"n_test_batches": len(test_dataloader),
 					"classif_per_tp": False, # We want to classify the whole sequence!!. Standard: True, #optional
 					"n_labels": train_dataloader.nclasses+1} #plus one, because there is one class that summerizes all the other classes--> "other" is "0"
-
-		"""
-		print("")
-		print("Trainingdataset:")
-		print(data_objects["dataset_obj"])
-
-		print("Using Testdataset:")
-		print(test_dataset_obj)
-		"""
 		
 		return data_objects
 

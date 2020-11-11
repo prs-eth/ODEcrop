@@ -68,7 +68,8 @@ class Crops(object):
 		
 		# create mask
 		self.step = step
-		self.trunc = trunc # use all features?
+		self.trunc = trunc # use all features
+
 		self.feature_trunc = trunc*self.nb**2
 
 		#for statistics
@@ -224,6 +225,8 @@ class Crops(object):
 				
 				X_mod = np.delete(X_mod, (samples_to_delete), axis=0)
 				X_mask_mod = np.delete(X_mask_mod, (samples_to_delete), axis=0)
+				if self.noskip:
+					X_mask_mod = (X_mod != 0)
 				Y_mod = np.delete(Y_mod, (samples_to_delete), axis=0)
 
 				#make assumptions about the label, harden
@@ -490,7 +493,7 @@ class Crops(object):
 					X_mod[~mask_2] = 0
 				else:
 					X_mod[~mask] = 0
-									
+
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)
 				X_mask_mod = np.delete(mask, (timeC), axis=2)
@@ -614,10 +617,7 @@ class Crops(object):
 				#"destroy" data, that is corrputed by bad weather. We will never use it!
 				# "all masked out elements should be zeros"
 				if self.noskip:
-					mask_2 = (X_mod != 0)
-					X_mod[~mask_2] = 0
-				else:
-					X_mod[~mask] = 0
+					X_mask_mod = (X_mod != 0)
 				
 				#Truncate the timestamp-column (timeC) from the features and mask
 				X_mod = np.delete(X_mod, (timeC), axis=2)

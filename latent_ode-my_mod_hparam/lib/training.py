@@ -1,7 +1,7 @@
-"""
-author: Nando Metzger
-metzgern@ethz.ch
-"""
+###########################
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+###########################
 
 import os
 from random import SystemRandom
@@ -9,7 +9,7 @@ from random import SystemRandom
 import lib.utils as utils
 from lib.utils import compute_loss_all_batches
 from lib.utils import Bunch, get_optimizer, plot_confusion_matrix
-from lib.construct import get_ODE_RNN_model, get_classic_RNN_model
+from lib.construct import get_ODE_RNN_model#, get_classic_RNN_model
 from lib.ode_rnn import *
 from lib.parse_datasets import parse_datasets
 
@@ -113,23 +113,24 @@ def construct_and_train_model(config):
 
 	##############################################################################
 	# Create Model
-	#pdb.set_trace()
 
 	Model = []
-
 	if args.ode_rnn:
 		for i in range(num_seeds):
 			Model.append(get_ODE_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
-			
-	if args.classic_rnn:
-		for i in range(num_seeds):
-			Model.append(get_classic_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
+	else:
+		raise Exception("only the model with flag '--ode-rnn' is supported. Add this to the command.")
+
+	#if args.classic_rnn:
+	#	for i in range(num_seeds):
+	#		Model.append(get_classic_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
 
 	# "Magic" wandb model watcher
 	wandb.watch(Model[0], "all")
 
 	##################################################################
 	
+	# Tensorboard not used anymore.
 	if args.tensorboard:
 		Validationwriter = []
 		#Trainwriter = []
@@ -269,29 +270,13 @@ def train_it(
 		Logger.append( utils.get_logger(logpath=log_path, filepath=os.path.abspath(__file__)) )
 		Logger[i].info(input_command)
 		
-		
-		"""
-		Diffeq_param = Model[i].Encoder0.z0_diffeq_solver.parameters()
-
-		other_param = [ list(Model[i].classifier.parameters(),
-						Model[i].Encoder0.RNN_update.parameters(),
-						Model[i].Encoder0.ode_bn0.parameters(),
-						Model[i].Encoder0.ode_bn1.parameters(),
-						Model[i].Encoder0.output_bn.parameters(),
-						Model[i].parameters() ]
-		"""
-
 		Optimizer.append( get_optimizer(args.optimizer, args.lr, Model[i].parameters() ) )
 
-		"""
-		otherOptimizer.append( get_optimizer(args.optimizer, args.lr, Diffeq_param ) )
-		ODEOptimizer.append( get_optimizer(args.optimizer, args.lr, Model[i].parameters() ) )
-		"""
 
 	num_batches = Data_obj[0]["n_train_batches"]
 	labels = Data_obj[0]["dataset_obj"].label_list
 
-	#create empty lists
+	#create empty lists for results and similar
 	num_gpus = len(Devices)
 	train_res = [None] * num_gpus
 	batch_dict = [None] * num_gpus
@@ -328,7 +313,6 @@ def train_it(
 		
 		for i, device in enumerate(Devices):
 			train_res[i] = Model[i].compute_all_losses(batch_dict[i], n_traj_samples = 3, kl_coef = kl_coef)
-		#train_res= compute_all_losses_mod(Models, batch_dict, n_traj_samples = 3, kl_coef = kl_coef)
 		
 		for i, device in enumerate(Devices):
 			train_res[i]["loss"].backward()
@@ -340,11 +324,10 @@ def train_it(
 		if args.dataset=="swisscrop":
 			n_iters_to_viz /= 20
 		
-		#vizualization_interval =(round(n_iters_to_viz * num_batches - 0.499999) if round(n_iters_to_viz * num_batches - 0.499999)>0 else 1)
-		#if (itr!=1) and (itr % round(n_iters_to_viz * num_batches - 0.499999)== 0) :
 		if (itr!=0)	and (itr % args.val_freq) ==0 :
 			with torch.no_grad():
-
+				
+				# Calculate labels and loss on test data
 				for i, device in enumerate(Devices):
 					test_res[i], label_dict[i] = compute_loss_all_batches(Model[i], 
 						Data_obj[i]["test_dataloader"], args,
@@ -356,10 +339,14 @@ def train_it(
 				for i, device in enumerate(Devices):
 					
 					#make confusion matrix
-					_, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
+					cm, conf_fig = plot_confusion_matrix(label_dict[0]["correct_labels"],label_dict[0]["predict_labels"], Data_obj[0]["dataset_obj"].label_list, tensor_name='dev/cm')
 					Validationwriter[i].add_figure("Validation_Confusionmatrix", conf_fig, itr*args.batch_size)
 					
-					#logger.info("-----------------------------------------------------------------------------------")
+					# prepare GT labels and predictions
+					y_ref_train = torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().cpu()
+					y_pred_train = torch.argmax(batch_dict[0]['labels'], dim=1).cpu()
+					y_ref = label_dict[0]["correct_labels"].cpu()
+					y_pred = label_dict[0]["predict_labels"]
 
 					# prepare GT labels and predictions
 					y_ref_train = torch.argmax(train_res[0]['label_predictions'], dim=2).squeeze().cpu()
@@ -379,17 +366,15 @@ def train_it(
 						torch.save({
 							'args': args,
 							'state_dict': Model[i].state_dict(),
+							'cm': cm
 						}, Top_ckpt_path[i])
 
+
+						utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
 						# Save trajectory here
-						if not test_res[i]["PCA_traj"] is None:
-							with open( os.path.join('vis', 'traj_dict' + str(ExperimentID[i]) + '.pickle' ), 'wb') as handle:
-								pickle.dump(test_res[i]["PCA_traj"], handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-
-						# Save Heatmap-Confusionmatrix, if validationset contains all samples...
-						#if len(np.unique(y_ref))==len(Data_obj[0]["dataset_obj"].label_list):
-						#	utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
+						#if not test_res[i]["PCA_traj"] is None:
+						#	with open( os.path.join('vis', 'traj_dict' + str(ExperimentID[i]) + '.pickle' ), 'wb') as handle:
+						#		pickle.dump(test_res[i]["PCA_traj"], handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 					# make PCA visualization
 					if "PCA_traj" in test_res[0]:
@@ -406,8 +391,6 @@ def train_it(
 						
 						'loss/train': train_res[i]["loss"].detach(),
 						'loss/validation': test_res[i]["loss"].detach(),
-						#'Confusionmatrix': conf_fig,
-						
 
 						'Other_metrics/train_cm' : sklearn_cm(y_ref_train, y_pred_train),
 						'Other_metrics/train_precision': precision_score(y_ref_train, y_pred_train, average='macro'),
@@ -429,12 +412,7 @@ def train_it(
 					wandb.log(logdict, step=itr*args.batch_size)
 					
 					# wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)
-
-			# empty result placeholder
-			#somedict = {}
-			#test_res = [somedict]
-			#test_res[0]["accuracy"] = float(0)
-
+		# Write training loss and accuracy after every batch (Only recommanded for debugging)
 		fine_train_writer = False
 		if fine_train_writer:
 			if "loss" in train_res[i]:
@@ -460,7 +438,4 @@ def train_it(
 		label_dict = [None]* num_gpus
 
 	print(Best_test_acc[0], " at step ", Best_test_acc_step[0])
-
-
-	
 	return train_res, test_res, Best_test_acc[0], Best_test_acc_step[0]

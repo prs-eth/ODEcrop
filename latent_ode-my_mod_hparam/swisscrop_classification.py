@@ -69,7 +69,6 @@ class SwissCrops(object):
 		self.means = [0.4071655 , 0.2441012 , 0.23429523, 0.23402453, 0.00432794, 0.00615292, 0.00566292, 0.00306609, 0.00367624]
 		self.stds = [0.24994541, 0.30625425, 0.32668449, 0.30204761, 0.00490984, 0.00411067, 0.00426914, 0.0027143 , 0.00221963]
 
-		
 		# Define some mapping to sort out the labels for fewer cases
 		# All Labels
 		self.labellist = np.array([ 1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,
@@ -100,8 +99,6 @@ class SwissCrops(object):
 		self.labellistglob23 = np.array([49, 26, 48, 48, 20,  8, 41, 51, 32, 36, 20, 20, 38, 30, 30, 50, 34,
 											42, 10, 29, 45, 45,  9,  9, 50, 42, 21, 21, 21, 21, 21, 27, 27, 27,
 											21, 21, 27, 21, 46, 44, 44, 46, 46, 46, 14, 14, 14, 27])
-		#if not self.check_exists():
-		#	self.process_data()
 
 		if mode=="train":
 			data_file = self.train_file
@@ -113,8 +110,8 @@ class SwissCrops(object):
 			#self.process_data()
 		
 		if not os.path.exists(data_file):
-			self.process_data()
-
+			print("haven't found " + data_file + " . Starting to preprocess the whole dataset...")
+			#self.process_data()
 		self.hdf5dataloader = h5py.File(data_file, "r", rdcc_nbytes=1024**2*4000,rdcc_nslots=1e7)
 		self.nsamples = self.hdf5dataloader["data"].shape[0]
 		self.nfeatures = self.hdf5dataloader["data"].shape[2]
@@ -626,7 +623,7 @@ class SwissCrops(object):
 		return True
 
 	def __len__(self):
-		# returns the number of samples that are actually used
+	# returns the number of samples that are actually used
 		if self.mode=="train":
 			return min(self.n, self.hdf5dataloader["data"].shape[0])
 		else:
@@ -702,10 +699,32 @@ class SwissCrops(object):
 
 
 class Dataset(torch.utils.data.Dataset):
-	def __init__(self, path, t=0.0, mode='all', eval_mode=False, fold=None, gt_path='data/SwissCrops/labelsC.csv',
-	step=1, feature_trunc=10):
-		
+	def __init__(self, path, t=0.9, mode='all', eval_mode=False, fold=None, gt_path='data/SwissCrops/labels.csv',
+		step=1, feature_trunc=10):
+
 		self.data = h5py.File(path, "r")
+		self.samples = self.data["data"].shape[0]
+		self.max_obs = self.data["data"].shape[1]
+		self.spatial = self.data["data"].shape[2:-1]
+		#self.n_classes = np.max( self.data["gt"] ) + 1
+
+		self.t = t
+		self.augment_rate = 0
+		self.eval_mode = eval_mode
+		self.fold = fold
+		self.step = step
+		self.featrue_trunc = feature_trunc
+
+		self.eval_mode = eval_mode
+		self.fold = fold
+		self.gt_path = gt_path
+
+		self.shuffle = True
+		self.normalization = True
+
+		self.mode = mode
+
+		self.data = h5py.File(self.raw_file, "r")
 		self.samples = self.data["data"].shape[0]
 		self.max_obs = self.data["data"].shape[1]
 		self.spatial = self.data["data"].shape[2:-1]
@@ -726,15 +745,10 @@ class Dataset(torch.utils.data.Dataset):
 		
 		self.valid_samples = self.valid_list.shape[0]
 		
-		#self.dates = self.chooose_dates()[0].tolist()
-		#self.dates = self.chooose_dates_2().tolist()
-		#self.max_obs = len(self.dates)
-		self.max_obs = 71
-
 		gt_path_ = './utils/' + gt_path		
 		if not os.path.exists(gt_path_):
-			gt_path_ = './'  + gt_path		
-			
+			gt_path_ = './'  + gt_path	
+					
 		file=open(gt_path_, "r")
 		tier_1 = []
 		tier_2 = []
@@ -774,7 +788,6 @@ class Dataset(torch.utils.data.Dataset):
 				tier_3[i] = '0_unknown'
 			if tier_4[i] == '':
 				tier_4[i] = '0_unknown'
-			
 							
 		tier_2_elements = list(set(tier_2))
 		tier_3_elements = list(set(tier_3))
@@ -818,29 +831,11 @@ class Dataset(torch.utils.data.Dataset):
 		for gt in self.label_list23:
 			self.label_list_glob23.append(tier_4_[int(gt)])
 			self.label_list_glob_name23.append(tier_4[int(gt)])
-			
-#		self.tier_2_elements_reduced = list(set(self.label_list_local_1))
-#		self.tier_3_elements_reduced = list(set(self.label_list_local_2))
-#		self.tier_4_elements_reduced = list(set(self.label_list_glob))
-#		self.tier_2_elements_reduced.sort()
-#		self.tier_3_elements_reduced.sort()
-#		self.tier_4_elements_reduced.sort()
 		
-#		print(self.label_list)
-#		print('-'*20)
-#		
-#		print(self.label_list_local_1)
-#		print(self.label_list_local_1_name)		
-#		print('-'*20)
-#
-#		print(self.label_list_local_2)
-#		print(self.label_list_local_2_name)				
-#		print('-'*20)
-#		
-#		print(self.label_list_glob)
-#		print(self.label_list_glob_name)
-			
-		#self.n_classes = len(self.label_list)
+		self.n_classes = max(self.label_list_glob) + 1
+		self.n_classes_local_1 = max(self.label_list_local_1) + 1
+		self.n_classes_local_2 = max(self.label_list_local_2) + 1
+
 		self.n_classes = max(self.label_list_glob) + 1
 		self.n_classes_local_1 = max(self.label_list_local_1) + 1
 		self.n_classes_local_2 = max(self.label_list_local_2) + 1
@@ -912,7 +907,6 @@ class Dataset(torch.utils.data.Dataset):
 			target[target_ == self.label_list[i]] = self.label_list_glob[i]
 			target_local_1[target_ == self.label_list[i]] = self.label_list_local_1[i]
 			target_local_2[target_ == self.label_list[i]] = self.label_list_local_2[i]
-			
 		
 		X = torch.from_numpy(X)
 		cloud_cover = torch.from_numpy(cloud_cover).float()
@@ -922,7 +916,6 @@ class Dataset(torch.utils.data.Dataset):
 		if self.eval_mode:
 			gt_instance = torch.from_numpy(gt_instance).float()
 		
-
 		#augmentation
 		if self.eval_mode==False and np.random.rand() < self.augment_rate:
 			flip_dir  = np.random.randint(3)
@@ -957,10 +950,7 @@ class Dataset(torch.utils.data.Dataset):
 		if self.eval_mode:  
 			return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long(), gt_instance.long()	 
 		else:
-			#return X, target, target_local_1, target_local_2, cloud_cover
 			return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long(),
-
-
 
 	def get_rid_small_fg_tiles(self):
 		valid = np.ones(self.samples)
@@ -1061,6 +1051,7 @@ class Dataset(torch.utils.data.Dataset):
 	
 			for j in range(class_labels.shape[0]):
 			   class_fq[j] += torch.sum(temp==class_labels[j]) 
+<<<<<<< HEAD
 
 		for x in class_names:
 			print(x)
@@ -1070,12 +1061,18 @@ class Dataset(torch.utils.data.Dataset):
 
 
 
+=======
+>>>>>>> 00466fa3efa844e857600428c8995406d82a972c
+
+		for x in class_names:
+			print(x)
+			
+		for x in class_fq:
+			print(x)
 
 
-if __name__=="__main__":
 
-	bs = 600
-
+<<<<<<< HEAD
 	#train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", datatype="2_14toplabels_asdf")
 	#trainloader = FastTensorDataLoader(train_dataset_obj, batch_size=bs, shuffle=False)
 	#train_generator = utils.inf_generator(trainloader)
@@ -1110,16 +1107,22 @@ if __name__=="__main__":
 
 	for i in range(len(traindataset.label_list23)):
 		dumbtarget23[dumbtarget == traindataset.label_list23[i]] = traindataset.label_list_glob23[i]
+=======
+if __name__=="__main__":
+>>>>>>> 00466fa3efa844e857600428c8995406d82a972c
 
+	bs = 600
 
-	#train_dataset = Dataset("data/SwissCrops/", 0.,'train')
-	#raw_train_samples = len(train_dataset)
+	#train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", datatype="2_14toplabels_asdf")
+	#trainloader = FastTensorDataLoader(train_dataset_obj, batch_size=bs, shuffle=False)
+	#train_generator = utils.inf_generator(trainloader)
 
-	#test_dataset = Dataset("data/SwissCrops/", 0.,'test')
-	#raw_test_samples = len(test_dataset)
+	data_path = "data/SwissCrops/raw/train_set_24x24_debug.hdf5"
+	traindataset = Dataset(data_path, 0.,'all')
+	 
 
-	#train_dataset_obj[0]
 	print("Done")
+<<<<<<< HEAD
 
 	#pdb.set_trace()
 
@@ -1128,3 +1131,5 @@ if __name__=="__main__":
 
 	#	batch_dict = utils.get_next_batch(train_generator)
 	
+=======
+>>>>>>> 00466fa3efa844e857600428c8995406d82a972c

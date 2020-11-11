@@ -1,6 +1,7 @@
 ###########################
-# Latent ODEs for Irregularly-Sampled Time Series
-# Author: Yulia Rubanova
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+# Code adapted from Yulia Rubanova, Latent ordinary differential equations for irregularly-sampled time series
 ###########################
 
 import os
@@ -11,7 +12,6 @@ import torch.nn as nn
 from torch.nn.functional import relu
 
 import lib.utils as utils
-from lib.latent_ode import LatentODE
 from lib.encoder_decoder import *
 from lib.diffeq_solver import DiffeqSolver
 

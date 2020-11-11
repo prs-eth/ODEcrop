@@ -1,6 +1,7 @@
 ###########################
-# Latent ODEs for Irregularly-Sampled Time Series
-# Author: Yulia Rubanova
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+# Code adapted from Yulia Rubanova, Latent ordinary differential equations for irregularly-sampled time series
 ###########################
 
 import numpy as np
@@ -25,7 +26,7 @@ from lib.base_models import create_classifier
 from lib.ode_func import ODEFunc
 from lib.diffeq_solver import DiffeqSolver
 
-from lib.gru_ode import FullGRUODECell_Autonomous
+#from lib.gru_ode import FullGRUODECell_Autonomous
 from lib.RNNcells import STAR_unit, GRU_unit, GRU_standard_unit, LSTM_unit
 
 import pdb
@@ -116,7 +117,7 @@ class ML_ODE_RNN(Baseline):
 		include_topper = False, linear_topper = False,
 		use_BN = True, resnet = False,
 		ode_type="linear", ode_units=200, rec_layers=1, ode_method="dopri5",
-		stack_order = None, nornnimputation=True):
+		stack_order = None, nornnimputation=False):
 
 		Baseline.__init__(self, input_dim, latent_dim, device = device, 
 			obsrv_std = obsrv_std, use_binary_classif = use_binary_classif,

@@ -1,13 +1,12 @@
-"""
-author: Nando Metzger
-metzgern@ethz.ch
-"""
+###########################
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+###########################
 
 import lib.utils as utils
 
 from lib.ode_func import ODEFunc
 from lib.diffeq_solver import DiffeqSolver
-from lib.gru_ode import FullGRUODECell_Autonomous
 
 import torch.nn as nn
 import torch

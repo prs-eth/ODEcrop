@@ -1,7 +1,7 @@
 ###########################
-# Latent ODEs for Irregularly-Sampled Time Series
-# Author: Yulia Rubanova,
-# Editor: Nando Metzger
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+# Code adapted from Yulia Rubanova, Latent ordinary differential equations for irregularly-sampled time series
 ###########################
 
 import os
@@ -29,13 +29,12 @@ from torch.utils.tensorboard import SummaryWriter
 import lib.utils as utils
 from lib.plotting import *
 
-from lib.rnn_baselines import *
+#from lib.rnn_baselines import *
 from lib.ode_rnn import *
 from lib.create_latent_ode_model import create_LatentODE_model
 from lib.parse_datasets import parse_datasets
 from lib.ode_func import ODEFunc, ODEFunc_w_Poisson
 from lib.diffeq_solver import DiffeqSolver
-from mujoco_physics import HopperPhysics
 
 from lib.utils import compute_loss_all_batches
 
@@ -56,24 +55,24 @@ parser.add_argument('-validn',  type=int, default=21000, help="Size of the valid
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=0.00762, help="Starting learning rate.")
 parser.add_argument('-b', '--batch-size', type=int, default=700)
-parser.add_argument('--viz', default=True, action='store_true', help="Show plots while training")
+parser.add_argument('--viz', default=True, action='store_true', help="NOT IN USE! Show plots while training")
 
 parser.add_argument('--save', type=str, default='experiments/', help="Path for save checkpoints")
-parser.add_argument('--load', type=str, default=None, help="ID of the experiment to load for evaluation. If None, run a new experiment.")
+parser.add_argument('--load', type=str, default=None, help="NOT IN USE! ID of the experiment to load for evaluation. If None, run a new experiment.")
 parser.add_argument('-r', '--random-seed', type=int, default=1991, help="Random_seed")
 
-parser.add_argument('--dataset', type=str, default='crop', help="Dataset to load. Available: physionet, activity, hopper, periodic, crop, swisscrop")
-parser.add_argument('-s', '--sample-tp', type=float, default=None, help="Number of time points to sub-sample."
+parser.add_argument('--dataset', type=str, default='crop', help="Dataset to load. Available: crop, swisscrop")
+parser.add_argument('-s', '--sample-tp', type=float, default=None, help="NOT IN USE! Number of time points to sub-sample."
 	"If > 1, subsample exact number of points. If the number is in [0,1], take a percentage of available points per time series. If None, do not subsample")
 
 #only for swissdata:
 parser.add_argument('--step', type=int, default=1, help="intervall used for skipping observations in swissdata")
 parser.add_argument('--trunc', type=int, default=9, help="Feature truncation in swissdata")
-parser.add_argument('--swissdatatype', type=str, default="2_toplabels", help="blank (default), 2 (for more selective cloud handling), 2_toplabels for the most frequent labels. (only works if accordingly preprocessed) ")
+parser.add_argument('--swissdatatype', type=str, default="2", help="blank (default), 2 (for more selective cloud handling), 2_toplabels for the most frequent labels. (only works if accordingly preprocessed) ")
 parser.add_argument('--singlepix', default=False,  type=bool, help="Applies batchnormalization to the outputs of the RNN-cells")
 parser.add_argument('--noskip', action='store_true', help="If the flag is step, the dataloader will not sort out cloudy frames, and all the frames will be taken for the training.")
 
-parser.add_argument('-c', '--cut-tp', type=int, default=None, help="Cut out the section of the timeline of the specified length (in number of points)."
+parser.add_argument('-c', '--cut-tp', type=int, default=None, help="NOT IN USE! Cut out the section of the timeline of the specified length (in number of points)."
 	"Used for periodic function demo.")
 
 parser.add_argument('--quantization', type=float, default=0.1, help="Quantization on the physionet dataset."
@@ -129,9 +128,9 @@ parser.add_argument('--optimizer', type=str, default='adamax',
 					# working: adamax, adagrad, adadelta, adam, adaw, ASGD, rprop, RMSprop
 					# not working sparseadam(need sparse gradients), LBFGS(missing closure)
 parser.add_argument('--lrdecay',  type=float, default=0.9995, help="For the Learning rate scheduler")
+
 parser.add_argument('--trainsub',  type=float, default=1., help="Downsampling of the Training dataset. How many data points should be left. [0,1]")
 parser.add_argument('--testsub',  type=float, default=1., help="Downsampling of the Testing dataset. How many data points should be left. [0,1]")
-
 
 parser.add_argument('--num-seeds', type=int, default=1, help="Number of runs to average from. Default=1")
 parser.add_argument('--num-search', type=int, default=1, help="Number of search steps to be executed")
@@ -183,14 +182,6 @@ if __name__ == '__main__':
 	utils.makedirs("results/")
 	utils.makedirs("vis/")
 
-	##################################################################
-
-	#Load checkpoint and evaluate the model
-	#if args.load is not None:
-		#utils.get_ckpt_model(ckpt_path, model, device)
-		#utils.get_ckpt_model(top_ckpt_path, model, Devices[0])
-		#exit()
-
 	#################################################################
 	# Hyperparameter Optimization
 	
@@ -212,21 +203,9 @@ if __name__ == '__main__':
 		
 	hyper_config = {
 		"spec_config": spec_config, # fixed argument space
-
-		#"rec_layers": hp.quniform('rec_layers', 1, 4, 1),
-		#"units": hp.quniform('ode_units', 10, 400, 40), # default: 500
-		#"latents": hp.quniform('latents', 15, 80, 5), # default: 35
-		#"gru_units": hp.quniform('gru-units', 30, 120, 5), # default: 50
-		#"optimizer": hp.choice('optimizer', optimizer_choice), 
-		#"lr": hp.loguniform('lr', np.log(0.0001), np.log(0.01)),
-		#"batch_size": hp.qloguniform('batch_size', np.log(50), np.log(3000), 50), 
-		#"random-seed":  hp.randint('seed', 5),
-		#"ode-method": hp.choice('ODE_solver', solver_choice),
 	}
 
-	# Hyperparameters:
-	# rec_layers, units, latents, gru_units, optimizer, lr, batch_size, ode-method
-
+	# Hyperparameters: rec_layers, units, latents, gru_units, optimizer, lr, batch_size, ode-method
 	if args.hparams is None:
 		args.hparams = []
 

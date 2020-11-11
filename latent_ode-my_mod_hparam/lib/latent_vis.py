@@ -1,6 +1,7 @@
-
+###########################
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
 # Author: Nando Metzger
-
+###########################
 
 from sklearn.decomposition import PCA
 import torch

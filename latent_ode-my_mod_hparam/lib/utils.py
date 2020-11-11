@@ -1,6 +1,7 @@
 ###########################
-# Latent ODEs for Irregularly-Sampled Time Series
-# Author: Yulia Rubanova
+# Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+# Author: Nando Metzger
+# Code adapted from Yulia Rubanova, Latent ordinary differential equations for irregularly-sampled time series
 ###########################
 
 import os
@@ -33,6 +34,7 @@ from sklearn.metrics import confusion_matrix
 from lib.latent_vis import get_pca_traj
 
 import matplotlib.pyplot as plt 
+from lib.latent_vis import get_pca_traj
 
 from lib.latent_vis import get_pca_traj
 
@@ -566,9 +568,12 @@ def compute_loss_all_batches(model,
 	all_test_labels =  torch.Tensor([]).to(device)
 	hard_test_labels =  torch.Tensor([]).long().to(device)
 	hard_classif_predictions = torch.Tensor([]).long().to(device)
-
+	plot_latent = False
 	save_latents = 10
-	stored_latents = False
+	if plot_latent:
+		first, testing = True, True
+	else:
+		first, testing = False, False
 
 	for i in tqdm(range(n_batches)):
 		#pdb.set_trace()
@@ -737,7 +742,7 @@ class FastTensorDataLoader:
 		self.shuffle = shuffle
 		self.batch_shuffle = batch_shuffle
 		self.timestamps = h5py.File(os.path.join(self.dataset.processed_folder, self.dataset.time_file), "r")["tt"][:]
-		self.noskip = dataset.noskip
+		#self.noskip = dataset.noskip
 		self.subsamp = subsamp
 
 		#
@@ -750,7 +755,7 @@ class FastTensorDataLoader:
 
 		# prepare skipping of steps and truncation of features
 		self.early_prediction = early_prediction
-		
+
 		if hasattr(self.dataset, 'step'):
 			self.step = self.dataset.step
 		else:
@@ -782,13 +787,14 @@ class FastTensorDataLoader:
 			np.random.shuffle(self.true_batch_indices)
 		self.subsampled_batch_indices = self.true_batch_indices[:self.n_batches]
 
+		"""
 		self.singlepix = self.dataset.singlepix
 		if self.singlepix:
 			a = np.zeros(9, dtype=bool)
 			a[4] = 1
 			kronmask = np.kron(np.ones(9,dtype=bool),a)
 			self.kronmask = kronmask[:self.feature_trunc]
-
+		"""
 
 	def __iter__(self):
 		# reset iterator state
@@ -802,9 +808,6 @@ class FastTensorDataLoader:
 		
 		if self.batch_shuffle and self.dataset.mode=="train":
 			np.random.shuffle(self.batch_indices)
-		
-		#if self.batch_shuffle:
-		#	np.random.shuffle(self.batch_indices)
 
 		self.bi = 0
 		self.i = 0
@@ -843,18 +846,13 @@ class FastTensorDataLoader:
 			mask = torch.from_numpy(self.hdf5dataloader["mask"][start:stop] ).float()#.to(self.dataset.device)
 			labels = torch.from_numpy( self.hdf5dataloader["labels"][start:stop] ).float()#.to(self.dataset.device)
 
-			if self.singlepix:
-				data_dict = {
-					"data": data[:,::self.step,self.kronmask].to(self.dataset.device), 
-					"time_steps": time_stamps[::self.step].to(self.dataset.device),
-					"mask": mask[:,::self.step,self.kronmask].to(self.dataset.device),
-					"labels": labels}
-			else:
-				data_dict = {
-					"data": data[:,::self.step,:self.feature_trunc].to(self.dataset.device), 
-					"time_steps": time_stamps[::self.step].to(self.dataset.device),
-					"mask": mask[:,::self.step,:self.feature_trunc].to(self.dataset.device),
-					"labels": labels}
+
+		
+			data_dict = {
+				"data": data[:,::self.step,:self.feature_trunc].to(self.dataset.device), 
+				"time_steps": time_stamps[::self.step].to(self.dataset.device),
+				"mask": mask[:,::self.step,:self.feature_trunc].to(self.dataset.device),
+				"labels": labels}
 
 		if self.subsamp>0 and self.subsamp<1:
 			max_len = data_dict["mask"].shape[1]
@@ -862,12 +860,18 @@ class FastTensorDataLoader:
 			validinds = [torch.nonzero(torch.sum(seq,1)) for seq in data_dict["mask"]] 
 			newinds = [ inds[torch.multinomial(torch.ones(len(inds)), max(int(len(inds)*self.subsamp), 1), replacement=False )] for inds in validinds]
 			data_dict["mask"] = torch.stack([ torch.zeros(max_len, dtype=torch.float32, device=self.dataset.device).scatter_(0, torch.squeeze(inds), 1) for inds in newinds]).unsqueeze(2).repeat(1,1,features)
-			
-			
+
 		if self.early_prediction > 0:
-			filter_rest =  torch.zeros_like(data_dict["mask"]) 
-			filter_rest[:,:self.early_prediction,:] = 1
-			data_dict["mask"] = data_dict["mask"] * filter_rest
+			zero_input_propagation = True
+			if zero_input_propagation:
+				#Used to test test propagation behaviour of vanilla RNNs
+				data_dict["mask"][:,self.early_prediction:,:] = 1
+				data_dict["data"][:,self.early_prediction:,:] = 0
+			else:
+				# RNNs will not propagate after last observation, but ODE-RNN will
+				filter_rest =  torch.zeros_like(data_dict["mask"]) 
+				filter_rest[:,:self.early_prediction,:] = 1
+				data_dict["mask"] = data_dict["mask"] * filter_rest
 
 		#if self.noskip:
 			# Mark every frame as observed (needed for some experiments)
@@ -905,7 +909,6 @@ class FastTensorDataLoader:
 
 	def __len__(self):
 		return self.n_batches
-
 
 class Bunch(object):
   def __init__(self, adict):
@@ -1018,7 +1021,8 @@ def plot_confusion_matrix(correct_labels, predict_labels, labels, title='Confusi
 		- Depending on the number of category and the data , you may have to modify the figzie, font sizes etc. 
 		- Currently, some of the ticks dont line up due to rotations.
 	'''
-	cm = confusion_matrix(correct_labels, predict_labels)#, labels=labels)
+	cmnorm = confusion_matrix(correct_labels, predict_labels, normalize='true')#, labels=labels)
+	cm = confusion_matrix(correct_labels, predict_labels)#, normalize='true')#, labels=labels)
 	if normalize:
 		cm = cm.astype('float')*10 / cm.sum(axis=1)[:, np.newaxis]
 		cm = np.nan_to_num(cm, copy=True)
@@ -1053,8 +1057,40 @@ def plot_confusion_matrix(correct_labels, predict_labels, labels, title='Confusi
 		ax.text(j, i, format(cm[i, j], 'd') if cm[i,j]!=0 else '.', horizontalalignment="center", fontsize=3.5, verticalalignment='center', color= "black")
 	fig.set_tight_layout(True)
 	#summary = tfplot.figure.to_summary(fig, tag=tensor_name)
-	return 1, fig
+	return cmnorm, fig
 
+
+
+def plot_confusion_matrix2(target_test, pred_test, valid_labels_names, ExperimentID):
+
+	from sklearn.metrics import confusion_matrix
+	#from sklearn.metrics import ConfusionMatrixDisplay
+	import seaborn as sn
+	import pandas as pd
+	import matplotlib.pyplot as plt
+	sn.set(font_scale=1.3)
+
+	#cm = confusion_matrix(target_test, pred_test, normalize=None)
+	cm = confusion_matrix(target_test, pred_test, normalize='true')
+	
+	#Baseline CM: A saved top-run from GRU-dt
+	refcm = torch.load('experiments/experiment_2702000_topscore.ckpt')["cm"]
+	diffcm = cm-refcm
+
+	vmax = np.max([ -np.min(diffcm) , np.max(diffcm) ])
+
+	df_cm = pd.DataFrame(diffcm, index = [i for i in valid_labels_names],
+					columns = [i for i in valid_labels_names])
+	plt.figure(figsize = (15,10))
+	#sn.heatmap(df_cm, annot=False, cmap='Blues')#vmin=0, vmax=100
+	#sn.heatmap(df_cm, annot=False, cmap='RdBu', vmin=-0.10, vmax=0.10)
+	sn.heatmap(df_cm, annot=False, cmap='BrBG', vmin=-vmax, vmax=vmax)
+	#plt.xlabel('True label')
+	#plt.ylabel('Predicted label')
+	#plt.title('Confusion matrix')
+	plt.savefig('vis/cm' + str(ExperimentID) + '.pdf', bbox_inches='tight')
+
+	plt.close()
 
 
 
