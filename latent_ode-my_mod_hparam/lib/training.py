@@ -9,7 +9,7 @@ from random import SystemRandom
 import lib.utils as utils
 from lib.utils import compute_loss_all_batches
 from lib.utils import Bunch, get_optimizer, plot_confusion_matrix
-from lib.construct import get_ODE_RNN_model, get_classic_RNN_model
+from lib.construct import get_ODE_RNN_model#, get_classic_RNN_model
 from lib.ode_rnn import *
 from lib.parse_datasets import parse_datasets
 
@@ -118,10 +118,12 @@ def construct_and_train_model(config):
 	if args.ode_rnn:
 		for i in range(num_seeds):
 			Model.append(get_ODE_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
-			
-	if args.classic_rnn:
-		for i in range(num_seeds):
-			Model.append(get_classic_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
+	else:
+		raise Exception("only the model with flag '--ode-rnn' is supported. Add this to the command.")
+
+	#if args.classic_rnn:
+	#	for i in range(num_seeds):
+	#		Model.append(get_classic_RNN_model(args, Devices[0], input_dim, n_labels, classif_per_tp))
 
 	# "Magic" wandb model watcher
 	wandb.watch(Model[0], "all")
@@ -267,29 +269,13 @@ def train_it(
 		Logger.append( utils.get_logger(logpath=log_path, filepath=os.path.abspath(__file__)) )
 		Logger[i].info(input_command)
 		
-		
-		"""
-		Diffeq_param = Model[i].Encoder0.z0_diffeq_solver.parameters()
-
-		other_param = [ list(Model[i].classifier.parameters(),
-						Model[i].Encoder0.RNN_update.parameters(),
-						Model[i].Encoder0.ode_bn0.parameters(),
-						Model[i].Encoder0.ode_bn1.parameters(),
-						Model[i].Encoder0.output_bn.parameters(),
-						Model[i].parameters() ]
-		"""
-
 		Optimizer.append( get_optimizer(args.optimizer, args.lr, Model[i].parameters() ) )
 
-		"""
-		otherOptimizer.append( get_optimizer(args.optimizer, args.lr, Diffeq_param ) )
-		ODEOptimizer.append( get_optimizer(args.optimizer, args.lr, Model[i].parameters() ) )
-		"""
 
 	num_batches = Data_obj[0]["n_train_batches"]
 	labels = Data_obj[0]["dataset_obj"].label_list
 
-	#create empty lists
+	#create empty lists for results and similar
 	num_gpus = len(Devices)
 	train_res = [None] * num_gpus
 	batch_dict = [None] * num_gpus
@@ -337,11 +323,10 @@ def train_it(
 		if args.dataset=="swisscrop":
 			n_iters_to_viz /= 20
 		
-		#vizualization_interval =(round(n_iters_to_viz * num_batches - 0.499999) if round(n_iters_to_viz * num_batches - 0.499999)>0 else 1)
-		#if (itr!=1) and (itr % round(n_iters_to_viz * num_batches - 0.499999)== 0) :
 		if (itr!=0)	and (itr % args.val_freq) ==0 :
 			with torch.no_grad():
-
+				
+				# Calculate labels and loss on test data
 				for i, device in enumerate(Devices):
 					test_res[i], label_dict[i] = compute_loss_all_batches(Model[i], 
 						Data_obj[i]["test_dataloader"], args,
@@ -397,7 +382,6 @@ def train_it(
 						
 						'loss/train': train_res[i]["loss"].detach(),
 						'loss/validation': test_res[i]["loss"].detach(),
-						#'Confusionmatrix': conf_fig,
 
 						'Other_metrics/train_cm' : sklearn_cm(y_ref_train, y_pred_train),
 						'Other_metrics/train_precision': precision_score(y_ref_train, y_pred_train, average='macro'),
@@ -418,6 +402,7 @@ def train_it(
 					wandb.log(logdict, step=itr*args.batch_size)
 					wandb.sklearn.plot_confusion_matrix(y_ref, y_pred, labels)
 
+		# Write training loss and accuracy after every batch (Only recommanded for debugging)
 		fine_train_writer = False
 		if fine_train_writer:
 			if "loss" in train_res[i]:

@@ -301,12 +301,9 @@ class Encoder_z0_ODE_RNN(nn.Module):
 				#creating new data including delta ts plus mask, concaninate the delta t for pure RNN
 				xi = torch.cat([ features , delta_ts, new_mask], -1)
 
-			# TODO: check if mask is all non, if so: don't do GRU update to save computational costs=> Conclusion, it is not faster
-			#pdb.set_trace()
-			#xi[:,:,self.]
-			#obs_mask = data[:,i,self.input_dim//2]
 
 			if self.RNNcell=='lstm':
+				# In case of LSTM update, we have to take special care of the variables for the hidden and cell state
 				h_i_ode = yi_ode[:,:,:self.latent_dim//2]
 				c_i_ode = yi_ode[:,:,self.latent_dim//2:]
 				h_c_lstm = (h_i_ode, c_i_ode)
@@ -322,15 +319,10 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					ode_sol = yi_out.unsqueeze(2)
 					time_points = time_points.unsqueeze(0)
 			else:
-				
-				# GRU-unit: the output is directly the hidden state
-				#pdb.set_trace()
-				#yi_ode[:,obs_mask.bool()], prev_std[:,obs_mask.bool()] = self.RNN_update(yi_ode[:,obs_mask.bool()], prev_std[:,obs_mask.bool()], xi[:,obs_mask.bool()])
+				# GRU-unit or any other RNN cell: the output is directly the hidden state
 				yi_ode, prev_std = self.RNN_update(yi_ode, prev_std, xi)
-
 				yi, yi_std = yi_ode, prev_std
 				yi_out = yi
-
 
 				if not self.use_ODE:
 					ode_sol = yi_ode.unsqueeze(2)
@@ -360,7 +352,6 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					old_ODE_flags = ODE_flags
 				else:
 					#RNN case
-					#marker = np.ones((n_traj,len(time_points)))
 					marker = ((xi[:,:,(self.latent_dim+1):].sum((0,2))==0).cpu().detach().int().numpy()*2)[:,np.newaxis]  # zero: RNN-update, two: No update at all
 
 				d = {"yi_ode": yi_ode[:,:save_latents].cpu().detach(), #"yi_from_data": yi_from_data,
@@ -398,20 +389,4 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		assert(not torch.isnan(yi_std).any())
 
 		return yi, yi_std, latent_ys, extra_info
-
-
-class Decoder(nn.Module):
-	def __init__(self, latent_dim, input_dim):
-		super(Decoder, self).__init__()
-		# decode data from latent space where we are solving an ODE back to the data space
-
-		decoder = nn.Sequential(
-		   nn.Linear(latent_dim, input_dim),)
-
-		utils.init_network_weights(decoder)	
-		self.decoder = decoder
-
-	def forward(self, data):
-		return self.decoder(data)
-
 
