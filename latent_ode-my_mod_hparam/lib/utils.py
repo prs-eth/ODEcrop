@@ -1072,6 +1072,8 @@ def plot_confusion_matrix2(target_test, pred_test, valid_labels_names, Experimen
 
 	#cm = confusion_matrix(target_test, pred_test, normalize=None)
 	cm = confusion_matrix(target_test, pred_test, normalize='true')
+	dim = cm.shape[0]
+
 	
 	#Baseline CM: A saved top-run from GRU-dt
 	refcm = torch.load('experiments/experiment_2702000_topscore.ckpt')["cm"]

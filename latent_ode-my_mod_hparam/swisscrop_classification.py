@@ -1051,7 +1051,6 @@ class Dataset(torch.utils.data.Dataset):
 	
 			for j in range(class_labels.shape[0]):
 			   class_fq[j] += torch.sum(temp==class_labels[j]) 
-<<<<<<< HEAD
 
 		for x in class_names:
 			print(x)
@@ -1060,56 +1059,7 @@ class Dataset(torch.utils.data.Dataset):
 			print(x)
 
 
-
-=======
->>>>>>> 00466fa3efa844e857600428c8995406d82a972c
-
-		for x in class_names:
-			print(x)
-			
-		for x in class_fq:
-			print(x)
-
-
-
-<<<<<<< HEAD
-	#train_dataset_obj = SwissCrops('data/SwissCrops', mode="train", datatype="2_14toplabels_asdf")
-	#trainloader = FastTensorDataLoader(train_dataset_obj, batch_size=bs, shuffle=False)
-	#train_generator = utils.inf_generator(trainloader)
-
-	data_path = "data/SwissCrops/raw/train_set_24x24_debug.hdf5"
-	traindataset = Dataset(data_path, 0.,'all')
-	#traindataset =  Dataset(data_path , 0., 'test', True, 5)
-	 
-	
-	#traindataset.data_stat()
-
-	nclasses = traindataset.n_classes
-	nclasses_local_1 = traindataset.n_classes_local_1
-	nclasses_local_2 = traindataset.n_classes_local_2
-
-	traindataset[0]
-	traindataset[1]
-	traindataset[2]
-	traindataset[3]
-	traindataset[4]
-	traindataset[5]
-
-	dumbtarget = np.array(traindataset.label_list)
-	dumbtarget13 = np.zeros_like(traindataset.label_list)
-	dumbtarget23 = np.zeros_like(traindataset.label_list)
-	dumbtarget_ref = np.zeros_like(traindataset.label_list)
-	for i in range(len(traindataset.label_list)):
-		dumbtarget_ref[dumbtarget == traindataset.label_list[i]] = traindataset.label_list_glob[i]
-
-	for i in range(len(traindataset.label_list13)):
-		dumbtarget13[dumbtarget == traindataset.label_list13[i]] = traindataset.label_list_glob13[i]
-
-	for i in range(len(traindataset.label_list23)):
-		dumbtarget23[dumbtarget == traindataset.label_list23[i]] = traindataset.label_list_glob23[i]
-=======
 if __name__=="__main__":
->>>>>>> 00466fa3efa844e857600428c8995406d82a972c
 
 	bs = 600
 
@@ -1122,14 +1072,3 @@ if __name__=="__main__":
 	 
 
 	print("Done")
-<<<<<<< HEAD
-
-	#pdb.set_trace()
-
-	#Speed test
-	#for t in tqdm(range(len(trainloader))):
-
-	#	batch_dict = utils.get_next_batch(train_generator)
-	
-=======
->>>>>>> 00466fa3efa844e857600428c8995406d82a972c
