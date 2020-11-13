@@ -289,7 +289,7 @@ class ML_ODE_RNN(Baseline):
 
 
 	def get_reconstruction(self, time_steps_to_predict, data, truth_time_steps,
-		mask = None, n_traj_samples = None, mode = None, save_latents=0):
+		mask = None, n_traj_samples = None, mode = None, testing=False):
 
 		if (len(truth_time_steps) != len(time_steps_to_predict)) or (torch.sum(time_steps_to_predict - truth_time_steps) != 0):
 			raise Exception("Extrapolation mode not implemented for ODE-RNN")
@@ -346,7 +346,7 @@ class ML_ODE_RNN(Baseline):
 
 			# run one trajectory of ODE-RNN for every stacking-layer "s"
 			_, _, latent_ys, latent_extra_info = self.ode_gru[s].run_odernn(
-				input_sequence, truth_time_steps, run_backwards = False, save_latents=save_latents)
+				input_sequence, truth_time_steps, run_backwards = False, testing=testing)
 
 			latent_ys = latent_ys.permute(0,2,1,3)
 

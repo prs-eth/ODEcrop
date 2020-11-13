@@ -699,8 +699,8 @@ class SwissCrops(object):
 
 
 class Dataset(torch.utils.data.Dataset):
-	def __init__(self, path, t=0.9, mode='all', eval_mode=False, fold=None, gt_path='data/SwissCrops/labels.csv',
-		step=1, feature_trunc=10):
+	def __init__(self, path, t=0.9, mode='all', eval_mode=False, fold=None, gt_path='data/SwissCrops/labelsC.csv',
+		step=1, feature_trunc=10, untile=False, cloud_thresh=0.05):
 
 		self.data = h5py.File(path, "r")
 		self.samples = self.data["data"].shape[0]
@@ -714,27 +714,23 @@ class Dataset(torch.utils.data.Dataset):
 		self.fold = fold
 		self.step = step
 		self.featrue_trunc = feature_trunc
+		self.cloud_thresh = cloud_thresh
 
 		self.eval_mode = eval_mode
 		self.fold = fold
 		self.gt_path = gt_path
+		self.untile = untile
 
 		self.shuffle = True
 		self.normalization = True
-
+		self.normalize = True
 		self.mode = mode
+		self.nb = 3
 
-		self.data = h5py.File(self.raw_file, "r")
-		self.samples = self.data["data"].shape[0]
-		self.max_obs = self.data["data"].shape[1]
-		self.spatial = self.data["data"].shape[2:-1]
-		#self.n_classes = np.max( self.data["gt"] ) + 1
-		self.t = t
-		self.augment_rate = 0
-		self.eval_mode = eval_mode
-		self.fold = fold
-		self.step = step
-		self.featrue_trunc = feature_trunc
+		# define de previously calculated global training mean and std...
+		self.means = [0.4071655 , 0.2441012 , 0.23429523, 0.23402453, 0.00432794, 0.00615292, 0.00566292, 0.00306609, 0.00367624]
+		self.stds = [0.24994541, 0.30625425, 0.32668449, 0.30204761, 0.00490984, 0.00411067, 0.00426914, 0.0027143 , 0.00221963]
+
 		
 		#Get train/test split
 		if self.fold != None:
@@ -879,8 +875,7 @@ class Dataset(torch.utils.data.Dataset):
 		X = self.data["data"][idx]
 		target_ = self.data["gt"][idx,...,0]
 		cloud_cover = self.data["cloud_cover"][idx,...]
-		if self.eval_mode:
-			gt_instance = self.data["gt_instance"][idx,...,0]
+		gt_instance = self.data["gt_instance"][idx,...,0]
 
 
 		X = np.transpose(X, (0, 3, 1, 2))
@@ -908,14 +903,15 @@ class Dataset(torch.utils.data.Dataset):
 			target_local_1[target_ == self.label_list[i]] = self.label_list_local_1[i]
 			target_local_2[target_ == self.label_list[i]] = self.label_list_local_2[i]
 		
+		"""
 		X = torch.from_numpy(X)
 		cloud_cover = torch.from_numpy(cloud_cover).float()
 		target = torch.from_numpy(target).float()
 		target_local_1 = torch.from_numpy(target_local_1).float()
 		target_local_2 = torch.from_numpy(target_local_2).float()
-		if self.eval_mode:
-			gt_instance = torch.from_numpy(gt_instance).float()
-		
+		gt_instance = torch.from_numpy(gt_instance).float()
+		"""
+
 		#augmentation
 		if self.eval_mode==False and np.random.rand() < self.augment_rate:
 			flip_dir  = np.random.randint(3)
@@ -947,10 +943,102 @@ class Dataset(torch.utils.data.Dataset):
 		#keep values between 0-1
 		X = X * 1e-4
 		
-		if self.eval_mode:  
-			return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long(), gt_instance.long()	 
+		if not self.untile:
+			
+			if self.eval_mode:  
+				return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long(), gt_instance.long()	 
+			else:
+				return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long(),
+
 		else:
-			return X.float(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long(),
+			# convert them to type long()
+			#X, target, target_local_1, target_local_2, cloud_cover, gt_instance = X.long(), target.long(), target_local_1.long(), target_local_2.long(), cloud_cover.long(), gt_instance.long()
+
+			seq_length = X.shape[0]
+			raw_features = X.shape[1]
+			nfeatures = raw_features* self.nb**2
+			raw_batch = (24 - int(self.nb/2)*2)**2
+
+			ntargetclasses = self.n_classes
+			ntargetclasses_l1 = self.n_classes_local_1
+			ntargetclasses_l2 = self.n_classes_local_2
+			
+			# check if data can be cropped
+			cloud_mask = cloud_cover>self.cloud_thresh
+			invalid_obs = np.sum(cloud_mask,axis=0)==0
+
+			sub_shape = (self.nb, self.nb)
+			view_shape = tuple(np.subtract(invalid_obs.shape, sub_shape) + 1) + sub_shape
+			strides = invalid_obs.strides + invalid_obs.strides
+			sub_invalid = np.lib.stride_tricks.as_strided(invalid_obs,view_shape,strides)
+
+
+			# Prepare for running mean and std calculation
+			valid_ind = np.nonzero( (~cloud_mask)[:,np.newaxis] )
+			valid_data = X[valid_ind[0],:,valid_ind[2],valid_ind[3]]
+
+			if self.normalize:
+				norm_data = (valid_data-self.means)/self.stds
+				X[valid_ind[0],:,valid_ind[2],valid_ind[3]] = norm_data
+
+			#prepare mask for later
+			sub_shape = (seq_length, self.nb, self.nb)
+			view_shape = tuple(np.subtract(cloud_mask.shape, sub_shape) + 1) + sub_shape
+			strides = cloud_mask.strides + cloud_mask.strides
+			sub_cloud = np.lib.stride_tricks.as_strided(cloud_mask,view_shape,strides)
+
+			ravel_mask = sub_cloud.reshape(raw_batch, seq_length, self.nb**2)
+			cloud_mask = np.tile(ravel_mask, (1,1, raw_features))
+			mask = ~cloud_mask
+				
+			# Subtile the features
+			sub_shape = (seq_length, raw_features, self.nb, self.nb)
+			view_shape = tuple(np.subtract(X.shape, sub_shape) + 1) + sub_shape
+			strides = X.strides + X.strides
+			sub_X = np.lib.stride_tricks.as_strided(X,view_shape,strides)
+
+			ravel_X = sub_X.reshape(raw_batch, sub_X.shape[4], nfeatures )
+
+			# subtile Targets
+			sub_shape = (self.nb, self.nb)
+			view_shape = tuple(np.subtract(target.shape, sub_shape) + 1) + sub_shape
+			strides = target.strides + target.strides
+
+			sub_target = np.lib.stride_tricks.as_strided(target,view_shape,strides)
+			sub_target_local_1 = np.lib.stride_tricks.as_strided(target_local_1,view_shape,strides)
+			sub_target_local_2 = np.lib.stride_tricks.as_strided(target_local_2,view_shape,strides)
+
+			ravel_mask = sub_invalid.reshape(raw_batch, 1, self.nb**2)
+			ravel_target = sub_target[:,:,self.nb//2, self.nb//2].reshape(-1)
+			ravel_target_local_1 = sub_target_local_1[:,:,self.nb//2, self.nb//2].reshape(-1)
+			ravel_target_local_2 = sub_target_local_2[:,:,self.nb//2, self.nb//2].reshape(-1)[:]
+			
+			#subtile gt_instances
+			#TODO: ... ??? Check how this exactly works!!
+			sub_shape = (self.nb, self.nb)
+			view_shape = tuple(np.subtract(target.shape, sub_shape) + 1) + sub_shape
+			strides = gt_instance.strides + gt_instance.strides
+			sub_gt_instance = np.lib.stride_tricks.as_strided(gt_instance,view_shape,strides)
+
+			# bring to one-hot format
+			OH_target = np.zeros((ravel_target.size, ntargetclasses))
+			OH_target[np.arange(ravel_target.size),ravel_target] = 1
+
+			OH_target_local_1 = np.zeros((ravel_target_local_1.size, ntargetclasses_l1))
+			OH_target_local_1[np.arange(ravel_target_local_1.size),ravel_target_local_1] = 1
+
+			OH_target_local_2 = np.zeros((ravel_target_local_2.size, ntargetclasses_l2))
+			OH_target_local_2[np.arange(ravel_target_local_2.size),ravel_target_local_2] = 1
+
+			# if only one pixel in a neighbourhood is corrupted, we don't use it=> set complete mask of this (sample, timestep) as unobserved
+			# may be changed in later exermiments
+			mask = np.tile( (mask.sum(2)==nfeatures)[:,:,np.newaxis] , (1,1,nfeatures))
+
+			# "destroy" data, that is corrputed by bad weather. We will never use it!
+			ravel_X[~mask] = 0
+
+
+			return ravel_X, OH_target, OH_target_local_1, OH_target_local_2, mask, sub_gt_instance
 
 	def get_rid_small_fg_tiles(self):
 		valid = np.ones(self.samples)
@@ -1068,7 +1156,10 @@ if __name__=="__main__":
 	#train_generator = utils.inf_generator(trainloader)
 
 	data_path = "data/SwissCrops/raw/train_set_24x24_debug.hdf5"
-	traindataset = Dataset(data_path, 0.,'all')
+	traindataset = Dataset(data_path, 0.9, 'all', untile=True)
 	 
+	for i in tqdm(range(1000)):
+		traindataset[i]
+
 
 	print("Done")

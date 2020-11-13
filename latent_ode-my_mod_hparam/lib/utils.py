@@ -569,7 +569,8 @@ def compute_loss_all_batches(model,
 	hard_test_labels =  torch.Tensor([]).long().to(device)
 	hard_classif_predictions = torch.Tensor([]).long().to(device)
 	plot_latent = False
-	save_latents = 10
+	stored_latents = False
+	save_latents = 0
 	if plot_latent:
 		first, testing = True, True
 	else:
@@ -580,7 +581,7 @@ def compute_loss_all_batches(model,
 		batch_dict = get_next_batch(test_dataloader)
 
 		results  = model.compute_all_losses(batch_dict,
-			n_traj_samples = n_traj_samples, kl_coef = kl_coef, save_latents=save_latents)
+			n_traj_samples = n_traj_samples, kl_coef = kl_coef, testing=False)
 
 		if args.classif:
 			n_labels = model.n_labels #batch_dict["labels"].size(-1)
@@ -608,7 +609,6 @@ def compute_loss_all_batches(model,
 		#	PCA_traj = get_pca_traj(results["latent_info"][0], num_PCA=5, num_train_PCA=10, PCA_dim=1)
 		#	first, testing = False, False
 
-		
 		n_test_batches += 1
 
 		if save_latents>0:
@@ -626,7 +626,6 @@ def compute_loss_all_batches(model,
 			if n_batches * batch_size >= max_samples_for_eval:
 				break
 
-	
 	if n_test_batches > 0:
 		for key, value in total.items():
 			total[key] = total[key] / n_test_batches
@@ -711,7 +710,6 @@ def check_mask(data, mask):
 
 	# all masked out elements should be zeros
 	assert(torch.sum(data[mask == 0.] != 0.) == 0)
-
 
 # Experimental of Nando:
 class FastTensorDataLoader:
@@ -1068,31 +1066,45 @@ def plot_confusion_matrix2(target_test, pred_test, valid_labels_names, Experimen
 	import seaborn as sn
 	import pandas as pd
 	import matplotlib.pyplot as plt
-	sn.set(font_scale=1.3)
+	sn.set(font_scale=2.0)
 
 	#cm = confusion_matrix(target_test, pred_test, normalize=None)
 	cm = confusion_matrix(target_test, pred_test, normalize='true')
-	dim = cm.shape[0]
-
 	
 	#Baseline CM: A saved top-run from GRU-dt
 	refcm = torch.load('experiments/experiment_2702000_topscore.ckpt')["cm"]
 	diffcm = cm-refcm
 
+	#Flip sign of non -diagonal
+	signflipmat = -np.ones(cm.shape)+2*np.identity(cm.shape[0])
+	diffcm =  np.multiply(signflipmat, diffcm)
+
+	# get minmax ticks
 	vmax = np.max([ -np.min(diffcm) , np.max(diffcm) ])
 
-	df_cm = pd.DataFrame(diffcm, index = [i for i in valid_labels_names],
+	#make dataframe
+	df_diffcm = pd.DataFrame(diffcm, index = [i for i in valid_labels_names],
 					columns = [i for i in valid_labels_names])
+	cm = pd.DataFrame(cm, index = [i for i in valid_labels_names],
+					columns = [i for i in valid_labels_names])
+
 	plt.figure(figsize = (15,10))
 	#sn.heatmap(df_cm, annot=False, cmap='Blues')#vmin=0, vmax=100
 	#sn.heatmap(df_cm, annot=False, cmap='RdBu', vmin=-0.10, vmax=0.10)
-	sn.heatmap(df_cm, annot=False, cmap='BrBG', vmin=-vmax, vmax=vmax)
+	sn.heatmap(df_diffcm, annot=False, cmap='BrBG', vmin=-vmax, vmax=vmax)
+	#plt.xlabel('True label')
+	#plt.ylabel('Predicted label')
+	#plt.title('Confusion matrix')
+	plt.savefig('vis/cm' + str(ExperimentID) + 'diff.pdf', bbox_inches='tight')
+	plt.close()
+
+	plt.figure(figsize = (15,10))
+	#sn.heatmap(df_cm, annot=False, cmap='Blues')#vmin=0, vmax=1
+	#sn.heatmap(df_cm, annot=False, cmap='RdBu', vmin=-0.10, vmax=0.10)
+	sn.heatmap(cm, annot=False, cmap='Blues', vmin=0, vmax=1)
 	#plt.xlabel('True label')
 	#plt.ylabel('Predicted label')
 	#plt.title('Confusion matrix')
 	plt.savefig('vis/cm' + str(ExperimentID) + '.pdf', bbox_inches='tight')
-
 	plt.close()
-
-
 
