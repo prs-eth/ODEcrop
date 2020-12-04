@@ -877,7 +877,6 @@ class Dataset(torch.utils.data.Dataset):
 		cloud_cover = self.data["cloud_cover"][idx,...]
 		gt_instance = self.data["gt_instance"][idx,...,0]
 
-
 		X = np.transpose(X, (0, 3, 1, 2))
 		
 		#X = X[0::2,:4,...]
@@ -1156,8 +1155,11 @@ if __name__=="__main__":
 	#train_generator = utils.inf_generator(trainloader)
 
 	data_path = "data/SwissCrops/raw/train_set_24x24_debug.hdf5"
-	traindataset = Dataset(data_path, 0.9, 'all', untile=True)
-	 
+	traindataset = Dataset(data_path, 0.9, 'train', untile=True)
+	
+	train_dataloader = torch.utils.data.DataLoader(traindataset,batch_size=1, shuffle=True,
+														 num_workers=0, worker_init_fn=np.random.seed(1996))
+
 	for i in tqdm(range(1000)):
 		traindataset[i]
 
