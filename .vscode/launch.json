@@ -15,7 +15,7 @@
             "name": "GRU-dt: Crop",
             "type": "python",
             "request": "launch",
-            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/run_models.py",
             "console": "integratedTerminal",
             "args": [
                 //#python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --stack-order gru -BN=true --topper=true
@@ -39,7 +39,7 @@
             "name": "ODE-GRU: Crop",
             "type": "python",
             "request": "launch",
-            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/run_models.py",
             "console": "integratedTerminal",
             "args": [
                 "--niters", "30",
@@ -68,7 +68,7 @@
             "name": "ODE-GRU:: Crop, Subsample",
             "type": "python",
             "request": "launch",
-            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/run_models.py",
             "console": "integratedTerminal",
             "args": [
                 "--niters", "30",
@@ -100,7 +100,7 @@
             "name": "ODE-GRU: Swisscrop",
             "type": "python",
             "request": "launch",
-            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/run_models.py",
             "console": "integratedTerminal",
             "args": [
                 "--niters", "1",
@@ -130,7 +130,7 @@
             "name": "GRU-dt: swisscrop",
             "type": "python",
             "request": "launch",
-            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/run_models.py",
             "console": "integratedTerminal",
             "args": [
                 "--niters", "1",
@@ -163,7 +163,7 @@
             "name": "LSTM-dt: swisscrop",
             "type": "python",
             "request": "launch",
-            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/run_models.py",
             "console": "integratedTerminal",
             "args": [
                 //#python3 run_models.py --niters 2 -n 11000000 -validn 300000 -b 600 --swissdatatype 2_toplabels -v 2 --ode-rnn --rnn-cell gru --stack-order gru --random-seed 6001 --stack-order gru -BN=true --topper=true --dataset swisscrop --step 2 --trunc 9
