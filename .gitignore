@@ -15,4 +15,8 @@ logs/
 experiments/
 data/
 runs/
+vis/
+plots/
+outputs/
+assets/
 wandb/
