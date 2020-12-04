@@ -9,3 +9,10 @@ latent_ode-my_mod_hparam/experiments/
 latent_ode-my_mod_hparam/data/
 latent_ode-my_mod_hparam/runs/
 latent_ode-my_mod_hparam/wandb/
+fieldRNN-my_mod/data
+fieldRNN-my_mod
+logs/
+experiments/
+data/
+runs/
+wandb/
