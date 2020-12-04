@@ -1,1030 +1,0 @@
-Lmod has detected the following error: The following module(s) are unknown:
-"cuda/10.0.13" "pytorch/1.4.0"
-
-Please check the spelling or version number. Also try "module spider ..."
-It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "cuda/10.0.13" "pytorch/1.4.0"
-
-
-
-Couldn't import umap
-I'm counting gpu's:  1
-Means I will train  1  models, with different random seeds
-My Devices:  ['cuda:0']
-Sampling dataset of 300000 training examples
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Testing hyperparameters:
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Trainingdataset:
-  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Using Evaluationdataset:
-  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
-  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]2020-04-07 17:36:15.248957: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
-2020-04-07 17:36:15.249134: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
-2020-04-07 17:36:15.249150: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
-                                                     runs/expID9232000_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232001_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232002_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232003_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232004_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232005_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232006_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232007_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232008_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232009_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232010_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232011_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232012_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232013_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232014_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232015_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232016_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232017_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232018_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232019_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232020_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232021_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232022_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232023_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232024_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232025_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232026_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232027_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232028_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]                                                     runs/expID9232029_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:euler_seed:6000_optim:adamax
-  0%|          | 0/1 [00:08<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                     0.8629529960531037
-  0%|          | 0/1 [53:26<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                     0.8642985288841047
-  0%|          | 0/1 [1:44:58<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                       0.8622533189809831
-  0%|          | 0/1 [2:35:52<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                       0.8624506637961966
-  0%|          | 0/1 [3:27:07<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                       0.8642626480086114
-  0%|          | 0/1 [4:19:59<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                       0.8627018299246502
-  0%|          | 0/1 [5:13:18<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                       0.8624327233584499
-  0%|          | 0/1 [6:06:24<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                       0.8644779332615716
-  0%|          | 0/1 [7:00:02<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                       0.8617151058485827
-  0%|          | 0/1 [7:53:51<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                       0.8646035163257983
-  0%|          | 0/1 [8:47:50<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                       0.8643882310728381
-  0%|          | 0/1 [9:41:47<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                       0.8627197703623969
-  0%|          | 0/1 [10:35:44<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8652493720846789
-  0%|          | 0/1 [11:29:53<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8637423753139577
-  0%|          | 0/1 [12:24:04<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8629529960531037
-  0%|          | 0/1 [13:17:29<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8641370649443847
-  0%|          | 0/1 [14:11:12<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8625583064226767
-  0%|          | 0/1 [15:03:57<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8642805884463581
-  0%|          | 0/1 [15:58:01<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.864513814137065
-  0%|          | 0/1 [16:52:05<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8622174381054898
-  0%|          | 0/1 [17:45:51<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8657517043415859
-  0%|          | 0/1 [18:39:19<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8618765697883028
-  0%|          | 0/1 [19:33:20<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8638141370649444
-  0%|          | 0/1 [20:26:50<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8652314316469322
-  0%|          | 0/1 [21:19:55<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8643344097595982
-  0%|          | 0/1 [22:11:12<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8630426982418371
-  0%|          | 0/1 [23:01:18<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.861750986724076
-  0%|          | 0/1 [23:50:47<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8626838894869034
-  0%|          | 0/1 [24:40:47<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8652134912091856
-  0%|          | 0/1 [25:31:26<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method euler --random-seed 6000 --num-search 1 --num-seeds 30
-
-                                                        0.8634732687477574
-  0%|          | 0/1 [26:22:36<?, ?trial/s, best loss=?]                                                        {'loss': 0.13646393972012905, 'loss_variance': 1.3458990846947444e-06, 'status': 'ok'}
-  0%|          | 0/1 [26:22:36<?, ?trial/s, best loss=?]100%|██████████| 1/1 [26:22:36<00:00, 94956.62s/trial, best loss: 0.13646393972012905]100%|██████████| 1/1 [26:22:36<00:00, 94956.62s/trial, best loss: 0.13646393972012905]
-
------------------------------------------------------------------------------------------------------------------
-TRIAL PROTOCOL:
------------------------------------------------------------------------------------------------------------------
-Trial: 0001   |   Test-Accuracy: 86.354 %   |   Standard deviation: 0.116 %   |   Hyperparameters: {}   |
------------------------------------------------------------------------------------------------------------------
-Best configuration: 86.354 % (+-0.116) , with Hyperparmeters: {}
------------------------------------------------------------------------------------------------------------------

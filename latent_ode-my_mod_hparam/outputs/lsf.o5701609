@@ -1,310 +1,0 @@
-Lmod has detected the following error: The following module(s) are unknown:
-"pytorch/1.4.0" "cuda/10.0.13"
-
-Please check the spelling or version number. Also try "module spider ..."
-It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
-
-
-
-Couldn't import umap
-I'm counting gpu's:  1
-Means I will train  1  models, with different random seeds
-My Devices:  ['cuda:0']
-Sampling dataset of 300000 training examples
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Testing hyperparameters:
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Trainingdataset:
-  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Using Evaluationdataset:
-  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]                                                     Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
-  0%|          | 0/1 [00:04<?, ?trial/s, best loss=?]2020-04-08 01:09:04.491162: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
-2020-04-08 01:09:04.492939: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
-2020-04-08 01:09:04.492969: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
-                                                     runs/expID4657000_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657001_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657002_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657003_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657004_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657005_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657006_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657007_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657008_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657009_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657010_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657011_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657012_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657013_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]                                                     runs/expID4657014_TRAINode_ns:300000_ba:1000_ode-units:200_gru-uts:110_lats:45_rec-lay:1_solver:explicit_adams_seed:6000_optim:adamax
-  0%|          | 0/1 [00:10<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                     0.8639935414424113
-  0%|          | 0/1 [1:18:38<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                       0.862091855041263
-  0%|          | 0/1 [2:36:31<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                       0.8641550053821313
-  0%|          | 0/1 [4:02:02<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                       0.8630426982418371
-  0%|          | 0/1 [5:23:44<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                       0.8625224255471834
-  0%|          | 0/1 [6:44:20<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                       0.8643164693218515
-  0%|          | 0/1 [8:06:58<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                       0.8644779332615716
-  0%|          | 0/1 [9:35:27<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                       0.8627197703623969
-  0%|          | 0/1 [11:04:57<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                        0.8625224255471834
-  0%|          | 0/1 [12:32:52<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                        0.8633476856835307
-  0%|          | 0/1 [14:04:31<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                        0.8615715823466092
-  0%|          | 0/1 [15:36:11<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                        0.8646035163257983
-  0%|          | 0/1 [17:07:51<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                        0.8623430211697165
-  0%|          | 0/1 [18:38:02<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                        0.8631503408683172
-  0%|          | 0/1 [20:06:32<?, ?trial/s, best loss=?]run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-run_models.py --niters 55 -n 300000 -validn 60000 -b 1000 --ode-method explicit_adams --random-seed 6000 --num-search 1 --num-seeds 15
-
-                                                        0.8633476856835307
-  0%|          | 0/1 [21:35:34<?, ?trial/s, best loss=?]                                                        {'loss': 0.13678626958497786, 'loss_variance': 8.730142483927261e-07, 'status': 'ok'}
-  0%|          | 0/1 [21:35:34<?, ?trial/s, best loss=?]100%|██████████| 1/1 [21:35:34<00:00, 77734.92s/trial, best loss: 0.13678626958497786]100%|██████████| 1/1 [21:35:34<00:00, 77734.92s/trial, best loss: 0.13678626958497786]
-
------------------------------------------------------------------------------------------------------------------
-TRIAL PROTOCOL:
------------------------------------------------------------------------------------------------------------------
-Trial: 0001   |   Test-Accuracy: 86.321 %   |   Standard deviation: 0.093 %   |   Hyperparameters: {}   |
------------------------------------------------------------------------------------------------------------------
-Best configuration: 86.321 % (+-0.093) , with Hyperparmeters: {}
------------------------------------------------------------------------------------------------------------------

@@ -1,130 +1,0 @@
-> /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/run_models.py(159)<module>()
--> if __name__ == '__main__':
-(Pdb) c
-Sampling dataset of 8000 training examples
-  0%|                                                                                                                                     | 0/1 [00:00<?, ?trial/s, best loss=?]                                                                                                                                                                                Testing hyperparameters:
-  0%|                                                                                                                                     | 0/1 [00:00<?, ?trial/s, best loss=?]                                                                                                                                                                                runs/expID2580000_TRAINode_ns:8000_ba:700_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:euler_seed:1991_optim:adamax_stackin:1None
-  0%|                                                                                                                                     | 0/1 [00:13<?, ?trial/s, best loss=?]run_models.py --ode-rnn --dataset swisscrop -v 2
-  0%|                                                                                                                                 | 0/14508 [00:00<?, ?it/s]
-                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(327)train_it()
--> pdb.set_trace()
-  0%|                                                                                                                                     | 0/1 [00:16<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [00:16<?, ?trial/s, best loss=?]                                                                                                                                                                                0.010090909090909091
-  0%|                                                                                                                                     | 0/1 [00:28<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [00:28<?, ?trial/s, best loss=?]                                                                                                                                                                                146
-  0%|                                                                                                                                     | 0/1 [00:38<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [00:38<?, ?trial/s, best loss=?]                                                                                                                                                                                ***
-  0%|                                                                                                                                     | 0/1 [01:05<?, ?trial/s, best loss=?]                                                                                                                                                                                SyntaxError: invalid syntax
-  0%|                                                                                                                                     | 0/1 [01:05<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:05<?, ?trial/s, best loss=?]Train Ac: 0.000 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                               | 0/14508 [00:56<?, ?it/s]
-Train Ac: 0.000 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 1/14508 [00:56<229:04:39, 56.85s/it]
-                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(326)train_it()
--> 
-  0%|                                                                                                                                     | 0/1 [01:12<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:12<?, ?trial/s, best loss=?]                                                                                                                                                                                ***
-  0%|                                                                                                                                     | 0/1 [01:26<?, ?trial/s, best loss=?]                                                                                                                                                                                NameError: name 'cc' is not defined
-  0%|                                                                                                                                     | 0/1 [01:26<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:26<?, ?trial/s, best loss=?]Train Ac: 44.714 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                  | 1/14508 [01:14<229:04:39, 56.85s/it]
-Train Ac: 44.714 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                  | 2/14508 [01:14<182:04:38, 45.19s/it]
-                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(327)train_it()
--> pdb.set_trace()
-  0%|                                                                                                                                     | 0/1 [01:30<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:30<?, ?trial/s, best loss=?]Train Ac: 40.286 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                  | 2/14508 [01:16<182:04:38, 45.19s/it]
-Train Ac: 40.286 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                  | 3/14508 [01:16<129:51:34, 32.23s/it]
-                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(326)train_it()
--> 
-Train Ac: 14.857 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                  | 3/14508 [01:18<129:51:34, 32.23s/it]
-  0%|                                                                                                                                     | 0/1 [01:32<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:32<?, ?trial/s, best loss=?]Train Ac: 14.857 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 4/14508 [01:18<93:23:51, 23.18s/it]
-                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(327)train_it()
--> pdb.set_trace()
-  0%|                                                                                                                                     | 0/1 [01:34<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:34<?, ?trial/s, best loss=?]Train Ac: 21.429 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 4/14508 [01:20<93:23:51, 23.18s/it]
-Train Ac: 21.429 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 5/14508 [01:20<67:52:54, 16.85s/it]
-                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(326)train_it()
--> 
-Train Ac: 54.857 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 5/14508 [01:22<67:52:54, 16.85s/it]
-  0%|                                                                                                                                     | 0/1 [01:36<?, ?trial/s, best loss=?]Train Ac: 54.857 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 6/14508 [01:22<49:57:18, 12.40s/it]
-                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:36<?, ?trial/s, best loss=?]                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(327)train_it()
--> pdb.set_trace()
-  0%|                                                                                                                                     | 0/1 [01:38<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:38<?, ?trial/s, best loss=?]Train Ac: 58.143 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 6/14508 [01:27<49:57:18, 12.40s/it]
-Train Ac: 58.143 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 7/14508 [01:27<40:35:03, 10.08s/it]
-                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(326)train_it()
--> 
-  0%|                                                                                                                                     | 0/1 [01:43<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:43<?, ?trial/s, best loss=?]Train Ac: 57.286 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 7/14508 [01:32<40:35:03, 10.08s/it]
-Train Ac: 57.286 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 8/14508 [01:32<34:30:24,  8.57s/it]
-                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(327)train_it()
--> pdb.set_trace()
-  0%|                                                                                                                                     | 0/1 [01:48<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:48<?, ?trial/s, best loss=?]                                                                                                                                                                                ***
-  0%|                                                                                                                                     | 0/1 [01:49<?, ?trial/s, best loss=?]                                                                                                                                                                                NameError: name 'cc' is not defined
-  0%|                                                                                                                                     | 0/1 [01:49<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:49<?, ?trial/s, best loss=?]Train Ac: 53.571 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 8/14508 [01:37<34:30:24,  8.57s/it]
-Train Ac: 53.571 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 9/14508 [01:37<29:43:10,  7.38s/it]
-                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(326)train_it()
--> 
-  0%|                                                                                                                                     | 0/1 [01:53<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:53<?, ?trial/s, best loss=?]Train Ac: 48.429 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                   | 9/14508 [01:43<29:43:10,  7.38s/it]
-Train Ac: 48.429 %  |  Test Ac: 0.000 %, Peak Test Ac.: 0.000 % (at 0 batches)  |:   0%|                                  | 10/14508 [01:43<28:10:34,  7.00s/it]
-                                                                                                                                                                                > /home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py(327)train_it()
--> pdb.set_trace()
-  0%|                                                                                                                                     | 0/1 [01:59<?, ?trial/s, best loss=?]                                                                                                                                                                                (Pdb) 
-  0%|                                                                                                                                     | 0/1 [01:59<?, ?trial/s, best loss=?]job exception: 
-  0%|                                                                                                                                     | 0/1 [02:02<?, ?trial/s, best loss=?]
-Traceback (most recent call last):
-ODE-RNN  True
-Classic-RNN:  False
-Stacked layers:  1
-Stacked layers:  None
-ODE-type:  linear
-RNN-cell:  gru
-Weight-sharing ODE:  False
-Weight-sharing RNN:  False
-Using BN:  False
-defaut adapted LR's!!
-Used Optimizer: adamax
-Used Ode-Solver euler
-  File "run_models.py", line 159, in <module>
-    experimentID = args.load
-  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/fmin.py", line 482, in fmin
-    show_progressbar=show_progressbar,
-  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/base.py", line 686, in fmin
-    show_progressbar=show_progressbar,
-  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/fmin.py", line 509, in fmin
-    rval.exhaust()
-  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/fmin.py", line 330, in exhaust
-    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
-  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/fmin.py", line 286, in run
-    self.serial_evaluate()
-  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/fmin.py", line 165, in serial_evaluate
-    result = self.domain.evaluate(spec, ctrl)
-  File "/home/metzgern/.local/lib/python3.6/site-packages/hyperopt/base.py", line 894, in evaluate
-    rval = self.fn(pyll
----------------------------------------------------------------------------------------------------------------------------------------------
-TRIAL PROTOCOL:
----------------------------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------------------------
-_rval)
-  File "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py", line 172, in construct_and_train_model
-    input_command,
-  File "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py", line 327, in train_it
-    pdb.set_trace()
-  File "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/training.py", line 327, in train_it
-    pdb.set_trace()
-  File "/usr/lib/python3.6/bdb.py", line 51, in trace_dispatch
-    return self.dispatch_line(frame)
-  File "/usr/lib/python3.6/bdb.py", line 70, in dispatch_line
-    if self.quitting: raise BdbQuit
-bdb.BdbQuit
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "run_models.py", line 159, in <module>
-    experimentID = args.load
-  File "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/latent_ode-my_mod_hparam/lib/utils.py", line 816, in hyperopt_summary
-    np.sqrt(best_var)*100,
-UnboundLocalError: local variable 'best_var' referenced before assignment

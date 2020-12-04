@@ -1,1021 +1,0 @@
-Lmod has detected the following error: The following module(s) are unknown:
-"pytorch/1.4.0" "cuda/10.0.13"
-
-Please check the spelling or version number. Also try "module spider ..."
-It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
-
-
-
-Couldn't import umap
-I'm counting gpu's:  1
-Means I will train  1  models, with different random seeds
-My Devices:  ['cuda:0']
-Sampling dataset of 300000 training examples
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]                                                      Testing hyperparameters:
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]                                                      gru_units : 288.0
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]                                                      Trainingdataset:
-  0%|          | 0/15 [00:05<?, ?trial/s, best loss=?]                                                      Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-  0%|          | 0/15 [00:05<?, ?trial/s, best loss=?]                                                      Using Evaluationdataset:
-  0%|          | 0/15 [00:05<?, ?trial/s, best loss=?]                                                      Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
-  0%|          | 0/15 [00:05<?, ?trial/s, best loss=?]                                                      Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
-  0%|          | 0/15 [00:05<?, ?trial/s, best loss=?]2020-05-04 01:31:25.492194: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/extras/CUPTI/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
-2020-05-04 01:31:25.494460: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/extras/CUPTI/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
-2020-05-04 01:31:25.494475: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
-                                                      runs/expID2354000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:288_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
-  0%|          | 0/15 [00:10<?, ?trial/s, best loss=?]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                      0.8755651237890204
-  0%|          | 0/15 [1:04:50<?, ?trial/s, best loss=?]                                                         at step 
-  0%|          | 0/15 [1:04:50<?, ?trial/s, best loss=?]                                                        4388400
-  0%|          | 0/15 [1:04:50<?, ?trial/s, best loss=?]                                                        {'loss': 0.1244348762109796, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8755651237890204, 'best_peak_step': 4388400, 'best_steps': [4388400]}
-  0%|          | 0/15 [1:04:50<?, ?trial/s, best loss=?]  7%|▋         | 1/15 [1:04:50<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:180: RuntimeWarning: invalid value encountered in true_divide
-  var_test_acc = sum((abs(Test_acc - mean_test_acc)**2)/(num_seeds-1))
-
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:183: RuntimeWarning: invalid value encountered in true_divide
-  var_best_test_acc = sum((abs(Best_test_acc - mean_best_test_acc)**2)/(num_seeds-1))
-
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:188: RuntimeWarning: invalid value encountered in true_divide
-  var_train_acc = sum((abs(Train_acc - mean_train_acc)**2)/(num_seeds-1))
-
-build_posterior_wrapper took 0.001022 seconds
-
-TPE using 1/1 trials with best loss 0.124435
-
-                                                                                       Testing hyperparameters:
-  7%|▋         | 1/15 [1:04:50<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]                                                                                       gru_units : 159.0
-  7%|▋         | 1/15 [1:04:50<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]                                                                                       Trainingdataset:
-  7%|▋         | 1/15 [1:04:50<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]                                                                                       Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-  7%|▋         | 1/15 [1:04:50<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]                                                                                       Using Evaluationdataset:
-  7%|▋         | 1/15 [1:04:50<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]                                                                                       Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
-  7%|▋         | 1/15 [1:04:50<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]                                                                                       Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
-  7%|▋         | 1/15 [1:04:50<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]                                                                                       runs/expID6032000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:159_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
-  7%|▋         | 1/15 [1:04:50<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                       0.8759418729817008
-  7%|▋         | 1/15 [2:07:49<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]                                                                                        at step 
-  7%|▋         | 1/15 [2:07:49<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]                                                                                       4674600
-  7%|▋         | 1/15 [2:07:49<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796]                                                                                       {'loss': 0.12405812701829921, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8759418729817008, 'best_peak_step': 4674600, 'best_steps': [4674600]}
-  7%|▋         | 1/15 [2:07:49<15:07:43, 3890.26s/trial, best loss: 0.1244348762109796] 13%|█▎        | 2/15 [2:07:49<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001271 seconds
-
-build_posterior_wrapper took 0.001271 seconds
-
-TPE using 2/2 trials with best loss 0.124058
-
-TPE using 2/2 trials with best loss 0.124058
-
-                                                                                        Testing hyperparameters:
- 13%|█▎        | 2/15 [2:07:50<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]                                                                                        gru_units : 237.0
- 13%|█▎        | 2/15 [2:07:50<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]                                                                                        Trainingdataset:
- 13%|█▎        | 2/15 [2:07:50<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]                                                                                        Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 13%|█▎        | 2/15 [2:07:50<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]                                                                                        Using Evaluationdataset:
- 13%|█▎        | 2/15 [2:07:50<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]                                                                                        Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 13%|█▎        | 2/15 [2:07:50<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]                                                                                        Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 13%|█▎        | 2/15 [2:07:50<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]                                                                                        runs/expID9779000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:237_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 13%|█▎        | 2/15 [2:07:50<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                        0.875475421600287
- 13%|█▎        | 2/15 [3:10:45<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]                                                                                         at step 
- 13%|█▎        | 2/15 [3:10:45<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]                                                                                        5151600
- 13%|█▎        | 2/15 [3:10:45<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921]                                                                                        {'loss': 0.12452457839971298, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.875475421600287, 'best_peak_step': 5151600, 'best_steps': [5151600]}
- 13%|█▎        | 2/15 [3:10:45<13:55:42, 3857.10s/trial, best loss: 0.12405812701829921] 20%|██        | 3/15 [3:10:45<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001246 seconds
-
-build_posterior_wrapper took 0.001246 seconds
-
-build_posterior_wrapper took 0.001246 seconds
-
-TPE using 3/3 trials with best loss 0.124058
-
-TPE using 3/3 trials with best loss 0.124058
-
-TPE using 3/3 trials with best loss 0.124058
-
-                                                                                        Testing hyperparameters:
- 20%|██        | 3/15 [3:10:45<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]                                                                                        gru_units : 195.0
- 20%|██        | 3/15 [3:10:45<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]                                                                                        Trainingdataset:
- 20%|██        | 3/15 [3:10:45<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]                                                                                        Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 20%|██        | 3/15 [3:10:45<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]                                                                                        Using Evaluationdataset:
- 20%|██        | 3/15 [3:10:45<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]                                                                                        Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 20%|██        | 3/15 [3:10:45<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]                                                                                        Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 20%|██        | 3/15 [3:10:45<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]                                                                                        runs/expID9746000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:195_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 20%|██        | 3/15 [3:10:45<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                        0.8747219232149265
- 20%|██        | 3/15 [4:12:42<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]                                                                                         at step 
- 20%|██        | 3/15 [4:12:42<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]                                                                                        4865400
- 20%|██        | 3/15 [4:12:42<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921]                                                                                        {'loss': 0.12527807678507352, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8747219232149265, 'best_peak_step': 4865400, 'best_steps': [4865400]}
- 20%|██        | 3/15 [4:12:42<12:46:31, 3832.62s/trial, best loss: 0.12405812701829921] 27%|██▋       | 4/15 [4:12:42<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001238 seconds
-
-build_posterior_wrapper took 0.001238 seconds
-
-build_posterior_wrapper took 0.001238 seconds
-
-build_posterior_wrapper took 0.001238 seconds
-
-TPE using 4/4 trials with best loss 0.124058
-
-TPE using 4/4 trials with best loss 0.124058
-
-TPE using 4/4 trials with best loss 0.124058
-
-TPE using 4/4 trials with best loss 0.124058
-
-                                                                                        Testing hyperparameters:
- 27%|██▋       | 4/15 [4:12:42<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]                                                                                        gru_units : 153.0
- 27%|██▋       | 4/15 [4:12:42<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]                                                                                        Trainingdataset:
- 27%|██▋       | 4/15 [4:12:42<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]                                                                                        Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 27%|██▋       | 4/15 [4:12:42<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]                                                                                        Using Evaluationdataset:
- 27%|██▋       | 4/15 [4:12:42<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]                                                                                        Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 27%|██▋       | 4/15 [4:12:42<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]                                                                                        Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 27%|██▋       | 4/15 [4:12:42<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]                                                                                        runs/expID3214000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:153_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 27%|██▋       | 4/15 [4:12:42<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                        0.8735378543236455
- 27%|██▋       | 4/15 [5:11:19<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]                                                                                         at step 
- 27%|██▋       | 4/15 [5:11:19<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]                                                                                        3052800
- 27%|██▋       | 4/15 [5:11:19<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921]                                                                                        {'loss': 0.1264621456763545, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8735378543236455, 'best_peak_step': 3052800, 'best_steps': [3052800]}
- 27%|██▋       | 4/15 [5:11:19<11:36:16, 3797.87s/trial, best loss: 0.12405812701829921] 33%|███▎      | 5/15 [5:11:19<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001239 seconds
-
-build_posterior_wrapper took 0.001239 seconds
-
-build_posterior_wrapper took 0.001239 seconds
-
-build_posterior_wrapper took 0.001239 seconds
-
-build_posterior_wrapper took 0.001239 seconds
-
-TPE using 5/5 trials with best loss 0.124058
-
-TPE using 5/5 trials with best loss 0.124058
-
-TPE using 5/5 trials with best loss 0.124058
-
-TPE using 5/5 trials with best loss 0.124058
-
-TPE using 5/5 trials with best loss 0.124058
-
-                                                                                        Testing hyperparameters:
- 33%|███▎      | 5/15 [5:11:19<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]                                                                                        gru_units : 141.0
- 33%|███▎      | 5/15 [5:11:19<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]                                                                                        Trainingdataset:
- 33%|███▎      | 5/15 [5:11:19<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]                                                                                        Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 33%|███▎      | 5/15 [5:11:19<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]                                                                                        Using Evaluationdataset:
- 33%|███▎      | 5/15 [5:11:19<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]                                                                                        Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 33%|███▎      | 5/15 [5:11:19<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]                                                                                        Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 33%|███▎      | 5/15 [5:11:19<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]                                                                                        runs/expID2215000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:141_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 33%|███▎      | 5/15 [5:11:19<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                        0.8725152493720847
- 33%|███▎      | 5/15 [6:10:21<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]                                                                                         at step 
- 33%|███▎      | 5/15 [6:10:21<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]                                                                                        3243600
- 33%|███▎      | 5/15 [6:10:21<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921]                                                                                        {'loss': 0.1274847506279153, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8725152493720847, 'best_peak_step': 3243600, 'best_steps': [3243600]}
- 33%|███▎      | 5/15 [6:10:21<10:18:56, 3713.68s/trial, best loss: 0.12405812701829921] 40%|████      | 6/15 [6:10:21<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921] build_posterior_wrapper took 0.001324 seconds
-
-build_posterior_wrapper took 0.001324 seconds
-
-build_posterior_wrapper took 0.001324 seconds
-
-build_posterior_wrapper took 0.001324 seconds
-
-build_posterior_wrapper took 0.001324 seconds
-
-build_posterior_wrapper took 0.001324 seconds
-
-TPE using 6/6 trials with best loss 0.124058
-
-TPE using 6/6 trials with best loss 0.124058
-
-TPE using 6/6 trials with best loss 0.124058
-
-TPE using 6/6 trials with best loss 0.124058
-
-TPE using 6/6 trials with best loss 0.124058
-
-TPE using 6/6 trials with best loss 0.124058
-
-                                                                                       Testing hyperparameters:
- 40%|████      | 6/15 [6:10:21<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]                                                                                       gru_units : 255.0
- 40%|████      | 6/15 [6:10:21<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]                                                                                       Trainingdataset:
- 40%|████      | 6/15 [6:10:21<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]                                                                                       Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 40%|████      | 6/15 [6:10:21<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]                                                                                       Using Evaluationdataset:
- 40%|████      | 6/15 [6:10:21<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]                                                                                       Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 40%|████      | 6/15 [6:10:21<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]                                                                                       Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 40%|████      | 6/15 [6:10:21<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]                                                                                       runs/expID7263000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:255_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 40%|████      | 6/15 [6:10:21<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                       0.8755651237890204
- 40%|████      | 6/15 [7:14:00<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]                                                                                        at step 
- 40%|████      | 6/15 [7:14:00<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]                                                                                       2575800
- 40%|████      | 6/15 [7:14:00<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921]                                                                                       {'loss': 0.1244348762109796, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8755651237890204, 'best_peak_step': 2575800, 'best_steps': [2575800]}
- 40%|████      | 6/15 [7:14:00<9:09:18, 3662.07s/trial, best loss: 0.12405812701829921] 47%|████▋     | 7/15 [7:14:00<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001408 seconds
-
-build_posterior_wrapper took 0.001408 seconds
-
-build_posterior_wrapper took 0.001408 seconds
-
-build_posterior_wrapper took 0.001408 seconds
-
-build_posterior_wrapper took 0.001408 seconds
-
-build_posterior_wrapper took 0.001408 seconds
-
-build_posterior_wrapper took 0.001408 seconds
-
-TPE using 7/7 trials with best loss 0.124058
-
-TPE using 7/7 trials with best loss 0.124058
-
-TPE using 7/7 trials with best loss 0.124058
-
-TPE using 7/7 trials with best loss 0.124058
-
-TPE using 7/7 trials with best loss 0.124058
-
-TPE using 7/7 trials with best loss 0.124058
-
-TPE using 7/7 trials with best loss 0.124058
-
-                                                                                       Testing hyperparameters:
- 47%|████▋     | 7/15 [7:14:01<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]                                                                                       gru_units : 54.0
- 47%|████▋     | 7/15 [7:14:01<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]                                                                                       Trainingdataset:
- 47%|████▋     | 7/15 [7:14:01<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]                                                                                       Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 47%|████▋     | 7/15 [7:14:01<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]                                                                                       Using Evaluationdataset:
- 47%|████▋     | 7/15 [7:14:01<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]                                                                                       Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 47%|████▋     | 7/15 [7:14:01<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]                                                                                       Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 47%|████▋     | 7/15 [7:14:01<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]                                                                                       runs/expID5615000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:54_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 47%|████▋     | 7/15 [7:14:01<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                       0.8712773591675637
- 47%|████▋     | 7/15 [8:18:38<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]                                                                                        at step 
- 47%|████▋     | 7/15 [8:18:38<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]                                                                                       3720600
- 47%|████▋     | 7/15 [8:18:38<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921]                                                                                       {'loss': 0.12872264083243634, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8712773591675637, 'best_peak_step': 3720600, 'best_steps': [3720600]}
- 47%|████▋     | 7/15 [8:18:38<8:14:35, 3709.39s/trial, best loss: 0.12405812701829921] 53%|█████▎    | 8/15 [8:18:38<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001525 seconds
-
-build_posterior_wrapper took 0.001525 seconds
-
-build_posterior_wrapper took 0.001525 seconds
-
-build_posterior_wrapper took 0.001525 seconds
-
-build_posterior_wrapper took 0.001525 seconds
-
-build_posterior_wrapper took 0.001525 seconds
-
-build_posterior_wrapper took 0.001525 seconds
-
-build_posterior_wrapper took 0.001525 seconds
-
-TPE using 8/8 trials with best loss 0.124058
-
-TPE using 8/8 trials with best loss 0.124058
-
-TPE using 8/8 trials with best loss 0.124058
-
-TPE using 8/8 trials with best loss 0.124058
-
-TPE using 8/8 trials with best loss 0.124058
-
-TPE using 8/8 trials with best loss 0.124058
-
-TPE using 8/8 trials with best loss 0.124058
-
-TPE using 8/8 trials with best loss 0.124058
-
-                                                                                       Testing hyperparameters:
- 53%|█████▎    | 8/15 [8:18:38<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]                                                                                       gru_units : 267.0
- 53%|█████▎    | 8/15 [8:18:38<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]                                                                                       Trainingdataset:
- 53%|█████▎    | 8/15 [8:18:39<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]                                                                                       Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 53%|█████▎    | 8/15 [8:18:39<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]                                                                                       Using Evaluationdataset:
- 53%|█████▎    | 8/15 [8:18:39<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]                                                                                       Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 53%|█████▎    | 8/15 [8:18:39<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]                                                                                       Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 53%|█████▎    | 8/15 [8:18:39<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]                                                                                       runs/expID8255000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:267_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 53%|█████▎    | 8/15 [8:18:39<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                       0.8750986724076067
- 53%|█████▎    | 8/15 [9:24:09<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]                                                                                        at step 
- 53%|█████▎    | 8/15 [9:24:09<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]                                                                                       3243600
- 53%|█████▎    | 8/15 [9:24:09<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921]                                                                                       {'loss': 0.12490132759239325, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8750986724076067, 'best_peak_step': 3243600, 'best_steps': [3243600]}
- 53%|█████▎    | 8/15 [9:24:09<7:18:39, 3759.98s/trial, best loss: 0.12405812701829921] 60%|██████    | 9/15 [9:24:09<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001471 seconds
-
-build_posterior_wrapper took 0.001471 seconds
-
-build_posterior_wrapper took 0.001471 seconds
-
-build_posterior_wrapper took 0.001471 seconds
-
-build_posterior_wrapper took 0.001471 seconds
-
-build_posterior_wrapper took 0.001471 seconds
-
-build_posterior_wrapper took 0.001471 seconds
-
-build_posterior_wrapper took 0.001471 seconds
-
-build_posterior_wrapper took 0.001471 seconds
-
-TPE using 9/9 trials with best loss 0.124058
-
-TPE using 9/9 trials with best loss 0.124058
-
-TPE using 9/9 trials with best loss 0.124058
-
-TPE using 9/9 trials with best loss 0.124058
-
-TPE using 9/9 trials with best loss 0.124058
-
-TPE using 9/9 trials with best loss 0.124058
-
-TPE using 9/9 trials with best loss 0.124058
-
-TPE using 9/9 trials with best loss 0.124058
-
-TPE using 9/9 trials with best loss 0.124058
-
-                                                                                       Testing hyperparameters:
- 60%|██████    | 9/15 [9:24:10<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]                                                                                       gru_units : 144.0
- 60%|██████    | 9/15 [9:24:10<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]                                                                                       Trainingdataset:
- 60%|██████    | 9/15 [9:24:10<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]                                                                                       Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 60%|██████    | 9/15 [9:24:10<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]                                                                                       Using Evaluationdataset:
- 60%|██████    | 9/15 [9:24:10<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]                                                                                       Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 60%|██████    | 9/15 [9:24:10<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]                                                                                       Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 60%|██████    | 9/15 [9:24:10<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]                                                                                       runs/expID1124000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:144_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 60%|██████    | 9/15 [9:24:10<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                       0.8730355220667384
- 60%|██████    | 9/15 [10:28:48<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]                                                                                         at step 
- 60%|██████    | 9/15 [10:28:48<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]                                                                                        3625200
- 60%|██████    | 9/15 [10:28:48<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921]                                                                                        {'loss': 0.1269644779332616, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8730355220667384, 'best_peak_step': 3625200, 'best_steps': [3625200]}
- 60%|██████    | 9/15 [10:28:48<6:21:07, 3811.26s/trial, best loss: 0.12405812701829921] 67%|██████▋   | 10/15 [10:28:48<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001341 seconds
-
-build_posterior_wrapper took 0.001341 seconds
-
-build_posterior_wrapper took 0.001341 seconds
-
-build_posterior_wrapper took 0.001341 seconds
-
-build_posterior_wrapper took 0.001341 seconds
-
-build_posterior_wrapper took 0.001341 seconds
-
-build_posterior_wrapper took 0.001341 seconds
-
-build_posterior_wrapper took 0.001341 seconds
-
-build_posterior_wrapper took 0.001341 seconds
-
-build_posterior_wrapper took 0.001341 seconds
-
-TPE using 10/10 trials with best loss 0.124058
-
-TPE using 10/10 trials with best loss 0.124058
-
-TPE using 10/10 trials with best loss 0.124058
-
-TPE using 10/10 trials with best loss 0.124058
-
-TPE using 10/10 trials with best loss 0.124058
-
-TPE using 10/10 trials with best loss 0.124058
-
-TPE using 10/10 trials with best loss 0.124058
-
-TPE using 10/10 trials with best loss 0.124058
-
-TPE using 10/10 trials with best loss 0.124058
-
-TPE using 10/10 trials with best loss 0.124058
-
-                                                                                         Testing hyperparameters:
- 67%|██████▋   | 10/15 [10:28:49<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]                                                                                         gru_units : 117.0
- 67%|██████▋   | 10/15 [10:28:49<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]                                                                                         Trainingdataset:
- 67%|██████▋   | 10/15 [10:28:49<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 67%|██████▋   | 10/15 [10:28:49<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]                                                                                         Using Evaluationdataset:
- 67%|██████▋   | 10/15 [10:28:49<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 67%|██████▋   | 10/15 [10:28:49<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]                                                                                         Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 67%|██████▋   | 10/15 [10:28:49<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]                                                                                         runs/expID1234000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:117_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 67%|██████▋   | 10/15 [10:28:49<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                         0.8719590958019375
- 67%|██████▋   | 10/15 [11:33:05<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]                                                                                          at step 
- 67%|██████▋   | 10/15 [11:33:05<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]                                                                                         2957400
- 67%|██████▋   | 10/15 [11:33:05<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921]                                                                                         {'loss': 0.12804090419806247, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8719590958019375, 'best_peak_step': 2957400, 'best_steps': [2957400]}
- 67%|██████▋   | 10/15 [11:33:05<5:19:17, 3831.56s/trial, best loss: 0.12405812701829921] 73%|███████▎  | 11/15 [11:33:05<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001410 seconds
-
-build_posterior_wrapper took 0.001410 seconds
-
-build_posterior_wrapper took 0.001410 seconds
-
-build_posterior_wrapper took 0.001410 seconds
-
-build_posterior_wrapper took 0.001410 seconds
-
-build_posterior_wrapper took 0.001410 seconds
-
-build_posterior_wrapper took 0.001410 seconds
-
-build_posterior_wrapper took 0.001410 seconds
-
-build_posterior_wrapper took 0.001410 seconds
-
-build_posterior_wrapper took 0.001410 seconds
-
-build_posterior_wrapper took 0.001410 seconds
-
-TPE using 11/11 trials with best loss 0.124058
-
-TPE using 11/11 trials with best loss 0.124058
-
-TPE using 11/11 trials with best loss 0.124058
-
-TPE using 11/11 trials with best loss 0.124058
-
-TPE using 11/11 trials with best loss 0.124058
-
-TPE using 11/11 trials with best loss 0.124058
-
-TPE using 11/11 trials with best loss 0.124058
-
-TPE using 11/11 trials with best loss 0.124058
-
-TPE using 11/11 trials with best loss 0.124058
-
-TPE using 11/11 trials with best loss 0.124058
-
-TPE using 11/11 trials with best loss 0.124058
-
-                                                                                         Testing hyperparameters:
- 73%|███████▎  | 11/15 [11:33:05<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]                                                                                         gru_units : 213.0
- 73%|███████▎  | 11/15 [11:33:05<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]                                                                                         Trainingdataset:
- 73%|███████▎  | 11/15 [11:33:05<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 73%|███████▎  | 11/15 [11:33:05<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]                                                                                         Using Evaluationdataset:
- 73%|███████▎  | 11/15 [11:33:05<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 73%|███████▎  | 11/15 [11:33:05<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]                                                                                         Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 73%|███████▎  | 11/15 [11:33:05<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]                                                                                         runs/expID9882000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:213_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 73%|███████▎  | 11/15 [11:33:05<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                         0.8752601363473269
- 73%|███████▎  | 11/15 [12:37:30<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]                                                                                          at step 
- 73%|███████▎  | 11/15 [12:37:30<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]                                                                                         4770000
- 73%|███████▎  | 11/15 [12:37:30<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921]                                                                                         {'loss': 0.12473986365267309, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8752601363473269, 'best_peak_step': 4770000, 'best_steps': [4770000]}
- 73%|███████▎  | 11/15 [12:37:30<4:15:56, 3839.21s/trial, best loss: 0.12405812701829921] 80%|████████  | 12/15 [12:37:30<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-build_posterior_wrapper took 0.001558 seconds
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-TPE using 12/12 trials with best loss 0.124058
-
-                                                                                         Testing hyperparameters:
- 80%|████████  | 12/15 [12:37:30<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]                                                                                         gru_units : 141.0
- 80%|████████  | 12/15 [12:37:30<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]                                                                                         Trainingdataset:
- 80%|████████  | 12/15 [12:37:30<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 80%|████████  | 12/15 [12:37:30<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]                                                                                         Using Evaluationdataset:
- 80%|████████  | 12/15 [12:37:30<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 80%|████████  | 12/15 [12:37:30<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]                                                                                         Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 80%|████████  | 12/15 [12:37:30<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]                                                                                         runs/expID1333000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:141_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 80%|████████  | 12/15 [12:37:30<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                         0.8725152493720847
- 80%|████████  | 12/15 [13:43:43<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]                                                                                          at step 
- 80%|████████  | 12/15 [13:43:43<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]                                                                                         3243600
- 80%|████████  | 12/15 [13:43:43<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921]                                                                                         {'loss': 0.1274847506279153, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8725152493720847, 'best_peak_step': 3243600, 'best_steps': [3243600]}
- 80%|████████  | 12/15 [13:43:43<3:12:20, 3846.94s/trial, best loss: 0.12405812701829921] 87%|████████▋ | 13/15 [13:43:43<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-build_posterior_wrapper took 0.001476 seconds
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-TPE using 13/13 trials with best loss 0.124058
-
-                                                                                         Testing hyperparameters:
- 87%|████████▋ | 13/15 [13:43:43<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]                                                                                         gru_units : 51.0
- 87%|████████▋ | 13/15 [13:43:43<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]                                                                                         Trainingdataset:
- 87%|████████▋ | 13/15 [13:43:43<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 87%|████████▋ | 13/15 [13:43:43<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]                                                                                         Using Evaluationdataset:
- 87%|████████▋ | 13/15 [13:43:43<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 87%|████████▋ | 13/15 [13:43:43<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]                                                                                         Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 87%|████████▋ | 13/15 [13:43:43<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]                                                                                         runs/expID4926000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:51_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 87%|████████▋ | 13/15 [13:43:43<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                         0.8708467886616433
- 87%|████████▋ | 13/15 [14:49:58<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]                                                                                          at step 
- 87%|████████▋ | 13/15 [14:49:58<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]                                                                                         4579200
- 87%|████████▋ | 13/15 [14:49:58<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921]                                                                                         {'loss': 0.12915321133835667, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8708467886616433, 'best_peak_step': 4579200, 'best_steps': [4579200]}
- 87%|████████▋ | 13/15 [14:49:58<2:09:29, 3884.65s/trial, best loss: 0.12405812701829921] 93%|█████████▎| 14/15 [14:49:58<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-build_posterior_wrapper took 0.001415 seconds
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-TPE using 14/14 trials with best loss 0.124058
-
-                                                                                         Testing hyperparameters:
- 93%|█████████▎| 14/15 [14:49:58<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]                                                                                         gru_units : 93.0
- 93%|█████████▎| 14/15 [14:49:58<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]                                                                                         Trainingdataset:
- 93%|█████████▎| 14/15 [14:49:58<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 93%|█████████▎| 14/15 [14:49:58<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]                                                                                         Using Evaluationdataset:
- 93%|█████████▎| 14/15 [14:49:58<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 93%|█████████▎| 14/15 [14:49:58<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]                                                                                         Warning, the specified stacking order is not the same length as the number of stacked layers, taking stack-order as reference.
- 93%|█████████▎| 14/15 [14:49:58<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]                                                                                         runs/expID5153000_TRAINode_ns:300000_ba:600_ode-units:255_gru-uts:93_lats:70_rec-lay:2_solver:euler_seed:6001_optim:adamax_stackin:1['ode_rnn', 'ode_rnn']_BN
- 93%|█████████▎| 14/15 [14:49:58<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-run_models.py --niters 20 -n 300000 -validn 60000 -b 600 -BN --lr 0.0084761 --ode-rnn --stack-order ode_rnn ode_rnn --ode-type linear --rnn-cell star --ode-method euler --random-seed 6001 --optimizer adamax --num-search 15 --hparams gru_units
-
-                                                                                         0.8724434876210979
- 93%|█████████▎| 14/15 [15:56:09<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]                                                                                          at step 
- 93%|█████████▎| 14/15 [15:56:09<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]                                                                                         3625200
- 93%|█████████▎| 14/15 [15:56:09<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]                                                                                         {'loss': 0.1275565123789021, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8724434876210979, 'best_peak_step': 3625200, 'best_steps': [3625200]}
- 93%|█████████▎| 14/15 [15:56:09<1:05:11, 3911.87s/trial, best loss: 0.12405812701829921]100%|██████████| 15/15 [15:56:09<00:00, 3929.47s/trial, best loss: 0.12405812701829921]  100%|██████████| 15/15 [15:56:09<00:00, 3824.63s/trial, best loss: 0.12405812701829921]
-ODE-RNN  True
-Classic-RNN:  False
-Stacked layers:  1
-Stacked layers:  ['ode_rnn', 'ode_rnn']
-ODE-type:  linear
-RNN-cell:  star
-Weight-sharing ODE:  False
-Weight-sharing RNN:  False
-Using BN:  True
-defaut adapted LR's!!
-Used Optimizer: adamax
-Used Ode-Solver euler
-
----------------------------------------------------------------------------------------------------------------------------------------------
-TRIAL PROTOCOL:
----------------------------------------------------------------------------------------------------------------------------------------------
-Trial: 0001  |  #runs: 1  |  Mean Acc.: 87.557 %  |  Std: nan %  |  Best Acc.: 87.557 % (Peak: 4388400 samples)  |  Hparams: {'gru_units': [288.0]}  |
-Trial: 0002  |  #runs: 1  |  Mean Acc.: 87.594 %  |  Std: nan %  |  Best Acc.: 87.594 % (Peak: 4674600 samples)  |  Hparams: {'gru_units': [159.0]}  |
-Trial: 0003  |  #runs: 1  |  Mean Acc.: 87.548 %  |  Std: nan %  |  Best Acc.: 87.548 % (Peak: 5151600 samples)  |  Hparams: {'gru_units': [237.0]}  |
-Trial: 0004  |  #runs: 1  |  Mean Acc.: 87.472 %  |  Std: nan %  |  Best Acc.: 87.472 % (Peak: 4865400 samples)  |  Hparams: {'gru_units': [195.0]}  |
-Trial: 0005  |  #runs: 1  |  Mean Acc.: 87.354 %  |  Std: nan %  |  Best Acc.: 87.354 % (Peak: 3052800 samples)  |  Hparams: {'gru_units': [153.0]}  |
-Trial: 0006  |  #runs: 1  |  Mean Acc.: 87.252 %  |  Std: nan %  |  Best Acc.: 87.252 % (Peak: 3243600 samples)  |  Hparams: {'gru_units': [141.0]}  |
-Trial: 0007  |  #runs: 1  |  Mean Acc.: 87.557 %  |  Std: nan %  |  Best Acc.: 87.557 % (Peak: 2575800 samples)  |  Hparams: {'gru_units': [255.0]}  |
-Trial: 0008  |  #runs: 1  |  Mean Acc.: 87.128 %  |  Std: nan %  |  Best Acc.: 87.128 % (Peak: 3720600 samples)  |  Hparams: {'gru_units': [54.0]}  |
-Trial: 0009  |  #runs: 1  |  Mean Acc.: 87.510 %  |  Std: nan %  |  Best Acc.: 87.510 % (Peak: 3243600 samples)  |  Hparams: {'gru_units': [267.0]}  |
-Trial: 0010  |  #runs: 1  |  Mean Acc.: 87.304 %  |  Std: nan %  |  Best Acc.: 87.304 % (Peak: 3625200 samples)  |  Hparams: {'gru_units': [144.0]}  |
-Trial: 0011  |  #runs: 1  |  Mean Acc.: 87.196 %  |  Std: nan %  |  Best Acc.: 87.196 % (Peak: 2957400 samples)  |  Hparams: {'gru_units': [117.0]}  |
-Trial: 0012  |  #runs: 1  |  Mean Acc.: 87.526 %  |  Std: nan %  |  Best Acc.: 87.526 % (Peak: 4770000 samples)  |  Hparams: {'gru_units': [213.0]}  |
-Trial: 0013  |  #runs: 1  |  Mean Acc.: 87.252 %  |  Std: nan %  |  Best Acc.: 87.252 % (Peak: 3243600 samples)  |  Hparams: {'gru_units': [141.0]}  |
-Trial: 0014  |  #runs: 1  |  Mean Acc.: 87.085 %  |  Std: nan %  |  Best Acc.: 87.085 % (Peak: 4579200 samples)  |  Hparams: {'gru_units': [51.0]}  |
-Trial: 0015  |  #runs: 1  |  Mean Acc.: 87.244 %  |  Std: nan %  |  Best Acc.: 87.244 % (Peak: 3625200 samples)  |  Hparams: {'gru_units': [93.0]}  |
----------------------------------------------------------------------------------------------------------------------------------------------
-Best configuration mean: 87.594 % (+-nan) (best run: 87.594 %) , with Hyperparmeters: {'gru_units': [159.0]}
----------------------------------------------------------------------------------------------------------------------------------------------

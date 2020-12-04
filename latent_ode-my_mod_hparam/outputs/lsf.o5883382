@@ -1,1622 +1,0 @@
-Lmod has detected the following error: The following module(s) are unknown:
-"pytorch/1.4.0" "cuda/10.0.13"
-
-Please check the spelling or version number. Also try "module spider ..."
-It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
-
-
-
-Couldn't import umap
-I'm counting gpu's:  1
-Means I will train  1  models, with different random seeds
-My Devices:  ['cuda:0']
-Sampling dataset of 300000 training examples
-  0%|          | 0/20 [00:00<?, ?trial/s, best loss=?]                                                      Testing hyperparameters:
-  0%|          | 0/20 [00:00<?, ?trial/s, best loss=?]                                                      batch_size : (730.0,)
-  0%|          | 0/20 [00:00<?, ?trial/s, best loss=?]                                                      Trainingdataset:
-  0%|          | 0/20 [00:05<?, ?trial/s, best loss=?]                                                      Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-  0%|          | 0/20 [00:05<?, ?trial/s, best loss=?]                                                      Using Evaluationdataset:
-  0%|          | 0/20 [00:05<?, ?trial/s, best loss=?]                                                      Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
-  0%|          | 0/20 [00:05<?, ?trial/s, best loss=?]2020-04-20 09:59:18.954984: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/extras/CUPTI/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
-2020-04-20 09:59:18.957057: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/extras/CUPTI/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
-2020-04-20 09:59:18.957096: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
-                                                      runs/expID4495000_TRAINode_ns:300000_ba:730_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
-  0%|          | 0/20 [00:10<?, ?trial/s, best loss=?]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                      0.8705238607822031
-  0%|          | 0/20 [3:03:09<?, ?trial/s, best loss=?]                                                         at step 
-  0%|          | 0/20 [3:03:09<?, ?trial/s, best loss=?]                                                        3538310
-  0%|          | 0/20 [3:03:09<?, ?trial/s, best loss=?]                                                        {'loss': 0.12947613921779688, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8705238607822031, 'best_peak_step': 3538310, 'best_steps': [3538310]}
-  0%|          | 0/20 [3:03:09<?, ?trial/s, best loss=?]  5%|▌         | 1/20 [3:03:09<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:168: RuntimeWarning: invalid value encountered in true_divide
-  var_test_acc = sum((abs(Test_acc - mean_test_acc)**2)/(num_seeds-1))
-
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:171: RuntimeWarning: invalid value encountered in true_divide
-  var_best_test_acc = sum((abs(Best_test_acc - mean_best_test_acc)**2)/(num_seeds-1))
-
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:176: RuntimeWarning: invalid value encountered in true_divide
-  var_train_acc = sum((abs(Train_acc - mean_train_acc)**2)/(num_seeds-1))
-
-build_posterior_wrapper took 0.001432 seconds
-
-TPE using 1/1 trials with best loss 0.129476
-
-                                                                                         Testing hyperparameters:
-  5%|▌         | 1/20 [3:03:09<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]                                                                                         batch_size : (290.0,)
-  5%|▌         | 1/20 [3:03:09<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]                                                                                         Trainingdataset:
-  5%|▌         | 1/20 [3:03:09<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-  5%|▌         | 1/20 [3:03:09<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]                                                                                         Using Evaluationdataset:
-  5%|▌         | 1/20 [3:03:09<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
-  5%|▌         | 1/20 [3:03:09<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]                                                                                         runs/expID3825000_TRAINode_ns:300000_ba:290_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
-  5%|▌         | 1/20 [3:03:09<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                         0.871205597416577
-  5%|▌         | 1/20 [10:32:59<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]                                                                                           at step 
-  5%|▌         | 1/20 [10:32:59<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]                                                                                          11962500
-  5%|▌         | 1/20 [10:32:59<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688]                                                                                          {'loss': 0.128794402583423, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.871205597416577, 'best_peak_step': 11962500, 'best_steps': [11962500]}
-  5%|▌         | 1/20 [10:32:59<57:59:55, 10989.23s/trial, best loss: 0.12947613921779688] 10%|█         | 2/20 [10:32:59<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]  build_posterior_wrapper took 0.002195 seconds
-
-build_posterior_wrapper took 0.002195 seconds
-
-TPE using 2/2 trials with best loss 0.128794
-
-TPE using 2/2 trials with best loss 0.128794
-
-                                                                                        Testing hyperparameters:
- 10%|█         | 2/20 [10:33:00<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]                                                                                        batch_size : (560.0,)
- 10%|█         | 2/20 [10:33:00<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]                                                                                        Trainingdataset:
- 10%|█         | 2/20 [10:33:00<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]                                                                                        Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 10%|█         | 2/20 [10:33:00<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]                                                                                        Using Evaluationdataset:
- 10%|█         | 2/20 [10:33:00<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]                                                                                        Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 10%|█         | 2/20 [10:33:00<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]                                                                                        runs/expID2976000_TRAINode_ns:300000_ba:560_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 10%|█         | 2/20 [10:33:00<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                        0.8709723717258702
- 10%|█         | 2/20 [14:25:43<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]                                                                                         at step 
- 10%|█         | 2/20 [14:25:43<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]                                                                                        5171040
- 10%|█         | 2/20 [14:25:43<78:56:51, 15789.55s/trial, best loss: 0.128794402583423]                                                                                        {'loss': 0.12902762827412984, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8709723717258702, 'best_peak_step': 5171040, 'best_steps': [5171040]}
- 10%|█         | 2/20 [14:25:43<78:56:51, 15789.55s/trial, best loss: 0.128794402583423] 15%|█▌        | 3/20 [14:25:43<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]build_posterior_wrapper took 0.002292 seconds
-
-build_posterior_wrapper took 0.002292 seconds
-
-build_posterior_wrapper took 0.002292 seconds
-
-TPE using 3/3 trials with best loss 0.128794
-
-TPE using 3/3 trials with best loss 0.128794
-
-TPE using 3/3 trials with best loss 0.128794
-
-                                                                                        Testing hyperparameters:
- 15%|█▌        | 3/20 [14:25:43<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]                                                                                        batch_size : (790.0,)
- 15%|█▌        | 3/20 [14:25:43<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]                                                                                        Trainingdataset:
- 15%|█▌        | 3/20 [14:25:43<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]                                                                                        Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 15%|█▌        | 3/20 [14:25:43<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]                                                                                        Using Evaluationdataset:
- 15%|█▌        | 3/20 [14:25:43<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]                                                                                        Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 15%|█▌        | 3/20 [14:25:43<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]                                                                                        runs/expID3325000_TRAINode_ns:300000_ba:790_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 15%|█▌        | 3/20 [14:25:43<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                        0.8708826695371367
- 15%|█▌        | 3/20 [17:15:11<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]                                                                                         at step 
- 15%|█▌        | 3/20 [17:15:11<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]                                                                                        4779500
- 15%|█▌        | 3/20 [17:15:11<71:58:33, 15241.94s/trial, best loss: 0.128794402583423]                                                                                        {'loss': 0.12911733046286333, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8708826695371367, 'best_peak_step': 4779500, 'best_steps': [4779500]}
- 15%|█▌        | 3/20 [17:15:11<71:58:33, 15241.94s/trial, best loss: 0.128794402583423] 20%|██        | 4/20 [17:15:11<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]build_posterior_wrapper took 0.001993 seconds
-
-build_posterior_wrapper took 0.001993 seconds
-
-build_posterior_wrapper took 0.001993 seconds
-
-build_posterior_wrapper took 0.001993 seconds
-
-TPE using 4/4 trials with best loss 0.128794
-
-TPE using 4/4 trials with best loss 0.128794
-
-TPE using 4/4 trials with best loss 0.128794
-
-TPE using 4/4 trials with best loss 0.128794
-
-                                                                                        Testing hyperparameters:
- 20%|██        | 4/20 [17:15:11<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]                                                                                        batch_size : (930.0,)
- 20%|██        | 4/20 [17:15:11<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]                                                                                        Trainingdataset:
- 20%|██        | 4/20 [17:15:11<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]                                                                                        Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 20%|██        | 4/20 [17:15:11<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]                                                                                        Using Evaluationdataset:
- 20%|██        | 4/20 [17:15:11<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]                                                                                        Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 20%|██        | 4/20 [17:15:11<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]                                                                                        runs/expID486000_TRAINode_ns:300000_ba:930_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 20%|██        | 4/20 [17:15:11<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                        0.8718155722999641
- 20%|██        | 4/20 [19:34:06<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]                                                                                         at step 
- 20%|██        | 4/20 [19:34:06<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]                                                                                        6609510
- 20%|██        | 4/20 [19:34:06<60:58:33, 13719.60s/trial, best loss: 0.128794402583423]                                                                                        {'loss': 0.1281844277000359, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8718155722999641, 'best_peak_step': 6609510, 'best_steps': [6609510]}
- 20%|██        | 4/20 [19:34:06<60:58:33, 13719.60s/trial, best loss: 0.128794402583423] 25%|██▌       | 5/20 [19:34:06<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]build_posterior_wrapper took 0.002063 seconds
-
-build_posterior_wrapper took 0.002063 seconds
-
-build_posterior_wrapper took 0.002063 seconds
-
-build_posterior_wrapper took 0.002063 seconds
-
-build_posterior_wrapper took 0.002063 seconds
-
-TPE using 5/5 trials with best loss 0.128184
-
-TPE using 5/5 trials with best loss 0.128184
-
-TPE using 5/5 trials with best loss 0.128184
-
-TPE using 5/5 trials with best loss 0.128184
-
-TPE using 5/5 trials with best loss 0.128184
-
-                                                                                         Testing hyperparameters:
- 25%|██▌       | 5/20 [19:34:06<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]                                                                                         batch_size : (400.0,)
- 25%|██▌       | 5/20 [19:34:06<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]                                                                                         Trainingdataset:
- 25%|██▌       | 5/20 [19:34:06<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 25%|██▌       | 5/20 [19:34:06<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]                                                                                         Using Evaluationdataset:
- 25%|██▌       | 5/20 [19:34:06<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 25%|██▌       | 5/20 [19:34:06<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]                                                                                         runs/expID1440000_TRAINode_ns:300000_ba:400_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 25%|██▌       | 5/20 [19:34:06<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                         0.8711158952278436
- 25%|██▌       | 5/20 [24:29:37<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]                                                                                          at step 
- 25%|██▌       | 5/20 [24:29:37<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]                                                                                         5066800
- 25%|██▌       | 5/20 [24:29:37<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359]                                                                                         {'loss': 0.1288841047721564, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8711158952278436, 'best_peak_step': 5066800, 'best_steps': [5066800]}
- 25%|██▌       | 5/20 [24:29:37<50:26:02, 12104.19s/trial, best loss: 0.1281844277000359] 30%|███       | 6/20 [24:29:37<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]build_posterior_wrapper took 0.002092 seconds
-
-build_posterior_wrapper took 0.002092 seconds
-
-build_posterior_wrapper took 0.002092 seconds
-
-build_posterior_wrapper took 0.002092 seconds
-
-build_posterior_wrapper took 0.002092 seconds
-
-build_posterior_wrapper took 0.002092 seconds
-
-TPE using 6/6 trials with best loss 0.128184
-
-TPE using 6/6 trials with best loss 0.128184
-
-TPE using 6/6 trials with best loss 0.128184
-
-TPE using 6/6 trials with best loss 0.128184
-
-TPE using 6/6 trials with best loss 0.128184
-
-TPE using 6/6 trials with best loss 0.128184
-
-                                                                                         Testing hyperparameters:
- 30%|███       | 6/20 [24:29:37<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]                                                                                         batch_size : (670.0,)
- 30%|███       | 6/20 [24:29:37<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]                                                                                         Trainingdataset:
- 30%|███       | 6/20 [24:29:37<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 30%|███       | 6/20 [24:29:37<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]                                                                                         Using Evaluationdataset:
- 30%|███       | 6/20 [24:29:37<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 30%|███       | 6/20 [24:29:37<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]                                                                                         runs/expID3043000_TRAINode_ns:300000_ba:670_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 30%|███       | 6/20 [24:29:37<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                         0.8709185504126301
- 30%|███       | 6/20 [27:44:20<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]                                                                                          at step 
- 30%|███       | 6/20 [27:44:20<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]                                                                                         4407260
- 30%|███       | 6/20 [27:44:20<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359]                                                                                         {'loss': 0.1290814495873699, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8709185504126301, 'best_peak_step': 4407260, 'best_steps': [4407260]}
- 30%|███       | 6/20 [27:44:20<53:38:13, 13792.39s/trial, best loss: 0.1281844277000359] 35%|███▌      | 7/20 [27:44:20<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]build_posterior_wrapper took 0.002172 seconds
-
-build_posterior_wrapper took 0.002172 seconds
-
-build_posterior_wrapper took 0.002172 seconds
-
-build_posterior_wrapper took 0.002172 seconds
-
-build_posterior_wrapper took 0.002172 seconds
-
-build_posterior_wrapper took 0.002172 seconds
-
-build_posterior_wrapper took 0.002172 seconds
-
-TPE using 7/7 trials with best loss 0.128184
-
-TPE using 7/7 trials with best loss 0.128184
-
-TPE using 7/7 trials with best loss 0.128184
-
-TPE using 7/7 trials with best loss 0.128184
-
-TPE using 7/7 trials with best loss 0.128184
-
-TPE using 7/7 trials with best loss 0.128184
-
-TPE using 7/7 trials with best loss 0.128184
-
-                                                                                         Testing hyperparameters:
- 35%|███▌      | 7/20 [27:44:21<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]                                                                                         batch_size : (260.0,)
- 35%|███▌      | 7/20 [27:44:21<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]                                                                                         Trainingdataset:
- 35%|███▌      | 7/20 [27:44:21<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 35%|███▌      | 7/20 [27:44:21<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]                                                                                         Using Evaluationdataset:
- 35%|███▌      | 7/20 [27:44:21<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 35%|███▌      | 7/20 [27:44:21<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]                                                                                         runs/expID315000_TRAINode_ns:300000_ba:260_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 35%|███▌      | 7/20 [27:44:21<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                         0.8719411553641909
- 35%|███▌      | 7/20 [36:13:08<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]                                                                                          at step 
- 35%|███▌      | 7/20 [36:13:08<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]                                                                                         6984640
- 35%|███▌      | 7/20 [36:13:08<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359]                                                                                         {'loss': 0.12805884463580908, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8719411553641909, 'best_peak_step': 6984640, 'best_steps': [6984640]}
- 35%|███▌      | 7/20 [36:13:08<47:31:15, 13159.69s/trial, best loss: 0.1281844277000359] 40%|████      | 8/20 [36:13:08<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]build_posterior_wrapper took 0.003691 seconds
-
-build_posterior_wrapper took 0.003691 seconds
-
-build_posterior_wrapper took 0.003691 seconds
-
-build_posterior_wrapper took 0.003691 seconds
-
-build_posterior_wrapper took 0.003691 seconds
-
-build_posterior_wrapper took 0.003691 seconds
-
-build_posterior_wrapper took 0.003691 seconds
-
-build_posterior_wrapper took 0.003691 seconds
-
-TPE using 8/8 trials with best loss 0.128059
-
-TPE using 8/8 trials with best loss 0.128059
-
-TPE using 8/8 trials with best loss 0.128059
-
-TPE using 8/8 trials with best loss 0.128059
-
-TPE using 8/8 trials with best loss 0.128059
-
-TPE using 8/8 trials with best loss 0.128059
-
-TPE using 8/8 trials with best loss 0.128059
-
-TPE using 8/8 trials with best loss 0.128059
-
-                                                                                          Testing hyperparameters:
- 40%|████      | 8/20 [36:13:08<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]                                                                                          batch_size : (310.0,)
- 40%|████      | 8/20 [36:13:08<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]                                                                                          Trainingdataset:
- 40%|████      | 8/20 [36:13:08<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 40%|████      | 8/20 [36:13:08<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]                                                                                          Using Evaluationdataset:
- 40%|████      | 8/20 [36:13:08<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 40%|████      | 8/20 [36:13:08<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]                                                                                          runs/expID3867000_TRAINode_ns:300000_ba:310_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 40%|████      | 8/20 [36:13:08<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                          0.8713850017940438
- 40%|████      | 8/20 [43:13:44<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]                                                                                           at step 
- 40%|████      | 8/20 [43:13:44<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]                                                                                          5076870
- 40%|████      | 8/20 [43:13:44<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908]                                                                                          {'loss': 0.12861499820595623, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8713850017940438, 'best_peak_step': 5076870, 'best_steps': [5076870]}
- 40%|████      | 8/20 [43:13:44<61:14:00, 18370.07s/trial, best loss: 0.12805884463580908] 45%|████▌     | 9/20 [43:13:44<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]build_posterior_wrapper took 0.002371 seconds
-
-build_posterior_wrapper took 0.002371 seconds
-
-build_posterior_wrapper took 0.002371 seconds
-
-build_posterior_wrapper took 0.002371 seconds
-
-build_posterior_wrapper took 0.002371 seconds
-
-build_posterior_wrapper took 0.002371 seconds
-
-build_posterior_wrapper took 0.002371 seconds
-
-build_posterior_wrapper took 0.002371 seconds
-
-build_posterior_wrapper took 0.002371 seconds
-
-TPE using 9/9 trials with best loss 0.128059
-
-TPE using 9/9 trials with best loss 0.128059
-
-TPE using 9/9 trials with best loss 0.128059
-
-TPE using 9/9 trials with best loss 0.128059
-
-TPE using 9/9 trials with best loss 0.128059
-
-TPE using 9/9 trials with best loss 0.128059
-
-TPE using 9/9 trials with best loss 0.128059
-
-TPE using 9/9 trials with best loss 0.128059
-
-TPE using 9/9 trials with best loss 0.128059
-
-                                                                                          Testing hyperparameters:
- 45%|████▌     | 9/20 [43:13:44<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]                                                                                          batch_size : (1310.0,)
- 45%|████▌     | 9/20 [43:13:44<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]                                                                                          Trainingdataset:
- 45%|████▌     | 9/20 [43:13:44<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 45%|████▌     | 9/20 [43:13:44<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]                                                                                          Using Evaluationdataset:
- 45%|████▌     | 9/20 [43:13:44<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 45%|████▌     | 9/20 [43:13:44<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]                                                                                          runs/expID847000_TRAINode_ns:300000_ba:1310_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 45%|████▌     | 9/20 [43:13:44<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                          0.8701829924650162
- 45%|████▌     | 9/20 [45:02:25<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]                                                                                           at step 
- 45%|████▌     | 9/20 [45:02:25<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]                                                                                          5450910
- 45%|████▌     | 9/20 [45:02:25<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908]                                                                                          {'loss': 0.12981700753498382, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8701829924650162, 'best_peak_step': 5450910, 'best_steps': [5450910]}
- 45%|████▌     | 9/20 [45:02:25<62:25:28, 20429.84s/trial, best loss: 0.12805884463580908] 50%|█████     | 10/20 [45:02:25<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]build_posterior_wrapper took 0.002378 seconds
-
-build_posterior_wrapper took 0.002378 seconds
-
-build_posterior_wrapper took 0.002378 seconds
-
-build_posterior_wrapper took 0.002378 seconds
-
-build_posterior_wrapper took 0.002378 seconds
-
-build_posterior_wrapper took 0.002378 seconds
-
-build_posterior_wrapper took 0.002378 seconds
-
-build_posterior_wrapper took 0.002378 seconds
-
-build_posterior_wrapper took 0.002378 seconds
-
-build_posterior_wrapper took 0.002378 seconds
-
-TPE using 10/10 trials with best loss 0.128059
-
-TPE using 10/10 trials with best loss 0.128059
-
-TPE using 10/10 trials with best loss 0.128059
-
-TPE using 10/10 trials with best loss 0.128059
-
-TPE using 10/10 trials with best loss 0.128059
-
-TPE using 10/10 trials with best loss 0.128059
-
-TPE using 10/10 trials with best loss 0.128059
-
-TPE using 10/10 trials with best loss 0.128059
-
-TPE using 10/10 trials with best loss 0.128059
-
-TPE using 10/10 trials with best loss 0.128059
-
-                                                                                           Testing hyperparameters:
- 50%|█████     | 10/20 [45:02:25<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]                                                                                           batch_size : (420.0,)
- 50%|█████     | 10/20 [45:02:25<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]                                                                                           Trainingdataset:
- 50%|█████     | 10/20 [45:02:25<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 50%|█████     | 10/20 [45:02:25<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]                                                                                           Using Evaluationdataset:
- 50%|█████     | 10/20 [45:02:25<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 50%|█████     | 10/20 [45:02:25<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]                                                                                           runs/expID3376000_TRAINode_ns:300000_ba:420_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 50%|█████     | 10/20 [45:02:25<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                           0.8715285252960172
- 50%|█████     | 10/20 [50:22:02<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]                                                                                            at step 
- 50%|█████     | 10/20 [50:22:02<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]                                                                                           2968560
- 50%|█████     | 10/20 [50:22:02<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908]                                                                                           {'loss': 0.1284714747039828, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8715285252960172, 'best_peak_step': 2968560, 'best_steps': [2968560]}
- 50%|█████     | 10/20 [50:22:02<45:09:31, 16257.14s/trial, best loss: 0.12805884463580908] 55%|█████▌    | 11/20 [50:22:02<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]build_posterior_wrapper took 0.002857 seconds
-
-build_posterior_wrapper took 0.002857 seconds
-
-build_posterior_wrapper took 0.002857 seconds
-
-build_posterior_wrapper took 0.002857 seconds
-
-build_posterior_wrapper took 0.002857 seconds
-
-build_posterior_wrapper took 0.002857 seconds
-
-build_posterior_wrapper took 0.002857 seconds
-
-build_posterior_wrapper took 0.002857 seconds
-
-build_posterior_wrapper took 0.002857 seconds
-
-build_posterior_wrapper took 0.002857 seconds
-
-build_posterior_wrapper took 0.002857 seconds
-
-TPE using 11/11 trials with best loss 0.128059
-
-TPE using 11/11 trials with best loss 0.128059
-
-TPE using 11/11 trials with best loss 0.128059
-
-TPE using 11/11 trials with best loss 0.128059
-
-TPE using 11/11 trials with best loss 0.128059
-
-TPE using 11/11 trials with best loss 0.128059
-
-TPE using 11/11 trials with best loss 0.128059
-
-TPE using 11/11 trials with best loss 0.128059
-
-TPE using 11/11 trials with best loss 0.128059
-
-TPE using 11/11 trials with best loss 0.128059
-
-TPE using 11/11 trials with best loss 0.128059
-
-                                                                                           Testing hyperparameters:
- 55%|█████▌    | 11/20 [50:22:02<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]                                                                                           batch_size : (370.0,)
- 55%|█████▌    | 11/20 [50:22:02<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]                                                                                           Trainingdataset:
- 55%|█████▌    | 11/20 [50:22:02<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 55%|█████▌    | 11/20 [50:22:02<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]                                                                                           Using Evaluationdataset:
- 55%|█████▌    | 11/20 [50:22:02<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 55%|█████▌    | 11/20 [50:22:02<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]                                                                                           runs/expID6037000_TRAINode_ns:300000_ba:370_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 55%|█████▌    | 11/20 [50:22:02<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                           0.871259418729817
- 55%|█████▌    | 11/20 [56:39:04<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]                                                                                            at step 
- 55%|█████▌    | 11/20 [56:39:04<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]                                                                                           3449880
- 55%|█████▌    | 11/20 [56:39:04<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908]                                                                                           {'loss': 0.12874058127018295, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.871259418729817, 'best_peak_step': 3449880, 'best_steps': [3449880]}
- 55%|█████▌    | 11/20 [56:39:04<42:49:57, 17133.04s/trial, best loss: 0.12805884463580908] 60%|██████    | 12/20 [56:39:04<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-build_posterior_wrapper took 0.003755 seconds
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-TPE using 12/12 trials with best loss 0.128059
-
-                                                                                           Testing hyperparameters:
- 60%|██████    | 12/20 [56:39:05<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]                                                                                           batch_size : (990.0,)
- 60%|██████    | 12/20 [56:39:05<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]                                                                                           Trainingdataset:
- 60%|██████    | 12/20 [56:39:05<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 60%|██████    | 12/20 [56:39:05<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]                                                                                           Using Evaluationdataset:
- 60%|██████    | 12/20 [56:39:05<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 60%|██████    | 12/20 [56:39:05<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]                                                                                           runs/expID352000_TRAINode_ns:300000_ba:990_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 60%|██████    | 12/20 [56:39:05<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                           0.8708647290993901
- 60%|██████    | 12/20 [59:13:20<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]                                                                                            at step 
- 60%|██████    | 12/20 [59:13:20<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]                                                                                           5512320
- 60%|██████    | 12/20 [59:13:20<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908]                                                                                           {'loss': 0.12913527090060994, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8708647290993901, 'best_peak_step': 5512320, 'best_steps': [5512320]}
- 60%|██████    | 12/20 [59:13:20<41:43:59, 18779.88s/trial, best loss: 0.12805884463580908] 65%|██████▌   | 13/20 [59:13:20<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-build_posterior_wrapper took 0.003597 seconds
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-TPE using 13/13 trials with best loss 0.128059
-
-                                                                                           Testing hyperparameters:
- 65%|██████▌   | 13/20 [59:13:20<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]                                                                                           batch_size : (530.0,)
- 65%|██████▌   | 13/20 [59:13:20<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]                                                                                           Trainingdataset:
- 65%|██████▌   | 13/20 [59:13:20<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 65%|██████▌   | 13/20 [59:13:20<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]                                                                                           Using Evaluationdataset:
- 65%|██████▌   | 13/20 [59:13:20<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 65%|██████▌   | 13/20 [59:13:20<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]                                                                                           runs/expID3514000_TRAINode_ns:300000_ba:530_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 65%|██████▌   | 13/20 [59:13:20<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                           0.8711158952278436
- 65%|██████▌   | 13/20 [63:24:16<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]                                                                                            at step 
- 65%|██████▌   | 13/20 [63:24:16<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]                                                                                           4988360
- 65%|██████▌   | 13/20 [63:24:16<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908]                                                                                           {'loss': 0.1288841047721564, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8711158952278436, 'best_peak_step': 4988360, 'best_steps': [4988360]}
- 65%|██████▌   | 13/20 [63:24:16<30:57:38, 15922.64s/trial, best loss: 0.12805884463580908] 70%|███████   | 14/20 [63:24:16<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-build_posterior_wrapper took 0.003602 seconds
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-TPE using 14/14 trials with best loss 0.128059
-
-                                                                                           Testing hyperparameters:
- 70%|███████   | 14/20 [63:24:17<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]                                                                                           batch_size : (470.0,)
- 70%|███████   | 14/20 [63:24:17<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]                                                                                           Trainingdataset:
- 70%|███████   | 14/20 [63:24:17<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 70%|███████   | 14/20 [63:24:17<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]                                                                                           Using Evaluationdataset:
- 70%|███████   | 14/20 [63:24:17<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 70%|███████   | 14/20 [63:24:17<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]                                                                                           runs/expID8969000_TRAINode_ns:300000_ba:470_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 70%|███████   | 14/20 [63:24:17<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                           0.8717258701112307
- 70%|███████   | 14/20 [67:50:46<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]                                                                                            at step 
- 70%|███████   | 14/20 [67:50:46<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]                                                                                           9971520
- 70%|███████   | 14/20 [67:50:46<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908]                                                                                           {'loss': 0.1282741298887693, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8717258701112307, 'best_peak_step': 9971520, 'best_steps': [9971520]}
- 70%|███████   | 14/20 [67:50:46<26:06:16, 15662.79s/trial, best loss: 0.12805884463580908] 75%|███████▌  | 15/20 [67:50:46<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-build_posterior_wrapper took 0.003237 seconds
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-TPE using 15/15 trials with best loss 0.128059
-
-                                                                                           Testing hyperparameters:
- 75%|███████▌  | 15/20 [67:50:46<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]                                                                                           batch_size : (1350.0,)
- 75%|███████▌  | 15/20 [67:50:46<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]                                                                                           Trainingdataset:
- 75%|███████▌  | 15/20 [67:50:46<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 75%|███████▌  | 15/20 [67:50:46<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]                                                                                           Using Evaluationdataset:
- 75%|███████▌  | 15/20 [67:50:46<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 75%|███████▌  | 15/20 [67:50:46<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]                                                                                           runs/expID3021000_TRAINode_ns:300000_ba:1350_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 75%|███████▌  | 15/20 [67:50:46<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                           0.8717438105489774
- 75%|███████▌  | 15/20 [69:29:10<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]                                                                                            at step 
- 75%|███████▌  | 15/20 [69:29:10<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]                                                                                           7188750
- 75%|███████▌  | 15/20 [69:29:10<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908]                                                                                           {'loss': 0.12825618945102257, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8717438105489774, 'best_peak_step': 7188750, 'best_steps': [7188750]}
- 75%|███████▌  | 15/20 [69:29:10<21:53:23, 15760.73s/trial, best loss: 0.12805884463580908] 80%|████████  | 16/20 [69:29:10<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-build_posterior_wrapper took 0.002516 seconds
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-TPE using 16/16 trials with best loss 0.128059
-
-                                                                                           Testing hyperparameters:
- 80%|████████  | 16/20 [69:29:10<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]                                                                                           batch_size : (650.0,)
- 80%|████████  | 16/20 [69:29:10<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]                                                                                           Trainingdataset:
- 80%|████████  | 16/20 [69:29:10<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 80%|████████  | 16/20 [69:29:10<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]                                                                                           Using Evaluationdataset:
- 80%|████████  | 16/20 [69:29:10<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 80%|████████  | 16/20 [69:29:10<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]                                                                                           runs/expID2833000_TRAINode_ns:300000_ba:650_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 80%|████████  | 16/20 [69:29:10<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                           0.8708467886616433
- 80%|████████  | 16/20 [72:26:29<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]                                                                                            at step 
- 80%|████████  | 16/20 [72:26:29<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]                                                                                           5541900
- 80%|████████  | 16/20 [72:26:29<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908]                                                                                           {'loss': 0.12915321133835667, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8708467886616433, 'best_peak_step': 5541900, 'best_steps': [5541900]}
- 80%|████████  | 16/20 [72:26:29<14:13:35, 12803.76s/trial, best loss: 0.12805884463580908] 85%|████████▌ | 17/20 [72:26:29<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-build_posterior_wrapper took 0.001931 seconds
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-TPE using 17/17 trials with best loss 0.128059
-
-                                                                                           Testing hyperparameters:
- 85%|████████▌ | 17/20 [72:26:31<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]                                                                                           batch_size : (480.0,)
- 85%|████████▌ | 17/20 [72:26:31<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]                                                                                           Trainingdataset:
- 85%|████████▌ | 17/20 [72:26:31<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 85%|████████▌ | 17/20 [72:26:31<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]                                                                                           Using Evaluationdataset:
- 85%|████████▌ | 17/20 [72:26:31<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 85%|████████▌ | 17/20 [72:26:31<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]                                                                                           runs/expID5870000_TRAINode_ns:300000_ba:480_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 85%|████████▌ | 17/20 [72:26:31<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                           0.8726049515608181
- 85%|████████▌ | 17/20 [76:35:22<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]                                                                                            at step 
- 85%|████████▌ | 17/20 [76:35:22<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]                                                                                           2865600
- 85%|████████▌ | 17/20 [76:35:22<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908]                                                                                           {'loss': 0.12739504843918192, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8726049515608181, 'best_peak_step': 2865600, 'best_steps': [2865600]}
- 85%|████████▌ | 17/20 [76:35:22<10:07:43, 12154.47s/trial, best loss: 0.12805884463580908] 90%|█████████ | 18/20 [76:35:22<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192] build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-build_posterior_wrapper took 0.001742 seconds
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-TPE using 18/18 trials with best loss 0.127395
-
-                                                                                          Testing hyperparameters:
- 90%|█████████ | 18/20 [76:35:23<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192]                                                                                          batch_size : (1260.0,)
- 90%|█████████ | 18/20 [76:35:23<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192]                                                                                          Trainingdataset:
- 90%|█████████ | 18/20 [76:35:23<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 90%|█████████ | 18/20 [76:35:23<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192]                                                                                          Using Evaluationdataset:
- 90%|█████████ | 18/20 [76:35:23<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 90%|█████████ | 18/20 [76:35:23<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192]                                                                                          runs/expID4199000_TRAINode_ns:300000_ba:1260_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 90%|█████████ | 18/20 [76:35:23<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                          0.8712414782920703
- 90%|█████████ | 18/20 [78:15:54<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192]                                                                                           at step 
- 90%|█████████ | 18/20 [78:15:54<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192]                                                                                          5458320
- 90%|█████████ | 18/20 [78:15:54<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192]                                                                                          {'loss': 0.12875852170792967, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8712414782920703, 'best_peak_step': 5458320, 'best_steps': [5458320]}
- 90%|█████████ | 18/20 [78:15:54<7:12:55, 12987.90s/trial, best loss: 0.12739504843918192] 95%|█████████▌| 19/20 [78:15:54<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-build_posterior_wrapper took 0.001853 seconds
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-TPE using 19/19 trials with best loss 0.127395
-
-                                                                                          Testing hyperparameters:
- 95%|█████████▌| 19/20 [78:15:55<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]                                                                                          batch_size : (390.0,)
- 95%|█████████▌| 19/20 [78:15:55<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]                                                                                          Trainingdataset:
- 95%|█████████▌| 19/20 [78:15:55<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 95%|█████████▌| 19/20 [78:15:55<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]                                                                                          Using Evaluationdataset:
- 95%|█████████▌| 19/20 [78:15:55<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 95%|█████████▌| 19/20 [78:15:55<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]                                                                                          runs/expID833000_TRAINode_ns:300000_ba:390_ode-units:255_gru-uts:100_lats:70_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 95%|█████████▌| 19/20 [78:15:55<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --ode-method dopri5 --random-seed 6001 --num-search 20 --num-seeds 1 --hparams batch_size
-
-                                                                                          0.8720487979906709
- 95%|█████████▌| 19/20 [83:13:28<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]                                                                                           at step 
- 95%|█████████▌| 19/20 [83:13:28<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]                                                                                          2974140
- 95%|█████████▌| 19/20 [83:13:28<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]                                                                                          {'loss': 0.12795120200932908, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8720487979906709, 'best_peak_step': 2974140, 'best_steps': [2974140]}
- 95%|█████████▌| 19/20 [83:13:28<3:01:41, 10901.06s/trial, best loss: 0.12739504843918192]100%|██████████| 20/20 [83:13:28<00:00, 12986.95s/trial, best loss: 0.12739504843918192]  100%|██████████| 20/20 [83:13:28<00:00, 14980.41s/trial, best loss: 0.12739504843918192]
-ODE-RNN  True
-Classic-RNN:  False
-Stacked layers:  1
-ODE-type:  gru
-RNN-cell:  gru
-defaut adapted LR's!!
-Used Optimizer: adamax
-Used Ode-Solver dopri5
-
----------------------------------------------------------------------------------------------------------------------------------------------
-TRIAL PROTOCOL:
----------------------------------------------------------------------------------------------------------------------------------------------
-Trial: 0001  |  #runs: 1  |  Mean Acc.: 87.052 %  |  Std: nan %  |  Best Acc.: 87.052 % (Peak: 3538310 samples)  |  Hparams: {'batch_size': [730.0]}  |
-Trial: 0002  |  #runs: 1  |  Mean Acc.: 87.121 %  |  Std: nan %  |  Best Acc.: 87.121 % (Peak: 11962500 samples)  |  Hparams: {'batch_size': [290.0]}  |
-Trial: 0003  |  #runs: 1  |  Mean Acc.: 87.097 %  |  Std: nan %  |  Best Acc.: 87.097 % (Peak: 5171040 samples)  |  Hparams: {'batch_size': [560.0]}  |
-Trial: 0004  |  #runs: 1  |  Mean Acc.: 87.088 %  |  Std: nan %  |  Best Acc.: 87.088 % (Peak: 4779500 samples)  |  Hparams: {'batch_size': [790.0]}  |
-Trial: 0005  |  #runs: 1  |  Mean Acc.: 87.182 %  |  Std: nan %  |  Best Acc.: 87.182 % (Peak: 6609510 samples)  |  Hparams: {'batch_size': [930.0]}  |
-Trial: 0006  |  #runs: 1  |  Mean Acc.: 87.112 %  |  Std: nan %  |  Best Acc.: 87.112 % (Peak: 5066800 samples)  |  Hparams: {'batch_size': [400.0]}  |
-Trial: 0007  |  #runs: 1  |  Mean Acc.: 87.092 %  |  Std: nan %  |  Best Acc.: 87.092 % (Peak: 4407260 samples)  |  Hparams: {'batch_size': [670.0]}  |
-Trial: 0008  |  #runs: 1  |  Mean Acc.: 87.194 %  |  Std: nan %  |  Best Acc.: 87.194 % (Peak: 6984640 samples)  |  Hparams: {'batch_size': [260.0]}  |
-Trial: 0009  |  #runs: 1  |  Mean Acc.: 87.139 %  |  Std: nan %  |  Best Acc.: 87.139 % (Peak: 5076870 samples)  |  Hparams: {'batch_size': [310.0]}  |
-Trial: 0010  |  #runs: 1  |  Mean Acc.: 87.018 %  |  Std: nan %  |  Best Acc.: 87.018 % (Peak: 5450910 samples)  |  Hparams: {'batch_size': [1310.0]}  |
-Trial: 0011  |  #runs: 1  |  Mean Acc.: 87.153 %  |  Std: nan %  |  Best Acc.: 87.153 % (Peak: 2968560 samples)  |  Hparams: {'batch_size': [420.0]}  |
-Trial: 0012  |  #runs: 1  |  Mean Acc.: 87.126 %  |  Std: nan %  |  Best Acc.: 87.126 % (Peak: 3449880 samples)  |  Hparams: {'batch_size': [370.0]}  |
-Trial: 0013  |  #runs: 1  |  Mean Acc.: 87.086 %  |  Std: nan %  |  Best Acc.: 87.086 % (Peak: 5512320 samples)  |  Hparams: {'batch_size': [990.0]}  |
-Trial: 0014  |  #runs: 1  |  Mean Acc.: 87.112 %  |  Std: nan %  |  Best Acc.: 87.112 % (Peak: 4988360 samples)  |  Hparams: {'batch_size': [530.0]}  |
-Trial: 0015  |  #runs: 1  |  Mean Acc.: 87.173 %  |  Std: nan %  |  Best Acc.: 87.173 % (Peak: 9971520 samples)  |  Hparams: {'batch_size': [470.0]}  |
-Trial: 0016  |  #runs: 1  |  Mean Acc.: 87.174 %  |  Std: nan %  |  Best Acc.: 87.174 % (Peak: 7188750 samples)  |  Hparams: {'batch_size': [1350.0]}  |
-Trial: 0017  |  #runs: 1  |  Mean Acc.: 87.085 %  |  Std: nan %  |  Best Acc.: 87.085 % (Peak: 5541900 samples)  |  Hparams: {'batch_size': [650.0]}  |
-Trial: 0018  |  #runs: 1  |  Mean Acc.: 87.260 %  |  Std: nan %  |  Best Acc.: 87.260 % (Peak: 2865600 samples)  |  Hparams: {'batch_size': [480.0]}  |
-Trial: 0019  |  #runs: 1  |  Mean Acc.: 87.124 %  |  Std: nan %  |  Best Acc.: 87.124 % (Peak: 5458320 samples)  |  Hparams: {'batch_size': [1260.0]}  |
-Trial: 0020  |  #runs: 1  |  Mean Acc.: 87.205 %  |  Std: nan %  |  Best Acc.: 87.205 % (Peak: 2974140 samples)  |  Hparams: {'batch_size': [390.0]}  |
----------------------------------------------------------------------------------------------------------------------------------------------
-Best configuration mean: 87.260 % (+-nan) (best run: 87.260 %) , with Hyperparmeters: {'batch_size': [480.0]}
----------------------------------------------------------------------------------------------------------------------------------------------

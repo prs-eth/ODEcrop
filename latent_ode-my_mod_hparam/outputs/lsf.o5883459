@@ -1,1392 +1,0 @@
-Lmod has detected the following error: The following module(s) are unknown:
-"pytorch/1.4.0" "cuda/10.0.13"
-
-Please check the spelling or version number. Also try "module spider ..."
-It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "pytorch/1.4.0" "cuda/10.0.13"
-
-
-
-Couldn't import umap
-I'm counting gpu's:  1
-Means I will train  1  models, with different random seeds
-My Devices:  ['cuda:0']
-Sampling dataset of 300000 training examples
-  0%|          | 0/18 [00:00<?, ?trial/s, best loss=?]                                                      Testing hyperparameters:
-  0%|          | 0/18 [00:00<?, ?trial/s, best loss=?]                                                      gru_units : 147.0
-  0%|          | 0/18 [00:00<?, ?trial/s, best loss=?]                                                      latents : 138.0
-  0%|          | 0/18 [00:00<?, ?trial/s, best loss=?]                                                      lr : 0.030755816207529194
-  0%|          | 0/18 [00:00<?, ?trial/s, best loss=?]                                                      Trainingdataset:
-  0%|          | 0/18 [00:05<?, ?trial/s, best loss=?]                                                      Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-  0%|          | 0/18 [00:05<?, ?trial/s, best loss=?]                                                      Using Evaluationdataset:
-  0%|          | 0/18 [00:05<?, ?trial/s, best loss=?]                                                      Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
-  0%|          | 0/18 [00:05<?, ?trial/s, best loss=?]2020-04-20 09:59:17.302261: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer.so.6'; dlerror: libnvinfer.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/extras/CUPTI/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
-2020-04-20 09:59:17.304327: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libnvinfer_plugin.so.6'; dlerror: libnvinfer_plugin.so.6: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /cluster/apps/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cluster/apps/gcc-4.8.5/libpng-1.6.27-d6quyddan2eotsexesxufytusf27xxgz/lib:/cluster/apps/gcc-4.8.5/jpeg-9b-psjvucpx7xwkflb3meatuo6ugdtapkex/lib:/cluster/apps/gcc-4.8.5/nccl-2.4.8-1-xpkpjc3dfz3c5knwctwl5vcut2ahfrwe/lib:/cluster/apps/gcc-4.8.5/cudnn-7.6.4-3ddmfyxxx2gkzhrra44ir3h3ls6yeuwe/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/extras/CUPTI/lib64:/cluster/apps/gcc-4.8.5/cuda-10.1.243-7tq43deb5x4dbs4oe427w4zszno23q6r/lib64:/cluster/apps/gcc-4.8.5/openblas-0.2.19-w25ydbabttcfa6g76gejjkthcm3xcuv3/lib:/cluster/apps/python/3.7.4/x86_64/lib64
-2020-04-20 09:59:17.304343: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:30] Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
-                                                      runs/expID910000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:147_lats:138.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
-  0%|          | 0/18 [00:09<?, ?trial/s, best loss=?]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                      0.3272515249372085
-  0%|          | 0/18 [2:59:38<?, ?trial/s, best loss=?]                                                         at step 
-  0%|          | 0/18 [2:59:38<?, ?trial/s, best loss=?]                                                        95900
-  0%|          | 0/18 [2:59:38<?, ?trial/s, best loss=?]                                                        {'loss': 0.6727484750627915, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.3272515249372085, 'best_peak_step': 95900, 'best_steps': [95900]}
-  0%|          | 0/18 [2:59:38<?, ?trial/s, best loss=?]  6%|▌         | 1/18 [2:59:38<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:168: RuntimeWarning: invalid value encountered in true_divide
-  var_test_acc = sum((abs(Test_acc - mean_test_acc)**2)/(num_seeds-1))
-
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:171: RuntimeWarning: invalid value encountered in true_divide
-  var_best_test_acc = sum((abs(Best_test_acc - mean_best_test_acc)**2)/(num_seeds-1))
-
-/cluster/work/igp_psr/metzgern/ODEcrop/latent_ode-my_mod_hparam/lib/training.py:176: RuntimeWarning: invalid value encountered in true_divide
-  var_train_acc = sum((abs(Train_acc - mean_train_acc)**2)/(num_seeds-1))
-
-build_posterior_wrapper took 0.002154 seconds
-
-TPE using 1/1 trials with best loss 0.672748
-
-                                                                                        Testing hyperparameters:
-  6%|▌         | 1/18 [2:59:39<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                        gru_units : 249.0
-  6%|▌         | 1/18 [2:59:39<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                        latents : 120.0
-  6%|▌         | 1/18 [2:59:39<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                        lr : 0.002644342807327952
-  6%|▌         | 1/18 [2:59:39<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                        Trainingdataset:
-  6%|▌         | 1/18 [2:59:39<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                        Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
-  6%|▌         | 1/18 [2:59:39<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                        Using Evaluationdataset:
-  6%|▌         | 1/18 [2:59:39<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                        Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
-  6%|▌         | 1/18 [2:59:39<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                        runs/expID3726000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:249_lats:120.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
-  6%|▌         | 1/18 [2:59:39<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                        0.8621994976677431
-  6%|▌         | 1/18 [5:56:11<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                         at step 
-  6%|▌         | 1/18 [5:56:11<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                        12275200
-  6%|▌         | 1/18 [5:56:11<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915]                                                                                        {'loss': 0.13780050233225694, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8621994976677431, 'best_peak_step': 12275200, 'best_steps': [12275200]}
-  6%|▌         | 1/18 [5:56:11<50:54:01, 10778.90s/trial, best loss: 0.6727484750627915] 11%|█         | 2/18 [5:56:11<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]build_posterior_wrapper took 0.002699 seconds
-
-build_posterior_wrapper took 0.002699 seconds
-
-TPE using 2/2 trials with best loss 0.137801
-
-TPE using 2/2 trials with best loss 0.137801
-
-                                                                                         Testing hyperparameters:
- 11%|█         | 2/18 [5:56:11<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                         gru_units : 108.0
- 11%|█         | 2/18 [5:56:11<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                         latents : 99.0
- 11%|█         | 2/18 [5:56:11<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                         lr : 0.01012746237587341
- 11%|█         | 2/18 [5:56:11<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                         Trainingdataset:
- 11%|█         | 2/18 [5:56:11<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 11%|█         | 2/18 [5:56:11<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                         Using Evaluationdataset:
- 11%|█         | 2/18 [5:56:11<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 11%|█         | 2/18 [5:56:11<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                         runs/expID2523000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:108_lats:99.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 11%|█         | 2/18 [5:56:11<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                         0.8661284535342663
- 11%|█         | 2/18 [8:59:26<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                          at step 
- 11%|█         | 2/18 [8:59:26<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                         11124400
- 11%|█         | 2/18 [8:59:26<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694]                                                                                         {'loss': 0.13387154646573374, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8661284535342663, 'best_peak_step': 11124400, 'best_steps': [11124400]}
- 11%|█         | 2/18 [8:59:26<47:39:27, 10722.95s/trial, best loss: 0.13780050233225694] 17%|█▋        | 3/18 [8:59:26<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.002741 seconds
-
-build_posterior_wrapper took 0.002741 seconds
-
-build_posterior_wrapper took 0.002741 seconds
-
-TPE using 3/3 trials with best loss 0.133872
-
-TPE using 3/3 trials with best loss 0.133872
-
-TPE using 3/3 trials with best loss 0.133872
-
-                                                                                         Testing hyperparameters:
- 17%|█▋        | 3/18 [8:59:26<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                         gru_units : 246.0
- 17%|█▋        | 3/18 [8:59:26<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                         latents : 180.0
- 17%|█▋        | 3/18 [8:59:26<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                         lr : 0.003695570368261106
- 17%|█▋        | 3/18 [8:59:26<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                         Trainingdataset:
- 17%|█▋        | 3/18 [8:59:26<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                         Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 17%|█▋        | 3/18 [8:59:26<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                         Using Evaluationdataset:
- 17%|█▋        | 3/18 [8:59:26<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                         Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 17%|█▋        | 3/18 [8:59:26<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                         runs/expID7077000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:246_lats:180.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 17%|█▋        | 3/18 [8:59:26<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                         0.8646035163257983
- 17%|█▋        | 3/18 [12:04:24<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                           at step 
- 17%|█▋        | 3/18 [12:04:24<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                          7863800
- 17%|█▋        | 3/18 [12:04:24<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374]                                                                                          {'loss': 0.13539648367420165, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8646035163257983, 'best_peak_step': 7863800, 'best_steps': [7863800]}
- 17%|█▋        | 3/18 [12:04:24<45:01:07, 10804.50s/trial, best loss: 0.13387154646573374] 22%|██▏       | 4/18 [12:04:24<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.003432 seconds
-
-build_posterior_wrapper took 0.003432 seconds
-
-build_posterior_wrapper took 0.003432 seconds
-
-build_posterior_wrapper took 0.003432 seconds
-
-TPE using 4/4 trials with best loss 0.133872
-
-TPE using 4/4 trials with best loss 0.133872
-
-TPE using 4/4 trials with best loss 0.133872
-
-TPE using 4/4 trials with best loss 0.133872
-
-                                                                                          Testing hyperparameters:
- 22%|██▏       | 4/18 [12:04:24<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                          gru_units : 117.0
- 22%|██▏       | 4/18 [12:04:24<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                          latents : 153.0
- 22%|██▏       | 4/18 [12:04:24<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                          lr : 0.0048408309740648895
- 22%|██▏       | 4/18 [12:04:24<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                          Trainingdataset:
- 22%|██▏       | 4/18 [12:04:24<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 22%|██▏       | 4/18 [12:04:24<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                          Using Evaluationdataset:
- 22%|██▏       | 4/18 [12:04:24<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 22%|██▏       | 4/18 [12:04:24<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                          runs/expID2087000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:117_lats:153.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 22%|██▏       | 4/18 [12:04:24<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                          0.8651776103336921
- 22%|██▏       | 4/18 [15:19:44<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                           at step 
- 22%|██▏       | 4/18 [15:19:44<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                          7000700
- 22%|██▏       | 4/18 [15:19:44<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374]                                                                                          {'loss': 0.13482238966630788, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8651776103336921, 'best_peak_step': 7000700, 'best_steps': [7000700]}
- 22%|██▏       | 4/18 [15:19:44<42:21:37, 10892.67s/trial, best loss: 0.13387154646573374] 28%|██▊       | 5/18 [15:19:44<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.003455 seconds
-
-build_posterior_wrapper took 0.003455 seconds
-
-build_posterior_wrapper took 0.003455 seconds
-
-build_posterior_wrapper took 0.003455 seconds
-
-build_posterior_wrapper took 0.003455 seconds
-
-TPE using 5/5 trials with best loss 0.133872
-
-TPE using 5/5 trials with best loss 0.133872
-
-TPE using 5/5 trials with best loss 0.133872
-
-TPE using 5/5 trials with best loss 0.133872
-
-TPE using 5/5 trials with best loss 0.133872
-
-                                                                                          Testing hyperparameters:
- 28%|██▊       | 5/18 [15:19:44<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                          gru_units : 207.0
- 28%|██▊       | 5/18 [15:19:44<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                          latents : 66.0
- 28%|██▊       | 5/18 [15:19:44<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                          lr : 0.0017579167563799504
- 28%|██▊       | 5/18 [15:19:44<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                          Trainingdataset:
- 28%|██▊       | 5/18 [15:19:44<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 28%|██▊       | 5/18 [15:19:44<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                          Using Evaluationdataset:
- 28%|██▊       | 5/18 [15:19:44<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 28%|██▊       | 5/18 [15:19:44<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                          runs/expID5375000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:207_lats:66.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 28%|██▊       | 5/18 [15:19:44<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                          0.8520631503408683
- 28%|██▊       | 5/18 [18:16:25<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                           at step 
- 28%|██▊       | 5/18 [18:16:25<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                          13809600
- 28%|██▊       | 5/18 [18:16:25<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374]                                                                                          {'loss': 0.14793684965913168, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8520631503408683, 'best_peak_step': 13809600, 'best_steps': [13809600]}
- 28%|██▊       | 5/18 [18:16:25<40:13:49, 11140.77s/trial, best loss: 0.13387154646573374] 33%|███▎      | 6/18 [18:16:25<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.002778 seconds
-
-build_posterior_wrapper took 0.002778 seconds
-
-build_posterior_wrapper took 0.002778 seconds
-
-build_posterior_wrapper took 0.002778 seconds
-
-build_posterior_wrapper took 0.002778 seconds
-
-build_posterior_wrapper took 0.002778 seconds
-
-TPE using 6/6 trials with best loss 0.133872
-
-TPE using 6/6 trials with best loss 0.133872
-
-TPE using 6/6 trials with best loss 0.133872
-
-TPE using 6/6 trials with best loss 0.133872
-
-TPE using 6/6 trials with best loss 0.133872
-
-TPE using 6/6 trials with best loss 0.133872
-
-                                                                                          Testing hyperparameters:
- 33%|███▎      | 6/18 [18:16:25<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                          gru_units : 57.0
- 33%|███▎      | 6/18 [18:16:25<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                          latents : 237.0
- 33%|███▎      | 6/18 [18:16:25<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                          lr : 0.004696995910548818
- 33%|███▎      | 6/18 [18:16:25<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                          Trainingdataset:
- 33%|███▎      | 6/18 [18:16:25<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 33%|███▎      | 6/18 [18:16:25<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                          Using Evaluationdataset:
- 33%|███▎      | 6/18 [18:16:25<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 33%|███▎      | 6/18 [18:16:25<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                          runs/expID1845000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:57_lats:237.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 33%|███▎      | 6/18 [18:16:25<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                          0.8655543595263725
- 33%|███▎      | 6/18 [21:29:46<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                           at step 
- 33%|███▎      | 6/18 [21:29:46<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                          3931900
- 33%|███▎      | 6/18 [21:29:46<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374]                                                                                          {'loss': 0.1344456404736275, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8655543595263725, 'best_peak_step': 3931900, 'best_steps': [3931900]}
- 33%|███▎      | 6/18 [21:29:46<36:35:46, 10978.91s/trial, best loss: 0.13387154646573374] 39%|███▉      | 7/18 [21:29:46<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.003017 seconds
-
-build_posterior_wrapper took 0.003017 seconds
-
-build_posterior_wrapper took 0.003017 seconds
-
-build_posterior_wrapper took 0.003017 seconds
-
-build_posterior_wrapper took 0.003017 seconds
-
-build_posterior_wrapper took 0.003017 seconds
-
-build_posterior_wrapper took 0.003017 seconds
-
-TPE using 7/7 trials with best loss 0.133872
-
-TPE using 7/7 trials with best loss 0.133872
-
-TPE using 7/7 trials with best loss 0.133872
-
-TPE using 7/7 trials with best loss 0.133872
-
-TPE using 7/7 trials with best loss 0.133872
-
-TPE using 7/7 trials with best loss 0.133872
-
-TPE using 7/7 trials with best loss 0.133872
-
-                                                                                          Testing hyperparameters:
- 39%|███▉      | 7/18 [21:29:47<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                          gru_units : 144.0
- 39%|███▉      | 7/18 [21:29:47<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                          latents : 156.0
- 39%|███▉      | 7/18 [21:29:47<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                          lr : 0.0033474009551707445
- 39%|███▉      | 7/18 [21:29:47<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                          Trainingdataset:
- 39%|███▉      | 7/18 [21:29:47<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 39%|███▉      | 7/18 [21:29:47<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                          Using Evaluationdataset:
- 39%|███▉      | 7/18 [21:29:47<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 39%|███▉      | 7/18 [21:29:47<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                          runs/expID6592000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:144_lats:156.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 39%|███▉      | 7/18 [21:29:47<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                          0.8646573376390384
- 39%|███▉      | 7/18 [24:29:37<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                           at step 
- 39%|███▉      | 7/18 [24:29:37<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                          10069500
- 39%|███▉      | 7/18 [24:29:37<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374]                                                                                          {'loss': 0.1353426623609616, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8646573376390384, 'best_peak_step': 10069500, 'best_steps': [10069500]}
- 39%|███▉      | 7/18 [24:29:37<34:07:01, 11165.61s/trial, best loss: 0.13387154646573374] 44%|████▍     | 8/18 [24:29:37<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.002940 seconds
-
-build_posterior_wrapper took 0.002940 seconds
-
-build_posterior_wrapper took 0.002940 seconds
-
-build_posterior_wrapper took 0.002940 seconds
-
-build_posterior_wrapper took 0.002940 seconds
-
-build_posterior_wrapper took 0.002940 seconds
-
-build_posterior_wrapper took 0.002940 seconds
-
-build_posterior_wrapper took 0.002940 seconds
-
-TPE using 8/8 trials with best loss 0.133872
-
-TPE using 8/8 trials with best loss 0.133872
-
-TPE using 8/8 trials with best loss 0.133872
-
-TPE using 8/8 trials with best loss 0.133872
-
-TPE using 8/8 trials with best loss 0.133872
-
-TPE using 8/8 trials with best loss 0.133872
-
-TPE using 8/8 trials with best loss 0.133872
-
-TPE using 8/8 trials with best loss 0.133872
-
-                                                                                          Testing hyperparameters:
- 44%|████▍     | 8/18 [24:29:37<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                          gru_units : 207.0
- 44%|████▍     | 8/18 [24:29:37<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                          latents : 57.0
- 44%|████▍     | 8/18 [24:29:37<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                          lr : 0.0069044218279547456
- 44%|████▍     | 8/18 [24:29:37<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                          Trainingdataset:
- 44%|████▍     | 8/18 [24:29:38<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 44%|████▍     | 8/18 [24:29:38<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                          Using Evaluationdataset:
- 44%|████▍     | 8/18 [24:29:38<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 44%|████▍     | 8/18 [24:29:38<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                          runs/expID9608000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:207_lats:57.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 44%|████▍     | 8/18 [24:29:38<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                          0.8617689271618227
- 44%|████▍     | 8/18 [27:32:40<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                           at step 
- 44%|████▍     | 8/18 [27:32:40<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                          13905500
- 44%|████▍     | 8/18 [27:32:40<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374]                                                                                          {'loss': 0.13823107283817726, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8617689271618227, 'best_peak_step': 13905500, 'best_steps': [13905500]}
- 44%|████▍     | 8/18 [27:32:40<30:42:13, 11053.33s/trial, best loss: 0.13387154646573374] 50%|█████     | 9/18 [27:32:40<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.002887 seconds
-
-build_posterior_wrapper took 0.002887 seconds
-
-build_posterior_wrapper took 0.002887 seconds
-
-build_posterior_wrapper took 0.002887 seconds
-
-build_posterior_wrapper took 0.002887 seconds
-
-build_posterior_wrapper took 0.002887 seconds
-
-build_posterior_wrapper took 0.002887 seconds
-
-build_posterior_wrapper took 0.002887 seconds
-
-build_posterior_wrapper took 0.002887 seconds
-
-TPE using 9/9 trials with best loss 0.133872
-
-TPE using 9/9 trials with best loss 0.133872
-
-TPE using 9/9 trials with best loss 0.133872
-
-TPE using 9/9 trials with best loss 0.133872
-
-TPE using 9/9 trials with best loss 0.133872
-
-TPE using 9/9 trials with best loss 0.133872
-
-TPE using 9/9 trials with best loss 0.133872
-
-TPE using 9/9 trials with best loss 0.133872
-
-TPE using 9/9 trials with best loss 0.133872
-
-                                                                                          Testing hyperparameters:
- 50%|█████     | 9/18 [27:32:40<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                          gru_units : 30.0
- 50%|█████     | 9/18 [27:32:40<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                          latents : 42.0
- 50%|█████     | 9/18 [27:32:40<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                          lr : 0.002846493002723748
- 50%|█████     | 9/18 [27:32:40<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                          Trainingdataset:
- 50%|█████     | 9/18 [27:32:40<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 50%|█████     | 9/18 [27:32:40<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                          Using Evaluationdataset:
- 50%|█████     | 9/18 [27:32:40<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 50%|█████     | 9/18 [27:32:40<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                          runs/expID1531000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:30_lats:42.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 50%|█████     | 9/18 [27:32:40<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                          0.8546286329386437
- 50%|█████     | 9/18 [30:46:26<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                           at step 
- 50%|█████     | 9/18 [30:46:26<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                          12275200
- 50%|█████     | 9/18 [30:46:26<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374]                                                                                          {'loss': 0.14537136706135634, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8546286329386437, 'best_peak_step': 12275200, 'best_steps': [12275200]}
- 50%|█████     | 9/18 [30:46:26<27:34:49, 11032.12s/trial, best loss: 0.13387154646573374] 56%|█████▌    | 10/18 [30:46:26<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.002607 seconds
-
-build_posterior_wrapper took 0.002607 seconds
-
-build_posterior_wrapper took 0.002607 seconds
-
-build_posterior_wrapper took 0.002607 seconds
-
-build_posterior_wrapper took 0.002607 seconds
-
-build_posterior_wrapper took 0.002607 seconds
-
-build_posterior_wrapper took 0.002607 seconds
-
-build_posterior_wrapper took 0.002607 seconds
-
-build_posterior_wrapper took 0.002607 seconds
-
-build_posterior_wrapper took 0.002607 seconds
-
-TPE using 10/10 trials with best loss 0.133872
-
-TPE using 10/10 trials with best loss 0.133872
-
-TPE using 10/10 trials with best loss 0.133872
-
-TPE using 10/10 trials with best loss 0.133872
-
-TPE using 10/10 trials with best loss 0.133872
-
-TPE using 10/10 trials with best loss 0.133872
-
-TPE using 10/10 trials with best loss 0.133872
-
-TPE using 10/10 trials with best loss 0.133872
-
-TPE using 10/10 trials with best loss 0.133872
-
-TPE using 10/10 trials with best loss 0.133872
-
-                                                                                           Testing hyperparameters:
- 56%|█████▌    | 10/18 [30:46:26<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                           gru_units : 177.0
- 56%|█████▌    | 10/18 [30:46:26<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                           latents : 81.0
- 56%|█████▌    | 10/18 [30:46:26<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                           lr : 0.0032930883573215907
- 56%|█████▌    | 10/18 [30:46:26<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                           Trainingdataset:
- 56%|█████▌    | 10/18 [30:46:26<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 56%|█████▌    | 10/18 [30:46:26<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                           Using Evaluationdataset:
- 56%|█████▌    | 10/18 [30:46:26<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 56%|█████▌    | 10/18 [30:46:26<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                           runs/expID1749000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:177_lats:81.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 56%|█████▌    | 10/18 [30:46:27<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                           0.8627556512378902
- 56%|█████▌    | 10/18 [33:51:16<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                            at step 
- 56%|█████▌    | 10/18 [33:51:16<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                           11124400
- 56%|█████▌    | 10/18 [33:51:16<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374]                                                                                           {'loss': 0.13724434876210978, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8627556512378902, 'best_peak_step': 11124400, 'best_steps': [11124400]}
- 56%|█████▌    | 10/18 [33:51:16<24:54:42, 11210.36s/trial, best loss: 0.13387154646573374] 61%|██████    | 11/18 [33:51:16<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.002966 seconds
-
-build_posterior_wrapper took 0.002966 seconds
-
-build_posterior_wrapper took 0.002966 seconds
-
-build_posterior_wrapper took 0.002966 seconds
-
-build_posterior_wrapper took 0.002966 seconds
-
-build_posterior_wrapper took 0.002966 seconds
-
-build_posterior_wrapper took 0.002966 seconds
-
-build_posterior_wrapper took 0.002966 seconds
-
-build_posterior_wrapper took 0.002966 seconds
-
-build_posterior_wrapper took 0.002966 seconds
-
-build_posterior_wrapper took 0.002966 seconds
-
-TPE using 11/11 trials with best loss 0.133872
-
-TPE using 11/11 trials with best loss 0.133872
-
-TPE using 11/11 trials with best loss 0.133872
-
-TPE using 11/11 trials with best loss 0.133872
-
-TPE using 11/11 trials with best loss 0.133872
-
-TPE using 11/11 trials with best loss 0.133872
-
-TPE using 11/11 trials with best loss 0.133872
-
-TPE using 11/11 trials with best loss 0.133872
-
-TPE using 11/11 trials with best loss 0.133872
-
-TPE using 11/11 trials with best loss 0.133872
-
-TPE using 11/11 trials with best loss 0.133872
-
-                                                                                           Testing hyperparameters:
- 61%|██████    | 11/18 [33:51:17<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                           gru_units : 120.0
- 61%|██████    | 11/18 [33:51:17<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                           latents : 51.0
- 61%|██████    | 11/18 [33:51:17<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                           lr : 0.0012787200526014242
- 61%|██████    | 11/18 [33:51:17<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                           Trainingdataset:
- 61%|██████    | 11/18 [33:51:17<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 61%|██████    | 11/18 [33:51:17<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                           Using Evaluationdataset:
- 61%|██████    | 11/18 [33:51:17<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 61%|██████    | 11/18 [33:51:17<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                           runs/expID1732000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:120_lats:51.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 61%|██████    | 11/18 [33:51:17<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                           0.8470039468963043
- 61%|██████    | 11/18 [36:49:08<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                            at step 
- 61%|██████    | 11/18 [36:49:08<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                           13809600
- 61%|██████    | 11/18 [36:49:08<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374]                                                                                           {'loss': 0.15299605310369568, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8470039468963043, 'best_peak_step': 13809600, 'best_steps': [13809600]}
- 61%|██████    | 11/18 [36:49:08<21:43:38, 11174.01s/trial, best loss: 0.13387154646573374] 67%|██████▋   | 12/18 [36:49:08<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-build_posterior_wrapper took 0.003125 seconds
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-TPE using 12/12 trials with best loss 0.133872
-
-                                                                                           Testing hyperparameters:
- 67%|██████▋   | 12/18 [36:49:08<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                           gru_units : 51.0
- 67%|██████▋   | 12/18 [36:49:08<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                           latents : 39.0
- 67%|██████▋   | 12/18 [36:49:08<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                           lr : 0.040266977784975386
- 67%|██████▋   | 12/18 [36:49:08<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                           Trainingdataset:
- 67%|██████▋   | 12/18 [36:49:08<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 67%|██████▋   | 12/18 [36:49:08<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                           Using Evaluationdataset:
- 67%|██████▋   | 12/18 [36:49:08<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 67%|██████▋   | 12/18 [36:49:08<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                           runs/expID3581000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:51_lats:39.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 67%|██████▋   | 12/18 [36:49:08<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                           0.3272515249372085
- 67%|██████▋   | 12/18 [39:46:49<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                            at step 
- 67%|██████▋   | 12/18 [39:46:49<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                           95900
- 67%|██████▋   | 12/18 [39:46:49<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374]                                                                                           {'loss': 0.6727484750627915, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.3272515249372085, 'best_peak_step': 95900, 'best_steps': [95900]}
- 67%|██████▋   | 12/18 [39:46:49<18:22:21, 11023.60s/trial, best loss: 0.13387154646573374] 72%|███████▏  | 13/18 [39:46:49<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-build_posterior_wrapper took 0.003335 seconds
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-TPE using 13/13 trials with best loss 0.133872
-
-                                                                                           Testing hyperparameters:
- 72%|███████▏  | 13/18 [39:46:50<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                           gru_units : 93.0
- 72%|███████▏  | 13/18 [39:46:50<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                           latents : 30.0
- 72%|███████▏  | 13/18 [39:46:50<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                           lr : 0.02067333318044221
- 72%|███████▏  | 13/18 [39:46:50<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                           Trainingdataset:
- 72%|███████▏  | 13/18 [39:46:50<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 72%|███████▏  | 13/18 [39:46:50<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                           Using Evaluationdataset:
- 72%|███████▏  | 13/18 [39:46:50<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 72%|███████▏  | 13/18 [39:46:50<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                           runs/expID5994000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:93_lats:30.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 72%|███████▏  | 13/18 [39:46:50<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                           0.8573017581628992
- 72%|███████▏  | 13/18 [43:05:21<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                            at step 
- 72%|███████▏  | 13/18 [43:05:21<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                           14097300
- 72%|███████▏  | 13/18 [43:05:21<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374]                                                                                           {'loss': 0.14269824183710078, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8573017581628992, 'best_peak_step': 14097300, 'best_steps': [14097300]}
- 72%|███████▏  | 13/18 [43:05:21<15:09:34, 10914.90s/trial, best loss: 0.13387154646573374] 78%|███████▊  | 14/18 [43:05:21<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-build_posterior_wrapper took 0.004110 seconds
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-TPE using 14/14 trials with best loss 0.133872
-
-                                                                                           Testing hyperparameters:
- 78%|███████▊  | 14/18 [43:05:22<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                           gru_units : 174.0
- 78%|███████▊  | 14/18 [43:05:22<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                           latents : 75.0
- 78%|███████▊  | 14/18 [43:05:22<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                           lr : 0.08239174632100868
- 78%|███████▊  | 14/18 [43:05:22<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                           Trainingdataset:
- 78%|███████▊  | 14/18 [43:05:22<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                           Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 78%|███████▊  | 14/18 [43:05:22<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                           Using Evaluationdataset:
- 78%|███████▊  | 14/18 [43:05:22<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                           Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 78%|███████▊  | 14/18 [43:05:22<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                           runs/expID8528000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:174_lats:75.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 78%|███████▊  | 14/18 [43:05:22<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                           0.3272515249372085
- 78%|███████▊  | 14/18 [46:11:53<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                            at step 
- 78%|███████▊  | 14/18 [46:11:53<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                           95900
- 78%|███████▊  | 14/18 [46:11:53<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374]                                                                                           {'loss': 0.6727484750627915, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.3272515249372085, 'best_peak_step': 95900, 'best_steps': [95900]}
- 78%|███████▊  | 14/18 [46:11:53<12:27:35, 11213.90s/trial, best loss: 0.13387154646573374] 83%|████████▎ | 15/18 [46:11:53<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374] build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-build_posterior_wrapper took 0.003453 seconds
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-TPE using 15/15 trials with best loss 0.133872
-
-                                                                                          Testing hyperparameters:
- 83%|████████▎ | 15/18 [46:11:53<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                          gru_units : 66.0
- 83%|████████▎ | 15/18 [46:11:53<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                          latents : 99.0
- 83%|████████▎ | 15/18 [46:11:53<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                          lr : 0.0012058884624715552
- 83%|████████▎ | 15/18 [46:11:53<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                          Trainingdataset:
- 83%|████████▎ | 15/18 [46:11:53<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 83%|████████▎ | 15/18 [46:11:53<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                          Using Evaluationdataset:
- 83%|████████▎ | 15/18 [46:11:53<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 83%|████████▎ | 15/18 [46:11:53<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                          runs/expID9549000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:66_lats:99.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 83%|████████▎ | 15/18 [46:11:53<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                          0.8538751345532831
- 83%|████████▎ | 15/18 [49:23:02<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                           at step 
- 83%|████████▎ | 15/18 [49:23:02<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                          13521900
- 83%|████████▎ | 15/18 [49:23:02<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374]                                                                                          {'loss': 0.14612486544671688, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8538751345532831, 'best_peak_step': 13521900, 'best_steps': [13521900]}
- 83%|████████▎ | 15/18 [49:23:02<9:20:21, 11207.24s/trial, best loss: 0.13387154646573374] 89%|████████▉ | 16/18 [49:23:02<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-build_posterior_wrapper took 0.004048 seconds
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-TPE using 16/16 trials with best loss 0.133872
-
-                                                                                          Testing hyperparameters:
- 89%|████████▉ | 16/18 [49:23:03<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                          gru_units : 36.0
- 89%|████████▉ | 16/18 [49:23:03<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                          latents : 216.0
- 89%|████████▉ | 16/18 [49:23:03<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                          lr : 0.0015427148023256455
- 89%|████████▉ | 16/18 [49:23:03<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                          Trainingdataset:
- 89%|████████▉ | 16/18 [49:23:03<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 89%|████████▉ | 16/18 [49:23:03<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                          Using Evaluationdataset:
- 89%|████████▉ | 16/18 [49:23:03<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 89%|████████▉ | 16/18 [49:23:03<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                          runs/expID5134000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:36_lats:216.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 89%|████████▉ | 16/18 [49:23:03<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                          0.8608898457122354
- 89%|████████▉ | 16/18 [52:50:37<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                           at step 
- 89%|████████▉ | 16/18 [52:50:37<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                          13426000
- 89%|████████▉ | 16/18 [52:50:37<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374]                                                                                          {'loss': 0.13911015428776463, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8608898457122354, 'best_peak_step': 13426000, 'best_steps': [13426000]}
- 89%|████████▉ | 16/18 [52:50:37<6:16:11, 11285.97s/trial, best loss: 0.13387154646573374] 94%|█████████▍| 17/18 [52:50:37<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-build_posterior_wrapper took 0.003687 seconds
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-TPE using 17/17 trials with best loss 0.133872
-
-                                                                                          Testing hyperparameters:
- 94%|█████████▍| 17/18 [52:50:37<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                          gru_units : 57.0
- 94%|█████████▍| 17/18 [52:50:37<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                          latents : 183.0
- 94%|█████████▍| 17/18 [52:50:37<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                          lr : 0.00946849717691585
- 94%|█████████▍| 17/18 [52:50:37<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                          Trainingdataset:
- 94%|█████████▍| 17/18 [52:50:37<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 287858
-    Root Location: data/Crops
-    Reduce: average
-
- 94%|█████████▍| 17/18 [52:50:37<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                          Using Evaluationdataset:
- 94%|█████████▍| 17/18 [52:50:37<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                          Dataset Crops
-    Number of datapoints: 55740
-    Root Location: data/Crops
-    Reduce: average
-
- 94%|█████████▍| 17/18 [52:50:37<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                          runs/expID5761000_TRAINode_ns:300000_ba:700_ode-units:255_gru-uts:57_lats:183.0_rec-lay:2_solver:dopri5_seed:6001_optim:adamax_stackin:1
- 94%|█████████▍| 17/18 [52:50:37<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-run_models.py --niters 50 -n 300000 -validn 60000 --ode-rnn --ode-type gru --rnn-cell lstm --ode-method dopri5 --random-seed 6001 --optimizer adamax --num-search 18 --num-seeds 1 --hparams latents gru_units lr
-
-                                                                                          0.8677610333692142
- 94%|█████████▍| 17/18 [56:37:45<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                           at step 
- 94%|█████████▍| 17/18 [56:37:45<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                          4699100
- 94%|█████████▍| 17/18 [56:37:45<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]                                                                                          {'loss': 0.13223896663078583, 'loss_variance': nan, 'status': 'ok', 'num_seeds': 1, 'best_acc': 0.8677610333692142, 'best_peak_step': 4699100, 'best_steps': [4699100]}
- 94%|█████████▍| 17/18 [56:37:45<3:13:56, 11636.56s/trial, best loss: 0.13387154646573374]100%|██████████| 18/18 [56:37:45<00:00, 12233.90s/trial, best loss: 0.13223896663078583]  100%|██████████| 18/18 [56:37:45<00:00, 11325.85s/trial, best loss: 0.13223896663078583]
-ODE-RNN  True
-Classic-RNN:  False
-Stacked layers:  1
-ODE-type:  gru
-RNN-cell:  lstm
-defaut adapted LR's!!
-Used Optimizer: adamax
-Used Ode-Solver dopri5
-
----------------------------------------------------------------------------------------------------------------------------------------------
-TRIAL PROTOCOL:
----------------------------------------------------------------------------------------------------------------------------------------------
-Trial: 0001  |  #runs: 1  |  Mean Acc.: 32.725 %  |  Std: nan %  |  Best Acc.: 32.725 % (Peak: 95900 samples)  |  Hparams: {'gru_units': [147.0], 'latents': [138.0], 'lr': [0.030755816207529194]}  |
-Trial: 0002  |  #runs: 1  |  Mean Acc.: 86.220 %  |  Std: nan %  |  Best Acc.: 86.220 % (Peak: 12275200 samples)  |  Hparams: {'gru_units': [249.0], 'latents': [120.0], 'lr': [0.002644342807327952]}  |
-Trial: 0003  |  #runs: 1  |  Mean Acc.: 86.613 %  |  Std: nan %  |  Best Acc.: 86.613 % (Peak: 11124400 samples)  |  Hparams: {'gru_units': [108.0], 'latents': [99.0], 'lr': [0.01012746237587341]}  |
-Trial: 0004  |  #runs: 1  |  Mean Acc.: 86.460 %  |  Std: nan %  |  Best Acc.: 86.460 % (Peak: 7863800 samples)  |  Hparams: {'gru_units': [246.0], 'latents': [180.0], 'lr': [0.003695570368261106]}  |
-Trial: 0005  |  #runs: 1  |  Mean Acc.: 86.518 %  |  Std: nan %  |  Best Acc.: 86.518 % (Peak: 7000700 samples)  |  Hparams: {'gru_units': [117.0], 'latents': [153.0], 'lr': [0.0048408309740648895]}  |
-Trial: 0006  |  #runs: 1  |  Mean Acc.: 85.206 %  |  Std: nan %  |  Best Acc.: 85.206 % (Peak: 13809600 samples)  |  Hparams: {'gru_units': [207.0], 'latents': [66.0], 'lr': [0.0017579167563799504]}  |
-Trial: 0007  |  #runs: 1  |  Mean Acc.: 86.555 %  |  Std: nan %  |  Best Acc.: 86.555 % (Peak: 3931900 samples)  |  Hparams: {'gru_units': [57.0], 'latents': [237.0], 'lr': [0.004696995910548818]}  |
-Trial: 0008  |  #runs: 1  |  Mean Acc.: 86.466 %  |  Std: nan %  |  Best Acc.: 86.466 % (Peak: 10069500 samples)  |  Hparams: {'gru_units': [144.0], 'latents': [156.0], 'lr': [0.0033474009551707445]}  |
-Trial: 0009  |  #runs: 1  |  Mean Acc.: 86.177 %  |  Std: nan %  |  Best Acc.: 86.177 % (Peak: 13905500 samples)  |  Hparams: {'gru_units': [207.0], 'latents': [57.0], 'lr': [0.0069044218279547456]}  |
-Trial: 0010  |  #runs: 1  |  Mean Acc.: 85.463 %  |  Std: nan %  |  Best Acc.: 85.463 % (Peak: 12275200 samples)  |  Hparams: {'gru_units': [30.0], 'latents': [42.0], 'lr': [0.002846493002723748]}  |
-Trial: 0011  |  #runs: 1  |  Mean Acc.: 86.276 %  |  Std: nan %  |  Best Acc.: 86.276 % (Peak: 11124400 samples)  |  Hparams: {'gru_units': [177.0], 'latents': [81.0], 'lr': [0.0032930883573215907]}  |
-Trial: 0012  |  #runs: 1  |  Mean Acc.: 84.700 %  |  Std: nan %  |  Best Acc.: 84.700 % (Peak: 13809600 samples)  |  Hparams: {'gru_units': [120.0], 'latents': [51.0], 'lr': [0.0012787200526014242]}  |
-Trial: 0013  |  #runs: 1  |  Mean Acc.: 32.725 %  |  Std: nan %  |  Best Acc.: 32.725 % (Peak: 95900 samples)  |  Hparams: {'gru_units': [51.0], 'latents': [39.0], 'lr': [0.040266977784975386]}  |
-Trial: 0014  |  #runs: 1  |  Mean Acc.: 85.730 %  |  Std: nan %  |  Best Acc.: 85.730 % (Peak: 14097300 samples)  |  Hparams: {'gru_units': [93.0], 'latents': [30.0], 'lr': [0.02067333318044221]}  |
-Trial: 0015  |  #runs: 1  |  Mean Acc.: 32.725 %  |  Std: nan %  |  Best Acc.: 32.725 % (Peak: 95900 samples)  |  Hparams: {'gru_units': [174.0], 'latents': [75.0], 'lr': [0.08239174632100868]}  |
-Trial: 0016  |  #runs: 1  |  Mean Acc.: 85.388 %  |  Std: nan %  |  Best Acc.: 85.388 % (Peak: 13521900 samples)  |  Hparams: {'gru_units': [66.0], 'latents': [99.0], 'lr': [0.0012058884624715552]}  |
-Trial: 0017  |  #runs: 1  |  Mean Acc.: 86.089 %  |  Std: nan %  |  Best Acc.: 86.089 % (Peak: 13426000 samples)  |  Hparams: {'gru_units': [36.0], 'latents': [216.0], 'lr': [0.0015427148023256455]}  |
-Trial: 0018  |  #runs: 1  |  Mean Acc.: 86.776 %  |  Std: nan %  |  Best Acc.: 86.776 % (Peak: 4699100 samples)  |  Hparams: {'gru_units': [57.0], 'latents': [183.0], 'lr': [0.00946849717691585]}  |
----------------------------------------------------------------------------------------------------------------------------------------------
-Best configuration mean: 86.776 % (+-nan) (best run: 86.776 %) , with Hyperparmeters: {'gru_units': [57.0], 'latents': [183.0], 'lr': [0.00946849717691585]}
----------------------------------------------------------------------------------------------------------------------------------------------
