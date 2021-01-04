@@ -65,7 +65,7 @@ def parse_datasets(args, device):
 			root = scratch_root1
 		elif os.path.exists(scratch_root2):
 			root = scratch_root2
-		print("dataroot: " + root)cloud_thresh
+		print("dataroot: " + root)#cloud_thresh
 
 		train_dataset_obj = Crops(root, mode="train", args=args, noskip=False,
 									download=True, device = device, list_form = list_form)

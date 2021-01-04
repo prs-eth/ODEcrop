@@ -370,7 +370,7 @@ def train_it(
 						}, Top_ckpt_path[i])
 
 
-						utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
+						#utils.plot_confusion_matrix2(y_ref, y_pred, Data_obj[0]["dataset_obj"].label_list, ExperimentID[i])
 						# Save trajectory here
 						#if not test_res[i]["PCA_traj"] is None:
 						#	with open( os.path.join('vis', 'traj_dict' + str(ExperimentID[i]) + '.pickle' ), 'wb') as handle:
