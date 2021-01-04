@@ -1,2 +1,2 @@
 
-## Crop Classification under Varying Cloud Coverwith Neural Ordinary Differential Equations
+## Crop Classification under Varying Cloud Cover with Neural Ordinary Differential Equations
