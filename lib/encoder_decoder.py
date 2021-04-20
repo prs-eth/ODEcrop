@@ -246,7 +246,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 
 		# Get positional encoding
 		# position_encodings = utils.get_sinusoid_encoding_table(time_steps*2*math.pi, d_hid=2) # note: 2*pi is already included? [0,1] is enough
-		position_encodings = utils.get_sinusoid_encoding_table(time_steps, d_hid=2)
+		position_encodings = utils.get_sinusoid_encoding_table(time_steps.cpu().numpy(), d_hid=2)
 		
 		### Check if experimental is on/off ###
 		experimental = False
