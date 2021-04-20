@@ -25,12 +25,38 @@
                 "--dataset", "crop",
                 "-b", "600",
                 "--ode-rnn",
-                "--random-seed", "6002",
+                "--random-seed", "6001",
                 "--stack-order", "gru",
                 "--lr", "0.00762",
                 "-g", "100",
                 "-l", "150",
                 "-v", "2",
+                "--topper", "true",
+                "-BN", "true"
+            ]
+        },
+        {
+            "name": "GRU-pos: Crop",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/run_models.py",
+            "console": "integratedTerminal",
+            "args": [
+                //#python run_models.py --niters 20 -n 300000 -validn 60000 -b 600 --ode-rnn --rnn-cell gru --random-seed 6001 --stack-order gru -BN=true --topper=true
+                "--niters", "20",
+                "-n", "300000",
+                "-validn", "600000",
+                "--dataset", "crop",
+                "-b", "600",
+                "--ode-rnn",
+                "--random-seed", "6001",
+                "--stack-order", "gru",
+                "--lr", "0.00762",
+                "-g", "100",
+                "-l", "150",
+                "-v", "2",
+                "--use_pos_encod", "True", // --use_pos_encod=True
+                //"--trainsub", "0.75",
                 "--topper", "true",
                 "-BN", "true"
             ]
@@ -65,7 +91,7 @@
             ]
         },
         {
-            "name": "ODE-GRU:: Crop, Subsample",
+            "name": "ODE-GRU: Crop, Subsample",
             "type": "python",
             "request": "launch",
             "program": "/home/pf/pfstud/metzgern_PF/ODE_Nando/ODE_crop_Project/run_models.py",
@@ -111,7 +137,7 @@
                 "-b", "300",
                 "--optimizer", "adamax",
                 "--ode-rnn",
-                "--rnn-cell", "lstm",
+                "--rnn-cell", "gru",
                 "--random-seed", "6001",
                 "--stack-order", "ode_rnn",
                 "--lr", "0.0076",

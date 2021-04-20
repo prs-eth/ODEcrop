@@ -34,7 +34,7 @@ def get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 			use_BN = args.batchnorm,
 			resnet = args.resnet,
 			ode_type=args.ode_type, ode_units = args.units, rec_layers = args.rec_layers, ode_method = args.ode_method,
-			nornnimputation=args.nornnimputation
+			nornnimputation=args.nornnimputation, use_pos_encod=args.use_pos_encod
 		).to(device)
 	else:
 		raise Exception("Number of stacked layers must be greater or equal to 1.")
@@ -43,6 +43,7 @@ def get_ODE_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
 
 
 def get_classic_RNN_model(args, device, input_dim, n_labels, classif_per_tp):
+	# Not used anymore !!!
 	
 	obsrv_std = 0.01
 	obsrv_std = torch.Tensor([obsrv_std]).to(device)

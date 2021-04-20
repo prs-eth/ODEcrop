@@ -91,7 +91,11 @@ def compute_binary_CE_loss(label_predictions, mortality_label):
 def compute_multiclass_CE_loss(label_predictions, true_label, mask):
 	#print("Computing multi-class classification loss: compute_multiclass_CE_loss")
 	def CXE(predicted, target):
-		return -(target * torch.log(predicted)).sum(dim=1).mean()
+		focal = False
+		if focal:
+			return -(1-predicted)**2*(target * torch.log(predicted)).sum(dim=1).mean()
+		else:
+			return -(target * torch.log(predicted)).sum(dim=1).mean()
 	
 	n_tp = 1
 	n_traj_samples = 1
@@ -182,7 +186,11 @@ def compute_multiclass_CE_loss(label_predictions, true_label, mask):
 
 		# use a very small number to avoid numerical problems
 		eps = 1e-10
-		ce_loss = -(true_label * torch.log(label_predictions + eps)).sum(dim=1).mean()
+		focal=False
+		if focal:
+			ce_loss = -( (1-label_predictions)**0.5 * true_label * torch.log(label_predictions + eps)).sum(dim=1).mean()
+		else: 
+			ce_loss = -( true_label * torch.log(label_predictions + eps)).sum(dim=1).mean()
 
 	return ce_loss
 

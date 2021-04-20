@@ -18,7 +18,7 @@ import argparse
 import numpy as np
 import pandas as pd
 from random import SystemRandom
-from sklearn import model_selection
+#from sklearn import model_selection
 
 import torch
 import torch.nn as nn
@@ -100,6 +100,7 @@ parser.add_argument('--rec-layers', type=int, default=2, help="Number of layers 
 parser.add_argument('-u', '--units', type=int, default=255, help="Number of units per layer in ODE func")
 parser.add_argument('-g', '--gru-units', type=int, default=100, help="Number of units per layer in each of GRU update networks")
 parser.add_argument('-RI', '--nornnimputation', default=False,  type=bool, help="If false (default), for the baseline models (vanilla RNNs), the models additionally imputes delta t, which is the time since the last observation.")
+parser.add_argument('--use_pos_encod', default=False,  type=bool, help="If false (default). Using a 2-dim positional encoding concatinated to the RNN's hidden state. Only available for vanilla RNNs.")
 
 parser.add_argument('--linear-classif', default=False, type=bool, help="If using a classifier, use a linear classifier instead of 1-layer NN")
 parser.add_argument('--topper', default=False, type=bool, help="If a topper to transform the input before the first trajectory should be used")

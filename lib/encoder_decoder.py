@@ -102,7 +102,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		z0_dim = None, RNN_update = None, 
 		n_gru_units = 100, device = torch.device("cpu"),
 		RNNcell = None, use_BN=True,
-		use_ODE = True, nornnimputation=False):
+		use_ODE = True, nornnimputation=False, use_pos_encod=False):
 		
 		super(Encoder_z0_ODE_RNN, self).__init__()
 
@@ -152,6 +152,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		self.use_BN = use_BN
 		self.use_ODE = use_ODE
 		self.nornnimputation = nornnimputation
+		self.use_pos_encod = use_pos_encod
 		self.z0_diffeq_solver = z0_diffeq_solver
 		self.input_dim = input_dim
 		self.device = device
@@ -227,6 +228,9 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		minimum_step = interval_length / 200 # maybe have to modify minimum time step # original
 		#minimum_step = interval_length / 100 # maybe have to modify minimum time step # new
 
+
+		 
+
 		#print("minimum step: {}".format(minimum_step))
 
 		assert(not torch.isnan(data).any())
@@ -240,6 +244,13 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		if run_backwards:
 			time_points_iter = reversed(time_points_iter)
 
+		# Get positional encoding
+		# position_encodings = utils.get_sinusoid_encoding_table(time_steps*2*math.pi, d_hid=2) # note: 2*pi is already included? [0,1] is enough
+		position_encodings = utils.get_sinusoid_encoding_table(time_steps, d_hid=2)
+		
+		### Check if experimental is on/off ###
+		experimental = False
+
 		for i in time_points_iter:
 
 			# move time step to the next interval
@@ -247,11 +258,14 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			#t_i = time_steps[i]							# new2
 			prev_t = time_steps[i]							# new
 
-			n_intermediate_tp = 2 # get steps in between
+			n_intermediate_tp = 2 # get steps in between, minimum is 2
 			if save_latents!=0:
 				n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get more steps in between for testing
 
 			time_points = utils.linspace_vector(prev_t, t_i, n_intermediate_tp)
+
+			if experimental: 
+				time_points = time_points.flip(0)
 
 			#Include inplementationin case of no ODE function
 			if self.use_ODE:
@@ -280,7 +294,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					exit()
 
 				yi_ode = ode_sol[:, :, -1, :]
-
+				
 				xi = data[:,i,:].unsqueeze(0)
 
 			else:
@@ -298,10 +312,18 @@ class Encoder_z0_ODE_RNN(nn.Module):
 					delta_ts[:,:,:] = 0
 
 				features = data[:,i,:self.input_dim//2].unsqueeze(0)
-				new_mask = single_mask.unsqueeze(0).unsqueeze(2).repeat(1,1,self.input_dim//2+1)
 
-				#creating new data including delta ts plus mask, concaninate the delta t for pure RNN
-				xi = torch.cat([ features , delta_ts, new_mask], -1)
+				if not self.use_pos_encod:
+					new_mask = single_mask.unsqueeze(0).unsqueeze(2).repeat(1,1,self.input_dim//2+1)
+					xi = torch.cat([ features , delta_ts, new_mask], -1)
+				else:
+					pos_encod = position_encodings[i].repeat(1,n_traj,1).float()
+					pos_encod[:,~single_mask.bool(),:] = 0
+					new_mask = single_mask.unsqueeze(0).unsqueeze(2).repeat(1,1,self.input_dim//2+2)
+					xi = torch.cat([ features ,  pos_encod, new_mask], -1)
+				#creating new data including delta ts plus mask, concaninate the delta t for pure RNN 
+
+				
 
 
 			if self.RNNcell=='lstm':
