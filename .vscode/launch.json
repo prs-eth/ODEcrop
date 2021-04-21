@@ -32,7 +32,8 @@
                 "-l", "150",
                 "-v", "2",
                 "--topper", "true",
-                "-BN", "true"
+                "-BN", "true",
+                "--hp_search", "true"
             ]
         },
         {
@@ -61,7 +62,7 @@
                 "-BN", "true"
             ]
         },
-                {
+        {
             "name": "ODE-GRU: Crop",
             "type": "python",
             "request": "launch",
@@ -150,6 +151,7 @@
                 "-BN", "True",
                 "--step", "2",
                 "--trunc", "9",
+                "--hp_search", "true"
             ]
         },
         {

@@ -39,13 +39,14 @@ class SwissCrops(object):
 		neighbourhood=3, cloud_thresh=0.05,
 		nsamples=float("inf"),args=None,
 		step=1, trunc=9, datatype="2",
-		singlepix=False, noskip=False):
+		singlepix=False, noskip=False, validation_from_train_split=0.15):
 		
 		self.datatype = datatype
 
 		self.normalize = True
 		self.shuffle = True
 		self.singlepix = singlepix
+		self.validation_from_train_split = validation_from_train_split
 
 		self.root = root
 		self.nb = neighbourhood
@@ -100,7 +101,7 @@ class SwissCrops(object):
 											42, 10, 29, 45, 45,  9,  9, 50, 42, 21, 21, 21, 21, 21, 27, 27, 27,
 											21, 21, 27, 21, 46, 44, 44, 46, 46, 46, 14, 14, 14, 27])
 
-		if mode=="train":
+		if mode=="train" or self.mode=="train_from_train" or self.mode=="validation_from_train":
 			data_file = self.train_file
 		elif mode=="test":
 			data_file = self.test_file
@@ -626,6 +627,10 @@ class SwissCrops(object):
 	# returns the number of samples that are actually used
 		if self.mode=="train":
 			return min(self.n, self.hdf5dataloader["data"].shape[0])
+		elif self.mode=="train_from_train":
+			return min(self.n, round(self.nsamples*(1-self.validation_from_train_split)), self.hdf5dataloader["data"].shape[0])
+		elif self.mode=="validation_from_train":
+			return min(self.n, round(self.nsamples*self.validation_from_train_split), self.hdf5dataloader["data"].shape[0])
 		else:
 			return min(self.n, self.hdf5dataloader["data"].shape[0])
 	
