@@ -783,7 +783,14 @@ class FastTensorDataLoader:
 		if self.batch_shuffle:
 			np.random.seed(1996)
 			np.random.shuffle(self.true_batch_indices)
-		self.subsampled_batch_indices = self.true_batch_indices[:self.n_batches]
+
+		if self.dataset.mode=="train_from_train":
+			self.subsampled_batch_indices = self.true_batch_indices[:self.n_batches]
+
+		elif self.dataset.mode=="validation_from_train":
+			self.subsampled_batch_indices = self.true_batch_indices[-self.n_batches:]
+		else:
+			self.subsampled_batch_indices = self.true_batch_indices[:self.n_batches]
 
 		"""
 		self.singlepix = self.dataset.singlepix
@@ -844,8 +851,6 @@ class FastTensorDataLoader:
 			mask = torch.from_numpy(self.hdf5dataloader["mask"][start:stop] ).float()#.to(self.dataset.device)
 			labels = torch.from_numpy( self.hdf5dataloader["labels"][start:stop] ).float()#.to(self.dataset.device)
 
-
-		
 			data_dict = {
 				"data": data[:,::self.step,:self.feature_trunc].to(self.dataset.device), 
 				"time_steps": time_stamps[::self.step].to(self.dataset.device),
@@ -875,35 +880,38 @@ class FastTensorDataLoader:
 			# Mark every frame as observed (needed for some experiments)
 			#data_dict["mask"] = torch.ones_like(data_dict["mask"])
 		
-		#perform remapping for Swisscrops
+		# perform remapping for Swisscrops
 		if self.remapping:
-			targetind = torch.argmax(data_dict["labels"],1)#.numpy()
-			#target = torch.zeros_like(targetind)
+			targetind = torch.argmax(data_dict["labels"], 1)  # .numpy()
+			# target = torch.zeros_like(targetind)
+			cur_batch_size = targetind.shape[0]
 
 			for i in range(len(self.dataset.labellistglob)):
-				#delete the label if it is not within the k most frequent classes k={13,23}
+				# delete the label if it is not within the k most frequent classes k={13,23}
 				if not (self.dataset.labellist[i] in self.dataset.labellist13):
 					targetind[targetind == self.dataset.labellistglob[i]] = 0
-			
+
 			# Reduce range of labels
 			uniquelabels = np.unique(self.reflistglob)
 			for i in range(self.nclasses):
-				targetind[targetind == uniquelabels[i]] = i+1
+				targetind[targetind == uniquelabels[i]] = i + 1
 
-			#Convert back to one hot
-			labels = torch.zeros((self.batch_size, self.nclasses+1))
-			labels[np.arange(self.batch_size),targetind] = 1
-
+			# Convert back to one hot
+			labels = torch.zeros((cur_batch_size, self.nclasses + 1))
+			labels[np.arange(cur_batch_size), targetind] = 1
 			data_dict["labels"] = labels.to(self.dataset.device)
 
 		else:
 			data_dict["labels"] = data_dict["labels"].to(self.dataset.device)
+			cur_batch_size = data_dict["labels"].shape[0]
 
-		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type = self.dataset.mode)
-				
-		self.i += self.batch_size
-		self.bi +=1
+		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type=self.dataset.mode)
+		self.i += cur_batch_size
+		self.bi += 1
 		return data_dict
+
+
+
 
 	def __len__(self):
 		return self.n_batches

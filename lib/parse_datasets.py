@@ -67,13 +67,26 @@ def parse_datasets(args, device):
 			root = scratch_root2
 		print("dataroot: " + root)#cloud_thresh
 
-		train_dataset_obj = Crops(root, mode="train", args=args, noskip=False,
+		if args.hp_search:
+			
+			train_dataset_obj = Crops(root, mode="train_from_train", args=args, noskip=False,
 									download=True, device = device, list_form = list_form)
-		test_dataset_obj = Crops(root, mode="test", args=args, noskip=False,
+			test_dataset_obj = Crops(root, mode="validation_from_train", args=args, noskip=False,
 									download=True, device = device, list_form = list_form)
-		
-		eval_dataset_obj = Crops(root, mode="eval", args=args, noskip=False, 
+			eval_dataset_obj = Crops(root, mode="validation_from_train", args=args, noskip=False,
+									download=True, device = device, list_form = list_form)
+
+			validation_batch_size = args.batch_size
+		else:
+			train_dataset_obj = Crops(root, mode="train", args=args, noskip=False,
+									download=True, device = device, list_form = list_form)
+			test_dataset_obj = Crops(root, mode="test", args=args, noskip=False,
+									download=True, device = device, list_form = list_form)
+			eval_dataset_obj = Crops(root, mode="eval", args=args, noskip=False, 
 									download=True, device = device,  list_form = list_form)
+
+
+			validation_batch_size = 10000
 		
 		n_samples = min(args.n, len(train_dataset_obj))
 		n_eval_samples = min( float("inf"), len(eval_dataset_obj)) #TODO set it back to inf
@@ -103,7 +116,7 @@ def parse_datasets(args, device):
 		batch_size = min(args.batch_size, args.n)
 
 		#evaluation batch sizes. #Must be tuned to increase efficency of evaluation
-		validation_batch_size = 10000 # size 30000 is 10s per batch
+		#validation_batch_size = 10000 # size 30000 is 10s per batch
 		test_batch_size = min(n_test_samples, validation_batch_size)
 		eval_batch_size = min(n_eval_samples, validation_batch_size)
 		
@@ -190,12 +203,21 @@ def parse_datasets(args, device):
 			print(scratch_root2)
 		print("dataroot: " + root)
 
-		train_dataset_obj = SwissCrops(root, mode="train", device=device,  noskip=args.noskip,
-										step=args.step, trunc=args.trunc, nsamples=args.n,
-										datatype=args.swissdatatype, singlepix=args.singlepix)
-		test_dataset_obj = SwissCrops(root, mode="test", device=device,  noskip=args.noskip,
-										step=args.step, trunc=args.trunc, nsamples=args.validn,
-										datatype=args.swissdatatype, singlepix=args.singlepix) 
+		if args.hp_search:
+			train_dataset_obj = SwissCrops(root, mode="train_from_train", device=device,  noskip=args.noskip,
+											step=args.step, trunc=args.trunc, nsamples=args.n,
+											datatype=args.swissdatatype, singlepix=args.singlepix)
+			test_dataset_obj = SwissCrops(root, mode="validation_from_train", device=device,  noskip=args.noskip,
+											step=args.step, trunc=args.trunc, nsamples=args.validn,
+											datatype=args.swissdatatype, singlepix=args.singlepix) 
+		else:
+				
+			train_dataset_obj = SwissCrops(root, mode="train", device=device,  noskip=args.noskip,
+											step=args.step, trunc=args.trunc, nsamples=args.n,
+											datatype=args.swissdatatype, singlepix=args.singlepix)
+			test_dataset_obj = SwissCrops(root, mode="test", device=device,  noskip=args.noskip,
+											step=args.step, trunc=args.trunc, nsamples=args.validn,
+											datatype=args.swissdatatype, singlepix=args.singlepix) 
 		
 		n_samples = min(args.n, len(train_dataset_obj))
 		n_test_samples = min( float("inf"), len(test_dataset_obj))

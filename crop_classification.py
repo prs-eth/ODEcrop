@@ -28,7 +28,7 @@ class Crops(object):
 	def __init__(self, root, args, download=False,
 		reduce='average', mode='train', minseqlength=20,
 		n_samples = None, device = torch.device("cpu"), list_form = True,
-		step=1, trunc=6, noskip=False):
+		step=1, trunc=6, noskip=False, validation_from_train_split=0.15):
 		
 		self.list_form = list_form
 		self.root = root
@@ -41,6 +41,7 @@ class Crops(object):
 		self.shuffle = True
 		self.nb = 3
 		self.singlepix = False
+		self.validation_from_train_split = validation_from_train_split
 
 		self.nameadd = ""
 		self.noskip = noskip
@@ -53,7 +54,7 @@ class Crops(object):
 		if not self._check_exists():
 			raise RuntimeError('Dataset not found. You can use download=True to download it')
 		
-		if self.mode=="train":
+		if self.mode=="train" or self.mode=="train_from_train" or self.mode=="validation_from_train":
 			data_file = self.train_file
 		elif self.mode=="eval":
 			data_file = self.eval_file
@@ -932,11 +933,19 @@ class Crops(object):
 	def __len__(self):
 		if self.mode=="train":
 			return min(self.args.n, self.hdf5dataloader["data"].shape[0])
+		elif self.mode=="train_from_train":
+			return min(self.args.n, round(self.nsamples*(1-self.validation_from_train_split)), self.hdf5dataloader["data"].shape[0])
+		elif self.mode=="validation_from_train":
+			return min(self.args.n, round(self.nsamples*self.validation_from_train_split), self.hdf5dataloader["data"].shape[0])
 		else:
 			return min(self.args.validn, self.hdf5dataloader["data"].shape[0])
 
 	def true_len__(self):
 		if self.mode=="train":
+			return self.hdf5dataloader["data"].shape[0]
+		elif self.mode=="train_from_train":
+			return self.hdf5dataloader["data"].shape[0]
+		elif self.mode=="validation_from_train":
 			return self.hdf5dataloader["data"].shape[0]
 		else:
 			return self.hdf5dataloader["data"].shape[0]
@@ -947,7 +956,6 @@ class Crops(object):
 		fmt_str += '    Root Location: {}\n'.format(self.root)
 		fmt_str += '    Reduce: {}\n'.format(self.reduce)
 		return fmt_str
-	
 	
 	
 def variable_time_collate_fn_crop(batch, args, device = torch.device("cpu"), data_type="train", 
