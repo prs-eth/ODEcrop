@@ -139,7 +139,7 @@
                 "--optimizer", "adamax",
                 "--ode-rnn",
                 "--rnn-cell", "gru",
-                "--random-seed", "6001",
+                "--random-seed", "6003",
                 "--stack-order", "ode_rnn",
                 "--lr", "0.0076",
                 "-g", "100",
@@ -151,7 +151,8 @@
                 "-BN", "True",
                 "--step", "2",
                 "--trunc", "9",
-                "--hp_search", "true"
+                "--hp_search", "true",
+                "--use_pos_encod2", "true"
             ]
         },
         {

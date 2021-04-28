@@ -140,9 +140,9 @@ def parse_datasets(args, device):
 				# because it can make use of the countagious blocks of data.
 				perc = 1.0
 				early_prediction = int(26*perc)
-				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False, early_prediction=early_prediction, subsamp=args.trainsub)
-				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False)
-				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False, early_prediction=early_prediction, subsamp=args.testsub)
+				train_dataloader = FastTensorDataLoader(train_data, batch_size=batch_size, shuffle=False, early_prediction=early_prediction, subsamp=args.trainsub, use_pos_encod2=args.use_pos_encod2)
+				test_dataloader = FastTensorDataLoader(test_data, batch_size=test_batch_size, shuffle=False, use_pos_encod2=args.use_pos_encod2)
+				eval_dataloader = FastTensorDataLoader(eval_data, batch_size=eval_batch_size, shuffle=False, early_prediction=early_prediction, subsamp=args.testsub, use_pos_encod2=args.use_pos_encod2)
 			
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
@@ -233,8 +233,8 @@ def parse_datasets(args, device):
 		mask = a_train_dict["observed_mask"]
 		labels = a_train_dict["labels"]
 		
-		train_dataloader = FastTensorDataLoader(train_dataset_obj, batch_size=train_batch_size, subsamp=args.trainsub)
-		test_dataloader = FastTensorDataLoader(test_dataset_obj, batch_size=test_batch_size, subsamp=args.testsub)
+		train_dataloader = FastTensorDataLoader(train_dataset_obj, batch_size=train_batch_size, subsamp=args.trainsub, use_pos_encod2=args.use_pos_encod2)
+		test_dataloader = FastTensorDataLoader(test_dataset_obj, batch_size=test_batch_size, subsamp=args.testsub, use_pos_encod2=args.use_pos_encod2)
 
 		data_objects = {"dataset_obj": train_dataset_obj, 
 					"train_dataloader": utils.inf_generator(train_dataloader), 
