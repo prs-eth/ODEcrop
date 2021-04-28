@@ -719,7 +719,7 @@ class FastTensorDataLoader:
 	the dataset and calls cat (slow).
 	"""
 	def __init__(self, dataset, batch_size=32, shuffle=False, batch_shuffle=True, early_prediction=0,
-		subsamp=1.):
+		subsamp=1., use_pos_encod2=False):
 		"""
 		Initialize a FastTensorDataLoader.
 
@@ -743,6 +743,7 @@ class FastTensorDataLoader:
 		#self.noskip = dataset.noskip
 		self.subsamp = subsamp
 
+		
 		#
 		if type(dataset).__name__=='SwissCrops':
 			self.remapping = True
@@ -766,6 +767,9 @@ class FastTensorDataLoader:
 		
 		self.feature_trunc = self.dataset.nb**2*trunc
 		
+		self.use_pos_encod2 = use_pos_encod2
+		self.position_encodings = get_sinusoid_encoding_table(self.dataset.timestamps, d_hid=self.dataset.features)[::self.step,:self.feature_trunc]
+
 		# Calculate # batches
 		n_batches, remainder = divmod(self.dataset_len, self.batch_size)
 		if remainder > 0: 
@@ -905,13 +909,13 @@ class FastTensorDataLoader:
 			data_dict["labels"] = data_dict["labels"].to(self.dataset.device)
 			cur_batch_size = data_dict["labels"].shape[0]
 
+		if self.use_pos_encod2:
+			data_dict["data"] = self.position_encodings.unsqueeze(0).repeat(data_dict["data"].shape[0],1,1) + data_dict["data"]
+
 		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type=self.dataset.mode)
 		self.i += cur_batch_size
 		self.bi += 1
 		return data_dict
-
-
-
 
 	def __len__(self):
 		return self.n_batches

@@ -18,4 +18,4 @@ module load python_gpu/3.7.4 cudnn/7.5 cuda/10.0.130 #hdf5/2.10.0 #2.7.14 #numpy
 
 #wandb agent cropteam/odecropclassification/84udfiku #TUM GRU downsampling
 
-wandb agent cropteam/odecropclassification/fzx1c15u
+wandb agent cropteam/odecropclassification/nvntbnu3
