@@ -742,7 +742,6 @@ class FastTensorDataLoader:
 		self.timestamps = h5py.File(os.path.join(self.dataset.processed_folder, self.dataset.time_file), "r")["tt"][:]
 		#self.noskip = dataset.noskip
 		self.subsamp = subsamp
-
 		
 		#
 		if type(dataset).__name__=='SwissCrops':
@@ -796,15 +795,14 @@ class FastTensorDataLoader:
 		else:
 			self.subsampled_batch_indices = self.true_batch_indices[:self.n_batches]
 
-		"""
 		self.singlepix = self.dataset.singlepix
 		if self.singlepix:
 			a = np.zeros(9, dtype=bool)
 			a[4] = 1
 			kronmask = np.kron(np.ones(9,dtype=bool),a)
 			self.kronmask = kronmask[:self.feature_trunc]
-		"""
-
+		
+		
 	def __iter__(self):
 		# reset iterator state
 		if self.shuffle:
@@ -905,6 +903,24 @@ class FastTensorDataLoader:
 			labels[np.arange(cur_batch_size), targetind] = 1
 			data_dict["labels"] = labels.to(self.dataset.device)
 
+
+			#Kronmask
+			if self.singlepix:
+				data_dict["data"] = data_dict["data"][:,:,self.kronmask]
+				data_dict["mask"] = data_dict["mask"][:,:,self.kronmask]
+
+				assert(torch.sum(data_dict["data"][data_dict["mask"] == 0.] != 0.) == 0)
+
+
+
+			# if self.singlepix:
+			# 	data_dict = {
+			# 		"data": data[::self.step,self.kronmask], 
+			# 		"time_steps": time_stamps[::self.step],
+			# 		"mask": mask[::self.step,self.kronmask],
+			# 		"labels": labels}
+					
+
 		else:
 			data_dict["labels"] = data_dict["labels"].to(self.dataset.device)
 			cur_batch_size = data_dict["labels"].shape[0]
@@ -913,6 +929,10 @@ class FastTensorDataLoader:
 			data_dict["data"] = self.position_encodings.unsqueeze(0).repeat(data_dict["data"].shape[0],1,1) + data_dict["data"]
 
 		data_dict = split_and_subsample_batch(data_dict, self.dataset.args, data_type=self.dataset.mode)
+
+		assert(torch.sum(data_dict["observed_data"][data_dict["observed_mask"] == 0.] != 0.) == 0)
+
+
 		self.i += cur_batch_size
 		self.bi += 1
 		return data_dict

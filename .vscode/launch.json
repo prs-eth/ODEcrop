@@ -26,14 +26,13 @@
                 "-b", "600",
                 "--ode-rnn",
                 "--random-seed", "6001",
-                "--stack-order", "gru",
+                "--stack-order", "gru_small",
                 "--lr", "0.00762",
                 "-g", "100",
                 "-l", "150",
                 "-v", "2",
                 "--topper", "true",
                 "-BN", "true",
-                "--hp_search", "true"
             ]
         },
         {
@@ -135,7 +134,7 @@
                 "-validn", "100000",
                 "--dataset", "swisscrop",
                 "--swissdatatype", "2",
-                "-b", "300",
+                "-b", "375",
                 "--optimizer", "adamax",
                 "--ode-rnn",
                 "--rnn-cell", "gru",
@@ -152,7 +151,8 @@
                 "--step", "2",
                 "--trunc", "9",
                 "--hp_search", "true",
-                "--use_pos_encod2", "true"
+                //"--use_pos_encod2", "true",
+                "--singlepix", "true"
             ]
         },
         {
