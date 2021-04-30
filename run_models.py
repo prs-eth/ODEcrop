@@ -50,7 +50,7 @@ import wandb
 
 # Generative model for noisy data based on ODE
 parser = argparse.ArgumentParser('Latent ODE')
-parser.add_argument('-n', type=int, default=8000, help="Size of the dataset")
+parser.add_argument('-n', '--num_samples', type=int, default=8000, help="Size of the dataset")
 parser.add_argument('-validn',  type=int, default=21000, help="Size of the validation dataset")
 parser.add_argument('--niters', type=int, default=1) # default=300
 parser.add_argument('--lr',  type=float, default=0.00762, help="Starting learning rate.")
@@ -141,6 +141,7 @@ parser.add_argument('--hparams', nargs='*', help="a set of (separated by blank s
 
 
 args = parser.parse_args()
+args.n = args.num_samples
 
 #print("I'm running on GPU") if torch.cuda.is_available() else print("I'm running on CPU")
 num_gpus = torch.cuda.device_count()
