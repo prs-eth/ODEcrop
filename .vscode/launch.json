@@ -152,6 +152,7 @@
                 "--trunc", "9",
                 "--hp_search", "true",
                 //"--use_pos_encod2", "true",
+                "--trainsub", "0.75",
                 "--singlepix", "true"
             ]
         },
