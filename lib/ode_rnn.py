@@ -117,7 +117,8 @@ class ML_ODE_RNN(Baseline):
 		include_topper = False, linear_topper = False,
 		use_BN = True, resnet = False,
 		ode_type="linear", ode_units=200, rec_layers=1, ode_method="dopri5",
-		stack_order = None, nornnimputation=False, use_pos_encod=False):
+		stack_order = None, nornnimputation=False, use_pos_encod=False,
+		n_intermediate_tp=2):
 
 		Baseline.__init__(self, input_dim, latent_dim, device = device, 
 			obsrv_std = obsrv_std, use_binary_classif = use_binary_classif,
@@ -244,7 +245,8 @@ class ML_ODE_RNN(Baseline):
 				use_BN = use_BN,
 				use_ODE = use_ODE,
 				nornnimputation=nornnimputation,
-				use_pos_encod=use_pos_encod
+				use_pos_encod=use_pos_encod,
+				n_intermediate_tp=n_intermediate_tp
 			).to(device)
 
 			self.ode_gru.append( self.Encoder0 )

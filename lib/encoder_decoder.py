@@ -102,7 +102,8 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		z0_dim = None, RNN_update = None, 
 		n_gru_units = 100, device = torch.device("cpu"),
 		RNNcell = None, use_BN=True,
-		use_ODE = True, nornnimputation=False, use_pos_encod=False):
+		use_ODE = True, nornnimputation=False,
+		use_pos_encod=False, n_intermediate_tp=2):
 		
 		super(Encoder_z0_ODE_RNN, self).__init__()
 
@@ -152,6 +153,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 		self.use_BN = use_BN
 		self.use_ODE = use_ODE
 		self.nornnimputation = nornnimputation
+		self.n_intermediate_tp = n_intermediate_tp
 		self.use_pos_encod = use_pos_encod
 		self.z0_diffeq_solver = z0_diffeq_solver
 		self.input_dim = input_dim
@@ -258,7 +260,7 @@ class Encoder_z0_ODE_RNN(nn.Module):
 			#t_i = time_steps[i]							# new2
 			prev_t = time_steps[i]							# new
 
-			n_intermediate_tp = 2 # get steps in between, minimum is 2
+			n_intermediate_tp = self.n_intermediate_tp # get steps in between, minimum is 2
 			if save_latents!=0:
 				n_intermediate_tp = max(2, ((prev_t - t_i) / minimum_step).int()) # get more steps in between for testing
 
