@@ -18,7 +18,7 @@ If you find our work useful in your research, please consider citing our paper:
 }
 ```
 
-
+RNNs are not very happy with irregulary sampled time series since they do not have explicit notion of time by definition.
 <img src="https://github.com/nandometzger/ODEcrop/blob/master/assets/seq.png">
 
 In remote sensing and Earth observation we often have data gaps which translates irregular time series not only due to clouds, but also caused by irregular acquisition patterns in space or time, sensor failures and replacements, transmission limits, etc. For instance, we show below examples of Sentinel-2 time series data from TUM dataset (left for winter wheat, right for corn). Observations obscured
