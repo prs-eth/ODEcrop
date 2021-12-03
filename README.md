@@ -2,6 +2,7 @@
 # Crop Classification under Varying Cloud Cover with Neural Ordinary Differential Equations
 
 This is a Pytorch implementation of NODE for crop mapping task described in
+
 [Metzger, Nando, Mehmet Ozgur Turkoglu, Stefano D'Aronco, Jan Dirk Wegner, and Konrad Schindler. "Crop classification under varying cloud cover with neural ordinary differential equations." IEEE Transactions on Geoscience and Remote Sensing (2021).](https://arxiv.org/pdf/2012.02542.pdf)
 
 
