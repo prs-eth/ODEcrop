@@ -21,7 +21,8 @@ If you find our work useful in your research, please consider citing our paper:
 
 <img src="https://github.com/nandometzger/ODEcrop/blob/master/assets/seq.png">
 
-In remote sensing and Earth observation we often have data gaps which translates irregular time series not only due to clouds, but also caused by irregular acquisition patterns in space or time, sensor failures and replacements, transmission limits, etc.
+In remote sensing and Earth observation we often have data gaps which translates irregular time series not only due to clouds, but also caused by irregular acquisition patterns in space or time, sensor failures and replacements, transmission limits, etc. For instance, we show below examples of Sentinel-2 time series data from TUM dataset (left for winter wheat, right for corn). Observations obscured
+by clouds are marked in blue at the bottom. Note their irregular distribution.
 <img src="https://github.com/nandometzger/ODEcrop/blob/master/assets/tum.png">
 
 Illustration of the hidden state dynamics for traditional RNNs (left) and for the ODE-RNN model (right).
