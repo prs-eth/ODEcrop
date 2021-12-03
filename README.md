@@ -27,5 +27,11 @@ If you find our work useful in your research, please consider citing our paper:
 <img src="https://github.com/nandometzger/ODEcrop/blob/master/assets/rnn_node.png">
 
 
+## Setup
+We use a Conda environment that makes it easy to install all dependencies. Our code has been tested on Ubuntu 20.04 with PyTorch xx and CUDA xx.
+
+1. Install [miniconda](https://docs.conda.io/en/latest/miniconda.html) with Python 3.8.
+2. Create the conda environment: ```conda env create -f environment-xxxx.yml```
+3. Activate the environment: ```conda activate xxxx```
 
 ## Getting Started
