@@ -21,9 +21,10 @@ If you find our work useful in your research, please consider citing our paper:
 
 <img src="https://github.com/nandometzger/ODEcrop/blob/master/assets/seq.png">
 
-
+In remote sensing and Earth observation we often have data gaps which translates irregular time series not only due to clouds, but also caused by irregular acquisition patterns in space or time, sensor failures and replacements, transmission limits, etc.
 <img src="https://github.com/nandometzger/ODEcrop/blob/master/assets/tum.png">
 
+Illustration of the hidden state dynamics for traditional RNNs (left) and for the ODE-RNN model (right).
 <img src="https://github.com/nandometzger/ODEcrop/blob/master/assets/rnn_node.png">
 
 
