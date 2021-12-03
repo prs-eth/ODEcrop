@@ -5,6 +5,7 @@ This is a Pytorch implementation of NODE for crop mapping task described in
 
 [Metzger, Nando, Mehmet Ozgur Turkoglu, Stefano D'Aronco, Jan Dirk Wegner, and Konrad Schindler. "Crop classification under varying cloud cover with neural ordinary differential equations." IEEE Transactions on Geoscience and Remote Sensing (2021).](https://arxiv.org/pdf/2012.02542.pdf)
 
+## ✏️ 📄 Citation
 
 If you find our work useful in your research, please consider citing our paper:
 
@@ -18,7 +19,7 @@ If you find our work useful in your research, please consider citing our paper:
 }
 ```
 
-## Summary
+## 🌌 Overview
 RNNs are not very happy with irregulary sampled time series since they do not have explicit notion of time by definition.
 <img src="https://github.com/nandometzger/ODEcrop/blob/master/assets/seq.png">
 
