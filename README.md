@@ -3,7 +3,7 @@
 
 This is a Pytorch implementation of NODE for crop mapping task described in
 
-[Metzger, Nando, Mehmet Ozgur Turkoglu, Stefano D'Aronco, Jan Dirk Wegner, and Konrad Schindler. "Crop classification under varying cloud cover with neural ordinary differential equations." IEEE Transactions on Geoscience and Remote Sensing (2021).](https://ieeexplore.ieee.org/abstract/document/9520669?casa_token=fhX7NstWLuAAAAAA:nfKJPY4M_xSZuVnfHsZVUC0AuHZItQjjQ2s5B63m9uB9QATCd0TzgbvZQrzK18gIiDzZhhRC)
+[Metzger, Nando, Mehmet Ozgur Turkoglu, Stefano D'Aronco, Jan Dirk Wegner, and Konrad Schindler. "Crop classification under varying cloud cover with neural ordinary differential equations." IEEE Transactions on Geoscience and Remote Sensing (2021).](https://arxiv.org/pdf/2012.02542.pdf)
 
 
 If you find our work useful in your research, please consider citing our paper:
