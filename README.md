@@ -1,5 +1,5 @@
 
-## Crop Classification under Varying Cloud Cover with Neural Ordinary Differential Equations
+# Crop Classification under Varying Cloud Cover with Neural Ordinary Differential Equations
 
 This is a Pytorch implementation of NODE for crop mapping task described in
 
@@ -18,6 +18,7 @@ If you find our work useful in your research, please consider citing our paper:
 }
 ```
 
+## Summary
 RNNs are not very happy with irregulary sampled time series since they do not have explicit notion of time by definition.
 <img src="https://github.com/nandometzger/ODEcrop/blob/master/assets/seq.png">
 
