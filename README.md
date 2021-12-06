@@ -35,8 +35,8 @@ Illustration of the hidden state dynamics for traditional RNNs (left) and for th
 We use a Conda environment that makes it easy to install all dependencies. Our code has been tested on Ubuntu 20.04 with PyTorch xx and CUDA xx.
 
 1. Install [miniconda](https://docs.conda.io/en/latest/miniconda.html) with Python 3.8.
-2. Create the conda environment: ```conda env create -f environment-xxxx.yml```
-3. Activate the environment: ```conda activate xxxx```
+2. Create the conda environment: ```conda env create -f environment.yml```
+3. Activate the environment: ```conda activate node```
 
 ## Getting Started
 
