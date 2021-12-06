@@ -40,11 +40,11 @@ We use a Conda environment that makes it easy to install all dependencies. Our c
 
 ## Getting Started
 
-# Evaluate pre-trained model
+### Evaluate pre-trained model
 
 coming soon
 
-# Train yoursel
+### Train yoursel
 
 coming soon
 
