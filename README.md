@@ -39,3 +39,15 @@ We use a Conda environment that makes it easy to install all dependencies. Our c
 3. Activate the environment: ```conda activate xxxx```
 
 ## Getting Started
+
+# Evaluate pre-trained model
+
+coming soon
+
+# Train yoursel
+
+coming soon
+
+
+
+
