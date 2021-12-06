@@ -31,14 +31,14 @@ Illustration of the hidden state dynamics for traditional RNNs (left) and for th
 <img src="https://github.com/nandometzger/ODEcrop/blob/master/assets/rnn_node.png">
 
 
-## Setup
+## 🧵Setup
 We use a Conda environment that makes it easy to install all dependencies. Our code has been tested on Ubuntu 20.04 with PyTorch xx and CUDA xx.
 
 1. Install [miniconda](https://docs.conda.io/en/latest/miniconda.html) with Python 3.8.
 2. Create the conda environment: ```conda env create -f environment.yml```
 3. Activate the environment: ```conda activate node```
 
-## Getting Started
+## 🌈Getting Started
 
 ### Evaluate pre-trained model
 
