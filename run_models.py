@@ -94,6 +94,7 @@ parser.add_argument('--stacking', type=int, default=1, help="Number of hidden la
 parser.add_argument('--stack-order', nargs='*', help="a set of (separated by blank spaces): ode_rnn, gru, lstm, small_gru, star. Repetitions of same method are possible")
 parser.add_argument('-ODEws', '--ODE-sharing', default=False,  type=bool, help="Ties the weight together across different ODE between RNN-ODE-layers. Only useful if --stacking is larger than 2")
 parser.add_argument('-RNNws', '--RNN-sharing', default=False,  type=bool, help="Ties the weight together across different RNN between RNN-ODE-layers. Only useful if --stacking is larger than 2")
+parser.add_argument('--STARKws', default=False,  type=bool, help="Ties the gating weights together across RNN and ODE, only valid if rnn and ode is a star type")
 parser.add_argument('-BN', '--batchnorm', default=False,  type=bool, help="Applies batchnormalization to the outputs of the RNN-cells")
 parser.add_argument('-RN', '--resnet', default=False,  type=bool, help="Turns the stacked latent-trajectories into stacked residual trajectories.")
 
@@ -275,32 +276,32 @@ if __name__ == '__main__':
 			
 		hyperopt_summary(trials)
 
-	except Exception:
+	# except Exception:
 
-		print("ODE-RNN ", args.ode_rnn)
-		print("Classic-RNN: ", args.classic_rnn)
-		print("Stacked layers: ", args.stacking)
-		print("Stacked layers: ", args.stack_order)
-		print("ODE-type: ", args.ode_type)
-		print("RNN-cell: ", args.rnn_cell)
-		print("Weight-sharing ODE: ", args.ODE_sharing)
-		print("Weight-sharing RNN: ", args.RNN_sharing)
-		print("Using BN: ", args.batchnorm)
-		print("defaut adapted LR's!!")
+	# 	print("ODE-RNN ", args.ode_rnn)
+	# 	print("Classic-RNN: ", args.classic_rnn)
+	# 	print("Stacked layers: ", args.stacking)
+	# 	print("Stacked layers: ", args.stack_order)
+	# 	print("ODE-type: ", args.ode_type)
+	# 	print("RNN-cell: ", args.rnn_cell)
+	# 	print("Weight-sharing ODE: ", args.ODE_sharing)
+	# 	print("Weight-sharing RNN: ", args.RNN_sharing)
+	# 	print("Using BN: ", args.batchnorm)
+	# 	print("defaut adapted LR's!!")
 
-		if 'optimizer' in args.hparams:
-			print("Optimizer choices: ", optimizer_choice)
-		else:
-			print("Used Optimizer:", args.optimizer)
+	# 	if 'optimizer' in args.hparams:
+	# 		print("Optimizer choices: ", optimizer_choice)
+	# 	else:
+	# 		print("Used Optimizer:", args.optimizer)
 
-		if 'ode_method' in args.hparams:
-			print("ODE-Solver choices: ", solver_choice)
-		else:
-			print("Used Ode-Solver", args.ode_method)
+	# 	if 'ode_method' in args.hparams:
+	# 		print("ODE-Solver choices: ", solver_choice)
+	# 	else:
+	# 		print("Used Ode-Solver", args.ode_method)
 
-		hyperopt_summary(trials)
+	# 	hyperopt_summary(trials)
 
-		traceback.print_exc(file=sys.stdout)
+	# 	traceback.print_exc(file=sys.stdout)
 
 	print("ODE-RNN ", args.ode_rnn)
 	print("Classic-RNN: ", args.classic_rnn)

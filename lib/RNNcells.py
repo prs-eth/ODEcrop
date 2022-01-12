@@ -27,7 +27,8 @@ class STAR_unit(nn.Module):
 	"""
 
 	def __init__(self, hidden_size, input_size,
-		n_units=0, bias=True, use_BN=False):
+		n_units=0, bias=True, use_BN=False,
+		x_K=None, x_z=None ,h_K=None):
 		super(STAR_unit, self).__init__()
 
 		self.input_size = input_size
@@ -35,9 +36,12 @@ class STAR_unit(nn.Module):
 		self.bias = bias
 		
 		if n_units==0:
-			self.x_K = nn.Linear(input_size,  hidden_size, bias=bias)
-			self.x_z = nn.Linear(input_size,  hidden_size, bias=bias)
-			self.h_K = nn.Linear(hidden_size,  hidden_size, bias=bias)
+			if x_K is None:
+				self.x_K = nn.Linear(input_size,  hidden_size, bias=bias)
+			if x_z is None:
+				self.x_z = nn.Linear(input_size,  hidden_size, bias=bias)
+			if h_K is None:
+				self.h_K = nn.Linear(hidden_size,  hidden_size, bias=bias)
 
 			init.orthogonal_(self.x_K.weight) 
 			init.orthogonal_(self.x_z.weight)
@@ -48,23 +52,32 @@ class STAR_unit(nn.Module):
 			#self.h_K.bias.data.fill_(0.)
 		else:
 
-			self.x_K = nn.Sequential(
-				nn.Linear(input_size, n_units),
-				nn.Tanh(),
-				nn.Linear(n_units, hidden_size))
-			utils.init_network_weights(self.x_K, initype="ortho")
+			if x_K is None:  
+				self.x_K = nn.Sequential(
+					nn.Linear(input_size, n_units),
+					nn.Tanh(),
+					nn.Linear(n_units, hidden_size))
+				utils.init_network_weights(self.x_K, initype="ortho")
+			else:
+				self.x_K = x_K
 
-			self.x_z = nn.Sequential(
-				nn.Linear(input_size, n_units),
-				nn.Tanh(),
-				nn.Linear(n_units, hidden_size))
-			utils.init_network_weights(self.x_z, initype="ortho")
+			if x_z is None:  
+				self.x_z = nn.Sequential(
+					nn.Linear(input_size, n_units),
+					nn.Tanh(),
+					nn.Linear(n_units, hidden_size))
+				utils.init_network_weights(self.x_z, initype="ortho")
+			else:
+				self.x_z = x_z
 
-			self.h_K = nn.Sequential(
-				nn.Linear(hidden_size, n_units),
-				nn.Tanh(),
-				nn.Linear(n_units, hidden_size))
-			utils.init_network_weights(self.h_K, initype="ortho")
+			if h_K is None: 
+				self.h_K = nn.Sequential(
+					nn.Linear(hidden_size, n_units),
+					nn.Tanh(),
+					nn.Linear(n_units, hidden_size))
+				utils.init_network_weights(self.h_K, initype="ortho")
+			else:
+				self.h_K = h_K
 		
 		self.use_BN = use_BN
 

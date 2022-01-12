@@ -117,7 +117,7 @@ class ML_ODE_RNN(Baseline):
 		include_topper = False, linear_topper = False,
 		use_BN = True, resnet = False,
 		ode_type="linear", ode_units=200, rec_layers=1, ode_method="dopri5",
-		stack_order = None, nornnimputation=False, use_pos_encod=False):
+		stack_order = None, nornnimputation=False, use_pos_encod=False, STARKws=False):
 
 		Baseline.__init__(self, input_dim, latent_dim, device = device, 
 			obsrv_std = obsrv_std, use_binary_classif = use_binary_classif,
@@ -156,11 +156,36 @@ class ML_ODE_RNN(Baseline):
 			print("Stack-order: ", stack_order)
 			print("Stacking argument: ", stacking)
 			self.stacking = len(stack_order)
+		
+		if STARKws:
+			assert(ode_type in ["star2"])
+			assert(RNNcell in ["star"])
+
+			x_K = nn.Sequential(
+				nn.Linear(rnn_input, n_gru_units),
+				nn.Tanh(),
+				nn.Linear(n_gru_units, latent_dim))
+			utils.init_network_weights(x_K, initype="ortho")
+			x_z = nn.Sequential(
+				nn.Linear(rnn_input, n_gru_units),
+				nn.Tanh(),
+				nn.Linear(n_gru_units, latent_dim))
+			utils.init_network_weights(x_z, initype="ortho")
+ 
+			h_K = nn.Sequential(
+				nn.Linear(latent_dim, n_gru_units),
+				nn.Tanh(),
+				nn.Linear(n_gru_units, latent_dim))
+			utils.init_network_weights(h_K, initype="ortho")
+		else:
+			x_K, x_z, h_K = None, None, None
 
 		# get the default ODE and RNN for the weightsharing
 		# ODE stuff
-		z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
-		
+		z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type=ode_type, device=device, gates=(x_K, x_z, h_K))
+
+
+
 		# RNNcell
 		if RNNcell=='gru':
 			RNN_update = GRU_unit(latent_dim, rnn_input, n_units = n_gru_units, device=device).to(device)
@@ -172,13 +197,15 @@ class ML_ODE_RNN(Baseline):
 			RNN_update = LSTM_unit(latent_dim, rnn_input).to(device)
 
 		elif RNNcell=="star":
-			RNN_update = STAR_unit(latent_dim, rnn_input, n_units = n_gru_units).to(device)
+			RNN_update = STAR_unit(latent_dim, rnn_input, n_units=n_gru_units, x_K=x_K, x_z=x_z, h_K=h_K).to(device)
 
 		else:
 			raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
 
 
 		# Put the layers it into the model
+		print("Stacking Order:", stack_order)
+		print("Stacking:", self.stacking)
 		for s in range(self.stacking):
 			
 			use_ODE = (stack_order[s]=="ode_rnn")
@@ -208,9 +235,33 @@ class ML_ODE_RNN(Baseline):
 					vertical_rnn_input = layer_input_dimension
 					thisRNNcell = RNNcell
 
+
+				if STARKws:
+					assert(ode_type in ["star2"])
+					assert(RNNcell in ["star"])
+
+					x_K = nn.Sequential(
+						nn.Linear(rnn_input, n_gru_units),
+						nn.Tanh(),
+						nn.Linear(n_gru_units, latent_dim))
+					utils.init_network_weights(x_K, initype="ortho")
+					x_z = nn.Sequential(
+						nn.Linear(rnn_input, n_gru_units),
+						nn.Tanh(),
+						nn.Linear(n_gru_units, latent_dim))
+					utils.init_network_weights(x_z, initype="ortho")
+		
+					h_K = nn.Sequential(
+						nn.Linear(latent_dim, n_gru_units),
+						nn.Tanh(),
+						nn.Linear(n_gru_units, latent_dim))
+					utils.init_network_weights(h_K, initype="ortho")
+				else:
+					x_K, x_z, h_K = None, None, None
+
 				if thisRNNcell=='gru':
 					#pdb.set_trace()
-					RNN_update = GRU_unit(latent_dim, vertical_rnn_input, n_units = n_gru_units, device=device).to(device)
+					RNN_update = GRU_unit(latent_dim, vertical_rnn_input, n_units=n_gru_units, device=device).to(device)
 
 				elif thisRNNcell=='gru_small':
 					RNN_update = GRU_standard_unit(latent_dim, vertical_rnn_input, device=device).to(device)
@@ -220,7 +271,7 @@ class ML_ODE_RNN(Baseline):
 					RNN_update = LSTM_unit(latent_dim*2, vertical_rnn_input).to(device)
 
 				elif thisRNNcell=="star":
-					RNN_update = STAR_unit(latent_dim, vertical_rnn_input, n_units = n_gru_units).to(device)
+					RNN_update = STAR_unit(latent_dim, vertical_rnn_input, n_units= n_gru_units, x_K=x_K, x_z=x_z, h_K=h_K).to(device)
 
 				else:
 					raise Exception("Invalid RNN-cell type. Hint: expdecay not available for ODE-RNN")
@@ -232,7 +283,7 @@ class ML_ODE_RNN(Baseline):
 				else:
 					ode_latents = int(latent_dim)
 
-				z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type="linear", device=device)
+				z0_diffeq_solver = get_diffeq_solver(ode_latents, ode_units, rec_layers, ode_method, ode_type=ode_type, device=device, gates=(x_K, x_z, h_K))
 				
 			self.Encoder0 = Encoder_z0_ODE_RNN( 
 				latent_dim = ode_rnn_encoder_dim, 
@@ -265,15 +316,6 @@ class ML_ODE_RNN(Baseline):
 			utils.init_network_weights(self.topper)
 
 			self.topper_bn = nn.BatchNorm1d(latent_dim)
-
-		"""
-		self.decoder = nn.Sequential(
-			nn.Linear(latent_dim, n_units),
-			nn.Tanh(),
-			nn.Linear(n_units, input_dim),)
-
-		utils.init_network_weights(self.decoder)
-		"""
 
 		z0_dim = latent_dim
 
