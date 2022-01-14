@@ -30,13 +30,12 @@ import re
 import itertools
 #import tfplot
 import matplotlib
-from sklearn.metrics import confusion_matrix
-from lib.latent_vis import get_pca_traj
+from sklearn.metrics import confusion_matrix 
 
 import matplotlib.pyplot as plt 
 from lib.latent_vis import get_pca_traj
+from lib.chrono_initialization import chrono_init
 
-from lib.latent_vis import get_pca_traj
 
 
 def makedirs(dirname):
@@ -127,6 +126,8 @@ def init_network_weights(net, std = 0.1, initype="ortho"):
 		if isinstance(m, nn.Linear):
 			if initype=="ortho":
 				nn.init.orthogonal_(m.weight)
+			elif initype=="chrono":
+				chrono_init(m.weight) 
 			else:
 				nn.init.normal_(m.weight, mean=0, std=std)
 
